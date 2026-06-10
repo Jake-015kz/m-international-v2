@@ -42,7 +42,7 @@ export default function FloatingCards() {
               </div>
             </div>
             <p className="text-center text-xs lg:text-sm font-light text-zinc-600">
-              AI-формулы работают на ваше здоровье
+              Натуральные формулы для вашего здоровья
             </p>
           </GlassCard>
         </motion.div>
@@ -74,7 +74,7 @@ export default function FloatingCards() {
               </svg>
             </div>
             <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
-              Стабильный результат
+              Сертифицировано
             </span>
           </GlassCard>
         </motion.div>
@@ -101,7 +101,7 @@ export default function FloatingCards() {
               </div>
             </div>
             <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
-              Высокое качество
+              50+ стран
             </span>
           </GlassCard>
         </motion.div>

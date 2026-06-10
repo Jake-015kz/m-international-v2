@@ -5,9 +5,9 @@ import { onest, unbounded } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "M-International — Интеллект природы для вашего долголетия",
+  title: "M-International — Натуральные добавки для здоровья и долголетия",
   description:
-    "Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. Продукция представлена в 50+ странах.",
+    "Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. GMP, ISO, Halal, FDA. Продукция представлена в 50+ странах.",
   viewport: {
     width: "device-width",
     initialScale: 1,

@@ -47,7 +47,7 @@ export default function Hero() {
               Интеллект природы
             </span>{" "}
             <span className="font-extralight text-zinc-500">
-              для вашего долголетия
+              для вашего здоровья
             </span>
           </motion.h1>
 
@@ -58,7 +58,7 @@ export default function Hero() {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-sm sm:text-base md:text-lg text-zinc-500 font-onest font-light leading-relaxed max-w-xl mb-6 sm:mb-8 px-2"
           >
-            Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. Продукция представлена в 50+ странах.
+            Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. 50+ стран.
           </motion.p>
 
           {/* CTA Buttons — full width on mobile */}

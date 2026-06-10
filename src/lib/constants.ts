@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
   name: "M-International",
   url: "https://m-internation.kz",
-  description: "Интеллект природы для вашего долголетия",
+  description: "Натуральные добавки для здоровья и долголетия",
 } as const;
 
 export const LOCALES = ["ru", "en", "kk"] as const;
