@@ -17,10 +17,8 @@ interface Particle {
 }
 
 function generateParticles(count: number): Particle[] {
-  // Simple seeded-ish pseudo-random using index math for SSR/CSR parity
   const particles: Particle[] = [];
   for (let i = 0; i < count; i++) {
-    const seed = (i * 137.508) % 1; // golden-angle trick
     particles.push({
       id: i,
       x: (i * 37 + 13) % 100,
@@ -88,7 +86,7 @@ export default function HeroBackground() {
         />
       </motion.div>
 
-      {/* Multi-layer radial gradient overlay — center light, edges dark/green */}
+      {/* Mesh gradient overlay */}
       <div
         className="absolute inset-0 z-[1]"
         style={{
@@ -100,10 +98,51 @@ export default function HeroBackground() {
         }}
       />
 
+      {/* Animated glow orbs */}
+      <motion.div
+        className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full z-[1]"
+        style={{
+          background: "radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)",
+          left: "15%",
+          top: "25%",
+          filter: "blur(80px)",
+        }}
+        animate={{
+          x: [0, 40, -20, 0],
+          y: [0, -30, 15, 0],
+          scale: [1, 1.1, 0.95, 1],
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full z-[1]"
+        style={{
+          background: "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)",
+          right: "10%",
+          bottom: "20%",
+          filter: "blur(100px)",
+        }}
+        animate={{
+          x: [0, -30, 20, 0],
+          y: [0, 25, -15, 0],
+          scale: [1, 1.15, 0.9, 1],
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      />
+
       {/* Soft white glow behind center text — smaller on mobile */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
         <div className="w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-white/25 rounded-full blur-3xl" />
       </div>
+
+      {/* Dot grid — very subtle */}
+      <div
+        className="absolute inset-0 z-[1] opacity-[0.02]"
+        style={{
+          backgroundImage: "radial-gradient(circle, #10b981 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
 
       {/* Floating particles */}
       <Particles />

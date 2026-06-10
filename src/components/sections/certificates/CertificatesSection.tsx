@@ -4,6 +4,7 @@ import { Shield, Award, Leaf, BadgeCheck, FlaskConical, Heart } from "lucide-rea
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { BackgroundDecorations } from "@/components/ui";
 import MarqueeRow from "./MarqueeRow";
 
 const CERTIFICATES_ROW_1 = [
@@ -22,16 +23,9 @@ const CERTIFICATES_ROW_2 = [
 
 export default function CertificatesSection() {
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-[#FBFBFB]">
-      {/* Subtle background glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #10b981, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-        aria-hidden="true"
-      />
+    <section id="certificates" className="relative py-16 md:py-24 overflow-hidden bg-[#FBFBFB]">
+      {/* Background decorations */}
+      <BackgroundDecorations variant="section" accentColor="#10b981" />
 
       {/* Side fades for marquee */}
       <div className="absolute top-0 left-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-[#FBFBFB] to-transparent z-[5] pointer-events-none" />

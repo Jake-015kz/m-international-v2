@@ -4,6 +4,7 @@ import { Droplets, Leaf, Shield, Heart } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { BackgroundDecorations } from "@/components/ui";
 import ProductCard from "./ProductCard";
 
 const PRODUCTS = [
@@ -39,16 +40,9 @@ const PRODUCTS = [
 
 export default function ProductsSection() {
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-[#F7F7F7]">
-      {/* Subtle background glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.03] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #10b981, transparent 70%)",
-          filter: "blur(100px)",
-        }}
-        aria-hidden="true"
-      />
+    <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-[#F7F7F7]">
+      {/* Background decorations */}
+      <BackgroundDecorations variant="section" accentColor="#10b981" />
 
       <Container className="relative z-10">
         <ScrollReveal>
