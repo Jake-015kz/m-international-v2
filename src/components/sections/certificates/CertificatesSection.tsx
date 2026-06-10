@@ -1,4 +1,4 @@
-import { Shield, Award, Leaf, BadgeCheck, FlaskConical, Heart } from "lucide-react";
+import { Shield, Award, Leaf, BadgeCheck, FlaskConical, Heart, Globe, Sprout } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -6,17 +6,19 @@ import { BackgroundDecorations } from "@/components/ui";
 import MarqueeRow from "./MarqueeRow";
 
 const CERTIFICATES_ROW_1 = [
-  { id: "gmp", icon: <Shield className="w-4 h-4 md:w-5 md:h-5" />, label: "GMP" },
+  { id: "gmp", icon: <Shield className="w-4 h-4 md:w-5 md:h-5" />, label: "GMP — Надлежащая производственная практика" },
   { id: "iso", icon: <Award className="w-4 h-4 md:w-5 md:h-5" />, label: "ISO 9001:2015" },
-  { id: "halal", icon: <BadgeCheck className="w-4 h-4 md:w-5 md:h-5" />, label: "Halal" },
-  { id: "fda", icon: <FlaskConical className="w-4 h-4 md:w-5 md:h-5" />, label: "FDA" },
-  { id: "mesti", icon: <Award className="w-4 h-4 md:w-5 md:h-5" />, label: "MESTI" },
+  { id: "halal", icon: <BadgeCheck className="w-4 h-4 md:w-5 md:h-5" />, label: "Сертификат Халал" },
+  { id: "fda", icon: <FlaskConical className="w-4 h-4 md:w-5 md:h-5" />, label: "Одобрение FDA" },
+  { id: "mesti", icon: <Award className="w-4 h-4 md:w-5 md:h-5" />, label: "Малайзийский стандарт MESTI" },
 ];
 
 const CERTIFICATES_ROW_2 = [
-  { id: "natural", icon: <Leaf className="w-4 h-4 md:w-5 md:h-5" />, label: "100% Natural" },
-  { id: "eac", icon: <Shield className="w-4 h-4 md:w-5 md:h-5" />, label: "EAC" },
-  { id: "vegan", icon: <Heart className="w-4 h-4 md:w-5 md:h-5" />, label: "Vegan" },
+  { id: "natural", icon: <Leaf className="w-4 h-4 md:w-5 md:h-5" />, label: "100% натуральные ингредиенты" },
+  { id: "eac", icon: <Shield className="w-4 h-4 md:w-5 md:h-5" />, label: "Евразийское соответствие (EAC)" },
+  { id: "vegan", icon: <Heart className="w-4 h-4 md:w-5 md:h-5" />, label: "Vegan Certified" },
+  { id: "organic", icon: <Sprout className="w-4 h-4 md:w-5 md:h-5" />, label: "Organic Certified" },
+  { id: "global", icon: <Globe className="w-4 h-4 md:w-5 md:h-5" />, label: "50+ стран мира" },
 ];
 
 export default function CertificatesSection() {
@@ -41,16 +43,16 @@ export default function CertificatesSection() {
               </span>
             }
             title="Международные сертификаты"
-            description="Продукция сертифицирована по стандартам GMP, ISO, Halal, FDA"
+            description="Продукция M-International сертифицирована по мировым стандартам"
           />
         </ScrollReveal>
 
         <div className="mt-8 md:mt-12 space-y-3 md:space-y-4">
           <ScrollReveal delay={0.1}>
-            <MarqueeRow items={CERTIFICATES_ROW_1} direction="left" duration={30} />
+            <MarqueeRow items={CERTIFICATES_ROW_1} direction="left" duration={35} />
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
-            <MarqueeRow items={CERTIFICATES_ROW_2} direction="right" duration={35} />
+            <MarqueeRow items={CERTIFICATES_ROW_2} direction="right" duration={40} />
           </ScrollReveal>
         </div>
 
@@ -59,7 +61,7 @@ export default function CertificatesSection() {
             <div className="inline-flex items-center gap-2 text-zinc-400">
               <BadgeCheck className="w-3.5 h-3.5" />
               <p className="text-[9px] md:text-[10px] uppercase tracking-wider font-onest">
-                Проверенное качество
+                Проверенное качество · Безопасность · Эффективность
               </p>
               <BadgeCheck className="w-3.5 h-3.5" />
             </div>

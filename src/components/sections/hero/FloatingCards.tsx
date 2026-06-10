@@ -42,13 +42,13 @@ export default function FloatingCards() {
               </div>
             </div>
             <p className="text-center text-xs lg:text-sm font-light text-zinc-600">
-              Натуральные формулы для вашего здоровья
+              Натуральные формулы M-International
             </p>
           </GlassCard>
         </motion.div>
       </motion.div>
 
-      {/* Right top card - Stable result */}
+      {/* Right top card - Certified */}
       <motion.div
         className="absolute right-4 lg:right-8 top-[25%] -translate-y-1/2 z-20"
         initial={{ opacity: 0, x: 60 }}
@@ -60,9 +60,9 @@ export default function FloatingCards() {
           transition={{ delay: 1.4, duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <GlassCard className="p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
-            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-green-500/20 rounded-full flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-emerald-500/20 rounded-full flex items-center justify-center shrink-0">
               <svg
-                className="w-4 h-4 lg:w-5 lg:h-5 text-green-600"
+                className="w-4 h-4 lg:w-5 lg:h-5 text-emerald-600"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -74,13 +74,13 @@ export default function FloatingCards() {
               </svg>
             </div>
             <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
-              Сертифицировано
+              GMP · ISO · Halal
             </span>
           </GlassCard>
         </motion.div>
       </motion.div>
 
-      {/* Right bottom card - Service quality */}
+      {/* Right bottom card - Global reach */}
       <motion.div
         className="absolute right-4 lg:right-8 bottom-[25%] translate-y-1/2 z-20"
         initial={{ opacity: 0, x: 60 }}
@@ -93,10 +93,10 @@ export default function FloatingCards() {
         >
           <GlassCard className="p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
             <div className="flex -space-x-1.5 lg:-space-x-2">
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-zinc-300 border-2 border-white" />
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-zinc-400 border-2 border-white" />
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-zinc-500 border-2 border-white" />
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-zinc-600 border-2 border-white flex items-center justify-center text-[8px] lg:text-[10px] text-white font-medium">
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-200 border-2 border-white" />
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-300 border-2 border-white" />
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-400 border-2 border-white" />
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-600 border-2 border-white flex items-center justify-center text-[8px] lg:text-[10px] text-white font-medium">
                 +50
               </div>
             </div>

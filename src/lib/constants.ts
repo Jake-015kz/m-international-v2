@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   name: "M-International",
-  url: "https://m-internation.kz",
+  url: "https://m-international.kz",
   description: "Натуральные добавки для здоровья и долголетия",
 } as const;
 

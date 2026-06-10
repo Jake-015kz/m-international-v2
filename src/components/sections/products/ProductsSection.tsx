@@ -1,4 +1,4 @@
-import { Droplets, Leaf, Shield, Heart } from "lucide-react";
+import { Droplets, Leaf, Shield, Heart, Brain, Bone, Sparkles, Coffee } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -9,7 +9,7 @@ const PRODUCTS = [
   {
     name: "MiCrystal",
     subtitle: "Здоровье глаз",
-    description: "Клеточное питание для глаз. Экстракт бузины, лютеин, астаксантин. Снимает сухость и напряжение.",
+    description: "Клеточное питание для глаз. Экстракт бузины, лютеин, астаксантин.",
     color: "#b8942e",
     icon: <Droplets className="w-4 h-4" />,
   },
@@ -23,16 +23,44 @@ const PRODUCTS = [
   {
     name: "MiMAX",
     subtitle: "Антиоксидант",
-    description: "Астаксантин — антиоксидант в 6000 раз мощнее витамина С. Замедляет старение.",
+    description: "Астаксантин — антиоксидант в 6000 раз мощнее витамина С.",
     color: "#c85020",
     icon: <Shield className="w-4 h-4" />,
   },
   {
     name: "BluMAX",
     subtitle: "Иммунитет и мозг",
-    description: "Сине-зелёные водоросли AFA с нейропептидами. 60+ минералов для иммунитета и памяти.",
+    description: "Сине-зелёные водоросли AFA с нейропептидами. 60+ минералов.",
     color: "#2e7aa8",
+    icon: <Brain className="w-4 h-4" />,
+  },
+  {
+    name: "NutriMAX",
+    subtitle: "Белковый коктейль",
+    description: "Растительный белок со спирулиной и хлореллой. Энергия и восстановление.",
+    color: "#6b8e23",
+    icon: <Sparkles className="w-4 h-4" />,
+  },
+  {
+    name: "FlexiMAX",
+    subtitle: "Здоровье суставов",
+    description: "Растительный глюкозамин, куркума, гиалуроновая кислота.",
+    color: "#8b6914",
+    icon: <Bone className="w-4 h-4" />,
+  },
+  {
+    name: "MachoMAN",
+    subtitle: "Мужская сила",
+    description: "Мака перуанская, L-аргинин, женьшень. Поддержка тестостерона.",
+    color: "#8b2252",
     icon: <Heart className="w-4 h-4" />,
+  },
+  {
+    name: "MiTOWN",
+    subtitle: "Кофе с кордицепсом",
+    description: "100% арабика с кордицепсом. Энергия и бодрость.",
+    color: "#3c2415",
+    icon: <Coffee className="w-4 h-4" />,
   },
 ];
 
@@ -61,7 +89,7 @@ export default function ProductsSection() {
         {/* Product Grid */}
         <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {PRODUCTS.map((product, i) => (
-            <ScrollReveal key={product.name} delay={i * 0.1}>
+            <ScrollReveal key={product.name} delay={i * 0.08}>
               <ProductCard
                 name={product.name}
                 subtitle={product.subtitle}

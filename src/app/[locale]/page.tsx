@@ -1,4 +1,12 @@
-import { Hero, CertificatesSection, ProductsSection } from "@/components/sections";
+import {
+  Hero,
+  ProductsSection,
+  CertificatesSection,
+  AboutSection,
+  BusinessSection,
+  CTASection,
+  Footer,
+} from "@/components/sections";
 
 export default function Home() {
   return (
@@ -6,6 +14,10 @@ export default function Home() {
       <Hero />
       <ProductsSection />
       <CertificatesSection />
+      <AboutSection />
+      <BusinessSection />
+      <CTASection />
+      <Footer />
     </main>
   );
 }

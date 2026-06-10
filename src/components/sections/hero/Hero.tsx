@@ -1,19 +1,90 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Users, Globe, CalendarDays } from "lucide-react";
 import HeroBackground from "./HeroBackground";
 import FloatingCards from "./FloatingCards";
 import CTAButton from "./CTAButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ── Animated counter hook ── */
+function useCountUp(end: number, duration: number = 2, suffix: string = "", prefix: string = "") {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: end,
+        duration,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        onUpdate: () => {
+          setCount(Math.round(obj.val));
+        },
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, [end, duration]);
+
+  return { ref, display: `${prefix}${count.toLocaleString("ru-RU")}${suffix}` };
+}
+
+/* ── Stat card with icon ── */
+function StatCard({ icon, value, label, delay }: { icon: React.ReactNode; value: string; label: string; delay: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+      className="flex flex-col items-center gap-2 group"
+    >
+      <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-100 group-hover:scale-110 transition-all duration-300">
+        {icon}
+      </div>
+      <span className="font-unbounded text-lg md:text-2xl font-bold text-[#1A1A1A] tracking-tight">
+        {value}
+      </span>
+      <span className="text-[10px] md:text-xs text-zinc-500 font-onest font-medium uppercase tracking-wider">
+        {label}
+      </span>
+    </motion.div>
+  );
+}
+
 const stats = [
-  { value: "10 000+", label: "клиентов" },
-  { value: "50+", label: "стран" },
-  { value: "15 лет", label: "опыта" },
+  {
+    icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
+    value: "10 000+",
+    label: "Клиентов",
+    delay: 0.1,
+  },
+  {
+    icon: <Globe className="w-5 h-5 md:w-6 md:h-6" />,
+    value: "50+",
+    label: "Стран",
+    delay: 0.2,
+  },
+  {
+    icon: <CalendarDays className="w-5 h-5 md:w-6 md:h-6" />,
+    value: "15 лет",
+    label: "Опыта",
+    delay: 0.3,
+  },
 ];
 
 export default function Hero() {
@@ -32,7 +103,7 @@ export default function Hero() {
             trigger: contentRef.current.parentElement,
             start: "top top",
             end: "50% top",
-          scrub: 0.5,
+            scrub: 0.5,
           },
         });
       }
@@ -75,7 +146,7 @@ export default function Hero() {
             className="mb-4 sm:mb-6"
           >
             <span className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium tracking-wide bg-black/10 text-zinc-800 border border-black/5 shadow-sm">
-              Международная компания
+              M-International
             </span>
           </motion.div>
 
@@ -116,26 +187,6 @@ export default function Hero() {
               О компании
             </CTAButton>
           </motion.div>
-
-          {/* Mobile-only: inline stats below CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="flex lg:hidden justify-center items-center gap-6 sm:gap-8 mt-10 sm:mt-12 border-t border-black/5 pt-6"
-          >
-            {stats.map((stat, i) => (
-              <div key={i} className="flex items-center gap-6 sm:gap-8">
-                {i > 0 && <div className="w-px h-8 sm:h-10 bg-black/10" />}
-                <div className="text-center">
-                  <div className="font-unbounded text-sm sm:text-base font-bold text-[#1A1A1A] tracking-wide">
-                    {stat.value}
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-zinc-500 font-onest">{stat.label}</div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </div>
 
@@ -145,40 +196,48 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.6 }}
-        className="hidden lg:block absolute bottom-0 left-0 right-0 bg-black/5 backdrop-blur-sm py-4 z-20 will-change-transform"
+        className="hidden lg:block absolute bottom-0 left-0 right-0 bg-black/5 backdrop-blur-sm py-5 z-20 will-change-transform"
       >
         <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center gap-8 md:gap-16">
+          <div className="flex justify-center items-center gap-12 md:gap-20">
             {stats.map((stat, i) => (
-              <div key={i} className="flex items-center gap-8 md:gap-16">
-                {i > 0 && <div className="w-px h-10 bg-black/10" />}
-                <div className="text-center">
-                  <div className="font-unbounded text-base md:text-lg font-bold text-[#1A1A1A] tracking-wide">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-zinc-500 font-onest">{stat.label}</div>
-                </div>
+              <div key={i} className="flex items-center gap-12 md:gap-20">
+                {i > 0 && <div className="w-px h-12 bg-black/10" />}
+                <StatCard
+                  icon={stat.icon}
+                  value={stat.value}
+                  label={stat.label}
+                  delay={stat.delay}
+                />
               </div>
             ))}
           </div>
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Mobile stats — inline, below CTA */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-24 lg:bottom-28 left-1/2 -translate-x-1/2 z-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9, duration: 0.6 }}
+        className="lg:hidden flex justify-center items-center gap-8 sm:gap-10 mt-10 sm:mt-12 border-t border-black/5 pt-6"
       >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] text-zinc-400 font-onest tracking-wider">SCROLL</span>
-          <div className="w-px h-6 bg-gradient-to-b from-zinc-400 to-transparent" />
-        </motion.div>
+        {stats.map((stat, i) => (
+          <div key={i} className="flex items-center gap-8 sm:gap-10">
+            {i > 0 && <div className="w-px h-8 sm:h-10 bg-black/10" />}
+            <div className="flex flex-col items-center gap-1.5">
+              <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
+                {stat.icon}
+              </div>
+              <span className="font-unbounded text-sm sm:text-base font-bold text-[#1A1A1A]">
+                {stat.value}
+              </span>
+              <span className="text-[9px] sm:text-[10px] text-zinc-500 font-onest uppercase tracking-wider">
+                {stat.label}
+              </span>
+            </div>
+          </div>
+        ))}
       </motion.div>
     </section>
   );
