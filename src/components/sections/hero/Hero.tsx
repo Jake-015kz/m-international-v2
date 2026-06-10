@@ -31,7 +31,7 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-4 sm:mb-6"
           >
-            <span className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium tracking-wide bg-black/5 text-zinc-600 border border-black/5">
+            <span className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium tracking-wide bg-black/10 text-zinc-800 border border-black/5 shadow-sm">
               Международная компания
             </span>
           </motion.div>
@@ -68,7 +68,7 @@ export default function Hero() {
             transition={{ delay: 0.7, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0"
           >
-            <CTAButton size="lg" className="w-full sm:w-auto">Смотреть каталог</CTAButton>
+            <CTAButton size="lg" className="w-full sm:w-auto shadow-lg shadow-emerald-900/10">Смотреть каталог</CTAButton>
             <CTAButton variant="ghost" size="lg" className="w-full sm:w-auto">
               О компании
             </CTAButton>
@@ -79,13 +79,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
-            className="flex lg:hidden justify-center items-center gap-6 sm:gap-8 mt-10 sm:mt-12"
+            className="flex lg:hidden justify-center items-center gap-6 sm:gap-8 mt-10 sm:mt-12 border-t border-black/5 pt-6"
           >
             {stats.map((stat, i) => (
               <div key={i} className="flex items-center gap-6 sm:gap-8">
-                {i > 0 && <div className="w-px h-6 sm:h-8 bg-black/10" />}
+                {i > 0 && <div className="w-px h-8 sm:h-10 bg-black/10" />}
                 <div className="text-center">
-                  <div className="font-unbounded text-xs sm:text-sm font-bold text-[#1A1A1A]">
+                  <div className="font-unbounded text-sm sm:text-base font-bold text-[#1A1A1A] tracking-wide">
                     {stat.value}
                   </div>
                   <div className="text-[10px] sm:text-xs text-zinc-500 font-onest">{stat.label}</div>
@@ -107,9 +107,9 @@ export default function Hero() {
           <div className="flex justify-center items-center gap-8 md:gap-16">
             {stats.map((stat, i) => (
               <div key={i} className="flex items-center gap-8 md:gap-16">
-                {i > 0 && <div className="w-px h-8 bg-black/10" />}
+                {i > 0 && <div className="w-px h-10 bg-black/10" />}
                 <div className="text-center">
-                  <div className="font-unbounded text-sm md:text-base font-bold text-[#1A1A1A]">
+                  <div className="font-unbounded text-base md:text-lg font-bold text-[#1A1A1A] tracking-wide">
                     {stat.value}
                   </div>
                   <div className="text-xs text-zinc-500 font-onest">{stat.label}</div>
