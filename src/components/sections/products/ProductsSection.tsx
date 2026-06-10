@@ -1,5 +1,3 @@
-"use client";
-
 import { Droplets, Leaf, Shield, Heart } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";

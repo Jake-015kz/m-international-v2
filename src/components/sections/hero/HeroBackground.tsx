@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ── Particle data (deterministic via useMemo) ── */
 interface Particle {
@@ -68,14 +72,86 @@ function Particles() {
 }
 
 export default function HeroBackground() {
+  const bgRef = useRef<HTMLDivElement>(null);
+  const orb1Ref = useRef<HTMLDivElement>(null);
+  const orb2Ref = useRef<HTMLDivElement>(null);
+  const particlesRef = useRef<HTMLDivElement>(null);
+
+  // GSAP ScrollTrigger parallax — runs once on mount
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Background image: slow parallax (moves up as user scrolls)
+      if (bgRef.current) {
+        gsap.to(bgRef.current, {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: bgRef.current.parentElement,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        });
+      }
+
+      // Orb 1: medium parallax (opposite direction)
+      if (orb1Ref.current) {
+        gsap.to(orb1Ref.current, {
+          yPercent: -20,
+          xPercent: 10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: orb1Ref.current.parentElement,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      }
+
+      // Orb 2: fast parallax
+      if (orb2Ref.current) {
+        gsap.to(orb2Ref.current, {
+          yPercent: -30,
+          xPercent: -15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: orb2Ref.current.parentElement,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      // Particles: subtle parallax layer
+      if (particlesRef.current) {
+        gsap.to(particlesRef.current, {
+          yPercent: 25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: particlesRef.current.parentElement,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.5,
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div className="absolute inset-0">
-      {/* Background image — crisp, higher opacity */}
+      {/* Background image — parallax layer */}
       <motion.div
+        ref={bgRef}
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute inset-0"
+        className="absolute inset-0 will-change-transform"
+        style={{ transform: "translate3d(0,0,0)" }}
       >
         <Image
           src="/media/hero-bg.png"
@@ -98,9 +174,10 @@ export default function HeroBackground() {
         }}
       />
 
-      {/* Animated glow orbs */}
+      {/* Animated glow orb 1 — parallax layer */}
       <motion.div
-        className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full z-[1]"
+        ref={orb1Ref}
+        className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full z-[1] will-change-transform"
         style={{
           background: "radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)",
           left: "15%",
@@ -114,8 +191,11 @@ export default function HeroBackground() {
         }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
+
+      {/* Animated glow orb 2 — parallax layer */}
       <motion.div
-        className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full z-[1]"
+        ref={orb2Ref}
+        className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full z-[1] will-change-transform"
         style={{
           background: "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)",
           right: "10%",
@@ -144,8 +224,10 @@ export default function HeroBackground() {
         }}
       />
 
-      {/* Floating particles */}
-      <Particles />
+      {/* Floating particles — parallax layer */}
+      <div ref={particlesRef} className="will-change-transform">
+        <Particles />
+      </div>
 
       {/* Noise overlay */}
       <div className="absolute inset-0 noise-overlay" />

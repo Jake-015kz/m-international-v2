@@ -1,9 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroBackground from "./HeroBackground";
 import FloatingCards from "./FloatingCards";
 import CTAButton from "./CTAButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
   { value: "10 000+", label: "клиентов" },
@@ -12,6 +17,44 @@ const stats = [
 ];
 
 export default function Hero() {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  // Parallax: content fades & moves up faster than background
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (contentRef.current) {
+        gsap.to(contentRef.current, {
+          yPercent: -10,
+          opacity: 0.3,
+          ease: "none",
+          scrollTrigger: {
+            trigger: contentRef.current.parentElement,
+            start: "top top",
+            end: "50% top",
+          scrub: 0.5,
+          },
+        });
+      }
+
+      if (statsRef.current) {
+        gsap.to(statsRef.current, {
+          y: 20,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: statsRef.current.parentElement,
+            start: "top top",
+            end: "40% top",
+            scrub: 0.5,
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className="relative min-h-[100dvh] bg-[#FBFBFB] overflow-hidden">
       <HeroBackground />
@@ -21,8 +64,8 @@ export default function Hero() {
         <FloatingCards />
       </div>
 
-      {/* Center content */}
-      <div className="relative z-10 container mx-auto px-4 min-h-[100dvh] flex flex-col justify-center py-20 sm:py-24 lg:py-0">
+      {/* Center content — parallax layer (moves faster than bg) */}
+      <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] flex flex-col justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
         <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
           {/* Label */}
           <motion.div
@@ -96,12 +139,13 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom statistics panel — desktop only */}
+      {/* Bottom statistics panel — desktop only, parallax fade */}
       <motion.div
+        ref={statsRef}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.6 }}
-        className="hidden lg:block absolute bottom-0 left-0 right-0 bg-black/5 backdrop-blur-sm py-4 z-20"
+        className="hidden lg:block absolute bottom-0 left-0 right-0 bg-black/5 backdrop-blur-sm py-4 z-20 will-change-transform"
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center gap-8 md:gap-16">
