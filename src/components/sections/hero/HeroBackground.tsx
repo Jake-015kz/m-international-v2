@@ -16,14 +16,14 @@ export default function HeroBackground() {
           src="/media/hero-bg.png"
           alt="Nature background"
           fill
-          className="object-cover opacity-40"
+          className="object-cover opacity-30 sm:opacity-40"
           priority
         />
       </motion.div>
 
-      {/* Radial white glow behind center text */}
+      {/* Radial white glow behind center text — smaller on mobile */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[500px] h-[500px] bg-white/30 rounded-full blur-3xl" />
+        <div className="w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-white/30 rounded-full blur-3xl" />
       </div>
 
       {/* Noise overlay */}

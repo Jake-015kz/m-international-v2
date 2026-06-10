@@ -8,6 +8,18 @@ export const metadata: Metadata = {
   title: "M-International — Интеллект природы для вашего долголетия",
   description:
     "Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. Продукция представлена в 50+ странах.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    viewportFit: "cover",
+  },
+  themeColor: "#FBFBFB",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "M-International",
+  },
 };
 
 export default async function RootLayout({
