@@ -114,7 +114,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-surface-base/80 backdrop-blur-md border-b border-border-subtle/50"
         role="navigation"
         aria-label="Основная навигация"
       >

@@ -217,16 +217,14 @@ const ProductsSection = memo(function ProductsSection() {
             </div>
 
             {/* Dots indicator */}
-            <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="flex items-center justify-center gap-1.5 mt-4">
               {products.map((_, i) => (
                 <button
                   key={i}
-                  className="w-2 h-2 rounded-full bg-border-default transition-all duration-300 hover:bg-accent-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  className="w-1.5 h-1.5 rounded-full bg-text-tertiary/30 transition-all duration-300 hover:bg-accent-500 min-h-[32px] min-w-[32px] flex items-center justify-center"
                   aria-label={`Перейти к слайду ${i + 1}`}
                   onClick={() => emblaApi?.scrollTo(i)}
-                >
-                  <span className="w-2 h-2 rounded-full bg-text-tertiary/30 transition-all duration-300" />
-                </button>
+                />
               ))}
             </div>
           </div>

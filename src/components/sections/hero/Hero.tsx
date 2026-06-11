@@ -48,7 +48,7 @@ const Hero = memo(function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100dvh] mobile-full-height bg-surface-base overflow-hidden">
+    <section className="relative mobile-full-height bg-surface-base overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0">
         <video
@@ -75,7 +75,7 @@ const Hero = memo(function Hero() {
       />
 
       {/* Center content */}
-      <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] mobile-full-height flex flex-col items-center justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
+      <div ref={contentRef} className="relative z-10 container mx-auto px-4 mobile-full-height flex flex-col items-center justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
 
           {/* Badge */}
@@ -94,10 +94,9 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="font-unbounded text-[1.55rem] sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-normal mb-3 px-2 sm:px-0"
+            className="font-unbounded text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-normal mb-3 px-2 sm:px-0"
           >
-            <span className="text-white font-black">{t("title")}</span>{" "}
-            <span className="font-extralight text-white/70">{t("subtitle")}</span>
+            <span className="text-white font-black">{t("title")}</span>
           </motion.h1>
 
           {/* Subtitle */}

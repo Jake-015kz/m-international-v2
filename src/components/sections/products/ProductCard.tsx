@@ -116,14 +116,17 @@ const ProductCard = memo(function ProductCard({
         </h3>
 
         {/* Description */}
-        <p className={`text-text-secondary font-onest font-light leading-relaxed mb-4 line-clamp-3 flex-1 ${featured ? "text-sm md:text-base" : "text-[11px] md:text-sm"}`}>
+        <p className={`text-text-secondary font-onest font-light leading-relaxed line-clamp-2 ${featured ? "text-sm md:text-base" : "text-[11px] md:text-sm"}`}>
           {description}
         </p>
 
-        {/* Button instead of link */}
+        {/* Spacer pushes button to bottom */}
+        <div className="flex-1" />
+
+        {/* Button — always at bottom */}
         <button
           type="button"
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-unbounded font-bold transition-all duration-300 hover:-translate-y-0.5 min-h-[44px]"
+          className="mt-3 w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-unbounded font-bold transition-all duration-300 hover:-translate-y-0.5 min-h-[44px]"
           style={{
             background: `${color}15`,
             color: color,

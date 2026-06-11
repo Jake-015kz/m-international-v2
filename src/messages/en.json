@@ -28,7 +28,7 @@
   },
   "hero": {
     "label": "International company",
-    "title": "Nature's Intelligence for Your Health",
+    "title": "Health. Strength. Longevity.",
     "lead": "Certified natural supplements by M-International.",
     "subtitle": "Immunity. Detox. Longevity. 50+ countries.",
     "cta": "View catalog",
@@ -333,8 +333,17 @@
     "mission": "Mission",
     "vision": "Vision",
     "values": "Values",
-    "visionText": "Become the world's No.1 company through innovative products and a rewards system.",
-    "valuesText": "Quality, honesty, innovation and care for people."
+    "visionText": "Become the world's No.1 company through innovative products and a rewards system built around people.",
+    "valuesText": "Quality, honesty, innovation and care for people.",
+    "hero": {
+      "stat": {
+        "countries": "50+ countries",
+        "customers": "10K+ customers"
+      }
+    },
+    "certificates": {
+      "title": "6 certificates"
+    }
   },
   "businessPage": {
     "title": "Business with M-International",
