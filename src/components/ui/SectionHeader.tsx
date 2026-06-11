@@ -40,8 +40,6 @@ export default function SectionHeader({
           {description}
         </p>
       )}
-
-      <div className="mt-4 mx-auto h-px w-12 rounded-full bg-gradient-to-r from-transparent via-zinc-300 to-transparent" />
     </div>
   );
 }

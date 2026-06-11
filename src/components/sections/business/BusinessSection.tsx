@@ -3,7 +3,6 @@ import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
-import GlassCard from "@/components/ui/GlassCard";
 
 const rewards = [
   {
@@ -39,9 +38,9 @@ const rewards = [
 ];
 
 const steps = [
-  { num: "01", title: "Регистрация", desc: "Доступ к каталогу и бизнес-инструментам." },
-  { num: "02", title: "Обучение", desc: "Бесплатная программа: продукты, продажи, команда." },
-  { num: "03", title: "Доход", desc: "Зарабатывайте с первого дня." },
+  { title: "Регистрация", desc: "Доступ к каталогу и бизнес-инструментам." },
+  { title: "Обучение", desc: "Бесплатная программа: продукты, продажи, команда." },
+  { title: "Доход", desc: "Зарабатывайте с первого дня." },
 ];
 
 export default function BusinessSection() {
@@ -52,25 +51,17 @@ export default function BusinessSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            badge={
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/5 bg-white/60 backdrop-blur-sm">
-                <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-[9px] md:text-[10px] font-medium uppercase tracking-wider text-emerald-700 font-onest">
-                  Business
-                </span>
-              </span>
-            }
             title="Бизнес с M-International"
             description="Гибридная система вознаграждений. Высокий доход с первого дня."
           />
         </ScrollReveal>
 
-        {/* Rewards grid */}
-        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {/* Rewards — horizontal scroll on mobile, grid on desktop */}
+        <div className="mt-8 md:mt-12 flex gap-4 md:gap-5 overflow-x-auto pb-4 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 scrollbar-hide">
           {rewards.map((r, i) => (
-            <ScrollReveal key={r.title} delay={i * 0.08}>
-              <GlassCard className="p-5 md:p-6 h-full hover:border-emerald-200/50 transition-colors duration-300">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-3 md:mb-4">
+            <ScrollReveal key={r.title} delay={i * 0.06}>
+              <div className="flex-shrink-0 w-[280px] md:w-auto p-5 md:p-6 rounded-2xl bg-white border border-zinc-200/60 shadow-sm hover:border-zinc-300/60 transition-colors duration-300">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-3 md:mb-4">
                   {r.icon}
                 </div>
                 <h3 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mb-1.5">
@@ -79,31 +70,33 @@ export default function BusinessSection() {
                 <p className="text-xs md:text-sm text-zinc-500 font-onest font-light leading-relaxed">
                   {r.text}
                 </p>
-              </GlassCard>
+              </div>
             </ScrollReveal>
           ))}
         </div>
 
-        {/* Steps */}
+        {/* Steps — clean list instead of numbered cards */}
         <div className="mt-12 md:mt-16">
           <ScrollReveal>
             <h3 className="font-unbounded font-bold text-lg md:text-xl text-[#1A1A1A] text-center mb-6 md:mb-8">
               Как начать
             </h3>
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="max-w-xl mx-auto">
             {steps.map((s, i) => (
-              <ScrollReveal key={s.num} delay={i * 0.12}>
-                <div className="relative text-center p-6 md:p-8 rounded-3xl bg-white/60 backdrop-blur-sm border border-black/5 hover:border-emerald-200/50 transition-colors duration-300">
-                  <span className="font-unbounded text-3xl md:text-4xl font-black text-emerald-100">
-                    {s.num}
-                  </span>
-                  <h4 className="font-unbounded font-bold text-base md:text-lg text-[#1A1A1A] mt-2 mb-1.5">
-                    {s.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-zinc-500 font-onest font-light">
-                    {s.desc}
-                  </p>
+              <ScrollReveal key={s.title} delay={i * 0.1}>
+                <div className="flex items-start gap-4 mb-6 last:mb-0">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="font-unbounded text-xs font-bold text-emerald-600">{i + 1}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mb-0.5">
+                      {s.title}
+                    </h4>
+                    <p className="text-xs md:text-sm text-zinc-500 font-onest font-light">
+                      {s.desc}
+                    </p>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}

@@ -3,7 +3,6 @@ import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
-import GlassCard from "@/components/ui/GlassCard";
 
 const values = [
   {
@@ -44,38 +43,28 @@ export default function AboutSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            badge={
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/5 bg-white/60 backdrop-blur-sm">
-                <Gem className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-[9px] md:text-[10px] font-medium uppercase tracking-wider text-emerald-700 font-onest">
-                  About Us
-                </span>
-              </span>
-            }
             title="О компании M-International"
             description="Международный производитель натуральных БАДов. Наука + природа = здоровье."
           />
         </ScrollReveal>
 
-        {/* Values grid */}
-        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+        {/* Values — alternating layout instead of identical grid */}
+        <div className="mt-8 md:mt-12 space-y-4 md:space-y-5">
           {values.map((v, i) => (
-            <ScrollReveal key={v.title} delay={i * 0.1}>
-              <GlassCard className="p-5 md:p-7 h-full hover:border-emerald-200/50 transition-colors duration-300">
-                <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-                    {v.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mb-1.5">
-                      {v.title}
-                    </h3>
-                    <p className="text-xs md:text-sm text-zinc-500 font-onest font-light leading-relaxed">
-                      {v.text}
-                    </p>
-                  </div>
+            <ScrollReveal key={v.title} delay={i * 0.08}>
+              <div className={`flex items-start gap-4 md:gap-6 p-5 md:p-7 rounded-2xl bg-white border border-zinc-200/60 shadow-sm ${i % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""}`}>
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                  {v.icon}
                 </div>
-              </GlassCard>
+                <div>
+                  <h3 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mb-1.5">
+                    {v.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-zinc-500 font-onest font-light leading-relaxed">
+                    {v.text}
+                  </p>
+                </div>
+              </div>
             </ScrollReveal>
           ))}
         </div>
@@ -100,7 +89,7 @@ export default function AboutSection() {
 
                     {/* Content */}
                     <div className={`ml-10 md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
-                      <span className="font-unbounded text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                      <span className="font-unbounded text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
                         {item.year}
                       </span>
                       <h4 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mt-1.5 mb-0.5">

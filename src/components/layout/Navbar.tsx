@@ -110,7 +110,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
             <div className="flex items-center gap-3">
               <Link
                 href="#contact"
-                className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-xs font-medium bg-[#1A1A1A] text-white hover:bg-zinc-800 transition-colors duration-200"
+                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-xs font-medium bg-[#1A1A1A] text-white hover:bg-zinc-800 transition-colors duration-200"
               >
                 Связаться
               </Link>

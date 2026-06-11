@@ -110,7 +110,7 @@ export default function Footer() {
                 placeholder="Ваш email"
                 className="flex-1 min-w-0 px-3 py-2 text-xs bg-white/5 border border-white/10 rounded-full text-white placeholder:text-white/20 font-onest focus:outline-none focus:border-emerald-500/50 transition-colors"
               />
-              <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-unbounded font-bold rounded-full transition-colors duration-300 shrink-0">
+              <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-unbounded font-bold rounded-lg transition-colors duration-300 shrink-0">
                 OK
               </button>
             </div>

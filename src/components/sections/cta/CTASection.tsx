@@ -10,7 +10,7 @@ export default function CTASection() {
 
       <Container className="relative z-10">
         <ScrollReveal>
-          <div className="relative rounded-3xl bg-gradient-to-br from-[#1a2e1a] to-[#0d1f0d] p-8 md:p-14 text-center overflow-hidden">
+          <div className="relative rounded-2xl bg-gradient-to-br from-[#1a2e1a] to-[#0d1f0d] p-8 md:p-14 text-center overflow-hidden">
             {/* Decorative orbs */}
             <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
@@ -25,14 +25,14 @@ export default function CTASection() {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <a
                   href="#contacts"
-                  className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-500 hover:bg-emerald-400 text-white font-unbounded font-bold text-sm rounded-full transition-colors duration-300 group"
+                  className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-500 hover:bg-emerald-400 text-white font-unbounded font-bold text-sm rounded-xl transition-colors duration-300 group"
                 >
                   Связаться
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </a>
                 <a
                   href="#products"
-                  className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-white/10 hover:bg-white/15 text-white font-unbounded font-bold text-sm rounded-full border border-white/10 transition-colors duration-300"
+                  className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-white/10 hover:bg-white/15 text-white font-unbounded font-bold text-sm rounded-xl border border-white/10 transition-colors duration-300"
                 >
                   Каталог
                 </a>

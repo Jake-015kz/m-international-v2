@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import GlassCard from "@/components/ui/GlassCard";
 
 export default function FloatingCards() {
   return (
@@ -17,8 +16,8 @@ export default function FloatingCards() {
           animate={{ y: [0, -12, 0] }}
           transition={{ delay: 1.2, duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <GlassCard className="p-4 lg:p-6">
-            <div className="relative aspect-video rounded-2xl lg:rounded-3xl overflow-hidden bg-black/10 mb-3">
+          <div className="rounded-2xl bg-white border border-zinc-200/60 shadow-lg p-4 lg:p-6">
+            <div className="relative aspect-video rounded-xl lg:rounded-2xl overflow-hidden bg-black/10 mb-3">
               <video
                 src="/media/hero-bg.mp4"
                 className="w-full h-full object-cover"
@@ -44,7 +43,7 @@ export default function FloatingCards() {
             <p className="text-center text-xs lg:text-sm font-light text-zinc-600">
               Натуральные формулы M-International
             </p>
-          </GlassCard>
+          </div>
         </motion.div>
       </motion.div>
 
@@ -59,8 +58,8 @@ export default function FloatingCards() {
           animate={{ y: [0, -8, 0] }}
           transition={{ delay: 1.4, duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <GlassCard className="p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
-            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-emerald-500/20 rounded-full flex items-center justify-center shrink-0">
+          <div className="rounded-2xl bg-white border border-zinc-200/60 shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center shrink-0">
               <svg
                 className="w-4 h-4 lg:w-5 lg:h-5 text-emerald-600"
                 viewBox="0 0 24 24"
@@ -76,7 +75,7 @@ export default function FloatingCards() {
             <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
               GMP · ISO · Halal
             </span>
-          </GlassCard>
+          </div>
         </motion.div>
       </motion.div>
 
@@ -91,7 +90,7 @@ export default function FloatingCards() {
           animate={{ y: [0, -10, 0] }}
           transition={{ delay: 1.6, duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <GlassCard className="p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
+          <div className="rounded-2xl bg-white border border-zinc-200/60 shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
             <div className="flex -space-x-1.5 lg:-space-x-2">
               <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-200 border-2 border-white" />
               <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-300 border-2 border-white" />
@@ -103,7 +102,7 @@ export default function FloatingCards() {
             <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
               50+ стран
             </span>
-          </GlassCard>
+          </div>
         </motion.div>
       </motion.div>
     </>

@@ -34,14 +34,6 @@ export default function CertificatesSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            badge={
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/5 bg-white/60 backdrop-blur-sm">
-                <Shield className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-[9px] md:text-[10px] font-medium uppercase tracking-wider text-emerald-700 font-onest">
-                  Certified Quality
-                </span>
-              </span>
-            }
             title="Международные сертификаты"
             description="Продукция M-International сертифицирована по мировым стандартам"
           />

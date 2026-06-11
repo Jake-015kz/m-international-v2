@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FBFBFB;
+  --background: #FAFAFA;
   --foreground: #1A1A1A;
+  --accent-primary: #10b981;
+  --accent-secondary: #d4a853;
 }
 
 @theme inline {
@@ -69,6 +71,15 @@ html {
   text-size-adjust: 100%;
 }
 
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Reduced motion (MANDATORY) ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -99,7 +110,7 @@ html {
     radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
-    var(--background, #FBFBFB);
+    var(--background, #FAFAFA);
 }
 
 /* ── Dot grid utility ── */
