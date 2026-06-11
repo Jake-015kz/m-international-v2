@@ -233,6 +233,40 @@ html {
   transform: translate3d(0, 0, 0);
 }
 
+/* ── Mobile-first typography scale ── */
+@media (max-width: 639px) {
+  h1 {
+    font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+    line-height: 1.15 !important;
+  }
+  h2 {
+    font-size: clamp(1.25rem, 5vw, 2rem) !important;
+    line-height: 1.2 !important;
+  }
+  h3 {
+    font-size: clamp(1rem, 4vw, 1.5rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Touch-friendly tap targets */
+  a, button, [role="button"], input, textarea, select {
+    min-height: 44px;
+  }
+
+  /* Smaller padding on mobile sections */
+  .section-mobile-py {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
 /* ── Mobile GPU optimizations ── */
 @media (max-width: 767px) {
   /* Kill expensive blur on small screens */
@@ -245,6 +279,25 @@ html {
   .animate-marquee,
   .animate-marquee-reverse {
     animation-duration: calc(var(--marquee-duration, 30s) * 1.5) !important;
+  }
+
+  /* Disable backdrop-filter on low-end mobile */
+  .mobile-no-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Fix 100vh on mobile Safari */
+  .mobile-full-height {
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* ── Tablet adjustments ── */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tablet-col-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 

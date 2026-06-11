@@ -99,7 +99,7 @@ const ProductsSection = memo(function ProductsSection() {
         </ScrollReveal>
 
         {/* Product Grid */}
-        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="mt-6 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
           {PRODUCTS.map((product, i) => (
             <ScrollReveal key={product.name} delay={i * 0.06}>
               <ProductCard
@@ -118,12 +118,12 @@ const ProductsSection = memo(function ProductsSection() {
 
         {/* CTA to full catalog */}
         <ScrollReveal delay={0.4}>
-          <div className="mt-8 md:mt-12 text-center">
-            <a href="/catalog" className="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20">
+          <div className="mt-6 md:mt-12 text-center">
+            <a href="/catalog" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 min-h-[44px]">
               Смотреть весь каталог
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <p className="mt-4 text-xs md:text-sm text-text-tertiary font-onest font-light">
+            <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-text-tertiary font-onest font-light">
               Все продукты сертифицированы • GMP стандарт • 100% натуральные компоненты
             </p>
           </div>

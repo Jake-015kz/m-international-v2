@@ -84,7 +84,7 @@ export default function CatalogPage() {
   return (
     <main className="pt-14 md:pt-16">
       {/* Hero Banner */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      <section className="relative py-10 md:py-24 overflow-hidden">
         <div className="absolute inset-0">
           <img src="/images/sections/catalog-hero.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-surface-base" />
@@ -92,11 +92,11 @@ export default function CatalogPage() {
         <Container className="relative z-10">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-3 mobile-no-backdrop">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-xs font-medium text-white/80">Премиум качество</span>
+                <span className="text-[11px] font-medium text-white/80">Премиум качество</span>
               </div>
-              <h1 className="font-unbounded font-bold text-2xl sm:text-3xl md:text-4xl text-white mb-3">Каталог продукции</h1>
+              <h1 className="font-unbounded font-bold text-[1.65rem] sm:text-3xl md:text-4xl text-white mb-2">Каталог продукции</h1>
               <p className="text-sm md:text-base text-white/60 font-onest">Натуральные добавки для здоровья и долголетия. Сертифицированная продукция.</p>
             </div>
           </ScrollReveal>
@@ -104,15 +104,15 @@ export default function CatalogPage() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12 md:py-16">
+      <section className="py-8 md:py-16">
         <Container>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
             {PRODUCTS.map((product, i) => (
               <ScrollReveal key={product.name} delay={i * 0.05}>
                 <div className="group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
                   {/* Image */}
                   <div
-                    className="relative h-44 sm:h-48 overflow-hidden"
+                    className="relative h-36 sm:h-48 overflow-hidden"
                     style={{ background: `linear-gradient(135deg, ${product.color}12 0%, ${product.color}20 100%)` }}
                   >
                     <img src={product.image} alt={product.name} className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -126,19 +126,19 @@ export default function CatalogPage() {
                   </div>
 
                   {/* Content */}
-                  <div className="flex flex-col flex-1 p-5">
+                  <div className="flex flex-col flex-1 p-4 md:p-5">
                     <span className="text-[10px] font-medium font-onest uppercase tracking-wider mb-1" style={{ color: product.color }}>{product.subtitle}</span>
-                    <h3 className="font-onest font-bold text-base text-text-primary mb-2">{product.name}</h3>
-                    <p className="text-xs text-text-secondary font-onest font-light leading-relaxed mb-3 line-clamp-2 flex-1">{product.description}</p>
+                    <h3 className="font-onest font-bold text-sm md:text-base text-text-primary mb-1.5">{product.name}</h3>
+                    <p className="text-[11px] md:text-xs text-text-secondary font-onest font-light leading-relaxed mb-2 line-clamp-2 flex-1">{product.description}</p>
 
                     {/* Benefits */}
-                    <div className="flex flex-wrap gap-1.5 mb-3">
+                    <div className="flex flex-wrap gap-1 mb-2">
                       {product.benefits.map((b) => (
-                        <span key={b} className="px-2 py-0.5 rounded-lg bg-surface-sunken text-[10px] text-text-secondary font-onest">{b}</span>
+                        <span key={b} className="px-2 py-0.5 rounded-lg bg-surface-sunken text-[9px] md:text-[10px] text-text-secondary font-onest">{b}</span>
                       ))}
                     </div>
 
-                    <div className="inline-flex items-center gap-1.5 text-xs font-medium transition-all duration-300 group-hover:gap-3">
+                    <div className="inline-flex items-center gap-1.5 text-xs font-medium transition-all duration-300 group-hover:gap-3 min-h-[44px]">
                       <span style={{ color: product.color }} className="font-onest font-bold">Подробнее</span>
                       <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" style={{ color: product.color }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </div>
@@ -151,17 +151,17 @@ export default function CatalogPage() {
           </div>
 
           {/* Features */}
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
             {[
               { icon: <Leaf className="w-5 h-5" />, title: "100% натурально", desc: "Только натуральные ингредиенты" },
               { icon: <Shield className="w-5 h-5" />, title: "Сертифицировано", desc: "GMP, ISO, Halal, FDA" },
               { icon: <Award className="w-5 h-5" />, title: "Гарантия качества", desc: "Контроль на каждом этапе" },
             ].map((f) => (
-              <div key={f.title} className="flex items-center gap-3 p-4 rounded-2xl bg-surface-elevated border border-border-subtle">
-                <div className="w-10 h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center text-accent-600 shrink-0">{f.icon}</div>
+              <div key={f.title} className="flex items-center gap-3 p-3 md:p-4 rounded-2xl bg-surface-elevated border border-border-subtle">
+                <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center text-accent-600 shrink-0">{f.icon}</div>
                 <div>
-                  <div className="font-onest font-bold text-sm text-text-primary">{f.title}</div>
-                  <div className="text-xs text-text-secondary font-onest">{f.desc}</div>
+                  <div className="font-onest font-bold text-xs md:text-sm text-text-primary">{f.title}</div>
+                  <div className="text-[11px] md:text-xs text-text-secondary font-onest">{f.desc}</div>
                 </div>
               </div>
             ))}

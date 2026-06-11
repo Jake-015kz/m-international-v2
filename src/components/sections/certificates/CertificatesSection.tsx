@@ -64,12 +64,12 @@ const CertificatesSection = memo(function CertificatesSection() {
   const row2 = CERTIFICATES.slice(mid);
 
   return (
-    <section id="certificates" className="relative py-16 md:py-24 overflow-hidden bg-surface-base">
+    <section id="certificates" className="relative py-12 md:py-24 overflow-hidden bg-surface-base">
       <BackgroundDecorations variant="section" />
 
       {/* Side fades for marquee */}
-      <div className="absolute top-0 left-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-surface-base to-transparent z-[5] pointer-events-none" />
-      <div className="absolute top-0 right-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-surface-base to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 left-0 bottom-0 w-6 md:w-24 bg-gradient-to-r from-surface-base to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 right-0 bottom-0 w-6 md:w-24 bg-gradient-to-l from-surface-base to-transparent z-[5] pointer-events-none" />
 
       <Container className="relative z-10">
         <ScrollReveal>
@@ -80,7 +80,7 @@ const CertificatesSection = memo(function CertificatesSection() {
         </ScrollReveal>
 
         {/* Marquee rows with real certificate images */}
-        <div className="mt-8 md:mt-12 space-y-3 md:space-y-4">
+        <div className="mt-6 md:mt-12 space-y-2 md:space-y-4">
           <MarqueeRow items={row1} direction="left" duration={35} />
           {row2.length > 0 && (
             <MarqueeRow items={row2} direction="right" duration={40} />
@@ -89,10 +89,10 @@ const CertificatesSection = memo(function CertificatesSection() {
 
         {/* Bottom trust line */}
         <ScrollReveal delay={0.3}>
-          <div className="mt-8 text-center">
+          <div className="mt-6 md:mt-8 text-center">
             <div className="inline-flex items-center gap-2 text-text-tertiary">
               <BadgeCheck className="w-3.5 h-3.5" />
-              <p className="text-[10px] uppercase tracking-wider font-onest">
+              <p className="text-[9px] md:text-[10px] uppercase tracking-wider font-onest">
                 Проверенное качество · Безопасность · Эффективность
               </p>
               <BadgeCheck className="w-3.5 h-3.5" />

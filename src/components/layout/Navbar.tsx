@@ -66,9 +66,25 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
     return () => ctx.revert();
   }, []);
 
+  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [isMobileOpen]);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === `/${locale}` || pathname === "/";
@@ -158,16 +174,16 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
 
       {/* Mobile menu overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-surface-base/95 backdrop-blur-xl transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-surface-base/95 backdrop-blur-xl transition-all duration-500 md:hidden mobile-no-backdrop ${
           isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
+        <div className="flex flex-col items-center justify-center h-full gap-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
           {NAV_LINKS.map((link, i) => (
             <Link
               key={link.href}
               href={link.href === "/" ? `/${locale}` : `/${locale}${link.href}`}
-              className={`font-unbounded text-2xl font-bold transition-all duration-500 ${
+              className={`font-unbounded text-xl font-bold transition-all duration-500 py-2 ${
                 isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
               style={{ transitionDelay: isMobileOpen ? `${i * 80}ms` : "0ms" }}
@@ -175,9 +191,27 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
               {link.label}
             </Link>
           ))}
+
+          {/* Language switcher in mobile menu */}
+          <div className="flex items-center gap-2 mt-2">
+            {LOCALES.map((loc) => (
+              <Link
+                key={loc}
+                href={`/${loc}`}
+                className={`px-4 py-2 text-sm font-onest font-medium rounded-xl transition-colors duration-200 ${
+                  loc === locale
+                    ? "text-text-primary bg-surface-sunken"
+                    : "text-text-tertiary hover:text-text-secondary"
+                }`}
+              >
+                {LOCALE_LABELS[loc]}
+              </Link>
+            ))}
+          </div>
+
           <Link
             href={`/${locale}/contacts`}
-            className={`mt-4 inline-flex items-center px-8 py-3.5 rounded-2xl text-sm font-medium bg-emerald-600 text-white transition-all duration-500 ${
+            className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-2xl text-sm font-medium bg-emerald-600 text-white transition-all duration-500 ${
               isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms" }}

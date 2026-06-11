@@ -36,7 +36,7 @@ const ProductCard = memo(function ProductCard({
     >
       {/* Product image area */}
       <div
-        className="relative z-10 h-32 sm:h-40 md:h-44 overflow-hidden"
+        className="relative z-10 h-28 sm:h-40 md:h-44 overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${color}18 0%, ${color}30 50%, ${color}18 100%)`,
         }}
@@ -94,27 +94,27 @@ const ProductCard = memo(function ProductCard({
       </div>
 
       {/* Content */}
-      <div className={`relative z-10 flex flex-col flex-1 ${featured ? "p-6 md:p-8" : "p-5 md:p-6"}`}>
+      <div className={`relative z-10 flex flex-col flex-1 ${featured ? "p-5 md:p-8" : "p-4 md:p-6"}`}>
         {/* Subtitle */}
         <span
-          className="text-[10px] md:text-xs font-medium font-onest uppercase tracking-wider mb-2"
+          className="text-[10px] md:text-xs font-medium font-onest uppercase tracking-wider mb-1.5"
           style={{ color }}
         >
           {subtitle}
         </span>
 
         {/* Name */}
-        <h3 className={`font-onest font-bold leading-[1.2] tracking-normal text-text-primary mb-2 ${featured ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}>
+        <h3 className={`font-onest font-bold leading-[1.2] tracking-normal text-text-primary mb-1.5 ${featured ? "text-lg md:text-2xl" : "text-sm md:text-lg"}`}>
           {name}
         </h3>
 
         {/* Description */}
-        <p className={`text-text-secondary font-onest font-light leading-relaxed mb-5 line-clamp-3 flex-1 ${featured ? "text-sm md:text-base" : "text-xs md:text-sm"}`}>
+        <p className={`text-text-secondary font-onest font-light leading-relaxed mb-4 line-clamp-3 flex-1 ${featured ? "text-sm md:text-base" : "text-[11px] md:text-sm"}`}>
           {description}
         </p>
 
         {/* Link */}
-        <div className="inline-flex items-center gap-1.5 text-xs md:text-sm font-medium transition-all duration-300 group-hover:gap-3">
+        <div className="inline-flex items-center gap-1.5 text-xs md:text-sm font-medium transition-all duration-300 group-hover:gap-3 min-h-[44px]">
           <span style={{ color }} className="font-onest font-bold">Подробнее</span>
           <ArrowRight
             className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"

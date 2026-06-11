@@ -17,7 +17,7 @@ const rewards = [
 
 const BusinessSection = memo(function BusinessSection() {
   return (
-    <section id="business" className="relative py-16 md:py-24 overflow-hidden bg-surface-base">
+    <section id="business" className="relative py-12 md:py-24 overflow-hidden bg-surface-base">
       {/* Background image with overlay */}
       <div className="absolute inset-0">
         <img src="/images/sections/business-team.webp" alt="" className="w-full h-full object-cover opacity-5" loading="lazy" />
@@ -33,17 +33,17 @@ const BusinessSection = memo(function BusinessSection() {
         </ScrollReveal>
 
         {/* Rewards grid */}
-        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="mt-6 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
           {rewards.map((r, i) => (
             <ScrollReveal key={r.title} delay={i * 0.06}>
-              <div className={`group relative p-5 md:p-6 rounded-2xl bg-gradient-to-br ${r.gradient} border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 overflow-hidden`}>
+              <div className={`group relative p-4 md:p-6 rounded-2xl bg-gradient-to-br ${r.gradient} border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 overflow-hidden`}>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/5 to-transparent" />
                 <div className="relative z-10">
-                  <div className={`w-11 h-11 md:w-12 md:h-12 rounded-2xl ${r.iconBg} border flex items-center justify-center mb-3 md:mb-4 ${r.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${r.iconBg} border flex items-center justify-center mb-3 md:mb-4 ${r.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                     {r.icon}
                   </div>
                   <h3 className="font-onest font-bold text-sm md:text-base text-text-primary mb-1.5">{r.title}</h3>
-                  <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">{r.text}</p>
+                  <p className="text-[11px] md:text-sm text-text-secondary font-onest font-light leading-relaxed">{r.text}</p>
                 </div>
               </div>
             </ScrollReveal>

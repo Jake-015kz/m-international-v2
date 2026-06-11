@@ -99,7 +99,7 @@ const Hero = memo(function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100dvh] bg-surface-base overflow-hidden">
+    <section className="relative min-h-[100dvh] mobile-full-height bg-surface-base overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0">
         <video
@@ -128,7 +128,7 @@ const Hero = memo(function Hero() {
       />
 
       {/* Center content */}
-      <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] flex flex-col justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
+      <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] mobile-full-height flex flex-col justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
         <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
 
           {/* Badge */}
@@ -136,10 +136,10 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-5"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-4 mobile-no-backdrop"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-onest font-medium text-white/80">Натуральные БАДы премиум класса</span>
+            <span className="text-[11px] font-onest font-medium text-white/80">Натуральные БАДы премиум класса</span>
           </motion.div>
 
           {/* Title — compact for CIS */}
@@ -147,7 +147,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="font-unbounded text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-normal mb-4"
+            className="font-unbounded text-[1.65rem] sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-normal mb-3"
           >
             <span className="text-white font-black">Сила природы</span>{" "}
             <span className="font-extralight text-white/70">в каждой капсуле</span>
@@ -158,7 +158,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-sm sm:text-base md:text-lg text-white/60 font-onest font-light leading-relaxed max-w-xl mb-6 px-2"
+            className="text-sm sm:text-base md:text-lg text-white/60 font-onest font-light leading-relaxed max-w-xl mb-5 px-1"
           >
             Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. Доступны в 50+ странах.
           </motion.p>
@@ -168,12 +168,12 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0 mb-8"
+            className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0 mb-6"
           >
             <a href="#products" className="inline-flex items-center justify-center px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 w-full sm:w-auto">
               Смотреть каталог
             </a>
-            <a href="#about" className="inline-flex items-center justify-center px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white font-unbounded font-bold text-sm rounded-2xl border border-white/15 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto">
+            <a href="#about" className="inline-flex items-center justify-center px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white font-unbounded font-bold text-sm rounded-2xl border border-white/15 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto mobile-no-backdrop">
               О компании
             </a>
           </motion.div>
@@ -183,7 +183,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="w-full mb-6"
+            className="w-full mb-5"
           >
             <CertMarquee />
           </motion.div>
@@ -193,29 +193,25 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.0, duration: 0.8 }}
-            className="w-full max-w-xl mx-auto mb-8"
+            className="w-full max-w-xl mx-auto mb-5"
           >
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-3">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-2">
               <MapPin className="w-3.5 h-3.5 text-emerald-400/60" />
               <span className="text-[10px] sm:text-xs text-white/40 font-onest uppercase tracking-wider">Присутствие в СНГ</span>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5">
               {CIS_COUNTRIES.map((c, i) => (
                 <motion.div
                   key={c.code}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.1 + i * 0.05, duration: 0.3 }}
-                  className="group relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default"
+                  className="group relative flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-xl bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default"
                 >
-                  <span className="text-base sm:text-lg leading-none">{c.flag}</span>
-                  <span className="text-[10px] sm:text-xs text-white/50 font-onest font-medium group-hover:text-white/80 transition-colors">
+                  <span className="text-sm sm:text-lg leading-none">{c.flag}</span>
+                  <span className="text-[9px] sm:text-xs text-white/50 font-onest font-medium group-hover:text-white/80 transition-colors">
                     {c.name}
                   </span>
-                  {/* Tooltip on hover */}
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-black/80 rounded-md text-[9px] text-white/80 font-onest whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    {c.name}
-                  </div>
                 </motion.div>
               ))}
             </div>
@@ -228,40 +224,40 @@ const Hero = memo(function Hero() {
             transition={{ delay: 1.4, duration: 0.6 }}
             className="w-full max-w-lg mx-auto"
           >
-            <div className="relative flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm"
+            <div className="relative flex items-center justify-between px-3 sm:px-8 py-3 sm:py-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm mobile-no-backdrop"
               style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)" }}
             >
               {/* Stat 1 */}
               <div className="flex-1 text-center group">
-                <div className="flex items-center justify-center mb-1.5">
-                  <Globe className="w-4 h-4 text-emerald-400/70" />
+                <div className="flex items-center justify-center mb-1">
+                  <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400/70" />
                 </div>
-                <div className="font-unbounded font-bold text-xl sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">50+</div>
-                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">Стран</div>
+                <div className="font-unbounded font-bold text-lg sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">50+</div>
+                <div className="text-[9px] sm:text-xs text-white/40 font-onest mt-0.5">Стран</div>
               </div>
 
               {/* Divider */}
-              <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-2 sm:mx-4" />
+              <div className="w-px h-8 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-1.5 sm:mx-4" />
 
               {/* Stat 2 */}
               <div className="flex-1 text-center group">
-                <div className="flex items-center justify-center mb-1.5">
-                  <Users className="w-4 h-4 text-emerald-400/70" />
+                <div className="flex items-center justify-center mb-1">
+                  <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400/70" />
                 </div>
-                <div className="font-unbounded font-bold text-xl sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">10K+</div>
-                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">Партнёров</div>
+                <div className="font-unbounded font-bold text-lg sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">10K+</div>
+                <div className="text-[9px] sm:text-xs text-white/40 font-onest mt-0.5">Партнёров</div>
               </div>
 
               {/* Divider */}
-              <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-2 sm:mx-4" />
+              <div className="w-px h-8 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-1.5 sm:mx-4" />
 
               {/* Stat 3 */}
               <div className="flex-1 text-center group">
-                <div className="flex items-center justify-center mb-1.5">
-                  <Calendar className="w-4 h-4 text-emerald-400/70" />
+                <div className="flex items-center justify-center mb-1">
+                  <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400/70" />
                 </div>
-                <div className="font-unbounded font-bold text-xl sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">5</div>
-                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">Лет на рынке</div>
+                <div className="font-unbounded font-bold text-lg sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">5</div>
+                <div className="text-[9px] sm:text-xs text-white/40 font-onest mt-0.5">Лет на рынке</div>
               </div>
             </div>
           </motion.div>

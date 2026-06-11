@@ -80,7 +80,7 @@ const RegistrationForm = memo(function RegistrationForm() {
     );
   }
 
-  const inputClass = "w-full pl-10 pr-4 py-3 text-sm bg-surface-base border rounded-2xl text-text-primary placeholder:text-text-tertiary font-onest focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 transition-colors";
+  const inputClass = "w-full pl-10 pr-4 py-3 text-sm bg-surface-base border rounded-2xl text-text-primary placeholder:text-text-tertiary font-onest focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 transition-colors min-h-[44px]";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -131,7 +131,7 @@ const RegistrationForm = memo(function RegistrationForm() {
 
 const AboutSection = memo(function AboutSection() {
   return (
-    <section id="about" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt" style={{ contentVisibility: "auto", containIntrinsicSize: "0 800px" }}>
+    <section id="about" className="relative py-12 md:py-24 overflow-hidden bg-surface-alt" style={{ contentVisibility: "auto", containIntrinsicSize: "0 800px" }}>
       <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">
@@ -143,7 +143,7 @@ const AboutSection = memo(function AboutSection() {
         </ScrollReveal>
 
         {/* About image + text */}
-        <div className="mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
+        <div className="mt-6 md:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-center">
           <ScrollReveal>
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
               <img src="/images/sections/about-company.webp" alt="О компании M-International" className="w-full h-full object-cover" loading="lazy" />
@@ -151,11 +151,11 @@ const AboutSection = memo(function AboutSection() {
             </div>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <div className="space-y-4">
-              <div className="p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
+            <div className="space-y-3 md:space-y-4">
+              <div className="p-4 md:p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
-                    <Target className="w-5 h-5 text-accent-600" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
+                    <Target className="w-4 h-4 md:w-5 md:h-5 text-accent-600" />
                   </div>
                   <h3 className="font-unbounded font-bold text-sm text-text-primary">Миссия</h3>
                 </div>
@@ -163,10 +163,10 @@ const AboutSection = memo(function AboutSection() {
                   Создаём новый стандарт в индустрии — меняем имидж, повышаем доверие и социальную ценность.
                 </p>
               </div>
-              <div className="p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
+              <div className="p-4 md:p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
-                    <Eye className="w-5 h-5 text-accent-600" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
+                    <Eye className="w-4 h-4 md:w-5 md:h-5 text-accent-600" />
                   </div>
                   <h3 className="font-unbounded font-bold text-sm text-text-primary">Видение</h3>
                 </div>
@@ -174,10 +174,10 @@ const AboutSection = memo(function AboutSection() {
                   Стать компанией №1 в мире через инновационные продукты и систему вознаграждений.
                 </p>
               </div>
-              <div className="p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
+              <div className="p-4 md:p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
-                    <Gem className="w-5 h-5 text-accent-600" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
+                    <Gem className="w-4 h-4 md:w-5 md:h-5 text-accent-600" />
                   </div>
                   <h3 className="font-unbounded font-bold text-sm text-text-primary">Ценности</h3>
                 </div>
@@ -190,21 +190,21 @@ const AboutSection = memo(function AboutSection() {
         </div>
 
         {/* Timeline */}
-        <div className="mt-14 md:mt-20">
+        <div className="mt-10 md:mt-20">
           <ScrollReveal>
-            <h3 className="font-unbounded font-bold text-lg md:text-xl text-text-primary text-center mb-8">Наш путь</h3>
+            <h3 className="font-unbounded font-bold text-base md:text-xl text-text-primary text-center mb-6 md:mb-8">Наш путь</h3>
           </ScrollReveal>
           <div className="relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-200 via-accent-300 to-transparent md:-translate-x-px" />
-            <div className="space-y-6 md:space-y-8">
+            <div className="absolute left-3 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-200 via-accent-300 to-transparent md:-translate-x-px" />
+            <div className="space-y-4 md:space-y-8">
               {timeline.map((item, i) => (
                 <ScrollReveal key={item.year} delay={i * 0.08}>
-                  <div className={`relative flex items-start gap-4 md:gap-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-                    <div className="absolute left-4 md:left-1/2 w-2.5 h-2.5 rounded-full bg-accent-500 border-2 border-surface-elevated shadow-sm -translate-x-1.5 md:-translate-x-1.5 mt-1.5 z-10" />
-                    <div className={`ml-10 md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
-                      <span className="font-unbounded text-xs font-bold text-accent-600 bg-accent-50 px-2 py-0.5 rounded-md">{item.year}</span>
-                      <h4 className="font-unbounded font-bold text-sm md:text-base text-text-primary mt-1.5 mb-0.5">{item.title}</h4>
-                      <p className="text-xs md:text-sm text-text-secondary font-onest font-light">{item.desc}</p>
+                  <div className="relative flex items-start gap-3 md:gap-8">
+                    <div className="absolute left-3 md:left-1/2 w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-accent-500 border-2 border-surface-elevated shadow-sm -translate-x-1 md:-translate-x-1.5 mt-1.5 z-10" />
+                    <div className="ml-8 md:ml-0 md:w-1/2 md:pl-10">
+                      <span className="font-unbounded text-[10px] md:text-xs font-bold text-accent-600 bg-accent-50 px-2 py-0.5 rounded-md">{item.year}</span>
+                      <h4 className="font-unbounded font-bold text-xs md:text-base text-text-primary mt-1.5 mb-0.5">{item.title}</h4>
+                      <p className="text-[11px] md:text-sm text-text-secondary font-onest font-light">{item.desc}</p>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -214,21 +214,21 @@ const AboutSection = memo(function AboutSection() {
         </div>
 
         {/* How to Start Steps */}
-        <div className="mt-14 md:mt-20">
+        <div className="mt-10 md:mt-20">
           <ScrollReveal>
-            <div className="text-center mb-8">
-              <h3 className="font-unbounded font-bold text-xl md:text-2xl text-text-primary">Как начать</h3>
-              <p className="text-sm text-text-secondary font-onest mt-2">3 простых шага к вашему успеху</p>
+            <div className="text-center mb-6 md:mb-8">
+              <h3 className="font-unbounded font-bold text-base md:text-2xl text-text-primary">Как начать</h3>
+              <p className="text-xs md:text-sm text-text-secondary font-onest mt-1.5 md:mt-2">3 простых шага к вашему успеху</p>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto">
             {steps.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 0.12}>
-                <div className="group relative p-6 md:p-8 rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-2 text-center overflow-hidden">
-                  <span className="absolute top-3 right-4 font-unbounded text-5xl md:text-6xl font-black opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500 select-none" style={{ color: s.color }}>{s.num}</span>
-                  <div className="relative z-10 w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" style={{ background: `linear-gradient(135deg, ${s.color}15, ${s.color}08)`, border: `1px solid ${s.color}25`, color: s.color }}>{s.icon}</div>
-                  <h4 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-2">{s.title}</h4>
-                  <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">{s.desc}</p>
+                <div className="group relative p-5 md:p-8 rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-2 text-center overflow-hidden">
+                  <span className="absolute top-3 right-4 font-unbounded text-4xl md:text-6xl font-black opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500 select-none" style={{ color: s.color }}>{s.num}</span>
+                  <div className="relative z-10 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" style={{ background: `linear-gradient(135deg, ${s.color}15, ${s.color}08)`, border: `1px solid ${s.color}25`, color: s.color }}>{s.icon}</div>
+                  <h4 className="font-unbounded font-bold text-sm md:text-lg text-text-primary mb-1.5 md:mb-2">{s.title}</h4>
+                  <p className="text-[11px] md:text-sm text-text-secondary font-onest font-light leading-relaxed">{s.desc}</p>
                   {i < steps.length - 1 && (
                     <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20">
                       <ArrowRight className="w-6 h-6 text-border-default" />
@@ -242,14 +242,14 @@ const AboutSection = memo(function AboutSection() {
         </div>
 
         {/* Registration Form */}
-        <div className="mt-14 md:mt-20">
+        <div className="mt-10 md:mt-20">
           <ScrollReveal>
             <div className="max-w-lg mx-auto">
-              <div className="text-center mb-6">
-                <h3 className="font-unbounded font-bold text-xl md:text-2xl text-text-primary">Регистрация</h3>
-                <p className="text-sm text-text-secondary font-onest mt-2">Заполните форму и начните свой путь с M-International</p>
+              <div className="text-center mb-5 md:mb-6">
+                <h3 className="font-unbounded font-bold text-base md:text-2xl text-text-primary">Регистрация</h3>
+                <p className="text-xs md:text-sm text-text-secondary font-onest mt-1.5 md:mt-2">Заполните форму и начните свой путь с M-International</p>
               </div>
-              <div className="p-6 md:p-8 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm">
+              <div className="p-5 md:p-8 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm">
                 <RegistrationForm />
               </div>
             </div>
