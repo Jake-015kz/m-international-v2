@@ -2,20 +2,23 @@
 
 import { memo } from "react";
 import { TrendingUp, Users, GraduationCap, Handshake, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
 
-const rewards = [
-  { icon: <GraduationCap className="w-5 h-5" />, title: "Бесплатное обучение", text: "Программа: продукты, продажи, команда. Поддержка на каждом этапе.", gradient: "from-emerald-500/15 to-teal-500/15", iconBg: "bg-emerald-500/10 border-emerald-500/20", iconColor: "text-emerald-600" },
-  { icon: <Users className="w-5 h-5" />, title: "Сообщество 10 000+", text: "Присоединяйтесь к команде единомышленников в 50+ странах.", gradient: "from-blue-500/15 to-cyan-500/15", iconBg: "bg-blue-500/10 border-blue-500/20", iconColor: "text-blue-600" },
-  { icon: <Handshake className="w-5 h-5" />, title: "Win-Win система", text: "Ваш успех = успех вашей команды. Растём вместе.", gradient: "from-violet-500/15 to-purple-500/15", iconBg: "bg-violet-500/10 border-violet-500/20", iconColor: "text-violet-600" },
-  { icon: <TrendingUp className="w-5 h-5" />, title: "9 типов бонусов", text: "Комплексная система вознаграждений за результат.", gradient: "from-amber-500/15 to-orange-500/15", iconBg: "bg-amber-500/10 border-amber-500/20", iconColor: "text-amber-600" },
-  { icon: <Star className="w-5 h-5" />, title: "Глобальный рынок", text: "Бизнес без границ. 50+ стран для развития.", gradient: "from-sky-500/15 to-indigo-500/15", iconBg: "bg-sky-500/10 border-sky-500/20", iconColor: "text-sky-600" },
-];
-
 const BusinessSection = memo(function BusinessSection() {
+  const t = useTranslations("business");
+
+  const rewards = [
+    { icon: <GraduationCap className="w-5 h-5" />, title: t("steps.register.title"), text: t("steps.register.description"), gradient: "from-emerald-500/15 to-teal-500/15", iconBg: "bg-emerald-500/10 border-emerald-500/20", iconColor: "text-emerald-600" },
+    { icon: <Users className="w-5 h-5" />, title: "Сообщество 10 000+", text: "Присоединяйтесь к команде единомышленников в 50+ странах.", gradient: "from-blue-500/15 to-cyan-500/15", iconBg: "bg-blue-500/10 border-blue-500/20", iconColor: "text-blue-600" },
+    { icon: <Handshake className="w-5 h-5" />, title: t("reward3.title"), text: t("reward3.description"), gradient: "from-violet-500/15 to-purple-500/15", iconBg: "bg-violet-500/10 border-violet-500/20", iconColor: "text-violet-600" },
+    { icon: <TrendingUp className="w-5 h-5" />, title: "9 типов бонусов", text: "Комплексная система вознаграждений за результат.", gradient: "from-amber-500/15 to-orange-500/15", iconBg: "bg-amber-500/10 border-amber-500/20", iconColor: "text-amber-600" },
+    { icon: <Star className="w-5 h-5" />, title: "Глобальный рынок", text: "Бизнес без границ. 50+ стран для развития.", gradient: "from-sky-500/15 to-indigo-500/15", iconBg: "bg-sky-500/10 border-sky-500/20", iconColor: "text-sky-600" },
+  ];
+
   return (
     <section id="business" className="relative py-12 md:py-24 overflow-hidden bg-surface-base">
       {/* Background image with overlay */}
@@ -27,8 +30,14 @@ const BusinessSection = memo(function BusinessSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            title="Бизнес с M-International"
-            description="Гибридная система вознаграждений. Обучение, поддержка, глобальный рынок."
+            badge={
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100">
+                <TrendingUp className="w-3.5 h-3.5 text-accent-600" />
+                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">{t("joinTitle")}</span>
+              </div>
+            }
+            title={t("title")}
+            description={t("description")}
           />
         </ScrollReveal>
 

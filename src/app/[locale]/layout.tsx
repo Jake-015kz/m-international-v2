@@ -35,13 +35,13 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${onest.variable} ${unbounded.variable} h-full antialiased`}
+      className={`${onest.variable} ${unbounded.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider messages={messages}>
           <SmoothScrollProvider>
             <Navbar locale={locale} />
-            {children}
+            <div className="flex-1">{children}</div>
           </SmoothScrollProvider>
         </NextIntlClientProvider>
       </body>

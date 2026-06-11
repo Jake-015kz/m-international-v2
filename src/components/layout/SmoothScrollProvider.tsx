@@ -19,6 +19,8 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
     });
 
     // Connect Lenis to GSAP ScrollTrigger
@@ -30,13 +32,26 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
     gsap.ticker.lagSmoothing(0);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    // Handle anchor links with Lenis
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[href^="#"]');
+      if (anchor) {
+        const href = anchor.getAttribute("href");
+        if (href && href !== "#") {
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if (el) {
+            lenis.scrollTo(el as HTMLElement, { offset: 0, duration: 1.2 });
+          }
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
 
     return () => {
+      document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
     };
   }, []);

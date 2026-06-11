@@ -126,11 +126,11 @@ const ProductCard = memo(function ProductCard({
         {/* Button — always at bottom */}
         <button
           type="button"
-          className="mt-3 w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-unbounded font-bold transition-all duration-300 hover:-translate-y-0.5 min-h-[44px]"
+          className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-unbounded font-bold tracking-wide uppercase transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md min-h-[40px]"
           style={{
-            background: `${color}15`,
+            background: `linear-gradient(135deg, ${color}12, ${color}20)`,
             color: color,
-            border: `1px solid ${color}30`,
+            border: `1px solid ${color}25`,
           }}
           onClick={(e) => {
             e.stopPropagation();

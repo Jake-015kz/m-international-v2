@@ -28,8 +28,8 @@
   },
   "hero": {
     "label": "International company",
-    "title": "Health. Strength. Longevity.",
-    "lead": "Certified natural supplements by M-International.",
+    "title": "Nature's Intelligence. Your Longevity.",
+    "lead": "Health biotech in 50+ countries.",
     "subtitle": "Immunity. Detox. Longevity. 50+ countries.",
     "cta": "View catalog",
     "aboutLink": "About us",
@@ -53,8 +53,8 @@
     "vegan": "Vegan Certified"
   },
   "products": {
-    "title": "Our Products",
-    "description": "Natural supplements for health and longevity",
+    "title": "Nature's Intelligence for Your Health",
+    "description": "Immunity. Detox. Longevity. 50+ countries.",
     "micrystal": {
       "name": "MiCrystal",
       "subtitle": "Vision Care",
@@ -205,22 +205,20 @@
       "natural": "Natural ingredients",
       "certified": "International certificates",
       "tested": "Clinically tested"
-    }
+    },
+    "cta": "View full catalog"
   },
   "about": {
     "title": "About Us",
-    "description": "M International — a global natural healthcare company. Science-backed premium products.",
-    "motto": "Our Motto",
-    "mottoText": "«Bridge to Your Dreams» — we help people realize their potential.",
-    "slogan": "Slogan",
-    "sloganText": "«HURRAY!» — the energy of happiness, success, and abundance.",
-    "vision": "Become the world's No.1 company",
-    "visionSubtext": "Through innovative products and a rewards system built around people.",
-    "mission": "Setting a new standard in the MLM industry — building trust and social value.",
-    "coreValue": "Our Core Value",
-    "coreValueText": "Time invested, memories created, and the journey together — that matters most.",
+    "description": "M International — a global natural healthcare company. Science-backed premium products for health and longevity.",
+    "mission": "Mission",
+    "missionText": "Setting a new standard in the MLM industry — building trust and social value.",
+    "vision": "Vision",
+    "visionText": "Become the world's No.1 company through innovative products, advanced technologies and a people-centric rewards system.",
+    "coreValue": "Values",
+    "valuesText": "Quality, honesty, innovation and care for people.",
     "learnMore": "Learn more",
-    "team": "Our Team",
+    "team": "Our Journey",
     "timeline": {
       "2019": {
         "title": "Grand Opening in Mongolia",
@@ -333,12 +331,13 @@
     "mission": "Mission",
     "vision": "Vision",
     "values": "Values",
-    "visionText": "Become the world's No.1 company through innovative products and a rewards system built around people.",
+    "visionText": "Become the world's No.1 company through innovative products and a people-centric rewards system.",
     "valuesText": "Quality, honesty, innovation and care for people.",
     "hero": {
       "stat": {
         "countries": "50+ countries",
-        "customers": "10K+ customers"
+        "customers": "10K+ customers",
+        "years": "6 years"
       }
     },
     "certificates": {

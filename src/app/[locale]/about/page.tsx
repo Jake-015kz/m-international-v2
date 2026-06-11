@@ -102,10 +102,10 @@ export default function AboutPage() {
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              { icon: <Globe className="w-5 h-5 md:w-6 md:h-6" />, value: "50+", label: t("aboutPage.hero.stat.countries") },
-              { icon: <Users className="w-5 h-5 md:w-6 md:h-6" />, value: "10K+", label: t("aboutPage.hero.stat.customers") },
-              { icon: <Award className="w-5 h-5 md:w-6 md:h-6" />, value: "6", label: t("aboutPage.certificates.title") },
-              { icon: <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />, value: "5", label: t("hero.stat.years") },
+              { icon: <Globe className="w-5 h-5 md:w-6 md:h-6" />, value: "50+", label: t("hero.stat.countries") },
+              { icon: <Users className="w-5 h-5 md:w-6 md:h-6" />, value: "10K+", label: t("hero.stat.customers") },
+              { icon: <Award className="w-5 h-5 md:w-6 md:h-6" />, value: "6", label: t("certificates.title") },
+              { icon: <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />, value: "6", label: t("hero.stat.years") },
             ].map((s, i) => (
               <ScrollReveal key={s.label} delay={i * 0.1}>
                 <div className="text-center p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle">

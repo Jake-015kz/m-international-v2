@@ -1,15 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Container from "@/components/ui/Container";
 import { LOCALES } from "@/lib/constants";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface NavbarProps {
   locale?: string;
@@ -28,7 +24,6 @@ function getLocalizedHref(href: string, locale: string): string {
 
 export default function Navbar({ locale: propLocale }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
   const currentLocale = useLocale() || propLocale || "ru";
@@ -41,37 +36,46 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     { href: "/contacts", label: t("contacts") },
   ];
 
+  // Smart scroll: hide on scroll down, show on scroll up
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
 
-    const ctx = gsap.context(() => {
-      gsap.set(nav, {
-        backgroundColor: "oklch(98.5% 0.003 160 / 0)",
-        backdropFilter: "blur(0px)",
-        boxShadow: "none",
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const scrollDelta = currentScrollY - lastScrollY;
+
+        // Always show when near top
+        if (currentScrollY < 80) {
+          nav.style.transform = "translateY(0)";
+          nav.style.opacity = "1";
+        } else if (scrollDelta > 2) {
+          // Scrolling down — hide
+          nav.style.transform = "translateY(-100%)";
+          nav.style.opacity = "0";
+        } else if (scrollDelta < -2) {
+          // Scrolling up — show
+          nav.style.transform = "translateY(0)";
+          nav.style.opacity = "1";
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
       });
+    };
 
-      ScrollTrigger.create({
-        start: "top top",
-        end: "+=100",
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const bgAlpha = Math.min(progress * 0.85, 0.85);
-          const blur = Math.min(progress * 24, 24);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-          gsap.set(nav, {
-            backgroundColor: `oklch(98.5% 0.003 160 / ${bgAlpha})`,
-            backdropFilter: `blur(${blur}px)`,
-            boxShadow: progress > 0.5 ? "0 1px 20px oklch(0% 0 0 / 0.04)" : "none",
-          });
-
-          setIsScrolled(progress > 0.3);
-        },
-      });
-    }, nav);
-
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -100,7 +104,6 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     [pathname, currentLocale]
   );
 
-  // Build alternate locale URLs for language switcher
   const getLocaleHref = useCallback(
     (targetLocale: string) => {
       const pathWithoutLocale = pathname.replace(/^\/(ru|en|kk)/, "") || "/";
@@ -114,7 +117,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-surface-base/80 backdrop-blur-md border-b border-border-subtle/50"
+        className="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-out bg-surface-base/90 backdrop-blur-md border-b border-border-subtle/50"
         role="navigation"
         aria-label="Основная навигация"
       >

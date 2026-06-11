@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Shield, BadgeCheck } from "lucide-react";
 import Container from "@/components/ui/Container";
@@ -59,6 +60,7 @@ function MarqueeRow({ items, direction = "left", duration = 35 }: { items: typeo
 }
 
 const CertificatesSection = memo(function CertificatesSection() {
+  const t = useTranslations("certificates");
   const mid = Math.ceil(CERTIFICATES.length / 2);
   const row1 = CERTIFICATES.slice(0, mid);
   const row2 = CERTIFICATES.slice(mid);
@@ -74,8 +76,14 @@ const CertificatesSection = memo(function CertificatesSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            title="Международные сертификаты"
-            description="Продукция M-International сертифицирована по мировым стандартам качества"
+            badge={
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100">
+                <Shield className="w-3.5 h-3.5 text-accent-600" />
+                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">{t("certified")}</span>
+              </div>
+            }
+            title={t("title")}
+            description={t("description")}
           />
         </ScrollReveal>
 

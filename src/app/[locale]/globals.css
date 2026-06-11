@@ -72,16 +72,25 @@
 }
 
 /* ── Base ── */
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
   font-optical-sizing: auto;
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* ── Typography — normalized for a11y ── */
@@ -123,9 +132,9 @@ p {
   pointer-events: none;
 }
 
-/* Smooth scrolling */
+/* ── Smooth scrolling — handled by Lenis on desktop ── */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 ::selection {

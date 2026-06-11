@@ -45,10 +45,13 @@ const ProductsSection = memo(function ProductsSection() {
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setPrevEnabled(emblaApi.canScrollPrev());
     setNextEnabled(emblaApi.canScrollNext());
+    setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
   const openModal = useCallback((product: Product) => {
@@ -162,12 +165,12 @@ const ProductsSection = memo(function ProductsSection() {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100 mb-4">
                 <Sparkles className="w-3.5 h-3.5 text-accent-600" />
                 <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">
-                  {t("products.features.natural")}
+                  {tProducts("features.natural")}
                 </span>
               </div>
               <SectionHeader
-                title={t("products.title")}
-                description={t("products.description")}
+                title={tProducts("title")}
+                description={tProducts("description")}
               />
             </div>
           </ScrollReveal>
@@ -194,7 +197,7 @@ const ProductsSection = memo(function ProductsSection() {
 
             {/* Embla viewport */}
             <div className="overflow-hidden px-2" ref={emblaRef}>
-              <div className="flex gap-3 md:gap-5">
+              <div className="flex gap-3 md:gap-5 items-stretch">
                 {products.map((product, i) => (
                   <div
                     key={product.name}
@@ -217,11 +220,15 @@ const ProductsSection = memo(function ProductsSection() {
             </div>
 
             {/* Dots indicator */}
-            <div className="flex items-center justify-center gap-1.5 mt-4">
+            <div className="flex items-center justify-center gap-2 mt-6">
               {products.map((_, i) => (
                 <button
                   key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-text-tertiary/30 transition-all duration-300 hover:bg-accent-500 min-h-[32px] min-w-[32px] flex items-center justify-center"
+                  className={`rounded-full transition-all duration-300 min-h-[8px] min-w-[8px] ${
+                    i === selectedIndex
+                      ? "w-6 h-1.5 bg-accent-500"
+                      : "w-1.5 h-1.5 bg-text-tertiary/20 hover:bg-text-tertiary/40"
+                  }`}
                   aria-label={`Перейти к слайду ${i + 1}`}
                   onClick={() => emblaApi?.scrollTo(i)}
                 />
@@ -233,7 +240,7 @@ const ProductsSection = memo(function ProductsSection() {
           <ScrollReveal delay={0.4}>
             <div className="mt-6 md:mt-12 text-center">
               <a href="/catalog" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 min-h-[44px]">
-                {t("hero.cta")}
+                {tProducts("cta") || "Смотреть весь каталог"}
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
               <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-text-tertiary font-onest font-light">

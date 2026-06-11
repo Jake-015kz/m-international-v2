@@ -6,6 +6,7 @@ import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
+import { useTranslations } from "next-intl";
 
 const timeline = [
   { year: "2019", title: "Открытие в Монголии", desc: "Начало глобального пути компании." },
@@ -130,6 +131,8 @@ const RegistrationForm = memo(function RegistrationForm() {
 });
 
 const AboutSection = memo(function AboutSection() {
+  const t = useTranslations("about");
+  const tNav = useTranslations("nav");
   return (
     <section id="about" className="relative py-12 md:py-24 overflow-hidden bg-surface-alt" style={{ contentVisibility: "auto", containIntrinsicSize: "0 800px" }}>
       <BackgroundDecorations variant="section" />
@@ -137,8 +140,14 @@ const AboutSection = memo(function AboutSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            title="О компании M-International"
-            description="Международный производитель натуральных БАДов. Наука + природа = здоровье."
+            badge={
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100">
+                <Target className="w-3.5 h-3.5 text-accent-600" />
+                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">{tNav("about")}</span>
+              </div>
+            }
+            title={t("title")}
+            description={t("description")}
           />
         </ScrollReveal>
 
@@ -157,10 +166,10 @@ const AboutSection = memo(function AboutSection() {
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
                     <Target className="w-4 h-4 md:w-5 md:h-5 text-accent-600" />
                   </div>
-                  <h3 className="font-unbounded font-bold text-sm text-text-primary">Миссия</h3>
+                  <h3 className="font-unbounded font-bold text-sm text-text-primary">{t("mission")}</h3>
                 </div>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  Создаём новый стандарт в индустрии — меняем имидж, повышаем доверие и социальную ценность.
+                  {t("missionText")}
                 </p>
               </div>
               <div className="p-4 md:p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
@@ -168,10 +177,10 @@ const AboutSection = memo(function AboutSection() {
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
                     <Eye className="w-4 h-4 md:w-5 md:h-5 text-accent-600" />
                   </div>
-                  <h3 className="font-unbounded font-bold text-sm text-text-primary">Видение</h3>
+                  <h3 className="font-unbounded font-bold text-sm text-text-primary">{t("vision")}</h3>
                 </div>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  Стать компанией №1 в мире через инновационные продукты и систему вознаграждений.
+                  {t("visionText")}
                 </p>
               </div>
               <div className="p-4 md:p-5 rounded-2xl bg-surface-elevated border border-border-subtle">
@@ -179,10 +188,10 @@ const AboutSection = memo(function AboutSection() {
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center">
                     <Gem className="w-4 h-4 md:w-5 md:h-5 text-accent-600" />
                   </div>
-                  <h3 className="font-unbounded font-bold text-sm text-text-primary">Ценности</h3>
+                  <h3 className="font-unbounded font-bold text-sm text-text-primary">{t("coreValue")}</h3>
                 </div>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  Время, воспоминания и путь, пройденный вместе — это главное. Качество, честность, инновации.
+                  {t("valuesText")}
                 </p>
               </div>
             </div>
@@ -192,20 +201,39 @@ const AboutSection = memo(function AboutSection() {
         {/* Timeline */}
         <div className="mt-10 md:mt-20">
           <ScrollReveal>
-            <h3 className="font-unbounded font-bold text-base md:text-xl text-text-primary text-center mb-6 md:mb-8">Наш путь</h3>
+            <div className="text-center mb-6 md:mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100 mb-3">
+                <Rocket className="w-3.5 h-3.5 text-accent-600" />
+                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">{t("team")}</span>
+              </div>
+              <h3 className="font-unbounded font-bold text-base md:text-xl text-text-primary">Как мы росли и побеждали</h3>
+            </div>
           </ScrollReveal>
-          <div className="relative">
-            <div className="absolute left-3 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-200 via-accent-300 to-transparent md:-translate-x-px" />
-            <div className="space-y-4 md:space-y-8">
+          <div className="relative max-w-4xl mx-auto">
+            {/* Center line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-200 via-accent-400 to-accent-200 md:-translate-x-px" />
+            <div className="space-y-6 md:space-y-8">
               {timeline.map((item, i) => (
                 <ScrollReveal key={item.year} delay={i * 0.08}>
-                  <div className="relative flex items-start gap-3 md:gap-8">
-                    <div className="absolute left-3 md:left-1/2 w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-accent-500 border-2 border-surface-elevated shadow-sm -translate-x-1 md:-translate-x-1.5 mt-1.5 z-10" />
-                    <div className="ml-8 md:ml-0 md:w-1/2 md:pl-10">
-                      <span className="font-unbounded text-[10px] md:text-xs font-bold text-accent-600 bg-accent-50 px-2 py-0.5 rounded-md">{item.year}</span>
-                      <h4 className="font-unbounded font-bold text-xs md:text-base text-text-primary mt-1.5 mb-0.5">{item.title}</h4>
-                      <p className="text-[11px] md:text-sm text-text-secondary font-onest font-light">{item.desc}</p>
+                  <div className={`relative flex items-start gap-4 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
+                    {/* Dot on line */}
+                    <div className="absolute left-4 md:left-1/2 z-10 -translate-x-1/2 mt-5">
+                      <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-accent-500 border-[3px] border-surface-base shadow-md shadow-accent-500/20" />
                     </div>
+                    {/* Spacer for mobile */}
+                    <div className="ml-10 md:hidden" />
+                    {/* Card — alternating sides on desktop */}
+                    <div className={`ml-10 md:ml-0 md:w-[calc(50%-2.5rem)] ${i % 2 === 0 ? "md:pr-10 md:text-right" : "md:pl-10 md:text-left"}`}>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-50 border border-accent-100 mb-2">
+                        <span className="font-unbounded text-xs font-bold text-accent-600">{item.year}</span>
+                      </div>
+                      <div className="p-4 md:p-5 rounded-2xl bg-surface-elevated border border-border-subtle hover:border-accent-200 transition-all duration-300 hover:shadow-lg hover:shadow-accent-500/5">
+                        <h4 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1">{item.title}</h4>
+                        <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                    {/* Fill other side on desktop */}
+                    <div className="hidden md:block md:w-[calc(50%-2.5rem)]" />
                   </div>
                 </ScrollReveal>
               ))}
