@@ -66,6 +66,7 @@ const Hero = memo(function Hero() {
           loop
           playsInline
           preload="auto"
+          poster="/media/hero-bg.webp"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/media/hero-bg.mp4" type="video/mp4" />

@@ -113,9 +113,13 @@ html {
 }
 
 /* Mobile-first: ensure images don't overflow */
-img, video {
+img {
   max-width: 100%;
   height: auto;
+}
+
+video {
+  max-width: 100%;
 }
 
 /* Safe area insets for notched devices */
