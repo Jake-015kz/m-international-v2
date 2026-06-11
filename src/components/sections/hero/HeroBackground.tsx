@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef, useEffect, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -36,7 +36,7 @@ function generateParticles(count: number): Particle[] {
   return particles;
 }
 
-function Particles() {
+const Particles = memo(function Particles() {
   const particles = useMemo(() => generateParticles(24), []);
 
   return (
@@ -52,6 +52,7 @@ function Particles() {
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
+            willChange: "transform, opacity",
           }}
           animate={{
             y: p.animType === "a" ? [-10, 10, -10] : [-8, 14, -8],
@@ -68,9 +69,9 @@ function Particles() {
       ))}
     </div>
   );
-}
+});
 
-export default function HeroBackground() {
+const HeroBackground = memo(function HeroBackground() {
   const bgRef = useRef<HTMLDivElement>(null);
   const orb1Ref = useRef<HTMLDivElement>(null);
   const orb2Ref = useRef<HTMLDivElement>(null);
@@ -148,11 +149,14 @@ export default function HeroBackground() {
         style={{ transform: "translate3d(0,0,0)" }}
       >
         <Image
-          src="/media/hero-bg.png"
+          src="/media/hero-bg.webp"
           alt="Nature background"
           fill
+          sizes="100vw"
           className="object-cover opacity-50 sm:opacity-[0.6]"
           priority
+          placeholder="blur"
+          blurDataURL="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiTjU7QB0FA=="
         />
       </motion.div>
 
@@ -168,10 +172,10 @@ export default function HeroBackground() {
         }}
       />
 
-      {/* Animated glow orb 1 */}
+      {/* Animated glow orb 1 — hidden on mobile to save GPU */}
       <motion.div
         ref={orb1Ref}
-        className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full z-[1] will-change-transform"
+        className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full z-[1] will-change-transform hidden md:block"
         style={{
           background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%)",
           left: "15%",
@@ -186,10 +190,10 @@ export default function HeroBackground() {
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Animated glow orb 2 */}
+      {/* Animated glow orb 2 — hidden on mobile to save GPU */}
       <motion.div
         ref={orb2Ref}
-        className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full z-[1] will-change-transform"
+        className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full z-[1] will-change-transform hidden md:block"
         style={{
           background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.06) 0%, transparent 70%)",
           right: "10%",
@@ -227,4 +231,6 @@ export default function HeroBackground() {
       <div className="absolute inset-0 noise-overlay" />
     </div>
   );
-}
+});
+
+export default HeroBackground;

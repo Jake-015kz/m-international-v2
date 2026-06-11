@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { memo } from "react";
 import Button from "@/components/ui/Button";
 import type { ReactNode } from "react";
 
@@ -12,7 +13,7 @@ interface CTAButtonProps {
   className?: string;
 }
 
-export default function CTAButton({ children, onClick, variant = "primary", size = "md", className }: CTAButtonProps) {
+const CTAButton = memo(function CTAButton({ children, onClick, variant = "primary", size = "md", className }: CTAButtonProps) {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
@@ -25,4 +26,6 @@ export default function CTAButton({ children, onClick, variant = "primary", size
       </Button>
     </motion.div>
   );
-}
+});
+
+export default CTAButton;

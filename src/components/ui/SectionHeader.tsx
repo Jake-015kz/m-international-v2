@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
@@ -9,7 +9,7 @@ interface SectionHeaderProps {
   align?: "center" | "left";
 }
 
-export default function SectionHeader({
+const SectionHeader = memo(function SectionHeader({
   badge,
   title,
   description,
@@ -42,4 +42,6 @@ export default function SectionHeader({
       )}
     </div>
   );
-}
+});
+
+export default SectionHeader;

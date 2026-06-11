@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Target, Eye, Gem, Rocket } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -35,9 +36,9 @@ const timeline = [
   { year: "2025", title: "Саммит топ-лидеров", desc: "10 мероприятий за 6 месяцев. Саммит в Алматы." },
 ];
 
-export default function AboutSection() {
+const AboutSection = memo(function AboutSection() {
   return (
-    <section id="about" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt">
+    <section id="about" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt" style={{ contentVisibility: "auto", containIntrinsicSize: "0 600px" }}>
       <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">
@@ -108,4 +109,6 @@ export default function AboutSection() {
       </Container>
     </section>
   );
-}
+});
+
+export default AboutSection;

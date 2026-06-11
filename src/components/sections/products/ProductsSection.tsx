@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Leaf } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -65,9 +66,9 @@ const PRODUCTS = [
   },
 ];
 
-export default function ProductsSection() {
+const ProductsSection = memo(function ProductsSection() {
   return (
-    <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt">
+    <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt" style={{ contentVisibility: "auto", containIntrinsicSize: "0 500px" }}>
       <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">
@@ -97,4 +98,6 @@ export default function ProductsSection() {
       </Container>
     </section>
   );
-}
+});
+
+export default ProductsSection;

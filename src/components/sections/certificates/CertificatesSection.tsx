@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Shield, Award, Leaf, BadgeCheck, FlaskConical, Heart, Globe, Sprout } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -21,9 +22,9 @@ const CERTIFICATES_ROW_2 = [
   { id: "global", icon: <Globe className="w-4 h-4 md:w-5 md:h-5" />, label: "50+ стран мира" },
 ];
 
-export default function CertificatesSection() {
+const CertificatesSection = memo(function CertificatesSection() {
   return (
-    <section id="certificates" className="relative py-16 md:py-24 overflow-hidden bg-surface-base">
+    <section id="certificates" className="relative py-16 md:py-24 overflow-hidden bg-surface-base" style={{ contentVisibility: "auto", containIntrinsicSize: "0 400px" }}>
       <BackgroundDecorations variant="section" />
 
       {/* Side fades for marquee */}
@@ -61,4 +62,6 @@ export default function CertificatesSection() {
       </Container>
     </section>
   );
-}
+});
+
+export default CertificatesSection;

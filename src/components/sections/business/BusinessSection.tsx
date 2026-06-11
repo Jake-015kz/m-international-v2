@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { TrendingUp, Users, GraduationCap, Handshake, Gift, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -43,9 +44,9 @@ const steps = [
   { title: "Доход", desc: "Зарабатывайте с первого дня." },
 ];
 
-export default function BusinessSection() {
+const BusinessSection = memo(function BusinessSection() {
   return (
-    <section id="business" className="relative py-16 md:py-24 overflow-hidden bg-surface-base">
+    <section id="business" className="relative py-16 md:py-24 overflow-hidden bg-surface-base" style={{ contentVisibility: "auto", containIntrinsicSize: "0 600px" }}>
       <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">
@@ -115,4 +116,6 @@ export default function BusinessSection() {
       </Container>
     </section>
   );
-}
+});
+
+export default BusinessSection;

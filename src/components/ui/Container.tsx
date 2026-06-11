@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface ContainerProps {
@@ -7,7 +7,7 @@ interface ContainerProps {
   size?: "default" | "wide" | "narrow";
 }
 
-export default function Container({ children, className, size = "default" }: ContainerProps) {
+const Container = memo(function Container({ children, className, size = "default" }: ContainerProps) {
   return (
     <div
       className={cn(
@@ -21,4 +21,6 @@ export default function Container({ children, className, size = "default" }: Con
       {children}
     </div>
   );
-}
+});
+
+export default Container;

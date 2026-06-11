@@ -228,3 +228,37 @@ html {
 .animate-marquee-reverse:hover {
   animation-play-state: paused;
 }
+
+/* ── Content visibility for off-screen sections ── */
+@supports (content-visibility: auto) {
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 300px;
+  }
+}
+
+/* ── GPU layer promotion for animated elements ── */
+.gpu-layer {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ── Mobile GPU optimizations ── */
+@media (max-width: 767px) {
+  /* Kill expensive blur on small screens */
+  .mobile-no-blur {
+    filter: none !important;
+  }
+
+  /* Reduce motion for users who prefer it — already handled by prefers-reduced-motion */
+  /* But also reduce animation complexity on low-end devices */
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation-duration: calc(var(--marquee-duration, 30s) * 1.5) !important;
+  }
+}
+
+/* ── Contain layout/paint for heavy sections ── */
+.section-contain {
+  contain: layout style paint;
+}

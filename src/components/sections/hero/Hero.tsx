@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroBackground from "./HeroBackground";
@@ -10,13 +10,30 @@ import CTAButton from "./CTAButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ── Desktop-only wrapper: completely removes FloatingCards from DOM on mobile ── */
+
+const FloatingCardsWrapper = memo(function FloatingCardsWrapper() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => setIsDesktop(e.matches);
+    handler(mq);
+    mq.addEventListener("change", handler as (e: MediaQueryListEvent) => void);
+    return () => mq.removeEventListener("change", handler as (e: MediaQueryListEvent) => void);
+  }, []);
+
+  if (!isDesktop) return null;
+  return <FloatingCards />;
+});
+
 const stats = [
   { value: "10 000+", label: "Клиентов" },
   { value: "50+", label: "Стран" },
   { value: "15 лет", label: "Опыта" },
 ];
 
-export default function Hero() {
+const Hero = memo(function Hero() {
   const contentRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
@@ -55,13 +72,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100dvh] bg-surface-base overflow-hidden">
+    <section className="relative min-h-[100dvh] bg-surface-base overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "0 100vh" }}>
       <HeroBackground />
 
-      {/* Floating glass cards — hidden on mobile, visible from lg */}
-      <div className="hidden lg:block">
-        <FloatingCards />
-      </div>
+      {/* Floating glass cards — desktop only, not rendered on mobile at all */}
+      <FloatingCardsWrapper />
 
       {/* Center content — parallax layer */}
       <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] flex flex-col justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
@@ -148,4 +163,6 @@ export default function Hero() {
       </motion.div>
     </section>
   );
-}
+});
+
+export default Hero;

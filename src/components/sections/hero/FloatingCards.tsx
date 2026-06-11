@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { memo } from "react";
 
-export default function FloatingCards() {
+const FloatingCards = memo(function FloatingCards() {
   return (
     <>
       {/* Left card - Video preview */}
       <motion.div
-        className="absolute left-4 lg:left-8 top-[55%] -translate-y-1/2 max-w-[280px] lg:max-w-xs z-20"
+        className="absolute left-4 lg:left-8 top-[55%] -translate-y-1/2 max-w-[280px] lg:max-w-xs z-20 will-change-transform"
         initial={{ opacity: 0, x: -60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
@@ -15,6 +16,7 @@ export default function FloatingCards() {
         <motion.div
           animate={{ y: [0, -12, 0] }}
           transition={{ delay: 1.2, duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="will-change-transform"
         >
           <div className="rounded-2xl bg-surface-elevated border border-border-subtle shadow-lg p-4 lg:p-6">
             <div className="relative aspect-video rounded-xl lg:rounded-2xl overflow-hidden bg-black/10 mb-3">
@@ -49,7 +51,7 @@ export default function FloatingCards() {
 
       {/* Right top card - Certified */}
       <motion.div
-        className="absolute right-4 lg:right-8 top-[25%] -translate-y-1/2 z-20"
+        className="absolute right-4 lg:right-8 top-[25%] -translate-y-1/2 z-20 will-change-transform"
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
@@ -57,6 +59,7 @@ export default function FloatingCards() {
         <motion.div
           animate={{ y: [0, -8, 0] }}
           transition={{ delay: 1.4, duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+          className="will-change-transform"
         >
           <div className="rounded-2xl bg-surface-elevated border border-border-subtle shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
             <div className="w-8 h-8 lg:w-10 lg:h-10 bg-accent-500/20 rounded-lg flex items-center justify-center shrink-0">
@@ -81,7 +84,7 @@ export default function FloatingCards() {
 
       {/* Right bottom card - Global reach */}
       <motion.div
-        className="absolute right-4 lg:right-8 bottom-[25%] translate-y-1/2 z-20"
+        className="absolute right-4 lg:right-8 bottom-[25%] translate-y-1/2 z-20 will-change-transform"
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
@@ -89,6 +92,7 @@ export default function FloatingCards() {
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ delay: 1.6, duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+          className="will-change-transform"
         >
           <div className="rounded-2xl bg-surface-elevated border border-border-subtle shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
             <div className="flex -space-x-1.5 lg:-space-x-2">
@@ -107,4 +111,6 @@ export default function FloatingCards() {
       </motion.div>
     </>
   );
-}
+});
+
+export default FloatingCards;

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef, useEffect, useState } from "react";
+import { type ReactNode, useRef, useEffect, useState, useCallback, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
@@ -18,33 +18,31 @@ interface ScrollRevealProps {
   useGsap?: boolean;
 }
 
-export default function ScrollReveal({
+/* ── GSAP path — single useEffect, no fallback overhead ── */
+
+const GsapReveal = memo(function GsapReveal({
   children,
   className,
   delay = 0,
   duration = 0.7,
   threshold = 0.15,
   direction = "up",
-  useGsap = true,
-}: ScrollRevealProps) {
+}: Omit<ScrollRevealProps, "useGsap">) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
 
-  // GSAP ScrollTrigger mode — smoother, more control
-  useEffect(() => {
-    if (!useGsap) return;
+  const initAnimation = useCallback(() => {
     const el = ref.current;
     if (!el) return;
 
-    const ctx = gsap.context(() => {
-      const directionMap = {
-        up: { y: 40, x: 0 },
-        down: { y: -40, x: 0 },
-        left: { y: 0, x: -40 },
-        right: { y: 0, x: 40 },
-        none: { y: 0, x: 0 },
-      };
+    const directionMap = {
+      up: { y: 40, x: 0 },
+      down: { y: -40, x: 0 },
+      left: { y: 0, x: -40 },
+      right: { y: 0, x: 40 },
+      none: { y: 0, x: 0 },
+    };
 
+    const ctx = gsap.context(() => {
       gsap.fromTo(
         el,
         { opacity: 0, ...directionMap[direction] },
@@ -65,11 +63,33 @@ export default function ScrollReveal({
     }, el);
 
     return () => ctx.revert();
-  }, [delay, duration, threshold, direction, useGsap]);
+  }, [delay, duration, threshold, direction]);
 
-  // Fallback: IntersectionObserver mode
   useEffect(() => {
-    if (useGsap) return;
+    return initAnimation();
+  }, [initAnimation]);
+
+  return (
+    <div ref={ref} className={cn("will-change-[transform,opacity]", className)}>
+      {children}
+    </div>
+  );
+});
+
+/* ── IntersectionObserver fallback path ── */
+
+const IoReveal = memo(function IoReveal({
+  children,
+  className,
+  delay = 0,
+  duration = 0.7,
+  threshold = 0.15,
+  direction = "up",
+}: Omit<ScrollRevealProps, "useGsap">) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
@@ -85,7 +105,7 @@ export default function ScrollReveal({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [threshold, useGsap]);
+  }, [threshold]);
 
   const initialTransform =
     direction === "up"
@@ -98,16 +118,6 @@ export default function ScrollReveal({
             ? "translateX(40px)"
             : "none";
 
-  // When using GSAP, we don't need inline styles — GSAP handles it
-  if (useGsap) {
-    return (
-      <div ref={ref} className={cn("will-change-[transform,opacity]", className)}>
-        {children}
-      </div>
-    );
-  }
-
-  // IO fallback
   return (
     <div
       ref={ref}
@@ -123,4 +133,44 @@ export default function ScrollReveal({
       {children}
     </div>
   );
+});
+
+/* ── Main component — picks one path, no overlap ── */
+
+function ScrollReveal({
+  children,
+  className,
+  delay = 0,
+  duration = 0.7,
+  threshold = 0.15,
+  direction = "up",
+  useGsap = true,
+}: ScrollRevealProps) {
+  if (useGsap) {
+    return (
+      <GsapReveal
+        className={className}
+        delay={delay}
+        duration={duration}
+        threshold={threshold}
+        direction={direction}
+      >
+        {children}
+      </GsapReveal>
+    );
+  }
+
+  return (
+    <IoReveal
+      className={className}
+      delay={delay}
+      duration={duration}
+      threshold={threshold}
+      direction={direction}
+    >
+      {children}
+    </IoReveal>
+  );
 }
+
+export default ScrollReveal;

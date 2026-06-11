@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface GlassCardProps {
@@ -7,7 +7,7 @@ interface GlassCardProps {
   variant?: "default" | "subtle" | "elevated";
 }
 
-export default function GlassCard({ children, className, variant = "default" }: GlassCardProps) {
+const GlassCard = memo(function GlassCard({ children, className, variant = "default" }: GlassCardProps) {
   return (
     <div
       className={cn(
@@ -21,4 +21,6 @@ export default function GlassCard({ children, className, variant = "default" }: 
       {children}
     </div>
   );
-}
+});
+
+export default GlassCard;

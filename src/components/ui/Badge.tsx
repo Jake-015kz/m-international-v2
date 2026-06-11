@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface BadgeProps {
@@ -7,7 +7,7 @@ interface BadgeProps {
   variant?: "default" | "outline" | "glass";
 }
 
-export default function Badge({ children, className, variant = "default" }: BadgeProps) {
+const Badge = memo(function Badge({ children, className, variant = "default" }: BadgeProps) {
   return (
     <span
       className={cn(
@@ -21,4 +21,6 @@ export default function Badge({ children, className, variant = "default" }: Badg
       {children}
     </span>
   );
-}
+});
+
+export default Badge;

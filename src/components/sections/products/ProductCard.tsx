@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import { ArrowRight } from "lucide-react";
 
 interface ProductCardProps {
@@ -14,7 +14,7 @@ interface ProductCardProps {
   href?: string;
 }
 
-export default function ProductCard({
+const ProductCard = memo(function ProductCard({
   name,
   subtitle,
   description,
@@ -73,4 +73,6 @@ export default function ProductCard({
       )}
     </div>
   );
-}
+});
+
+export default ProductCard;

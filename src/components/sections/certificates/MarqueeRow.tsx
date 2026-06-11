@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface MarqueeRowProps {
@@ -8,7 +8,7 @@ interface MarqueeRowProps {
   className?: string;
 }
 
-export default function MarqueeRow({
+const MarqueeRow = memo(function MarqueeRow({
   items,
   direction = "left",
   duration = 30,
@@ -20,7 +20,7 @@ export default function MarqueeRow({
     <div className={cn("overflow-hidden py-1", className)}>
       <div
         className={cn(
-          "flex gap-3 md:gap-4 w-max",
+          "flex gap-3 md:gap-4 w-max will-change-transform",
           direction === "left" ? "animate-marquee" : "animate-marquee-reverse"
         )
         }
@@ -47,4 +47,6 @@ export default function MarqueeRow({
       </div>
     </div>
   );
-}
+});
+
+export default MarqueeRow;

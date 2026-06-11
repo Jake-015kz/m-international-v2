@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Send } from "lucide-react";
 import Container from "@/components/ui/Container";
 
@@ -20,9 +21,9 @@ const footerLinks = {
   ],
 };
 
-export default function Footer() {
+const Footer = memo(function Footer() {
   return (
-    <footer id="contacts" className="relative bg-accent-900 text-text-inverse overflow-hidden">
+    <footer id="contacts" className="relative bg-accent-900 text-text-inverse overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "0 400px" }}>
       {/* Top accent line */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-accent-500/30 to-transparent" />
 
@@ -137,4 +138,6 @@ export default function Footer() {
       </Container>
     </footer>
   );
-}
+});
+
+export default Footer;
