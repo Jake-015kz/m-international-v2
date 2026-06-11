@@ -27,7 +27,7 @@ const FloatingCards = memo(function FloatingCards() {
                 muted
                 loop
                 playsInline
-                poster="/media/hero-bg.png"
+                preload="auto"
               />
               {/* Play button overlay */}
               <div className="absolute inset-0 flex items-center justify-center">
