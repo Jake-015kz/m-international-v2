@@ -160,17 +160,11 @@ const HeroBackground = memo(function HeroBackground() {
         />
       </motion.div>
 
-      {/* Mesh gradient overlay */}
-      <div
-        className="absolute inset-0 z-[1]"
-        style={{
-          background: [
-            "radial-gradient(ellipse 80% 60% at 50% 45%, oklch(100% 0.002 160 / 0.45) 0%, oklch(100% 0.002 160 / 0.1) 50%, transparent 80%)",
-            "radial-gradient(ellipse 120% 100% at 50% 100%, oklch(18% 0.008 160 / 0.18) 0%, transparent 70%)",
-            "radial-gradient(ellipse 100% 80% at 50% 0%, oklch(88% 0.01 160 / 0.12) 0%, transparent 60%)",
-          ].join(", "),
-        }}
-      />
+      {/* Conic glow — desktop only */}
+      <div className="hero-conic-glow hidden md:block" style={{ left: '50%', top: '40%', transform: 'translate(-50%, -50%)' }} />
+
+      {/* Mesh gradient layer */}
+      <div className="absolute inset-0 hero-mesh-gradient opacity-50 z-[1]" />
 
       {/* Animated glow orb 1 — hidden on mobile to save GPU */}
       <motion.div

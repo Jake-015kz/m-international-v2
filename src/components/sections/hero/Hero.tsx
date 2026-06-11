@@ -72,7 +72,7 @@ const Hero = memo(function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100dvh] bg-surface-base overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "0 100vh" }}>
+    <section className="relative min-h-[100dvh] bg-surface-base overflow-hidden">
       <HeroBackground />
 
       {/* Floating glass cards — desktop only, not rendered on mobile at all */}
@@ -81,14 +81,25 @@ const Hero = memo(function Hero() {
       {/* Center content — parallax layer */}
       <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] flex flex-col justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
         <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
-          {/* Title — weight contrast: 900 vs 200 */}
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full hero-glass-badge mb-6 md:mb-8"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />
+            <span className="text-xs font-onest font-medium text-accent-700">Натуральные БАДы премиум класса</span>
+          </motion.div>
+
+          {/* Title — gradient text on key phrase */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="font-unbounded text-2xl sm:text-3xl md:text-5xl lg:text-[3.5rem] leading-[1.1] tracking-normal mb-4 sm:mb-6"
           >
-            <span className="font-black text-text-primary">
+            <span className="hero-gradient-text font-black">
               Интеллект природы
             </span>{" "}
             <span className="font-extralight text-text-secondary">
@@ -114,7 +125,7 @@ const Hero = memo(function Hero() {
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0"
           >
             <CTAButton size="lg" className="w-full sm:w-auto shadow-lg shadow-accent-900/10">Смотреть каталог</CTAButton>
-            <CTAButton variant="ghost" size="lg" className="w-full sm:w-auto">
+            <CTAButton variant="ghost" size="lg" className="w-full sm:w-auto border border-text-primary/20 hover:border-text-primary/40 hover:bg-text-primary/5">
               О компании
             </CTAButton>
           </motion.div>

@@ -100,7 +100,7 @@
         "Better memory",
         "Vascular cleansing"
       ],
-      "short": "Complete immunity and brain support.",
+      "short": "Immunity and brain support.",
       "composition": "AFA algae, mushrooms, vitamin C."
     },
     "nutrimax": {
@@ -209,14 +209,14 @@
   },
   "about": {
     "title": "About Us",
-    "description": "M International — a global company in natural healthcare. Science-backed premium products for health and longevity.",
+    "description": "M International — a global natural healthcare company. Science-backed premium products.",
     "motto": "Our Motto",
     "mottoText": "«Bridge to Your Dreams» — we help people realize their potential.",
-    "slogan": "The Slogan",
+    "slogan": "Slogan",
     "sloganText": "«HURRAY!» — the energy of happiness, success, and abundance.",
     "vision": "Become the world's No.1 company",
-    "visionSubtext": "Through innovative products, cutting-edge technology, and a people-first rewards system.",
-    "mission": "Creating a new standard in the MLM industry — reshaping its image and building trust.",
+    "visionSubtext": "Through innovative products and a rewards system built around people.",
+    "mission": "Setting a new standard in the MLM industry — building trust and social value.",
     "coreValue": "Our Core Value",
     "coreValueText": "Time invested, memories created, and the journey together — that matters most.",
     "learnMore": "Learn more",
@@ -254,8 +254,8 @@
   },
   "business": {
     "title": "Business with M-International",
-    "description": "Hybrid rewards system with 9 bonus types. High income from day one.",
-    "intro": "M International offers one of the most comprehensive rewards systems in the industry. 9 bonus types for maximum earnings.",
+    "description": "Hybrid rewards system with 9 bonus types. Earn from day one.",
+    "intro": "M International offers a rewards system with 9 bonus types for maximum earnings.",
     "rewardsTitle": "System Advantages",
     "reward1": {
       "title": "Equal opportunity",
@@ -270,10 +270,10 @@
       "description": "Your success = your team's success."
     },
     "memberTitle": "Become a Member",
-    "memberDescription": "Thousands worldwide have already changed their lives with M International.",
-    "memberQuote": "M International — your path to becoming a dollar millionaire.",
+    "memberDescription": "Thousands worldwide already earn with M International.",
+    "memberQuote": "M International — your chance to build real wealth.",
     "centricTitle": "Member-Centric",
-    "centricDescription": "We develop talent and leadership through emotional intelligence and personal potential.",
+    "centricDescription": "We develop talent and leadership through emotional intelligence.",
     "joinTitle": "Join Us",
     "joinSubtitle": "Be Part of the Team",
     "joinButton": "JOIN NOW",
@@ -333,7 +333,7 @@
     "mission": "Mission",
     "vision": "Vision",
     "values": "Values",
-    "visionText": "Become the world's No.1 company through innovative products and rewards system.",
+    "visionText": "Become the world's No.1 company through innovative products and a rewards system.",
     "valuesText": "Quality, honesty, innovation and care for people."
   },
   "businessPage": {

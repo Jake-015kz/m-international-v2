@@ -29,14 +29,14 @@ const ProductCard = memo(function ProductCard({
 }: ProductCardProps) {
   return (
     <div
-      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default hover:shadow-xl hover:shadow-black/5 transition-all duration-500 cursor-pointer ${featured ? "sm:col-span-2" : ""}`}
+      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 cursor-pointer card-premium-v2 ${featured ? "sm:col-span-2" : ""}`}
       onClick={() => {
         if (href !== "#") window.location.href = href;
       }}
     >
       {/* Product image area */}
       <div
-        className="relative h-32 sm:h-40 md:h-44 overflow-hidden"
+        className="relative z-10 h-32 sm:h-40 md:h-44 overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${color}18 0%, ${color}30 50%, ${color}18 100%)`,
         }}
@@ -94,7 +94,7 @@ const ProductCard = memo(function ProductCard({
       </div>
 
       {/* Content */}
-      <div className={`flex flex-col flex-1 ${featured ? "p-6 md:p-8" : "p-5 md:p-6"}`}>
+      <div className={`relative z-10 flex flex-col flex-1 ${featured ? "p-6 md:p-8" : "p-5 md:p-6"}`}>
         {/* Subtitle */}
         <span
           className="text-[10px] md:text-xs font-medium font-onest uppercase tracking-wider mb-2"
