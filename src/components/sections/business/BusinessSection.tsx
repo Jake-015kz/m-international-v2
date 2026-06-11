@@ -6,7 +6,6 @@ import {
   Users,
   GraduationCap,
   Handshake,
-  Gift,
   Star,
   UserPlus,
   BookOpen,
@@ -21,28 +20,20 @@ import { BackgroundDecorations } from "@/components/ui";
 
 const rewards = [
   {
-    icon: <TrendingUp className="w-5 h-5" />,
-    title: "9 типов бонусов",
-    text: "Одна из самых комплексных систем вознаграждений в отрасли.",
-    gradient: "from-amber-500/15 to-orange-500/15",
-    iconBg: "bg-amber-500/10 border-amber-500/20",
-    iconColor: "text-amber-600",
-  },
-  {
-    icon: <Users className="w-5 h-5" />,
-    title: "Равные возможности",
-    text: "Вознаграждения по результатам, а не по стажу. Каждый может добиться успеха.",
-    gradient: "from-blue-500/15 to-cyan-500/15",
-    iconBg: "bg-blue-500/10 border-blue-500/20",
-    iconColor: "text-blue-600",
-  },
-  {
     icon: <GraduationCap className="w-5 h-5" />,
     title: "Бесплатное обучение",
     text: "Программа: продукты, продажи, команда. Поддержка на каждом этапе.",
     gradient: "from-emerald-500/15 to-teal-500/15",
     iconBg: "bg-emerald-500/10 border-emerald-500/20",
     iconColor: "text-emerald-600",
+  },
+  {
+    icon: <Users className="w-5 h-5" />,
+    title: "Сообщество 10 000+",
+    text: "Присоединяйтесь к команде единомышленников в 50+ странах.",
+    gradient: "from-blue-500/15 to-cyan-500/15",
+    iconBg: "bg-blue-500/10 border-blue-500/20",
+    iconColor: "text-blue-600",
   },
   {
     icon: <Handshake className="w-5 h-5" />,
@@ -53,12 +44,12 @@ const rewards = [
     iconColor: "text-violet-600",
   },
   {
-    icon: <Gift className="w-5 h-5" />,
-    title: "Высокий доход с первого дня",
-    text: "Начните зарабатывать сразу после регистрации.",
-    gradient: "from-rose-500/15 to-pink-500/15",
-    iconBg: "bg-rose-500/10 border-rose-500/20",
-    iconColor: "text-rose-600",
+    icon: <TrendingUp className="w-5 h-5" />,
+    title: "9 типов бонусов",
+    text: "Комплексная система вознаграждений за результат.",
+    gradient: "from-amber-500/15 to-orange-500/15",
+    iconBg: "bg-amber-500/10 border-amber-500/20",
+    iconColor: "text-amber-600",
   },
   {
     icon: <Star className="w-5 h-5" />,
@@ -103,7 +94,7 @@ const BusinessSection = memo(function BusinessSection() {
         <ScrollReveal>
           <SectionHeader
             title="Бизнес с m-international.kz"
-            description="Гибридная система вознаграждений. Высокий доход с первого дня."
+            description="Гибридная система вознаграждений. Обучение, поддержка, глобальный рынок."
           />
         </ScrollReveal>
 
@@ -119,7 +110,7 @@ const BusinessSection = memo(function BusinessSection() {
                   <div className={`w-11 h-11 md:w-12 md:h-12 rounded-xl ${r.iconBg} border flex items-center justify-center mb-3 md:mb-4 ${r.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                     {r.icon}
                   </div>
-                  <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
+                  <h3 className="font-onest font-bold text-sm md:text-base text-text-primary mb-1.5">
                     {r.title}
                   </h3>
                   <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
@@ -196,17 +187,7 @@ const BusinessSection = memo(function BusinessSection() {
           </div>
         </div>
 
-        {/* Quote — enhanced */}
-        <ScrollReveal delay={0.3}>
-          <div className="mt-12 md:mt-16 text-center">
-            <div className="inline-block relative px-8 md:px-12 py-6 md:py-8 rounded-2xl bg-gradient-to-br from-accent-50/50 to-transparent border border-accent-100/50">
-              <blockquote className="font-unbounded text-base md:text-xl font-bold text-text-primary max-w-2xl mx-auto leading-[1.3]">
-                «m-international.kz — ваш мост к финансовой свободе»
-              </blockquote>
-              <p className="text-xs text-text-tertiary font-onest mt-2">— Топ-лидеры компании</p>
-            </div>
-          </div>
-        </ScrollReveal>
+
       </Container>
     </section>
   );

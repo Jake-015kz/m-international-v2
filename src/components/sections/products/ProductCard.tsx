@@ -29,7 +29,7 @@ const ProductCard = memo(function ProductCard({
 }: ProductCardProps) {
   return (
     <div
-      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 cursor-pointer card-premium-v2 ${featured ? "sm:col-span-2" : ""}`}
+      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 cursor-pointer product-card-hover ${featured ? "sm:col-span-2" : ""}`}
       onClick={() => {
         if (href !== "#") window.location.href = href;
       }}
@@ -104,7 +104,7 @@ const ProductCard = memo(function ProductCard({
         </span>
 
         {/* Name */}
-        <h3 className={`font-unbounded font-bold leading-[1.2] tracking-normal text-text-primary mb-2 ${featured ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}>
+        <h3 className={`font-onest font-bold leading-[1.2] tracking-normal text-text-primary mb-2 ${featured ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}>
           {name}
         </h3>
 
@@ -115,7 +115,7 @@ const ProductCard = memo(function ProductCard({
 
         {/* Link */}
         <div className="inline-flex items-center gap-1.5 text-xs md:text-sm font-medium transition-all duration-300 group-hover:gap-3">
-          <span style={{ color }} className="font-unbounded font-bold">Подробнее</span>
+          <span style={{ color }} className="font-onest font-bold">Подробнее</span>
           <ArrowRight
             className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
             style={{ color }}

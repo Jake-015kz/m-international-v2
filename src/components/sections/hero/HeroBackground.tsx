@@ -2,80 +2,16 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useMemo, useRef, useEffect, memo } from "react";
+import { useRef, useEffect, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  duration: number;
-  delay: number;
-  color: "white" | "green";
-  animType: "a" | "b";
-}
-
-function generateParticles(count: number): Particle[] {
-  const particles: Particle[] = [];
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      id: i,
-      x: (i * 37 + 13) % 100,
-      y: (i * 53 + 7) % 100,
-      size: 2 + (i % 3),
-      duration: 5 + (i % 4) * 1.5,
-      delay: (i * 0.7) % 5,
-      color: i % 3 === 0 ? "green" : "white",
-      animType: i % 2 === 0 ? "a" : "b",
-    });
-  }
-  return particles;
-}
-
-const Particles = memo(function Particles() {
-  const particles = useMemo(() => generateParticles(24), []);
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className={`absolute rounded-full ${
-            p.color === "green" ? "bg-accent-200" : "bg-surface-elevated"
-          }`}
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-            willChange: "transform, opacity",
-          }}
-          animate={{
-            y: p.animType === "a" ? [-10, 10, -10] : [-8, 14, -8],
-            x: p.animType === "a" ? [0, 5, 0] : [0, -4, 0],
-            opacity: [0.15, 0.3, 0.15],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-});
-
 const HeroBackground = memo(function HeroBackground() {
   const bgRef = useRef<HTMLDivElement>(null);
   const orb1Ref = useRef<HTMLDivElement>(null);
   const orb2Ref = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -119,19 +55,6 @@ const HeroBackground = memo(function HeroBackground() {
           },
         });
       }
-
-      if (particlesRef.current) {
-        gsap.to(particlesRef.current, {
-          yPercent: 25,
-          ease: "none",
-          scrollTrigger: {
-            trigger: particlesRef.current.parentElement,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1.5,
-          },
-        });
-      }
     });
 
     return () => ctx.revert();
@@ -160,11 +83,8 @@ const HeroBackground = memo(function HeroBackground() {
         />
       </motion.div>
 
-      {/* Conic glow — desktop only */}
-      <div className="hero-conic-glow hidden md:block" style={{ left: '50%', top: '40%', transform: 'translate(-50%, -50%)' }} />
-
       {/* Mesh gradient layer */}
-      <div className="absolute inset-0 hero-mesh-gradient opacity-50 z-[1]" />
+      <div className="absolute inset-0 mesh-gradient opacity-50 z-[1]" />
 
       {/* Animated glow orb 1 — hidden on mobile to save GPU */}
       <motion.div
@@ -215,11 +135,6 @@ const HeroBackground = memo(function HeroBackground() {
           backgroundSize: "28px 28px",
         }}
       />
-
-      {/* Floating particles — parallax layer */}
-      <div ref={particlesRef} className="will-change-transform">
-        <Particles />
-      </div>
 
       {/* Noise overlay */}
       <div className="absolute inset-0 noise-overlay" />

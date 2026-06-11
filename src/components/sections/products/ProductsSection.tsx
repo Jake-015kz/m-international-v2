@@ -14,7 +14,7 @@ const PRODUCTS = [
     color: "oklch(65% 0.14 75)",
     icon: <Leaf className="w-5 h-5" />,
     featured: true,
-    image: "/images/products/micrystal.png",
+    image: "/images/products/micrystal.webp",
   },
   {
     name: "GreenMAX",
@@ -22,6 +22,7 @@ const PRODUCTS = [
     description: "Формула 3 в 1: очищение кишечника, восстановление микрофлоры, защита печени.",
     color: "oklch(55% 0.16 140)",
     icon: <Leaf className="w-5 h-5" />,
+    featured: true,
     image: "/images/products/greenmax.png",
   },
   {
@@ -70,7 +71,7 @@ const PRODUCTS = [
     description: "100% арабика с кордицепсом. Энергия и бодрость.",
     color: "oklch(35% 0.08 40)",
     icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/mitown2.png",
+    image: "/images/products/mitown2.webp",
   },
 ];
 
@@ -93,8 +94,8 @@ const ProductsSection = memo(function ProductsSection() {
           </div>
         </ScrollReveal>
 
-        {/* Product Grid */}
-        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {/* Product Grid — varied layout: 2 featured (span-2), 6 standard */}
+        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {PRODUCTS.map((product, i) => (
             <ScrollReveal key={product.name} delay={i * 0.06}>
               <ProductCard

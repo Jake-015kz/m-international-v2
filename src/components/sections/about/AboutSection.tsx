@@ -5,29 +5,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
 
-const values = [
-  {
-    icon: <Target className="w-5 h-5 text-accent-600" />,
-    title: "Миссия",
-    text: "Создаём новый стандарт в индустрии — меняем имидж, повышаем доверие и социальную ценность.",
-  },
-  {
-    icon: <Eye className="w-5 h-5 text-accent-600" />,
-    title: "Видение",
-    text: "Стать компанией №1 в мире через инновационные продукты и систему вознаграждений, ориентированную на людей.",
-  },
-  {
-    icon: <Gem className="w-5 h-5 text-accent-600" />,
-    title: "Ценности",
-    text: "Время, воспоминания и путь, пройденный вместе — это главное. Качество, честность, инновации.",
-  },
-  {
-    icon: <Rocket className="w-5 h-5 text-accent-600" />,
-    title: "Девиз",
-    text: "«Мост к вашим мечтам» — мы помогаем людям реализовать свой потенциал и достичь успеха.",
-  },
-];
-
 const timeline = [
   { year: "2019", title: "Открытие в Монголии", desc: "Начало глобального пути компании." },
   { year: "2021", title: "Triple Diamond", desc: "Triple Diamond Director в Монголии." },
@@ -49,25 +26,52 @@ const AboutSection = memo(function AboutSection() {
           />
         </ScrollReveal>
 
-        {/* Values — alternating layout */}
-        <div className="mt-8 md:mt-12 space-y-4 md:space-y-5">
-          {values.map((v, i) => (
-            <ScrollReveal key={v.title} delay={i * 0.08}>
-              <div className={`flex items-start gap-4 md:gap-6 p-5 md:p-7 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm ${i % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""}`}>
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center shrink-0">
-                  {v.icon}
-                </div>
-                <div>
-                  <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
-                    {v.title}
-                  </h3>
-                  <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                    {v.text}
-                  </p>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+        {/* Values — 2-column layout */}
+        <div className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          <div className="p-5 md:p-7 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
+              <Target className="w-5 h-5 text-accent-600" />
+            </div>
+            <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
+              Миссия
+            </h3>
+            <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
+              Создаём новый стандарт в индустрии — меняем имидж, повышаем доверие и социальную ценность.
+            </p>
+          </div>
+          <div className="p-5 md:p-7 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
+              <Eye className="w-5 h-5 text-accent-600" />
+            </div>
+            <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
+              Видение
+            </h3>
+            <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
+              Стать компанией №1 в мире через инновационные продукты и систему вознаграждений, ориентированную на людей.
+            </p>
+          </div>
+          <div className="p-5 md:p-7 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
+              <Gem className="w-5 h-5 text-accent-600" />
+            </div>
+            <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
+              Ценности
+            </h3>
+            <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
+              Время, воспоминания и путь, пройденный вместе — это главное. Качество, честность, инновации.
+            </p>
+          </div>
+          <div className="p-5 md:p-7 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
+              <Rocket className="w-5 h-5 text-accent-600" />
+            </div>
+            <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
+              Девиз
+            </h3>
+            <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
+              «Мост к вашим мечтам» — мы помогаем людям реализовать свой потенциал и достичь успеха.
+            </p>
+          </div>
         </div>
 
         {/* Timeline */}

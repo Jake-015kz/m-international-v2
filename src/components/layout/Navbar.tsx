@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Container from "@/components/ui/Container";
+import { LOCALES, DEFAULT_LOCALE } from "@/lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,12 @@ const NAV_LINKS = [
   { href: "#about", label: "О компании" },
   { href: "#contacts", label: "Контакты" },
 ];
+
+const LOCALE_LABELS: Record<string, string> = {
+  ru: "RU",
+  en: "EN",
+  kk: "KZ",
+};
 
 export default function Navbar({ locale = "ru" }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
@@ -110,12 +117,29 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
 
             {/* CTA + Mobile toggle */}
             <div className="flex items-center gap-3">
-              <Link
-                href="#contacts"
-                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-xs font-medium bg-text-primary text-surface-elevated hover:bg-text-secondary transition-colors duration-200"
-              >
-                Связаться
-              </Link>
+            {/* Language switcher */}
+            <div className="hidden md:flex items-center gap-1 mr-2">
+              {LOCALES.map((loc) => (
+                <Link
+                  key={loc}
+                  href={`/${loc}`}
+                  className={`px-2 py-1 text-xs font-onest font-medium rounded transition-colors duration-200 ${
+                    loc === locale
+                      ? "text-text-primary bg-surface-sunken"
+                      : "text-text-tertiary hover:text-text-secondary"
+                  }`}
+                >
+                  {LOCALE_LABELS[loc]}
+                </Link>
+              ))}
+            </div>
+
+            <Link
+              href="#contacts"
+              className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-xs font-medium bg-text-primary text-surface-elevated hover:bg-text-secondary transition-colors duration-200"
+            >
+              Связаться
+            </Link>
 
               {/* Mobile hamburger */}
               <button

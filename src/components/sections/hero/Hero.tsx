@@ -27,15 +27,8 @@ const FloatingCardsWrapper = memo(function FloatingCardsWrapper() {
   return <FloatingCards />;
 });
 
-const stats = [
-  { value: "10 000+", label: "Клиентов" },
-  { value: "50+", label: "Стран" },
-  { value: "15 лет", label: "Опыта" },
-];
-
 const Hero = memo(function Hero() {
   const contentRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,20 +41,6 @@ const Hero = memo(function Hero() {
             trigger: contentRef.current.parentElement,
             start: "top top",
             end: "50% top",
-            scrub: 0.5,
-          },
-        });
-      }
-
-      if (statsRef.current) {
-        gsap.to(statsRef.current, {
-          y: 20,
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: statsRef.current.parentElement,
-            start: "top top",
-            end: "40% top",
             scrub: 0.5,
           },
         });
@@ -86,7 +65,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full hero-glass-badge mb-6 md:mb-8"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100 mb-6 md:mb-8"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />
             <span className="text-xs font-onest font-medium text-accent-700">Натуральные БАДы премиум класса</span>
@@ -99,7 +78,7 @@ const Hero = memo(function Hero() {
             transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="font-unbounded text-2xl sm:text-3xl md:text-5xl lg:text-[3.5rem] leading-[1.1] tracking-normal mb-4 sm:mb-6"
           >
-            <span className="hero-gradient-text font-black">
+            <span className="text-text-primary font-black">
               Интеллект природы
             </span>{" "}
             <span className="font-extralight text-text-secondary">
@@ -131,47 +110,6 @@ const Hero = memo(function Hero() {
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom statistics — inline text, not metric cards */}
-      <motion.div
-        ref={statsRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="hidden lg:block absolute bottom-0 left-0 right-0 py-5 z-20 will-change-transform"
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center gap-8 md:gap-12 text-text-tertiary font-onest text-sm">
-            {stats.map((stat, i) => (
-              <div key={i} className="flex items-center gap-8 md:gap-12">
-                {i > 0 && <div className="w-px h-6 bg-border-subtle" />}
-                <span>
-                  <strong className="font-unbounded text-base md:text-lg font-bold text-text-primary">{stat.value}</strong>
-                  {" "}{stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Mobile stats — inline, below CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.6 }}
-        className="lg:hidden flex justify-center items-center gap-6 sm:gap-8 mt-10 sm:mt-12 text-text-tertiary font-onest text-xs sm:text-sm"
-      >
-        {stats.map((stat, i) => (
-          <div key={i} className="flex items-center gap-6 sm:gap-8">
-            {i > 0 && <div className="w-px h-6 sm:h-8 bg-border-subtle" />}
-            <span>
-              <strong className="font-unbounded text-sm sm:text-base font-bold text-text-primary">{stat.value}</strong>
-              {" "}{stat.label}
-            </span>
-          </div>
-        ))}
-      </motion.div>
     </section>
   );
 });
