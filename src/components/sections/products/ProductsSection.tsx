@@ -9,6 +9,7 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
+import { useTranslations } from "next-intl";
 
 interface Product {
   name: string;
@@ -22,92 +23,10 @@ interface Product {
   composition?: string;
 }
 
-const PRODUCTS: Product[] = [
-  {
-    name: "MiCrystal",
-    subtitle: "Здоровье глаз",
-    description: "Клеточное питание для глаз. Экстракт бузины, лютеин, астаксантин.",
-    color: "oklch(65% 0.14 75)",
-    icon: <Leaf className="w-5 h-5" />,
-    featured: true,
-    image: "/images/products/micrystal.webp",
-    benefits: ["Острота зрения", "Защита от сухости", "Снижение глазного давления"],
-    composition: "Бузина, FloraGLO, лютеин, астаксантин.",
-  },
-  {
-    name: "GreenMAX",
-    subtitle: "Детокс",
-    description: "Формула 3 в 1: очищение кишечника, восстановление микрофлоры, защита печени.",
-    color: "oklch(55% 0.16 140)",
-    icon: <Leaf className="w-5 h-5" />,
-    featured: true,
-    image: "/images/products/greenmax.webp",
-    benefits: ["Очищает кишечник", "Восстанавливает микрофлору", "Защищает печень"],
-    composition: "Корень лопуха, хлорофилл, расторопша, пробиотик.",
-  },
-  {
-    name: "MiMAX",
-    subtitle: "Антиоксидант",
-    description: "Астаксантин — антиоксидант в 6000 раз мощнее витамина С.",
-    color: "oklch(55% 0.18 25)",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/mimax.webp",
-    benefits: ["Антиоксидантная защита", "Укрепление сердца", "Омоложение кожи"],
-    composition: "Астаксантин, облепиха, черника, экстракт сосны.",
-  },
-  {
-    name: "BluMAX",
-    subtitle: "Иммунитет и мозг",
-    description: "Сине-зелёные водоросли AFA с нейропептидами. 60+ минералов.",
-    color: "oklch(55% 0.14 230)",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/blumax.webp",
-    benefits: ["Укрепление иммунитета", "Улучшение памяти", "Очищение сосудов"],
-    composition: "Водоросли AFA, шампиньоны, витамин С.",
-  },
-  {
-    name: "NutriMAX",
-    subtitle: "Белковый коктейль",
-    description: "Растительный белок со спирулиной и хлореллой. Энергия и восстановление.",
-    color: "oklch(60% 0.14 120)",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/nutrimax.webp",
-    benefits: ["Восстановление после нагрузок", "Управление весом", "Укрепление костей"],
-    composition: "Соевый протеин, спирулина, хлорелла, моринга.",
-  },
-  {
-    name: "FlexiMAX",
-    subtitle: "Здоровье суставов",
-    description: "Растительный глюкозамин, куркума, гиалуроновая кислота.",
-    color: "oklch(55% 0.12 60)",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/fleximax.webp",
-    benefits: ["Снимает боль и воспаление", "Восстанавливает хрящи", "Возвращает подвижность"],
-    composition: "Куркума, глюкозамин, гиалуроновая кислота, хондроитин.",
-  },
-  {
-    name: "MachoMAN",
-    subtitle: "Мужская сила",
-    description: "Мака перуанская, L-аргинин, женьшень. Поддержка тестостерона.",
-    color: "oklch(45% 0.16 350)",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/machoman.webp",
-    benefits: ["Повышение тестостерона", "Улучшение либидо", "Энергия и выносливость"],
-    composition: "Мака перуанская, L-аргинин, женьшень, грейпфрут.",
-  },
-  {
-    name: "MiTOWN",
-    subtitle: "Кофе с кордицепсом",
-    description: "100% арабика с кордицепсом. Энергия и бодрость.",
-    color: "oklch(35% 0.08 40)",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/images/products/mitown2.webp",
-    benefits: ["Энергия и бодрость", "Поддержка иммунитета", "Антиоксиданты"],
-    composition: "100% арабика, экстракт кордицепса.",
-  },
-];
-
 const ProductsSection = memo(function ProductsSection() {
+  const t = useTranslations();
+  const tProducts = useTranslations("products");
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -142,6 +61,92 @@ const ProductsSection = memo(function ProductsSection() {
     setTimeout(() => setSelectedProduct(null), 300);
   }, []);
 
+  // Build products from i18n messages
+  const products: Product[] = [
+    {
+      name: tProducts("micrystal.name"),
+      subtitle: tProducts("micrystal.subtitle"),
+      description: tProducts("micrystal.description"),
+      color: "oklch(65% 0.14 75)",
+      icon: <Leaf className="w-5 h-5" />,
+      featured: true,
+      image: "/images/products/micrystal.webp",
+      benefits: tProducts.raw("micrystal.benefits") as unknown as string[],
+      composition: tProducts("micrystal.composition"),
+    },
+    {
+      name: tProducts("greenmax.name"),
+      subtitle: tProducts("greenmax.subtitle"),
+      description: tProducts("greenmax.description"),
+      color: "oklch(55% 0.16 140)",
+      icon: <Leaf className="w-5 h-5" />,
+      featured: true,
+      image: "/images/products/greenmax.webp",
+      benefits: tProducts.raw("greenmax.benefits") as unknown as string[],
+      composition: tProducts("greenmax.composition"),
+    },
+    {
+      name: tProducts("mimax.name"),
+      subtitle: tProducts("mimax.subtitle"),
+      description: tProducts("mimax.description"),
+      color: "oklch(55% 0.18 25)",
+      icon: <Leaf className="w-5 h-5" />,
+      image: "/images/products/mimax.webp",
+      benefits: tProducts.raw("mimax.benefits") as unknown as string[],
+      composition: tProducts("mimax.composition"),
+    },
+    {
+      name: tProducts("blumax.name"),
+      subtitle: tProducts("blumax.subtitle"),
+      description: tProducts("blumax.description"),
+      color: "oklch(55% 0.14 230)",
+      icon: <Leaf className="w-5 h-5" />,
+      image: "/images/products/blumax.webp",
+      benefits: tProducts.raw("blumax.benefits") as unknown as string[],
+      composition: tProducts("blumax.composition"),
+    },
+    {
+      name: tProducts("nutrimax.name"),
+      subtitle: tProducts("nutrimax.subtitle"),
+      description: tProducts("nutrimax.description"),
+      color: "oklch(60% 0.14 120)",
+      icon: <Leaf className="w-5 h-5" />,
+      image: "/images/products/nutrimax.webp",
+      benefits: tProducts.raw("nutrimax.benefits") as unknown as string[],
+      composition: tProducts("nutrimax.composition"),
+    },
+    {
+      name: tProducts("fleximax.name"),
+      subtitle: tProducts("fleximax.subtitle"),
+      description: tProducts("fleximax.description"),
+      color: "oklch(55% 0.12 60)",
+      icon: <Leaf className="w-5 h-5" />,
+      image: "/images/products/fleximax.webp",
+      benefits: tProducts.raw("fleximax.benefits") as unknown as string[],
+      composition: tProducts("fleximax.composition"),
+    },
+    {
+      name: tProducts("machoman.name"),
+      subtitle: tProducts("machoman.subtitle"),
+      description: tProducts("machoman.description"),
+      color: "oklch(45% 0.16 350)",
+      icon: <Leaf className="w-5 h-5" />,
+      image: "/images/products/machoman.webp",
+      benefits: tProducts.raw("machoman.benefits") as unknown as string[],
+      composition: tProducts("machoman.composition"),
+    },
+    {
+      name: tProducts("mitown.name"),
+      subtitle: tProducts("mitown.subtitle"),
+      description: tProducts("mitown.description"),
+      color: "oklch(35% 0.08 40)",
+      icon: <Leaf className="w-5 h-5" />,
+      image: "/images/products/mitown2.webp",
+      benefits: tProducts.raw("mitown.benefits") as unknown as string[],
+      composition: tProducts("mitown.composition"),
+    },
+  ];
+
   return (
     <>
       <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt">
@@ -156,11 +161,13 @@ const ProductsSection = memo(function ProductsSection() {
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100 mb-4">
                 <Sparkles className="w-3.5 h-3.5 text-accent-600" />
-                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">Премиум качество</span>
+                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">
+                  {t("products.features.natural")}
+                </span>
               </div>
               <SectionHeader
-                title="Наша продукция"
-                description="Натуральные добавки для здоровья и долголетия"
+                title={t("products.title")}
+                description={t("products.description")}
               />
             </div>
           </ScrollReveal>
@@ -188,7 +195,7 @@ const ProductsSection = memo(function ProductsSection() {
             {/* Embla viewport */}
             <div className="overflow-hidden px-2" ref={emblaRef}>
               <div className="flex gap-3 md:gap-5">
-                {PRODUCTS.map((product, i) => (
+                {products.map((product, i) => (
                   <div
                     key={product.name}
                     className="flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-[0_0_31%] min-w-0"
@@ -211,7 +218,7 @@ const ProductsSection = memo(function ProductsSection() {
 
             {/* Dots indicator */}
             <div className="flex items-center justify-center gap-2 mt-4">
-              {PRODUCTS.map((_, i) => (
+              {products.map((_, i) => (
                 <button
                   key={i}
                   className="w-2 h-2 rounded-full bg-border-default transition-all duration-300 hover:bg-accent-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
@@ -228,11 +235,11 @@ const ProductsSection = memo(function ProductsSection() {
           <ScrollReveal delay={0.4}>
             <div className="mt-6 md:mt-12 text-center">
               <a href="/catalog" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 min-h-[44px]">
-                Смотреть весь каталог
+                {t("hero.cta")}
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
               <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-text-tertiary font-onest font-light">
-                Все продукты сертифицированы • GMP стандарт • 100% натуральные компоненты
+                {t("products.features.certified")} · {t("products.features.natural")} · {t("products.features.tested")}
               </p>
             </div>
           </ScrollReveal>

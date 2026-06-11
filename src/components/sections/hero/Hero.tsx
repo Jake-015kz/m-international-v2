@@ -5,6 +5,7 @@ import { useRef, useEffect, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Globe, Users, Calendar, MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,6 +26,7 @@ const CIS_COUNTRIES = [
 /* ── Main Hero ── */
 const Hero = memo(function Hero() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("hero");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -72,7 +74,7 @@ const Hero = memo(function Hero() {
         style={{ background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%)", filter: "blur(100px)" }}
       />
 
-      {/* Center content — vertically and horizontally centered */}
+      {/* Center content */}
       <div ref={contentRef} className="relative z-10 container mx-auto px-4 min-h-[100dvh] mobile-full-height flex flex-col items-center justify-center py-20 sm:py-24 lg:py-0 will-change-transform">
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
 
@@ -84,18 +86,18 @@ const Hero = memo(function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-4 mobile-no-backdrop"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] font-onest font-medium text-white/80">Натуральные БАДы премиум класса</span>
+            <span className="text-[11px] font-onest font-medium text-white/80">{t("label")}</span>
           </motion.div>
 
-          {/* Title — compact for CIS */}
+          {/* Title */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="font-unbounded text-[1.55rem] sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-normal mb-3 px-2 sm:px-0"
           >
-            <span className="text-white font-black">Сила природы</span>{" "}
-            <span className="font-extralight text-white/70">в каждой капсуле</span>
+            <span className="text-white font-black">{t("title")}</span>{" "}
+            <span className="font-extralight text-white/70">{t("subtitle")}</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -105,7 +107,7 @@ const Hero = memo(function Hero() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-sm sm:text-base md:text-lg text-white/60 font-onest font-light leading-relaxed max-w-md sm:max-w-xl mb-5"
           >
-            Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. Доступны в 50+ странах.
+            {t("lead")}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -116,14 +118,14 @@ const Hero = memo(function Hero() {
             className="flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-none sm:w-auto px-4 sm:px-0 mb-6"
           >
             <a href="#products" className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 w-full sm:w-auto whitespace-nowrap min-h-[44px]">
-              Смотреть каталог
+              {t("cta")}
             </a>
             <a href="#about" className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white font-unbounded font-bold text-sm rounded-2xl border border-white/15 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto whitespace-nowrap mobile-no-backdrop min-h-[44px]">
-              О компании
+              {t("aboutLink")}
             </a>
           </motion.div>
 
-          {/* CIS Countries — elegant grid */}
+          {/* CIS Countries */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -152,7 +154,7 @@ const Hero = memo(function Hero() {
             </div>
           </motion.div>
 
-          {/* Stats — premium style */}
+          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -167,7 +169,7 @@ const Hero = memo(function Hero() {
                   <Globe className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400/70" />
                 </div>
                 <div className="font-unbounded font-bold text-base sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">50+</div>
-                <div className="text-[8px] sm:text-xs text-white/40 font-onest mt-0.5">Стран</div>
+                <div className="text-[8px] sm:text-xs text-white/40 font-onest mt-0.5">{t("stat.countries")}</div>
               </div>
 
               <div className="w-px h-6 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-1 sm:mx-2 md:mx-4" />
@@ -177,7 +179,7 @@ const Hero = memo(function Hero() {
                   <Users className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400/70" />
                 </div>
                 <div className="font-unbounded font-bold text-base sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">10K+</div>
-                <div className="text-[8px] sm:text-xs text-white/40 font-onest mt-0.5">Партнёров</div>
+                <div className="text-[8px] sm:text-xs text-white/40 font-onest mt-0.5">{t("stat.customers")}</div>
               </div>
 
               <div className="w-px h-6 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-1 sm:mx-2 md:mx-4" />
@@ -187,7 +189,7 @@ const Hero = memo(function Hero() {
                   <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400/70" />
                 </div>
                 <div className="font-unbounded font-bold text-base sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">5</div>
-                <div className="text-[8px] sm:text-xs text-white/40 font-onest mt-0.5">Лет на рынке</div>
+                <div className="text-[8px] sm:text-xs text-white/40 font-onest mt-0.5">{t("stat.years")}</div>
               </div>
             </div>
           </motion.div>

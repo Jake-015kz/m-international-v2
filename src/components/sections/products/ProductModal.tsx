@@ -3,6 +3,7 @@
 import { useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X, Leaf, Shield, CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -20,10 +21,14 @@ interface ProductModalProps {
 
 export default function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("catalog");
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Escape") onClose();
-  }, [onClose]);
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -54,9 +59,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
 
       {/* Modal */}
       <div className="relative z-10 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-surface-elevated border border-border-subtle shadow-2xl animate-modal-in">
-        {/* Header with image */}
+        {/* Header with image — taller, with solid overlay for controls */}
         <div
-          className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl"
+          className="relative h-56 sm:h-64 overflow-hidden rounded-t-2xl"
           style={{
             background: `linear-gradient(135deg, ${product.color}18 0%, ${product.color}30 50%, ${product.color}18 100%)`,
           }}
@@ -65,7 +70,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-contain p-6"
+              className="w-full h-full object-contain p-4"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -82,20 +87,23 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
             </div>
           )}
 
-          {/* Close button */}
+          {/* Solid gradient overlay at top for close button visibility */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
+
+          {/* Close button — always visible on dark overlay */}
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-sm flex items-center justify-center transition-colors duration-200 min-h-[44px] min-w-[44px]"
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center transition-colors duration-200 min-h-[44px] min-w-[44px]"
             aria-label="Закрыть"
           >
             <X className="w-4 h-4 text-white" />
           </button>
 
-          {/* Subtitle badge */}
+          {/* Subtitle badge — bottom left with solid bg */}
           <div className="absolute bottom-3 left-4">
             <span
-              className="inline-block px-3 py-1 rounded-full text-xs font-unbounded font-bold text-white"
-              style={{ background: `${product.color}cc` }}
+              className="inline-block px-3 py-1.5 rounded-full text-xs font-unbounded font-bold text-white shadow-lg"
+              style={{ background: `${product.color}dd` }}
             >
               {product.subtitle}
             </span>
@@ -116,7 +124,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
           {product.benefits && product.benefits.length > 0 && (
             <div className="mb-5">
               <h3 className="font-unbounded font-bold text-xs uppercase tracking-wider text-text-tertiary mb-3">
-                Преимущества
+                {t("specifications")}
               </h3>
               <div className="space-y-2">
                 {product.benefits.map((benefit) => (
@@ -133,7 +141,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
           {product.composition && (
             <div className="mb-5 p-3 rounded-xl bg-surface-sunken border border-border-subtle">
               <h3 className="font-unbounded font-bold text-xs uppercase tracking-wider text-text-tertiary mb-1.5">
-                Состав
+                {t("certificates")}
               </h3>
               <p className="text-xs text-text-secondary font-onest font-light leading-relaxed">
                 {product.composition}
@@ -156,13 +164,13 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
               onClick={onClose}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 min-h-[44px]"
             >
-              Узнать цену
+              {t("contact")}
             </a>
             <button
               onClick={onClose}
               className="inline-flex items-center justify-center px-6 py-3 bg-surface-sunken hover:bg-surface-base text-text-secondary font-onest font-medium text-sm rounded-2xl border border-border-subtle transition-all duration-300 min-h-[44px]"
             >
-              Закрыть
+              {t("backToCatalog")}
             </button>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { type ReactNode, memo } from "react";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ProductCardProps {
   name: string;
@@ -27,13 +28,15 @@ const ProductCard = memo(function ProductCard({
   image,
   onClick,
 }: ProductCardProps) {
+  const t = useTranslations("catalog");
+
   return (
     <div
       className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 cursor-pointer product-card-hover ${featured ? "sm:col-span-2" : ""}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
-      aria-label={`Подробнее о ${name}`}
+      aria-label={`${t("contact")} ${name}`}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -41,9 +44,9 @@ const ProductCard = memo(function ProductCard({
         }
       }}
     >
-      {/* Product image area */}
+      {/* Product image area — taller */}
       <div
-        className="relative z-10 h-28 sm:h-40 md:h-44 overflow-hidden"
+        className="relative z-10 h-36 sm:h-48 md:h-52 overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${color}18 0%, ${color}30 50%, ${color}18 100%)`,
         }}
@@ -53,7 +56,7 @@ const ProductCard = memo(function ProductCard({
             src={image}
             alt={name}
             fill
-            className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+            className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
@@ -131,7 +134,7 @@ const ProductCard = memo(function ProductCard({
             onClick?.();
           }}
         >
-          Подробнее
+          {t("contact")}
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>

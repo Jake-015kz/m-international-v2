@@ -1,27 +1,31 @@
 import { memo } from "react";
 import { Send, MapPin, Phone, Mail, Clock } from "lucide-react";
 import Container from "@/components/ui/Container";
-
-const footerLinks = {
-  company: [
-    { label: "О компании", href: "#about" },
-    { label: "Продукция", href: "#products" },
-    { label: "Бизнес", href: "#business" },
-    { label: "Сертификаты", href: "#certificates" },
-  ],
-  catalog: [
-    { label: "Детокс", href: "#products" },
-    { label: "Иммунитет", href: "#products" },
-    { label: "Питание", href: "#products" },
-    { label: "Уход за кожей", href: "#products" },
-  ],
-  legal: [
-    { label: "Конфиденциальность", href: "#" },
-    { label: "Условия", href: "#" },
-  ],
-};
+import { useTranslations } from "next-intl";
 
 const Footer = memo(function Footer() {
+  const t = useTranslations("footer");
+  const tNav = useTranslations("nav");
+
+  const footerLinks = {
+    company: [
+      { label: t("company"), href: "#about" },
+      { label: tNav("catalog"), href: "#products" },
+      { label: tNav("business") || "Бизнес", href: "#business" },
+      { label: t("certificates"), href: "#certificates" },
+    ],
+    catalog: [
+      { label: t("detox"), href: "#products" },
+      { label: t("immunity"), href: "#products" },
+      { label: t("nutrition"), href: "#products" },
+      { label: "Уход за кожей", href: "#products" },
+    ],
+    legal: [
+      { label: t("privacy"), href: "#" },
+      { label: t("terms"), href: "#" },
+    ],
+  };
+
   return (
     <footer id="contacts" className="relative bg-accent-900 text-text-inverse overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "0 500px" }}>
       <div className="h-px w-full bg-gradient-to-r from-transparent via-accent-500/30 to-transparent" />
@@ -32,7 +36,7 @@ const Footer = memo(function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <h3 className="font-unbounded font-bold text-base md:text-xl text-white mb-2 md:mb-3">M-International</h3>
             <p className="text-[11px] md:text-sm text-white/40 font-onest font-light leading-relaxed mb-3 md:mb-4">
-              Натуральные добавки для здоровья и долголетия. 50+ стран мира.
+              {t("subscription.description")}
             </p>
             <div className="space-y-1.5 md:space-y-2 mb-3 md:mb-4">
               <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/40 font-onest">
@@ -73,7 +77,7 @@ const Footer = memo(function Footer() {
 
           {/* Company links */}
           <div>
-            <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">Компания</h4>
+            <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("company")}</h4>
             <ul className="space-y-1.5 md:space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
@@ -85,7 +89,7 @@ const Footer = memo(function Footer() {
 
           {/* Catalog links */}
           <div>
-            <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">Каталог</h4>
+            <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("catalog")}</h4>
             <ul className="space-y-1.5 md:space-y-2">
               {footerLinks.catalog.map((link) => (
                 <li key={link.label}>
@@ -97,12 +101,12 @@ const Footer = memo(function Footer() {
 
           {/* Newsletter */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">Рассылка</h4>
-            <p className="text-[11px] md:text-xs text-white/40 font-onest font-light mb-3">Эксклюзивные предложения и советы</p>
+            <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("subscription.title")}</h4>
+            <p className="text-[11px] md:text-xs text-white/40 font-onest font-light mb-3">{t("subscription.description")}</p>
             <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
-                placeholder="Ваш email"
+                placeholder={t("subscription.placeholder")}
                 className="flex-1 min-w-0 px-4 py-2.5 text-xs bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-white/20 font-onest focus:outline-none focus:border-emerald-500/50 transition-colors min-h-[44px]"
               />
               <button className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-unbounded font-bold rounded-2xl transition-colors duration-300 shrink-0 min-h-[44px]">
@@ -115,7 +119,7 @@ const Footer = memo(function Footer() {
         {/* Bottom bar */}
         <div className="mt-8 md:mt-14 pt-5 md:pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-[10px] md:text-xs text-white/30 font-onest">
-            © {new Date().getFullYear()} M-International. Все права защищены.
+            {t("copyright").replace("{year}", String(new Date().getFullYear()))}
           </p>
           <div className="flex items-center gap-3 md:gap-4">
             {footerLinks.legal.map((link) => (

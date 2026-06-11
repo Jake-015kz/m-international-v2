@@ -1,25 +1,32 @@
+"use client";
+
 import { Footer } from "@/components/sections/footer";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Target, Eye, Gem, Rocket, Users, Globe, Award, TrendingUp, UserPlus, BookOpen, Banknote, ArrowRight } from "lucide-react";
-
-const timeline = [
-  { year: "2019", title: "Открытие в Монголии", desc: "Начало глобального пути компании." },
-  { year: "2020", title: "Рост в Монголии", desc: "Diamond Director и 1-я годовщина в Улан-Баторе." },
-  { year: "2021", title: "Triple Diamond", desc: "Triple Diamond Director в Монголии." },
-  { year: "2022", title: "Выход на рынок Казахстана", desc: "Crown Diamond в Казахстане." },
-  { year: "2023", title: "Глобальная экспансия", desc: "Запуск в Турции. Тур лидеров по 30 странам." },
-  { year: "2024", title: "Международные саммиты", desc: "M Travel: саммит директоров." },
-  { year: "2025", title: "Саммит топ-лидеров", desc: "10 мероприятий за 6 месяцев. Саммит в Алматы." },
-];
-
-const steps = [
-  { icon: <UserPlus className="w-6 h-6" />, title: "Регистрация", desc: "Заполните форму и получите доступ к каталогу и бизнес-инструментам.", color: "oklch(55% 0.16 140)", num: "01" },
-  { icon: <BookOpen className="w-6 h-6" />, title: "Обучение", desc: "Бесплатная программа: продукты, продажи, построение команды.", color: "oklch(55% 0.14 230)", num: "02" },
-  { icon: <Banknote className="w-6 h-6" />, title: "Доход", desc: "Зарабатывайте с первого дня. 9 типов бонусов ждут вас.", color: "oklch(55% 0.18 25)", num: "03" },
-];
+import { useTranslations } from "next-intl";
 
 export default function AboutPage() {
+  const t = useTranslations("aboutPage");
+  const tAbout = useTranslations("about");
+  const tBusiness = useTranslations("business");
+
+  const timeline = [
+    { year: "2019", title: tAbout("timeline.2019.title"), desc: tAbout("timeline.2019.description") },
+    { year: "2020", title: tAbout("timeline.2020.title"), desc: tAbout("timeline.2020.description") },
+    { year: "2021", title: tAbout("timeline.2021.title"), desc: tAbout("timeline.2021.description") },
+    { year: "2022", title: tAbout("timeline.2022.title"), desc: tAbout("timeline.2022.description") },
+    { year: "2023", title: tAbout("timeline.2023.title"), desc: tAbout("timeline.2023.description") },
+    { year: "2024", title: tAbout("timeline.2024.title"), desc: tAbout("timeline.2024.description") },
+    { year: "2025", title: tAbout("timeline.2025.title"), desc: tAbout("timeline.2025.description") },
+  ];
+
+  const steps = [
+    { icon: <UserPlus className="w-6 h-6" />, title: tBusiness("steps.register.title"), desc: tBusiness("steps.register.description"), color: "oklch(55% 0.16 140)", num: "01" },
+    { icon: <BookOpen className="w-6 h-6" />, title: tBusiness("steps.training.title"), desc: tBusiness("steps.training.description"), color: "oklch(55% 0.14 230)", num: "02" },
+    { icon: <Banknote className="w-6 h-6" />, title: tBusiness("steps.income.title"), desc: tBusiness("steps.income.description"), color: "oklch(55% 0.18 25)", num: "03" },
+  ];
+
   return (
     <main className="pt-14 md:pt-16">
       {/* Hero */}
@@ -31,8 +38,8 @@ export default function AboutPage() {
         <Container className="relative z-10">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto">
-              <h1 className="font-unbounded font-bold text-[1.65rem] sm:text-3xl md:text-4xl text-white mb-2">О компании M-International</h1>
-              <p className="text-sm md:text-base text-white/60 font-onest">Международный производитель натуральных БАДов. Наука + природа = здоровье.</p>
+              <h1 className="font-unbounded font-bold text-[1.65rem] sm:text-3xl md:text-4xl text-white mb-2">{t("title")}</h1>
+              <p className="text-sm md:text-base text-white/60 font-onest">{t("description")}</p>
             </div>
           </ScrollReveal>
         </Container>
@@ -47,9 +54,9 @@ export default function AboutPage() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Target className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
-                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">Миссия</h3>
+                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">{t("mission")}</h3>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  Создаём новый стандарт в индустрии — меняем имидж, повышаем доверие и социальную ценность. Мы помогаем людям реализовать свой потенциал и достичь успеха.
+                  {tAbout("mission")}
                 </p>
               </div>
             </ScrollReveal>
@@ -58,9 +65,9 @@ export default function AboutPage() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Eye className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
-                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">Видение</h3>
+                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">{t("vision")}</h3>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  Стать компанией №1 в мире через инновационные продукты, передовые технологии и систему вознаграждений, ориентированную на людей.
+                  {tAbout("visionText")}
                 </p>
               </div>
             </ScrollReveal>
@@ -69,9 +76,9 @@ export default function AboutPage() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Gem className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
-                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">Ценности</h3>
+                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">{t("values")}</h3>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  Время, воспоминания и путь, пройденный вместе — это главное. Качество, честность, инновации и забота о людях.
+                  {tAbout("valuesText")}
                 </p>
               </div>
             </ScrollReveal>
@@ -80,9 +87,9 @@ export default function AboutPage() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Rocket className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
-                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">Девиз</h3>
+                <h3 className="font-unbounded font-bold text-base md:text-lg text-text-primary mb-1.5">{tAbout("motto")}</h3>
                 <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
-                  «Мост к вашим мечтам» — мы помогаем людям реализовать свой потенциал. Слоган: «УРА!» — энергия счастья, успеха и изобилия.
+                  {tAbout("mottoText")}
                 </p>
               </div>
             </ScrollReveal>
@@ -95,10 +102,10 @@ export default function AboutPage() {
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              { icon: <Globe className="w-5 h-5 md:w-6 md:h-6" />, value: "50+", label: "Стран присутствия" },
-              { icon: <Users className="w-5 h-5 md:w-6 md:h-6" />, value: "10K+", label: "Партнёров" },
-              { icon: <Award className="w-5 h-5 md:w-6 md:h-6" />, value: "6", label: "Сертификатов" },
-              { icon: <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />, value: "5", label: "Лет на рынке" },
+              { icon: <Globe className="w-5 h-5 md:w-6 md:h-6" />, value: "50+", label: t("hero.stat.countries") },
+              { icon: <Users className="w-5 h-5 md:w-6 md:h-6" />, value: "10K+", label: t("hero.stat.customers") },
+              { icon: <Award className="w-5 h-5 md:w-6 md:h-6" />, value: "6", label: t("certificates.title") },
+              { icon: <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />, value: "5", label: t("hero.stat.years") },
             ].map((s, i) => (
               <ScrollReveal key={s.label} delay={i * 0.1}>
                 <div className="text-center p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle">
@@ -116,7 +123,7 @@ export default function AboutPage() {
       <section className="py-8 md:py-16">
         <Container>
           <ScrollReveal>
-            <h2 className="font-unbounded font-bold text-base md:text-2xl text-text-primary text-center mb-6 md:mb-10">Наш путь</h2>
+            <h2 className="font-unbounded font-bold text-base md:text-2xl text-text-primary text-center mb-6 md:mb-10">{tAbout("team")}</h2>
           </ScrollReveal>
           <div className="relative">
             <div className="absolute left-3 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-200 via-accent-300 to-transparent md:-translate-x-px" />
@@ -143,7 +150,7 @@ export default function AboutPage() {
         <Container>
           <ScrollReveal>
             <div className="text-center mb-6 md:mb-10">
-              <h2 className="font-unbounded font-bold text-base md:text-2xl text-text-primary">Как начать</h2>
+              <h2 className="font-unbounded font-bold text-base md:text-2xl text-text-primary">{tBusiness("howToStart")}</h2>
               <p className="text-xs md:text-sm text-text-secondary font-onest mt-1.5 md:mt-2">3 простых шага к вашему успеху</p>
             </div>
           </ScrollReveal>

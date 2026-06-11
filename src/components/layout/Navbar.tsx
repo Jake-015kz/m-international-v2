@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Container from "@/components/ui/Container";
 import { LOCALES } from "@/lib/constants";
 
@@ -32,12 +32,13 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
   const currentLocale = useLocale() || propLocale || "ru";
+  const t = useTranslations("nav");
 
   const NAV_LINKS = [
-    { href: "/", label: "Главная" },
-    { href: "/catalog", label: "Продукция" },
-    { href: "/about", label: "О компании" },
-    { href: "/contacts", label: "Контакты" },
+    { href: "/", label: t("home") },
+    { href: "/catalog", label: t("catalog") },
+    { href: "/about", label: t("about") },
+    { href: "/contacts", label: t("contacts") },
   ];
 
   useEffect(() => {
@@ -91,18 +92,23 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     };
   }, [isMobileOpen]);
 
-  const isActive = useCallback((href: string) => {
-    if (href === "/") return pathname === `/${currentLocale}` || pathname === "/";
-    return pathname.startsWith(`/${currentLocale}${href}`) || pathname.startsWith(href);
-  }, [pathname, currentLocale]);
+  const isActive = useCallback(
+    (href: string) => {
+      if (href === "/") return pathname === `/${currentLocale}` || pathname === "/";
+      return pathname.startsWith(`/${currentLocale}${href}`) || pathname.startsWith(href);
+    },
+    [pathname, currentLocale]
+  );
 
   // Build alternate locale URLs for language switcher
-  const getLocaleHref = useCallback((targetLocale: string) => {
-    // Strip current locale prefix and prepend new one
-    const pathWithoutLocale = pathname.replace(/^\/(ru|en|kk)/, "") || "/";
-    if (pathWithoutLocale === "/") return `/${targetLocale}`;
-    return `/${targetLocale}${pathWithoutLocale}`;
-  }, [pathname]);
+  const getLocaleHref = useCallback(
+    (targetLocale: string) => {
+      const pathWithoutLocale = pathname.replace(/^\/(ru|en|kk)/, "") || "/";
+      if (pathWithoutLocale === "/") return `/${targetLocale}`;
+      return `/${targetLocale}${pathWithoutLocale}`;
+    },
+    [pathname]
+  );
 
   return (
     <>
@@ -169,7 +175,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 href={`/${currentLocale}/contacts`}
                 className="hidden md:inline-flex items-center px-5 py-2 rounded-2xl text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-500 transition-colors duration-200"
               >
-                Связаться
+                {t("contacts")}
               </Link>
 
               {/* Mobile hamburger */}
@@ -233,7 +239,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
             }`}
             style={{ transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms" }}
           >
-            Связаться
+            {t("contacts")}
           </Link>
         </div>
       </div>
