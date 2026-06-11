@@ -44,7 +44,7 @@ const AboutSection = memo(function AboutSection() {
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
-            title="О компании M-International"
+            title="О компании m-international.kz"
             description="Международный производитель натуральных БАДов. Наука + природа = здоровье."
           />
         </ScrollReveal>

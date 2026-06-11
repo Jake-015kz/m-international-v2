@@ -32,7 +32,7 @@ const Footer = memo(function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <h3 className="font-unbounded font-bold text-lg md:text-xl text-text-inverse mb-2">
-              M-International
+              m-international.kz
             </h3>
             <p className="text-xs md:text-sm text-text-inverse/40 font-onest font-light leading-relaxed mb-4">
               Натуральные добавки для здоровья и долголетия. 50+ стран мира.
@@ -121,7 +121,7 @@ const Footer = memo(function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 md:mt-14 pt-6 border-t border-text-inverse/5 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-[10px] md:text-xs text-text-inverse/30 font-onest">
-            © {new Date().getFullYear()} M-International. Все права защищены.
+            © {new Date().getFullYear()} m-international.kz. Все права защищены.
           </p>
           <div className="flex items-center gap-4">
             {footerLinks.legal.map((link) => (

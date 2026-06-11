@@ -83,9 +83,15 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
             {/* Logo */}
             <Link
               href={`/${locale}`}
-              className="font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50"
+              className="flex items-center gap-2 font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50 group"
             >
-              M-International
+              <svg className="w-6 h-6 md:w-7 md:h-7 text-accent-600 group-hover:text-accent-500 transition-colors duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                <path d="M10 22V10L16 16L22 10V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="16" cy="16" r="3" fill="currentColor" opacity="0.15"/>
+              </svg>
+              <span className="hidden sm:inline">m-international.kz</span>
+              <span className="sm:hidden">m-int.kz</span>
             </Link>
 
             {/* Desktop links */}
