@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 import Container from "@/components/ui/Container";
-import { LOCALES, DEFAULT_LOCALE } from "@/lib/constants";
+import { LOCALES } from "@/lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,24 +15,30 @@ interface NavbarProps {
   locale?: string;
 }
 
-const NAV_LINKS = [
-  { href: "/", label: "Главная" },
-  { href: "/catalog", label: "Продукция" },
-  { href: "/about", label: "О компании" },
-  { href: "/contacts", label: "Контакты" },
-];
-
 const LOCALE_LABELS: Record<string, string> = {
   ru: "RU",
   en: "EN",
   kk: "KZ",
 };
 
-export default function Navbar({ locale = "ru" }: NavbarProps) {
+function getLocalizedHref(href: string, locale: string): string {
+  if (href === "/") return `/${locale}`;
+  return `/${locale}${href}`;
+}
+
+export default function Navbar({ locale: propLocale }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
+  const currentLocale = useLocale() || propLocale || "ru";
+
+  const NAV_LINKS = [
+    { href: "/", label: "Главная" },
+    { href: "/catalog", label: "Продукция" },
+    { href: "/about", label: "О компании" },
+    { href: "/contacts", label: "Контакты" },
+  ];
 
   useEffect(() => {
     const nav = navRef.current;
@@ -66,12 +73,10 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
     return () => ctx.revert();
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
@@ -86,10 +91,18 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
     };
   }, [isMobileOpen]);
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === `/${locale}` || pathname === "/";
-    return pathname.startsWith(`/${locale}${href}`) || pathname.startsWith(href);
-  };
+  const isActive = useCallback((href: string) => {
+    if (href === "/") return pathname === `/${currentLocale}` || pathname === "/";
+    return pathname.startsWith(`/${currentLocale}${href}`) || pathname.startsWith(href);
+  }, [pathname, currentLocale]);
+
+  // Build alternate locale URLs for language switcher
+  const getLocaleHref = useCallback((targetLocale: string) => {
+    // Strip current locale prefix and prepend new one
+    const pathWithoutLocale = pathname.replace(/^\/(ru|en|kk)/, "") || "/";
+    if (pathWithoutLocale === "/") return `/${targetLocale}`;
+    return `/${targetLocale}${pathWithoutLocale}`;
+  }, [pathname]);
 
   return (
     <>
@@ -103,7 +116,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
             <Link
-              href={`/${locale}`}
+              href={`/${currentLocale}`}
               className="flex items-center gap-2 font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50 group"
             >
               <svg className="w-6 h-6 md:w-7 md:h-7 text-accent-600 group-hover:text-accent-500 transition-colors duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +133,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
-                  href={link.href === "/" ? `/${locale}` : `/${locale}${link.href}`}
+                  href={getLocalizedHref(link.href, currentLocale)}
                   className={`text-sm font-onest font-light transition-colors duration-200 relative group ${
                     isActive(link.href) ? "text-accent-600" : "text-text-secondary hover:text-text-primary"
                   }`}
@@ -131,19 +144,21 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
               ))}
             </div>
 
-            {/* CTA + Mobile toggle */}
+            {/* CTA + Language + Mobile toggle */}
             <div className="flex items-center gap-3">
-              {/* Language switcher */}
-              <div className="hidden md:flex items-center gap-1 mr-2">
+              {/* Language switcher — desktop */}
+              <div className="hidden md:flex items-center gap-1 mr-2" role="group" aria-label="Выбор языка">
                 {LOCALES.map((loc) => (
                   <Link
                     key={loc}
-                    href={`/${loc}`}
+                    href={getLocaleHref(loc)}
                     className={`px-2 py-1 text-xs font-onest font-medium rounded-xl transition-colors duration-200 ${
-                      loc === locale
+                      loc === currentLocale
                         ? "text-text-primary bg-surface-sunken"
                         : "text-text-tertiary hover:text-text-secondary"
                     }`}
+                    aria-label={`Switch to ${LOCALE_LABELS[loc]}`}
+                    aria-current={loc === currentLocale ? "true" : undefined}
                   >
                     {LOCALE_LABELS[loc]}
                   </Link>
@@ -151,7 +166,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
               </div>
 
               <Link
-                href={`/${locale}/contacts`}
+                href={`/${currentLocale}/contacts`}
                 className="hidden md:inline-flex items-center px-5 py-2 rounded-2xl text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-500 transition-colors duration-200"
               >
                 Связаться
@@ -182,7 +197,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
           {NAV_LINKS.map((link, i) => (
             <Link
               key={link.href}
-              href={link.href === "/" ? `/${locale}` : `/${locale}${link.href}`}
+              href={getLocalizedHref(link.href, currentLocale)}
               className={`font-unbounded text-xl font-bold transition-all duration-500 py-2 ${
                 isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
@@ -193,16 +208,18 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
           ))}
 
           {/* Language switcher in mobile menu */}
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2 mt-2" role="group" aria-label="Выбор языка">
             {LOCALES.map((loc) => (
               <Link
                 key={loc}
-                href={`/${loc}`}
+                href={getLocaleHref(loc)}
                 className={`px-4 py-2 text-sm font-onest font-medium rounded-xl transition-colors duration-200 ${
-                  loc === locale
+                  loc === currentLocale
                     ? "text-text-primary bg-surface-sunken"
                     : "text-text-tertiary hover:text-text-secondary"
                 }`}
+                aria-label={`Switch to ${LOCALE_LABELS[loc]}`}
+                aria-current={loc === currentLocale ? "true" : undefined}
               >
                 {LOCALE_LABELS[loc]}
               </Link>
@@ -210,7 +227,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
           </div>
 
           <Link
-            href={`/${locale}/contacts`}
+            href={`/${currentLocale}/contacts`}
             className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-2xl text-sm font-medium bg-emerald-600 text-white transition-all duration-500 ${
               isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}

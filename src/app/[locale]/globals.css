@@ -78,15 +78,37 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  /* Typography rendering polish */
   font-optical-sizing: auto;
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Typography polish ── */
-h1, h2, h3, h4, h5, h6 {
+/* ── Typography — normalized for a11y ── */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-wrap: balance;
+}
+
+h4, h5, h6 {
+  line-height: 1.3;
+  letter-spacing: normal;
   text-wrap: balance;
 }
 
@@ -94,7 +116,7 @@ p {
   text-wrap: pretty;
 }
 
-/* Noise overlay for paper gloss texture */
+/* Noise overlay */
 .noise-overlay {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   opacity: 0.015;
@@ -106,13 +128,11 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom selection color */
 ::selection {
   background: oklch(55% 0.18 160 / 0.12);
   color: inherit;
 }
 
-/* Mobile-first: ensure images don't overflow */
 img {
   max-width: 100%;
   height: auto;
@@ -122,24 +142,19 @@ video {
   max-width: 100%;
 }
 
-/* Safe area insets for notched devices */
+/* Safe area insets */
 @supports (padding: env(safe-area-inset-bottom)) {
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
-  }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-top { padding-top: env(safe-area-inset-top); }
 }
 
-/* Prevent text size adjustment on orientation change */
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-x: hidden;
 }
 
-/* Hide scrollbar for horizontal scroll containers */
+/* Hide scrollbar */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -148,7 +163,7 @@ html {
   display: none;
 }
 
-/* ── Reduced motion (MANDATORY) ── */
+/* ── Reduced motion (MANDATORY a11y) ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -158,21 +173,32 @@ html {
   }
 }
 
-/* ── Scroll-driven animations (native CSS, progressive enhancement) ── */
-@supports (animation-timeline: view()) {
-  .scroll-fade-in {
-    animation: fade-in-up linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 100%;
-  }
+/* ── Modal animations ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-  @keyframes fade-in-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
-/* ── Mesh gradient background utility ── */
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+.animate-modal-in {
+  animation: modal-in 0.3s ease-out both;
+}
+
+/* ── Mesh gradient utility ── */
 .mesh-gradient {
   background:
     radial-gradient(ellipse at 20% 50%, oklch(55% 0.18 160 / 0.06) 0%, transparent 50%),
@@ -181,43 +207,16 @@ html {
     var(--background);
 }
 
-/* ── Dot grid utility ── */
 .dot-grid {
   background-image: radial-gradient(circle, oklch(55% 0.18 160 / 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* ── Glow orb utility ── */
 .glow-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
   pointer-events: none;
-}
-
-/* Marquee animations */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-.animate-marquee {
-  animation: marquee var(--marquee-duration, 30s) linear infinite;
-}
-
-.animate-marquee-reverse {
-  animation: marquee-reverse var(--marquee-duration, 30s) linear infinite;
-}
-
-/* Pause marquee on hover for accessibility */
-.animate-marquee:hover,
-.animate-marquee-reverse:hover {
-  animation-play-state: paused;
 }
 
 /* ── Content visibility for off-screen sections ── */
@@ -228,116 +227,9 @@ html {
   }
 }
 
-/* ── GPU layer promotion for animated elements ── */
 .gpu-layer {
   will-change: transform;
   transform: translate3d(0, 0, 0);
-}
-
-/* ── Mobile-first: prevent horizontal overflow ── */
-@media (max-width: 639px) {
-  html, body {
-    overflow-x: hidden !important;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-
-  /* Prevent text size adjustment on orientation change */
-  h1 {
-    font-size: clamp(1.4rem, 5.5vw, 2.5rem) !important;
-    line-height: 1.15 !important;
-    letter-spacing: normal !important;
-  }
-  h2 {
-    font-size: clamp(1.2rem, 4.5vw, 2rem) !important;
-    line-height: 1.2 !important;
-    letter-spacing: normal !important;
-  }
-  h3 {
-    font-size: clamp(1rem, 3.5vw, 1.5rem) !important;
-    line-height: 1.25 !important;
-    letter-spacing: normal !important;
-  }
-
-  /* Touch-friendly tap targets */
-  a, button, [role="button"], input, textarea, select {
-    min-height: 44px;
-  }
-
-  /* Ensure all containers respect viewport */
-  .container, [class*="max-w-"] {
-    max-width: 100vw;
-  }
-
-  /* Fix text truncation on small screens */
-  p, span, a, li {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-  }
-
-  /* Smaller padding on mobile sections */
-  .section-mobile-py {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
-
-  /* Improve readability on semi-transparent backgrounds */
-  .backdrop-blur-sm,
-  .backdrop-blur-md,
-  .backdrop-blur-xl {
-    -webkit-backdrop-filter: blur(8px) !important;
-    backdrop-filter: blur(8px) !important;
-  }
-}
-
-/* ── Mobile GPU optimizations ── */
-@media (max-width: 767px) {
-  /* Kill expensive blur on small screens */
-  .mobile-no-blur {
-    filter: none !important;
-  }
-
-  /* Reduce motion for users who prefer it — already handled by prefers-reduced-motion */
-  /* But also reduce animation complexity on low-end devices */
-  .animate-marquee,
-  .animate-marquee-reverse {
-    animation-duration: calc(var(--marquee-duration, 30s) * 1.5) !important;
-  }
-
-  /* Disable backdrop-filter on low-end mobile */
-  .mobile-no-backdrop {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  /* Fix 100vh on mobile Safari */
-  .mobile-full-height {
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
-  }
-}
-
-/* ── Tablet adjustments ── */
-@media (min-width: 640px) and (max-width: 1023px) {
-  .tablet-col-2 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-/* ── Contain layout/paint for heavy sections ── */
-.section-contain {
-  contain: layout style paint;
-}
-
-/* ── Video background ── */
-.video-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* ── Product Card Hover ── */
@@ -352,7 +244,6 @@ html {
     0 4px 12px oklch(0% 0 0 / 0.04);
 }
 
-/* ── Gradient Line ── */
 .gradient-line {
   height: 1px;
   background: linear-gradient(
@@ -362,4 +253,76 @@ html {
     oklch(70% 0.12 75 / 0.2),
     transparent
   );
+}
+
+/* ── Section containment ── */
+.section-contain {
+  contain: layout style paint;
+}
+
+.video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Mobile optimizations ── */
+@media (max-width: 639px) {
+  html, body {
+    overflow-x: hidden !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Touch-friendly tap targets */
+  a, button, [role="button"], input, textarea, select {
+    min-height: 44px;
+  }
+
+  .container, [class*="max-w-"] {
+    max-width: 100vw;
+  }
+
+  p, span, a, li {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .section-mobile-py {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-xl {
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-no-blur {
+    filter: none !important;
+  }
+
+  .mobile-no-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .mobile-full-height {
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tablet-col-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
