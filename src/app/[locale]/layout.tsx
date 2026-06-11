@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     maximumScale: 5,
     viewportFit: "cover",
   },
-  themeColor: "#FBFBFB",
+  themeColor: "oklch(98.5% 0.003 160)",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

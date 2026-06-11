@@ -22,7 +22,8 @@ export default function MarqueeRow({
         className={cn(
           "flex gap-3 md:gap-4 w-max",
           direction === "left" ? "animate-marquee" : "animate-marquee-reverse"
-        )}
+        )
+        }
         style={
           {
             "--marquee-duration": `${duration}s`,
@@ -32,15 +33,15 @@ export default function MarqueeRow({
         {doubled.map((item, i) => (
           <div
             key={`${item.id}-${i}`}
-            className="flex-shrink-0 flex items-center gap-2.5 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-xl border border-zinc-200/60 bg-white shadow-sm transition-all duration-300 hover:border-emerald-500/25 hover:shadow-md group cursor-default"
+            className="flex-shrink-0 flex items-center gap-2.5 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-xl border border-border-subtle bg-surface-elevated shadow-sm transition-all duration-300 hover:border-accent-500/25 hover:shadow-md group cursor-default"
           >
-            <div className="text-emerald-600 group-hover:scale-110 transition-transform duration-300">
+            <div className="text-accent-600 group-hover:scale-110 transition-transform duration-300">
               {item.icon}
             </div>
-            <span className="text-[10px] md:text-xs font-medium text-zinc-700 whitespace-nowrap font-onest">
+            <span className="text-[10px] md:text-xs font-medium text-text-primary whitespace-nowrap font-onest">
               {item.label}
             </span>
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="w-1.5 h-1.5 rounded-full bg-accent-500 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         ))}
       </div>

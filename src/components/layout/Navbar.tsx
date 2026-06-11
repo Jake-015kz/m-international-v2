@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { href: "#products", label: "Продукция" },
   { href: "#certificates", label: "Сертификаты" },
   { href: "#about", label: "О компании" },
-  { href: "#contact", label: "Контакты" },
+  { href: "#contacts", label: "Контакты" },
 ];
 
 export default function Navbar({ locale = "ru" }: NavbarProps) {
@@ -26,20 +26,17 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  // GSAP scroll-triggered navbar animation
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
 
     const ctx = gsap.context(() => {
-      // Initial state — transparent, no shadow
       gsap.set(nav, {
-        backgroundColor: "rgba(251, 251, 251, 0)",
+        backgroundColor: "oklch(98.5% 0.003 160 / 0)",
         backdropFilter: "blur(0px)",
         boxShadow: "none",
       });
 
-      // Animate on scroll
       ScrollTrigger.create({
         start: "top top",
         end: "+=100",
@@ -49,11 +46,11 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
           const blur = Math.min(progress * 24, 24);
 
           gsap.set(nav, {
-            backgroundColor: `rgba(251, 251, 251, ${bgAlpha})`,
+            backgroundColor: `oklch(98.5% 0.003 160 / ${bgAlpha})`,
             backdropFilter: `blur(${blur}px)`,
             boxShadow:
               progress > 0.5
-                ? "0 1px 20px rgba(0,0,0,0.04)"
+                ? "0 1px 20px oklch(0% 0 0 / 0.04)"
                 : "none",
           });
 
@@ -69,7 +66,6 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
     return () => ctx.revert();
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
@@ -87,7 +83,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
             {/* Logo */}
             <Link
               href={`/${locale}`}
-              className="font-unbounded font-bold text-base md:text-lg text-[#1A1A1A] tracking-normal z-50"
+              className="font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50"
             >
               M-International
             </Link>
@@ -98,10 +94,10 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-onest font-light text-zinc-600 hover:text-[#1A1A1A] transition-colors duration-200 relative group"
+                  className="text-sm font-onest font-light text-text-secondary hover:text-text-primary transition-colors duration-200 relative group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#1A1A1A] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-text-primary transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
             </div>
@@ -109,8 +105,8 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
             {/* CTA + Mobile toggle */}
             <div className="flex items-center gap-3">
               <Link
-                href="#contact"
-                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-xs font-medium bg-[#1A1A1A] text-white hover:bg-zinc-800 transition-colors duration-200"
+                href="#contacts"
+                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-xs font-medium bg-text-primary text-surface-elevated hover:bg-text-secondary transition-colors duration-200"
               >
                 Связаться
               </Link>
@@ -123,12 +119,12 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
                 aria-expanded={isMobileOpen}
               >
                 <span
-                  className={`block w-5 h-px bg-[#1A1A1A] transition-all duration-300 ${
+                  className={`block w-5 h-px bg-text-primary transition-all duration-300 ${
                     isMobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
                   }`}
                 />
                 <span
-                  className={`block w-5 h-px bg-[#1A1A1A] transition-all duration-300 ${
+                  className={`block w-5 h-px bg-text-primary transition-all duration-300 ${
                     isMobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
                   }`}
                 />
@@ -140,7 +136,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
 
       {/* Mobile menu overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-[#FBFBFB]/95 backdrop-blur-xl transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-surface-base/95 backdrop-blur-xl transition-all duration-500 md:hidden ${
           isMobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -151,7 +147,7 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
             <Link
               key={link.href}
               href={link.href}
-              className={`font-unbounded text-2xl font-bold text-[#1A1A1A] transition-all duration-500 ${
+              className={`font-unbounded text-2xl font-bold text-text-primary transition-all duration-500 ${
                 isMobileOpen
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-4"
@@ -162,8 +158,8 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
             </Link>
           ))}
           <Link
-            href="#contact"
-            className={`mt-4 inline-flex items-center px-6 py-3 rounded-full text-sm font-medium bg-[#1A1A1A] text-white transition-all duration-500 ${
+            href="#contacts"
+            className={`mt-4 inline-flex items-center px-6 py-3 rounded-full text-sm font-medium bg-text-primary text-surface-elevated transition-all duration-500 ${
               isMobileOpen
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-4"

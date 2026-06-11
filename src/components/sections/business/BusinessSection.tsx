@@ -6,32 +6,32 @@ import { BackgroundDecorations } from "@/components/ui";
 
 const rewards = [
   {
-    icon: <TrendingUp className="w-5 h-5 text-emerald-600" />,
+    icon: <TrendingUp className="w-5 h-5 text-accent-600" />,
     title: "9 типов бонусов",
     text: "Одна из самых комплексных систем вознаграждений в отрасли.",
   },
   {
-    icon: <Users className="w-5 h-5 text-emerald-600" />,
+    icon: <Users className="w-5 h-5 text-accent-600" />,
     title: "Равные возможности",
     text: "Вознаграждения по результатам, а не по стажу. Каждый может добиться успеха.",
   },
   {
-    icon: <GraduationCap className="w-5 h-5 text-emerald-600" />,
+    icon: <GraduationCap className="w-5 h-5 text-accent-600" />,
     title: "Бесплатное обучение",
     text: "Программа: продукты, продажи, команда. Поддержка на каждом этапе.",
   },
   {
-    icon: <Handshake className="w-5 h-5 text-emerald-600" />,
+    icon: <Handshake className="w-5 h-5 text-accent-600" />,
     title: "Win-Win система",
     text: "Ваш успех = успех вашей команды. Растём вместе.",
   },
   {
-    icon: <Gift className="w-5 h-5 text-emerald-600" />,
+    icon: <Gift className="w-5 h-5 text-accent-600" />,
     title: "Высокий доход с первого дня",
     text: "Начните зарабатывать сразу после регистрации.",
   },
   {
-    icon: <Star className="w-5 h-5 text-emerald-600" />,
+    icon: <Star className="w-5 h-5 text-accent-600" />,
     title: "Глобальный рынок",
     text: "Бизнес без границ. 50+ стран для развития.",
   },
@@ -45,8 +45,8 @@ const steps = [
 
 export default function BusinessSection() {
   return (
-    <section id="business" className="relative py-16 md:py-24 overflow-hidden bg-[#FBFBFB]">
-      <BackgroundDecorations variant="section" accentColor="#10b981" />
+    <section id="business" className="relative py-16 md:py-24 overflow-hidden bg-surface-base">
+      <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">
         <ScrollReveal>
@@ -60,14 +60,14 @@ export default function BusinessSection() {
         <div className="mt-8 md:mt-12 flex gap-4 md:gap-5 overflow-x-auto pb-4 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 scrollbar-hide">
           {rewards.map((r, i) => (
             <ScrollReveal key={r.title} delay={i * 0.06}>
-              <div className="flex-shrink-0 w-[280px] md:w-auto p-5 md:p-6 rounded-2xl bg-white border border-zinc-200/60 shadow-sm hover:border-zinc-300/60 transition-colors duration-300">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-3 md:mb-4">
+              <div className="flex-shrink-0 w-[280px] md:w-auto p-5 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle shadow-sm hover:border-border-default transition-colors duration-300">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3 md:mb-4">
                   {r.icon}
                 </div>
-                <h3 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mb-1.5">
+                <h3 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-1.5">
                   {r.title}
                 </h3>
-                <p className="text-xs md:text-sm text-zinc-500 font-onest font-light leading-relaxed">
+                <p className="text-xs md:text-sm text-text-secondary font-onest font-light leading-relaxed">
                   {r.text}
                 </p>
               </div>
@@ -75,10 +75,10 @@ export default function BusinessSection() {
           ))}
         </div>
 
-        {/* Steps — clean list instead of numbered cards */}
+        {/* Steps — clean list */}
         <div className="mt-12 md:mt-16">
           <ScrollReveal>
-            <h3 className="font-unbounded font-bold text-lg md:text-xl text-[#1A1A1A] text-center mb-6 md:mb-8">
+            <h3 className="font-unbounded font-bold text-lg md:text-xl text-text-primary text-center mb-6 md:mb-8">
               Как начать
             </h3>
           </ScrollReveal>
@@ -86,14 +86,14 @@ export default function BusinessSection() {
             {steps.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 0.1}>
                 <div className="flex items-start gap-4 mb-6 last:mb-0">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="font-unbounded text-xs font-bold text-emerald-600">{i + 1}</span>
+                  <div className="w-8 h-8 rounded-lg bg-accent-50 border border-accent-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="font-unbounded text-xs font-bold text-accent-600">{i + 1}</span>
                   </div>
                   <div>
-                    <h4 className="font-unbounded font-bold text-sm md:text-base text-[#1A1A1A] mb-0.5">
+                    <h4 className="font-unbounded font-bold text-sm md:text-base text-text-primary mb-0.5">
                       {s.title}
                     </h4>
-                    <p className="text-xs md:text-sm text-zinc-500 font-onest font-light">
+                    <p className="text-xs md:text-sm text-text-secondary font-onest font-light">
                       {s.desc}
                     </p>
                   </div>
@@ -103,13 +103,13 @@ export default function BusinessSection() {
           </div>
         </div>
 
-        {/* Quote */}
+        {/* Quote — toned down */}
         <ScrollReveal delay={0.3}>
           <div className="mt-10 md:mt-14 text-center">
-            <blockquote className="font-unbounded text-base md:text-xl font-bold text-[#1A1A1A] max-w-2xl mx-auto leading-[1.3]">
-              «M International — ваш шанс стать долларовым миллионером»
+            <blockquote className="font-unbounded text-base md:text-xl font-bold text-text-primary max-w-2xl mx-auto leading-[1.3]">
+              «M International — ваш мост к финансовой свободе»
             </blockquote>
-            <p className="text-xs text-zinc-400 font-onest mt-2">— Топ-лидеры компании</p>
+            <p className="text-xs text-text-tertiary font-onest mt-2">— Топ-лидеры компании</p>
           </div>
         </ScrollReveal>
       </Container>

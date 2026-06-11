@@ -12,9 +12,9 @@ export default function GlassCard({ children, className, variant = "default" }: 
     <div
       className={cn(
         "rounded-2xl",
-        variant === "default" && "bg-white border border-zinc-200/60 shadow-sm",
-        variant === "subtle" && "bg-zinc-50/80 border border-zinc-100",
-        variant === "elevated" && "bg-white border border-zinc-200/40 shadow-lg shadow-zinc-100/50",
+        variant === "default" && "bg-surface-elevated border border-border-subtle shadow-sm",
+        variant === "subtle" && "bg-surface-sunken/80 border border-border-subtle",
+        variant === "elevated" && "bg-surface-elevated border border-border-subtle shadow-lg shadow-text-primary/5",
         className
       )}
     >

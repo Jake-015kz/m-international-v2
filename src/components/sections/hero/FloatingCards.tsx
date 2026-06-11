@@ -16,7 +16,7 @@ export default function FloatingCards() {
           animate={{ y: [0, -12, 0] }}
           transition={{ delay: 1.2, duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="rounded-2xl bg-white border border-zinc-200/60 shadow-lg p-4 lg:p-6">
+          <div className="rounded-2xl bg-surface-elevated border border-border-subtle shadow-lg p-4 lg:p-6">
             <div className="relative aspect-video rounded-xl lg:rounded-2xl overflow-hidden bg-black/10 mb-3">
               <video
                 src="/media/hero-bg.mp4"
@@ -29,9 +29,9 @@ export default function FloatingCards() {
               />
               {/* Play button overlay */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-surface-elevated/90 rounded-full flex items-center justify-center shadow-lg">
                   <svg
-                    className="w-4 h-4 lg:w-5 lg:h-5 text-black ml-0.5"
+                    className="w-4 h-4 lg:w-5 lg:h-5 text-text-primary ml-0.5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -40,7 +40,7 @@ export default function FloatingCards() {
                 </div>
               </div>
             </div>
-            <p className="text-center text-xs lg:text-sm font-light text-zinc-600">
+            <p className="text-center text-xs lg:text-sm font-light text-text-secondary">
               Натуральные формулы M-International
             </p>
           </div>
@@ -58,10 +58,10 @@ export default function FloatingCards() {
           animate={{ y: [0, -8, 0] }}
           transition={{ delay: 1.4, duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="rounded-2xl bg-white border border-zinc-200/60 shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
-            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center shrink-0">
+          <div className="rounded-2xl bg-surface-elevated border border-border-subtle shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-accent-500/20 rounded-lg flex items-center justify-center shrink-0">
               <svg
-                className="w-4 h-4 lg:w-5 lg:h-5 text-emerald-600"
+                className="w-4 h-4 lg:w-5 lg:h-5 text-accent-600"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -72,7 +72,7 @@ export default function FloatingCards() {
                 <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
               </svg>
             </div>
-            <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
+            <span className="text-xs lg:text-sm font-medium text-text-primary whitespace-nowrap">
               GMP · ISO · Halal
             </span>
           </div>
@@ -90,16 +90,16 @@ export default function FloatingCards() {
           animate={{ y: [0, -10, 0] }}
           transition={{ delay: 1.6, duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="rounded-2xl bg-white border border-zinc-200/60 shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
+          <div className="rounded-2xl bg-surface-elevated border border-border-subtle shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3">
             <div className="flex -space-x-1.5 lg:-space-x-2">
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-200 border-2 border-white" />
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-300 border-2 border-white" />
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-400 border-2 border-white" />
-              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-600 border-2 border-white flex items-center justify-center text-[8px] lg:text-[10px] text-white font-medium">
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-accent-200 border-2 border-surface-elevated" />
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-accent-300 border-2 border-surface-elevated" />
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-accent-400 border-2 border-surface-elevated" />
+              <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-accent-600 border-2 border-surface-elevated flex items-center justify-center text-[8px] lg:text-[10px] text-text-inverse font-medium">
                 +50
               </div>
             </div>
-            <span className="text-xs lg:text-sm font-medium text-zinc-800 whitespace-nowrap">
+            <span className="text-xs lg:text-sm font-medium text-text-primary whitespace-nowrap">
               50+ стран
             </span>
           </div>

@@ -2,24 +2,14 @@
 
 import { motion } from "framer-motion";
 
-/**
- * BackgroundDecorations — анимированные фоновые декорации для секций.
- * Включает: mesh gradient, glow orbs, dot grid, floating particles.
- *
- * Использование:
- *   <BackgroundDecorations variant="hero" />  — для hero-секции (крупные orbs)
- *   <BackgroundDecorations variant="section" /> — для контент-секций (тонкие)
- *   <BackgroundDecorations variant="subtle" /> — минимальный (только градиент)
- */
 interface BackgroundDecorationsProps {
   variant?: "hero" | "section" | "subtle";
   accentColor?: string;
   className?: string;
 }
 
-export default function BackgroundDecorations({
+export function BackgroundDecorations({
   variant = "section",
-  accentColor = "#10b981",
   className = "",
 }: BackgroundDecorationsProps) {
   const isHero = variant === "hero";
@@ -35,13 +25,13 @@ export default function BackgroundDecorations({
           style={{
             background: isHero
               ? [
-                  `radial-gradient(ellipse 60% 50% at 30% 40%, ${accentColor}08 0%, transparent 60%)`,
-                  `radial-gradient(ellipse 50% 40% at 70% 60%, ${accentColor}06 0%, transparent 55%)`,
-                  `radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%)`,
+                  "radial-gradient(ellipse 60% 50% at 30% 40%, oklch(55% 0.18 160 / 0.05) 0%, transparent 60%)",
+                  "radial-gradient(ellipse 50% 40% at 70% 60%, oklch(55% 0.18 160 / 0.04) 0%, transparent 55%)",
+                  "radial-gradient(ellipse 80% 80% at 50% 50%, oklch(100% 0.002 160 / 0.03) 0%, transparent 70%)",
                 ].join(", ")
               : [
-                  `radial-gradient(ellipse 50% 40% at 20% 50%, ${accentColor}05 0%, transparent 60%)`,
-                  `radial-gradient(ellipse 40% 30% at 80% 40%, ${accentColor}04 0%, transparent 55%)`,
+                  "radial-gradient(ellipse 50% 40% at 20% 50%, oklch(55% 0.18 160 / 0.03) 0%, transparent 60%)",
+                  "radial-gradient(ellipse 40% 30% at 80% 40%, oklch(55% 0.18 160 / 0.02) 0%, transparent 55%)",
                 ].join(", "),
           }}
         />
@@ -53,7 +43,7 @@ export default function BackgroundDecorations({
           <motion.div
             className="absolute w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full"
             style={{
-              background: `radial-gradient(circle, ${accentColor}12 0%, transparent 70%)`,
+              background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%)",
               left: "10%",
               top: "20%",
               filter: "blur(80px)",
@@ -68,7 +58,7 @@ export default function BackgroundDecorations({
           <motion.div
             className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full"
             style={{
-              background: `radial-gradient(circle, ${accentColor}0a 0%, transparent 70%)`,
+              background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.06) 0%, transparent 70%)",
               right: "5%",
               bottom: "15%",
               filter: "blur(100px)",
@@ -80,11 +70,10 @@ export default function BackgroundDecorations({
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
-          {/* Third orb — center, very subtle */}
           <motion.div
             className="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full"
             style={{
-              background: `radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)`,
+              background: "radial-gradient(circle, oklch(100% 0.002 160 / 0.06) 0%, transparent 70%)",
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
@@ -104,7 +93,7 @@ export default function BackgroundDecorations({
           <motion.div
             className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full"
             style={{
-              background: `radial-gradient(circle, ${accentColor}08 0%, transparent 70%)`,
+              background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.05) 0%, transparent 70%)",
               left: "5%",
               top: "30%",
               filter: "blur(80px)",
@@ -118,7 +107,7 @@ export default function BackgroundDecorations({
           <motion.div
             className="absolute w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full"
             style={{
-              background: `radial-gradient(circle, ${accentColor}06 0%, transparent 70%)`,
+              background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.04) 0%, transparent 70%)",
               right: "10%",
               bottom: "20%",
               filter: "blur(90px)",
@@ -137,26 +126,21 @@ export default function BackgroundDecorations({
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `radial-gradient(circle, ${accentColor} 1px, transparent 1px)`,
+            backgroundImage: "radial-gradient(circle, oklch(55% 0.18 160) 1px, transparent 1px)",
             backgroundSize: isHero ? "32px 32px" : "24px 24px",
           }}
         />
       )}
 
       {/* Floating particles — hero only */}
-      {isHero && <FloatingParticles count={16} accentColor={accentColor} />}
+      {isHero && <FloatingParticles count={16} />}
     </div>
   );
 }
 
 /* ── Floating Particles ── */
 
-interface FloatingParticlesProps {
-  count: number;
-  accentColor: string;
-}
-
-function FloatingParticles({ count, accentColor }: FloatingParticlesProps) {
+function FloatingParticles({ count }: { count: number }) {
   const particles = Array.from({ length: count }, (_, i) => ({
     id: i,
     x: (i * 37 + 13) % 100,
@@ -179,7 +163,7 @@ function FloatingParticles({ count, accentColor }: FloatingParticlesProps) {
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
-            backgroundColor: p.isAccent ? accentColor : "#ffffff",
+            backgroundColor: p.isAccent ? "oklch(55% 0.18 160)" : "oklch(100% 0.002 160)",
           }}
           animate={{
             y: [-10, 15, -10],
@@ -197,3 +181,5 @@ function FloatingParticles({ count, accentColor }: FloatingParticlesProps) {
     </div>
   );
 }
+
+export default BackgroundDecorations;

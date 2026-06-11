@@ -23,13 +23,12 @@ const CERTIFICATES_ROW_2 = [
 
 export default function CertificatesSection() {
   return (
-    <section id="certificates" className="relative py-16 md:py-24 overflow-hidden bg-[#FBFBFB]">
-      {/* Background decorations */}
-      <BackgroundDecorations variant="section" accentColor="#10b981" />
+    <section id="certificates" className="relative py-16 md:py-24 overflow-hidden bg-surface-base">
+      <BackgroundDecorations variant="section" />
 
       {/* Side fades for marquee */}
-      <div className="absolute top-0 left-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-[#FBFBFB] to-transparent z-[5] pointer-events-none" />
-      <div className="absolute top-0 right-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-[#FBFBFB] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 left-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-surface-base to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 right-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-surface-base to-transparent z-[5] pointer-events-none" />
 
       <Container className="relative z-10">
         <ScrollReveal>
@@ -50,7 +49,7 @@ export default function CertificatesSection() {
 
         <ScrollReveal delay={0.3}>
           <div className="mt-8 md:mt-12 text-center">
-            <div className="inline-flex items-center gap-2 text-zinc-400">
+            <div className="inline-flex items-center gap-2 text-text-tertiary">
               <BadgeCheck className="w-3.5 h-3.5" />
               <p className="text-[9px] md:text-[10px] uppercase tracking-wider font-onest">
                 Проверенное качество · Безопасность · Эффективность

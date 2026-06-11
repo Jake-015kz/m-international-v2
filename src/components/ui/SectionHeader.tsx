@@ -28,7 +28,7 @@ export default function SectionHeader({
 
       <h2
         className={cn(
-          "font-unbounded font-bold text-xl sm:text-2xl md:text-3xl leading-[1.1] tracking-normal text-[#1A1A1A]",
+          "font-unbounded font-bold text-xl sm:text-2xl md:text-3xl leading-[1.1] tracking-normal text-text-primary",
           "mb-2 md:mb-3"
         )}
       >
@@ -36,7 +36,7 @@ export default function SectionHeader({
       </h2>
 
       {description && (
-        <p className="text-sm md:text-base text-zinc-500 font-onest font-light leading-relaxed max-w-md mx-auto">
+        <p className="text-sm md:text-base text-text-secondary font-onest font-light leading-relaxed max-w-md mx-auto">
           {description}
         </p>
       )}

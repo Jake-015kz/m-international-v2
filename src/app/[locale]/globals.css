@@ -1,10 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAFAFA;
-  --foreground: #1A1A1A;
-  --accent-primary: #10b981;
-  --accent-secondary: #d4a853;
+  /* ── Tinted neutrals (OKLCH, hue ~160 = emerald) ── */
+  --background: oklch(98.5% 0.003 160);
+  --foreground: oklch(18% 0.008 160);
+  --accent-primary: oklch(55% 0.18 160);
+  --accent-secondary: oklch(70% 0.12 75);
+
+  /* ── Surface scale ── */
+  --surface-base:     oklch(98.5% 0.003 160);
+  --surface-elevated: oklch(100% 0.002 160);
+  --surface-sunken:   oklch(96% 0.004 160);
+  --surface-alt:      oklch(97% 0.003 160);
+
+  /* ── Text scale ── */
+  --text-primary:   oklch(18% 0.008 160);
+  --text-secondary: oklch(48% 0.012 160);
+  --text-tertiary:  oklch(62% 0.010 160);
+  --text-inverse:   oklch(98% 0.003 160);
+
+  /* ── Border scale ── */
+  --border-subtle:  oklch(90% 0.006 160);
+  --border-default: oklch(82% 0.008 160);
+
+  /* ── Accent scale ── */
+  --accent-50:  oklch(97% 0.03 160);
+  --accent-100: oklch(93% 0.06 160);
+  --accent-200: oklch(85% 0.10 160);
+  --accent-300: oklch(75% 0.14 160);
+  --accent-400: oklch(65% 0.16 160);
+  --accent-500: oklch(55% 0.18 160);
+  --accent-600: oklch(48% 0.16 160);
+  --accent-700: oklch(40% 0.14 160);
+  --accent-800: oklch(32% 0.10 160);
+  --accent-900: oklch(22% 0.06 160);
 }
 
 @theme inline {
@@ -12,16 +41,57 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-onest);
   --font-heading: var(--font-unbounded);
+
+  /* Surface */
+  --color-surface-base:     var(--surface-base);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-sunken:   var(--surface-sunken);
+  --color-surface-alt:      var(--surface-alt);
+
+  /* Text */
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary:  var(--text-tertiary);
+  --color-text-inverse:   var(--text-inverse);
+
+  /* Border */
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-default: var(--border-default);
+
+  /* Accent */
+  --color-accent-50:  var(--accent-50);
+  --color-accent-100: var(--accent-100);
+  --color-accent-200: var(--accent-200);
+  --color-accent-300: var(--accent-300);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
+  --color-accent-800: var(--accent-800);
+  --color-accent-900: var(--accent-900);
 }
 
+/* ── Base ── */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  /* Prevent horizontal scroll on mobile */
   overflow-x: hidden;
-  /* Improve touch scrolling on iOS */
   -webkit-overflow-scrolling: touch;
+  /* Typography rendering polish */
+  font-optical-sizing: auto;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography polish ── */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 /* Noise overlay for paper gloss texture */
@@ -38,7 +108,7 @@ html {
 
 /* Custom selection color */
 ::selection {
-  background: rgba(0, 0, 0, 0.1);
+  background: oklch(55% 0.18 160 / 0.12);
   color: inherit;
 }
 
@@ -55,13 +125,6 @@ img, video {
   }
   .safe-top {
     padding-top: env(safe-area-inset-top);
-  }
-}
-
-/* Disable hover effects on touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .hover\:shadow-lg:hover {
-    box-shadow: none;
   }
 }
 
@@ -107,15 +170,15 @@ html {
 /* ── Mesh gradient background utility ── */
 .mesh-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
-    var(--background, #FAFAFA);
+    radial-gradient(ellipse at 20% 50%, oklch(55% 0.18 160 / 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, oklch(55% 0.18 160 / 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, oklch(55% 0.18 160 / 0.03) 0%, transparent 50%),
+    var(--background);
 }
 
 /* ── Dot grid utility ── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(circle, oklch(55% 0.18 160 / 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
