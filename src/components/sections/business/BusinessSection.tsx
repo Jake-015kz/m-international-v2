@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import { TrendingUp, Users, GraduationCap, Handshake, Star, Zap } from "lucide-react";
+import { TrendingUp, Users, GraduationCap, Handshake, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -49,30 +49,6 @@ const BusinessSection = memo(function BusinessSection() {
             </ScrollReveal>
           ))}
         </div>
-
-        {/* CTA Banner */}
-        <ScrollReveal>
-          <div className="mt-12 md:mt-16 relative rounded-2xl overflow-hidden">
-            <div className="absolute inset-0">
-              <img src="/images/sections/lifestyle.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-r from-accent-900/90 to-accent-800/80" />
-            </div>
-            <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-unbounded font-bold text-lg md:text-xl text-white">Готовы начать?</h3>
-                  <p className="text-sm text-white/60 font-onest">Получите консультацию по продукции и бизнесу</p>
-                </div>
-              </div>
-              <a href="#about" className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-accent-900 font-unbounded font-bold text-sm rounded-2xl hover:bg-white/90 transition-all duration-300 hover:-translate-y-0.5 shadow-lg shrink-0">
-                Регистрация
-              </a>
-            </div>
-          </div>
-        </ScrollReveal>
       </Container>
     </section>
   );

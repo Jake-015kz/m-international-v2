@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, useEffect, useState, memo } from "react";
+import { useRef, useEffect, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Globe } from "lucide-react";
 import Image from "next/image";
-import { Shield, Award, BadgeCheck, FlaskConical, Leaf, Globe, ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,83 +23,15 @@ const CIS_COUNTRIES = [
   { code: "tm", name: "Туркменистан", flag: "🇹🇲" },
 ];
 
-/* ── Mini Certificate Slider Data ── */
-const CERT_SLIDES = [
-  { id: "gmp", icon: <Shield className="w-5 h-5" />, label: "GMP", sub: "Надлежащая производственная практика", color: "oklch(55% 0.16 140)" },
-  { id: "iso", icon: <Award className="w-5 h-5" />, label: "ISO 9001", sub: "Система менеджмента качества", color: "oklch(55% 0.14 230)" },
-  { id: "halal", icon: <BadgeCheck className="w-5 h-5" />, label: "Halal", sub: "Сертификат Халал", color: "oklch(55% 0.18 160)" },
-  { id: "fda", icon: <FlaskConical className="w-5 h-5" />, label: "FDA", sub: "Одобрение FDA США", color: "oklch(55% 0.12 60)" },
-  { id: "eac", icon: <Shield className="w-5 h-5" />, label: "EAC", sub: "Евразийское соответствие", color: "oklch(45% 0.16 350)" },
-  { id: "natural", icon: <Leaf className="w-5 h-5" />, label: "100% Natural", sub: "Натуральные ингредиенты", color: "oklch(60% 0.14 120)" },
+/* ── Real Certificate Badges from old site ── */
+const CERT_BADGES = [
+  { name: "HALAL MiCrystal", image: "/images/certificates/certificate-halal-micrystal-2025.webp", color: "#c4a035" },
+  { name: "HALAL GreenMAX", image: "/images/certificates/certificate-halal-greenmax-2025.webp", color: "#5eb53a" },
+  { name: "HALAL MiTown", image: "/images/certificates/certificate-halal-mitown-2025.webp", color: "#4a90d9" },
+  { name: "HALAL Macho Flexi", image: "/images/certificates/certificate-halal-macho-flexi-2025.webp", color: "#d44a2a" },
+  { name: "AJL License", image: "/images/certificates/ajl-license-2025-2030.webp", color: "#6ab04a" },
+  { name: "HALAL MM-BM-NM", image: "/images/certificates/certificate-halal-mm-bm-nm-2026.webp", color: "#2a7aaa" },
 ];
-
-/* ── Mini Certificate Slider Component ── */
-const CertSlider = memo(function CertSlider() {
-  const [current, setCurrent] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const startTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % CERT_SLIDES.length);
-    }, 3000);
-  };
-
-  useEffect(() => {
-    startTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, []);
-
-  const goTo = (idx: number) => {
-    setCurrent(idx);
-    startTimer();
-  };
-
-  const prev = () => goTo((current - 1 + CERT_SLIDES.length) % CERT_SLIDES.length);
-  const next = () => goTo((current + 1) % CERT_SLIDES.length);
-
-  const cert = CERT_SLIDES[current];
-
-  return (
-    <div
-      className="relative w-full max-w-xs mx-auto mt-6 rounded-2xl overflow-hidden border border-white/10"
-      style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(16px)" }}
-    >
-      {/* Main slide */}
-      <div className="px-5 py-4 flex items-center gap-3">
-        <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: `${cert.color}20`, border: `1px solid ${cert.color}40`, color: cert.color }}
-        >
-          {cert.icon}
-        </div>
-        <div className="min-w-0">
-          <div className="text-white font-unbounded font-bold text-sm leading-tight">{cert.label}</div>
-          <div className="text-white/50 text-[11px] font-onest leading-tight mt-0.5 truncate">{cert.sub}</div>
-        </div>
-      </div>
-
-      {/* Controls */}
-      <div className="flex items-center justify-between px-3 py-2 border-t border-white/5">
-        <button onClick={prev} className="w-7 h-7 rounded-lg flex items-center justify-center text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors">
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-        <div className="flex gap-1.5">
-          {CERT_SLIDES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`h-1 rounded-full transition-all duration-300 ${i === current ? "w-5 bg-white/80" : "w-1.5 bg-white/20"}`}
-            />
-          ))}
-        </div>
-        <button onClick={next} className="w-7 h-7 rounded-lg flex items-center justify-center text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors">
-          <ChevronRight className="w-4 h-4" />
-        </button>
-      </div>
-    </div>
-  );
-});
 
 /* ── Main Hero ── */
 const Hero = memo(function Hero() {
@@ -188,7 +120,7 @@ const Hero = memo(function Hero() {
             Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. 50+ стран.
           </motion.p>
 
-          {/* CTA Buttons — uniform rounded-[16px] */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -203,21 +135,46 @@ const Hero = memo(function Hero() {
             </a>
           </motion.div>
 
-          {/* Mini Certificate Slider */}
+          {/* Real Certificate Badges — from old site */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="w-full max-w-xs"
+            className="w-full"
           >
-            <CertSlider />
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              {CERT_BADGES.map((cert, i) => (
+                <motion.div
+                  key={cert.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.9 + i * 0.08, duration: 0.4 }}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 hover:border-white/25 transition-all duration-300 cursor-default group"
+                  style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(12px)" }}
+                >
+                  <div className="relative w-6 h-6 flex-shrink-0">
+                    <Image
+                      src={cert.image}
+                      alt={cert.name}
+                      width={24}
+                      height={24}
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <span className="text-[10px] sm:text-[11px] text-white/60 font-onest font-medium whitespace-nowrap group-hover:text-white/80 transition-colors">
+                    {cert.name}
+                  </span>
+                  <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 opacity-40 group-hover:opacity-100 transition-opacity" style={{ background: cert.color }} />
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* CIS Countries */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.0, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             className="mt-6 flex flex-wrap items-center justify-center gap-2 px-4"
           >
             <Globe className="w-3.5 h-3.5 text-white/30 mr-1" />
@@ -237,7 +194,7 @@ const Hero = memo(function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
             className="mt-8 grid grid-cols-3 gap-4 sm:gap-8"
           >
             {[
