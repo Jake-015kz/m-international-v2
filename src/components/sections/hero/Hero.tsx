@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useRef, useEffect, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Globe } from "lucide-react";
+import { Globe, Users, Calendar, MapPin, Award, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -32,6 +32,48 @@ const CERT_BADGES = [
   { name: "AJL License", image: "/images/certificates/ajl-license-2025-2030.webp", color: "#6ab04a" },
   { name: "HALAL MM-BM-NM", image: "/images/certificates/certificate-halal-mm-bm-nm-2026.webp", color: "#2a7aaa" },
 ];
+
+/* ── Marquee for certificates ── */
+function CertMarquee() {
+  const doubled = [...CERT_BADGES, ...CERT_BADGES];
+
+  return (
+    <div className="relative w-full max-w-2xl mx-auto">
+      {/* Side fades */}
+      <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-black/40 to-transparent z-[2] pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-black/40 to-transparent z-[2] pointer-events-none" />
+
+      <div className="overflow-hidden py-1">
+        <div
+          className="flex gap-3 sm:gap-4 w-max animate-marquee"
+          style={{ "--marquee-duration": "28s" } as React.CSSProperties}
+        >
+          {doubled.map((cert, i) => (
+            <div
+              key={`${cert.name}-${i}`}
+              className="flex-shrink-0 flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-white/10 hover:border-white/25 transition-all duration-300 group cursor-default"
+              style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(12px)" }}
+            >
+              <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0">
+                <Image
+                  src={cert.image}
+                  alt={cert.name}
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <span className="text-[10px] sm:text-xs text-white/60 font-onest font-medium whitespace-nowrap group-hover:text-white/90 transition-colors">
+                {cert.name}
+              </span>
+              <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 opacity-40 group-hover:opacity-100 transition-opacity" style={{ background: cert.color }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ── Main Hero ── */
 const Hero = memo(function Hero() {
@@ -107,8 +149,8 @@ const Hero = memo(function Hero() {
             transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="font-unbounded text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-normal mb-4"
           >
-            <span className="text-white font-black">Интеллект природы</span>{" "}
-            <span className="font-extralight text-white/70">для вашего здоровья</span>
+            <span className="text-white font-black">Сила природы</span>{" "}
+            <span className="font-extralight text-white/70">в каждой капсуле</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -118,7 +160,7 @@ const Hero = memo(function Hero() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-sm sm:text-base md:text-lg text-white/60 font-onest font-light leading-relaxed max-w-xl mb-6 px-2"
           >
-            Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. 50+ стран.
+            Сертифицированные натуральные добавки для иммунитета, детокса и долголетия. Доступны в 50+ странах.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -126,7 +168,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0 mb-6"
+            className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0 mb-8"
           >
             <a href="#products" className="inline-flex items-center justify-center px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 w-full sm:w-auto">
               Смотреть каталог
@@ -136,78 +178,92 @@ const Hero = memo(function Hero() {
             </a>
           </motion.div>
 
-          {/* Real Certificate Badges — from old site */}
+          {/* Certificate Marquee */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="w-full"
+            className="w-full mb-6"
           >
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              {CERT_BADGES.map((cert, i) => (
+            <CertMarquee />
+          </motion.div>
+
+          {/* CIS Countries — elegant grid */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.0, duration: 0.8 }}
+            className="w-full max-w-xl mx-auto mb-8"
+          >
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-3">
+              <MapPin className="w-3.5 h-3.5 text-emerald-400/60" />
+              <span className="text-[10px] sm:text-xs text-white/40 font-onest uppercase tracking-wider">Присутствие в СНГ</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+              {CIS_COUNTRIES.map((c, i) => (
                 <motion.div
-                  key={cert.name}
+                  key={c.code}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.9 + i * 0.08, duration: 0.4 }}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 hover:border-white/25 transition-all duration-300 cursor-default group"
-                  style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(12px)" }}
+                  transition={{ delay: 1.1 + i * 0.05, duration: 0.3 }}
+                  className="group relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default"
                 >
-                  <div className="relative w-6 h-6 flex-shrink-0">
-                    <Image
-                      src={cert.image}
-                      alt={cert.name}
-                      width={24}
-                      height={24}
-                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  <span className="text-[10px] sm:text-[11px] text-white/60 font-onest font-medium whitespace-nowrap group-hover:text-white/80 transition-colors">
-                    {cert.name}
+                  <span className="text-base sm:text-lg leading-none">{c.flag}</span>
+                  <span className="text-[10px] sm:text-xs text-white/50 font-onest font-medium group-hover:text-white/80 transition-colors">
+                    {c.name}
                   </span>
-                  <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 opacity-40 group-hover:opacity-100 transition-opacity" style={{ background: cert.color }} />
+                  {/* Tooltip on hover */}
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-black/80 rounded-md text-[9px] text-white/80 font-onest whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                    {c.name}
+                  </div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* CIS Countries */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="mt-6 flex flex-wrap items-center justify-center gap-2 px-4"
-          >
-            <Globe className="w-3.5 h-3.5 text-white/30 mr-1" />
-            {CIS_COUNTRIES.map((c) => (
-              <span
-                key={c.code}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/5 border border-white/8 text-[10px] text-white/50 font-onest hover:bg-white/10 hover:text-white/70 transition-colors cursor-default"
-                title={c.name}
-              >
-                <span className="text-sm">{c.flag}</span>
-                <span className="hidden sm:inline">{c.name}</span>
-              </span>
-            ))}
-          </motion.div>
-
-          {/* Stats */}
+          {/* Stats — premium style */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4, duration: 0.6 }}
-            className="mt-8 grid grid-cols-3 gap-4 sm:gap-8"
+            className="w-full max-w-lg mx-auto"
           >
-            {[
-              { value: "50+", label: "Стран" },
-              { value: "10K+", label: "Партнёров" },
-              { value: "5", label: "Лет на рынке" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="font-unbounded font-bold text-xl sm:text-2xl text-white">{s.value}</div>
-                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">{s.label}</div>
+            <div className="relative flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm"
+              style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)" }}
+            >
+              {/* Stat 1 */}
+              <div className="flex-1 text-center group">
+                <div className="flex items-center justify-center mb-1.5">
+                  <Globe className="w-4 h-4 text-emerald-400/70" />
+                </div>
+                <div className="font-unbounded font-bold text-xl sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">50+</div>
+                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">Стран</div>
               </div>
-            ))}
+
+              {/* Divider */}
+              <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-2 sm:mx-4" />
+
+              {/* Stat 2 */}
+              <div className="flex-1 text-center group">
+                <div className="flex items-center justify-center mb-1.5">
+                  <Users className="w-4 h-4 text-emerald-400/70" />
+                </div>
+                <div className="font-unbounded font-bold text-xl sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">10K+</div>
+                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">Партнёров</div>
+              </div>
+
+              {/* Divider */}
+              <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-transparent via-white/15 to-transparent mx-2 sm:mx-4" />
+
+              {/* Stat 3 */}
+              <div className="flex-1 text-center group">
+                <div className="flex items-center justify-center mb-1.5">
+                  <Calendar className="w-4 h-4 text-emerald-400/70" />
+                </div>
+                <div className="font-unbounded font-bold text-xl sm:text-2xl lg:text-3xl text-white group-hover:text-emerald-300 transition-colors">5</div>
+                <div className="text-[10px] sm:text-xs text-white/40 font-onest mt-0.5">Лет на рынке</div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
