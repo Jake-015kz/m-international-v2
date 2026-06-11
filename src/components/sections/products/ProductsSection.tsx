@@ -78,6 +78,10 @@ const PRODUCTS = [
 const ProductsSection = memo(function ProductsSection() {
   return (
     <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img src="/images/sections/supplements.webp" alt="" className="w-full h-full object-cover opacity-5" loading="lazy" />
+      </div>
       <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">
@@ -94,7 +98,7 @@ const ProductsSection = memo(function ProductsSection() {
           </div>
         </ScrollReveal>
 
-        {/* Product Grid — varied layout: 2 featured (span-2), 6 standard */}
+        {/* Product Grid */}
         <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {PRODUCTS.map((product, i) => (
             <ScrollReveal key={product.name} delay={i * 0.06}>
@@ -112,10 +116,14 @@ const ProductsSection = memo(function ProductsSection() {
           ))}
         </div>
 
-        {/* Bottom note */}
+        {/* CTA to full catalog */}
         <ScrollReveal delay={0.4}>
           <div className="mt-8 md:mt-12 text-center">
-            <p className="text-xs md:text-sm text-text-tertiary font-onest font-light">
+            <a href="/catalog" className="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20">
+              Смотреть весь каталог
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <p className="mt-4 text-xs md:text-sm text-text-tertiary font-onest font-light">
               Все продукты сертифицированы • GMP стандарт • 100% натуральные компоненты
             </p>
           </div>

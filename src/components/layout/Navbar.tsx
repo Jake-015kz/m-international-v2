@@ -15,10 +15,10 @@ interface NavbarProps {
 }
 
 const NAV_LINKS = [
-  { href: "#products", label: "Продукция" },
-  { href: "#certificates", label: "Сертификаты" },
-  { href: "#about", label: "О компании" },
-  { href: "#contacts", label: "Контакты" },
+  { href: "/", label: "Главная" },
+  { href: "/catalog", label: "Продукция" },
+  { href: "/about", label: "О компании" },
+  { href: "/contacts", label: "Контакты" },
 ];
 
 const LOCALE_LABELS: Record<string, string> = {
@@ -55,17 +55,10 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
           gsap.set(nav, {
             backgroundColor: `oklch(98.5% 0.003 160 / ${bgAlpha})`,
             backdropFilter: `blur(${blur}px)`,
-            boxShadow:
-              progress > 0.5
-                ? "0 1px 20px oklch(0% 0 0 / 0.04)"
-                : "none",
+            boxShadow: progress > 0.5 ? "0 1px 20px oklch(0% 0 0 / 0.04)" : "none",
           });
 
-          if (progress > 0.3) {
-            setIsScrolled(true);
-          } else {
-            setIsScrolled(false);
-          }
+          setIsScrolled(progress > 0.3);
         },
       });
     }, nav);
@@ -76,6 +69,11 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === `/${locale}` || pathname === "/";
+    return pathname.startsWith(`/${locale}${href}`) || pathname.startsWith(href);
+  };
 
   return (
     <>
@@ -97,8 +95,8 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
                 <path d="M10 22V10L16 16L22 10V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <circle cx="16" cy="16" r="3" fill="currentColor" opacity="0.15"/>
               </svg>
-              <span className="hidden sm:inline">m-international.kz</span>
-              <span className="sm:hidden">m-int.kz</span>
+              <span className="hidden sm:inline">M-International</span>
+              <span className="sm:hidden">M-Int</span>
             </Link>
 
             {/* Desktop links */}
@@ -106,40 +104,42 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
-                  href={link.href}
-                  className="text-sm font-onest font-light text-text-secondary hover:text-text-primary transition-colors duration-200 relative group"
+                  href={link.href === "/" ? `/${locale}` : `/${locale}${link.href}`}
+                  className={`text-sm font-onest font-light transition-colors duration-200 relative group ${
+                    isActive(link.href) ? "text-accent-600" : "text-text-secondary hover:text-text-primary"
+                  }`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-text-primary transition-all duration-300 group-hover:w-full" />
+                  <span className={`absolute -bottom-1 left-0 h-px bg-accent-500 transition-all duration-300 ${isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"}`} />
                 </Link>
               ))}
             </div>
 
             {/* CTA + Mobile toggle */}
             <div className="flex items-center gap-3">
-            {/* Language switcher */}
-            <div className="hidden md:flex items-center gap-1 mr-2">
-              {LOCALES.map((loc) => (
-                <Link
-                  key={loc}
-                  href={`/${loc}`}
-                  className={`px-2 py-1 text-xs font-onest font-medium rounded transition-colors duration-200 ${
-                    loc === locale
-                      ? "text-text-primary bg-surface-sunken"
-                      : "text-text-tertiary hover:text-text-secondary"
-                  }`}
-                >
-                  {LOCALE_LABELS[loc]}
-                </Link>
-              ))}
-            </div>
+              {/* Language switcher */}
+              <div className="hidden md:flex items-center gap-1 mr-2">
+                {LOCALES.map((loc) => (
+                  <Link
+                    key={loc}
+                    href={`/${loc}`}
+                    className={`px-2 py-1 text-xs font-onest font-medium rounded-xl transition-colors duration-200 ${
+                      loc === locale
+                        ? "text-text-primary bg-surface-sunken"
+                        : "text-text-tertiary hover:text-text-secondary"
+                    }`}
+                  >
+                    {LOCALE_LABELS[loc]}
+                  </Link>
+                ))}
+              </div>
 
-            <Link
-              href="#contacts"
-              className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-xs font-medium bg-text-primary text-surface-elevated hover:bg-text-secondary transition-colors duration-200"
-            >
-              Связаться
-            </Link>
+              <Link
+                href={`/${locale}/contacts`}
+                className="hidden md:inline-flex items-center px-5 py-2 rounded-2xl text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-500 transition-colors duration-200"
+              >
+                Связаться
+              </Link>
 
               {/* Mobile hamburger */}
               <button
@@ -148,16 +148,8 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
                 aria-label={isMobileOpen ? "Закрыть меню" : "Открыть меню"}
                 aria-expanded={isMobileOpen}
               >
-                <span
-                  className={`block w-5 h-px bg-text-primary transition-all duration-300 ${
-                    isMobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
-                  }`}
-                />
-                <span
-                  className={`block w-5 h-px bg-text-primary transition-all duration-300 ${
-                    isMobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
-                  }`}
-                />
+                <span className={`block w-5 h-px bg-text-primary transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
+                <span className={`block w-5 h-px bg-text-primary transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""}`} />
               </button>
             </div>
           </div>
@@ -167,36 +159,28 @@ export default function Navbar({ locale = "ru" }: NavbarProps) {
       {/* Mobile menu overlay */}
       <div
         className={`fixed inset-0 z-40 bg-surface-base/95 backdrop-blur-xl transition-all duration-500 md:hidden ${
-          isMobileOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+          isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8">
           {NAV_LINKS.map((link, i) => (
             <Link
               key={link.href}
-              href={link.href}
-              className={`font-unbounded text-2xl font-bold text-text-primary transition-all duration-500 ${
-                isMobileOpen
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              href={link.href === "/" ? `/${locale}` : `/${locale}${link.href}`}
+              className={`font-unbounded text-2xl font-bold transition-all duration-500 ${
+                isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
               style={{ transitionDelay: isMobileOpen ? `${i * 80}ms` : "0ms" }}
             >
               {link.label}
             </Link>
           ))}
           <Link
-            href="#contacts"
-            className={`mt-4 inline-flex items-center px-6 py-3 rounded-full text-sm font-medium bg-text-primary text-surface-elevated transition-all duration-500 ${
-              isMobileOpen
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4"
+            href={`/${locale}/contacts`}
+            className={`mt-4 inline-flex items-center px-8 py-3.5 rounded-2xl text-sm font-medium bg-emerald-600 text-white transition-all duration-500 ${
+              isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
-            style={{
-              transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms",
-            }}
+            style={{ transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms" }}
           >
             Связаться
           </Link>
