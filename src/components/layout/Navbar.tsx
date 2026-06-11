@@ -176,7 +176,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
               <Link
                 href={`/${currentLocale}/contacts`}
-                className="hidden md:inline-flex items-center px-5 py-2 rounded-2xl text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-500 transition-colors duration-200"
+                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-medium bg-[oklch(18%_0.01_160)] text-white hover:bg-[oklch(25%_0.01_160)] border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_2px_8px_oklch(55%_0.18_160_/_0.1),0_1px_2px_rgba(0,0,0,0.15)]"
               >
                 {t("contacts")}
               </Link>
@@ -187,6 +187,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 z-50"
                 aria-label={isMobileOpen ? "Закрыть меню" : "Открыть меню"}
                 aria-expanded={isMobileOpen}
+                aria-controls="mobile-menu"
               >
                 <span className={`block w-5 h-px bg-text-primary transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
                 <span className={`block w-5 h-px bg-text-primary transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""}`} />
@@ -198,23 +199,31 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
       {/* Mobile menu overlay */}
       <div
+        id="mobile-menu"
         className={`fixed inset-0 z-40 bg-surface-base/95 backdrop-blur-xl transition-all duration-500 md:hidden mobile-no-backdrop ${
           isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!isMobileOpen}
+        aria-label="Мобильное меню"
       >
         <div className="flex flex-col items-center justify-center h-full gap-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-          {NAV_LINKS.map((link, i) => (
-            <Link
-              key={link.href}
-              href={getLocalizedHref(link.href, currentLocale)}
-              className={`font-unbounded text-xl font-bold transition-all duration-500 py-2 ${
-                isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
-              style={{ transitionDelay: isMobileOpen ? `${i * 80}ms` : "0ms" }}
-            >
-              {link.label}
-            </Link>
-          ))}
+          <ul className="flex flex-col items-center gap-6" role="list">
+            {NAV_LINKS.map((link, i) => (
+              <li key={link.href}>
+                <Link
+                  href={getLocalizedHref(link.href, currentLocale)}
+                  className={`font-unbounded text-xl font-bold transition-all duration-500 py-2 ${
+                    isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
+                  style={{ transitionDelay: isMobileOpen ? `${i * 80}ms` : "0ms" }}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
           {/* Language switcher in mobile menu */}
           <div className="flex items-center gap-2 mt-2" role="group" aria-label="Выбор языка">
@@ -237,7 +246,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
           <Link
             href={`/${currentLocale}/contacts`}
-            className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-2xl text-sm font-medium bg-emerald-600 text-white transition-all duration-500 ${
+            className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-medium bg-[oklch(18%_0.01_160)] text-white border border-white/[0.08] transition-all duration-500 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] ${
               isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms" }}

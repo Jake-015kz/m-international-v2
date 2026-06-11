@@ -70,15 +70,15 @@ const CertificatesSection = memo(function CertificatesSection() {
       <BackgroundDecorations variant="section" />
 
       {/* Side fades for marquee */}
-      <div className="absolute top-0 left-0 bottom-0 w-4 md:w-24 bg-gradient-to-r from-surface-base to-transparent z-[5] pointer-events-none" />
-      <div className="absolute top-0 right-0 bottom-0 w-4 md:w-24 bg-gradient-to-l from-surface-base to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 left-0 bottom-0 w-4 md:w-24 bg-gradient-to-r from-surface-base to-transparent z-[5] pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-0 right-0 bottom-0 w-4 md:w-24 bg-gradient-to-l from-surface-base to-transparent z-[5] pointer-events-none" aria-hidden="true" />
 
       <Container className="relative z-10">
         <ScrollReveal>
           <SectionHeader
             badge={
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100">
-                <Shield className="w-3.5 h-3.5 text-accent-600" />
+                <Shield className="w-3.5 h-3.5 text-accent-600" aria-hidden="true" />
                 <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">{t("certified")}</span>
               </div>
             }
@@ -88,7 +88,7 @@ const CertificatesSection = memo(function CertificatesSection() {
         </ScrollReveal>
 
         {/* Marquee rows with real certificate images */}
-        <div className="mt-6 md:mt-12 space-y-2 md:space-y-4 overflow-hidden">
+        <div className="mt-6 md:mt-12 space-y-2 md:space-y-4 overflow-hidden" aria-hidden="true">
           <MarqueeRow items={row1} direction="left" duration={35} />
           {row2.length > 0 && (
             <MarqueeRow items={row2} direction="right" duration={40} />
@@ -99,11 +99,11 @@ const CertificatesSection = memo(function CertificatesSection() {
         <ScrollReveal delay={0.3}>
           <div className="mt-6 md:mt-8 text-center">
             <div className="inline-flex items-center gap-2 text-text-tertiary">
-              <BadgeCheck className="w-3.5 h-3.5" />
+              <BadgeCheck className="w-3.5 h-3.5" aria-hidden="true" />
               <p className="text-[9px] md:text-[10px] uppercase tracking-wider font-onest">
                 Проверенное качество · Безопасность · Эффективность
               </p>
-              <BadgeCheck className="w-3.5 h-3.5" />
+              <BadgeCheck className="w-3.5 h-3.5" aria-hidden="true" />
             </div>
           </div>
         </ScrollReveal>

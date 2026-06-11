@@ -31,18 +31,9 @@ const ProductCard = memo(function ProductCard({
   const t = useTranslations("catalog");
 
   return (
-    <div
+    <article
       className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 cursor-pointer product-card-hover ${featured ? "sm:col-span-2" : ""}`}
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
-      aria-label={`${t("contact")} ${name}`}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick?.();
-        }
-      }}
+      aria-label={`${name} — ${subtitle}`}
     >
       {/* Product image area — taller */}
       <div
@@ -132,8 +123,7 @@ const ProductCard = memo(function ProductCard({
             color: color,
             border: `1px solid ${color}25`,
           }}
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             onClick?.();
           }}
         >
@@ -148,8 +138,9 @@ const ProductCard = memo(function ProductCard({
       <div
         className="h-0.5 w-0 group-hover:w-full transition-all duration-500 opacity-60"
         style={{ background: `linear-gradient(90deg, ${color}, transparent)` }}
+        aria-hidden="true"
       />
-    </div>
+    </article>
   );
 });
 

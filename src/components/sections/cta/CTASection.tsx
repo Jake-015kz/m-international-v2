@@ -33,18 +33,20 @@ const CTASection = memo(function CTASection() {
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
                   <a
                     href="#about"
-                    className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-500 hover:bg-emerald-400 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 group hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 min-h-[44px]"
+                    className="group relative inline-flex items-center justify-center gap-2 px-7 md:px-9 py-3 md:py-3.5 bg-[oklch(18%_0.01_160)] hover:bg-[oklch(25%_0.01_160)] text-white font-unbounded font-semibold text-sm rounded-xl border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 hover:-translate-y-0.5 shadow-[0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_4px_20px_oklch(55%_0.18_160_/_0.15),0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.08)] min-h-[44px]"
                   >
-                    <Phone className="w-4 h-4" />
-                    {t("contact")}
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none" aria-hidden="true" />
+                    <Phone className="w-4 h-4 relative z-10" />
+                    <span className="relative z-10">{t("contact")}</span>
+                    <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 transition-transform" />
                   </a>
                   <a
                     href="#products"
-                    className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-white/10 hover:bg-white/15 text-white font-unbounded font-bold text-sm rounded-2xl border border-white/15 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 min-h-[44px] mobile-no-backdrop"
+                    className="group relative inline-flex items-center justify-center gap-2 px-7 md:px-9 py-3 md:py-3.5 bg-white/[0.07] hover:bg-white/[0.12] text-white font-unbounded font-semibold text-sm rounded-xl border border-white/[0.1] hover:border-white/[0.18] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 min-h-[44px] mobile-no-backdrop"
                   >
-                    <MessageCircle className="w-4 h-4" />
-                    {t("catalog")}
+                    <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none" aria-hidden="true" />
+                    <MessageCircle className="w-4 h-4 relative z-10" />
+                    <span className="relative z-10">{t("catalog")}</span>
                   </a>
                 </div>
               </div>

@@ -5,16 +5,19 @@ import { motion } from "framer-motion";
 import { useRef, useEffect, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroBackground = memo(function HeroBackground() {
   const bgRef = useRef<HTMLDivElement>(null);
-  const orb1Ref = useRef<HTMLDivElement>(null);
-  const orb2Ref = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (reducedMotion) return;
+
     const ctx = gsap.context(() => {
+      // Parallax on background image only — not on blobs (CSS handles blob animation)
       if (bgRef.current) {
         gsap.to(bgRef.current, {
           yPercent: 15,
@@ -27,38 +30,10 @@ const HeroBackground = memo(function HeroBackground() {
           },
         });
       }
-
-      if (orb1Ref.current) {
-        gsap.to(orb1Ref.current, {
-          yPercent: -20,
-          xPercent: 10,
-          ease: "none",
-          scrollTrigger: {
-            trigger: orb1Ref.current.parentElement,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1.2,
-          },
-        });
-      }
-
-      if (orb2Ref.current) {
-        gsap.to(orb2Ref.current, {
-          yPercent: -30,
-          xPercent: -15,
-          ease: "none",
-          scrollTrigger: {
-            trigger: orb2Ref.current.parentElement,
-            start: "top top",
-            end: "bottom top",
-            scrub: 0.6,
-          },
-        });
-      }
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <div className="absolute inset-0">
@@ -68,8 +43,7 @@ const HeroBackground = memo(function HeroBackground() {
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute inset-0 will-change-transform"
-        style={{ transform: "translate3d(0,0,0)" }}
+        className="absolute inset-0 will-change-transform gpu-layer"
       >
         <Image
           src="/media/hero-bg.webp"
@@ -86,58 +60,65 @@ const HeroBackground = memo(function HeroBackground() {
       {/* Mesh gradient layer */}
       <div className="absolute inset-0 mesh-gradient opacity-50 z-[1]" />
 
-      {/* Animated glow orb 1 — hidden on mobile to save GPU */}
-      <motion.div
-        ref={orb1Ref}
-        className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full z-[1] will-change-transform hidden md:block"
-        style={{
-          background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%)",
-          left: "15%",
-          top: "25%",
-          filter: "blur(80px)",
-        }}
-        animate={{
-          x: [0, 40, -20, 0],
-          y: [0, -30, 15, 0],
-          scale: [1, 1.1, 0.95, 1],
-        }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* ── CSS-animated glow orbs ── */}
+      {/* Replaced Framer Motion infinite loops with GPU-composited CSS keyframes.
+          Hidden on mobile (md:block), disabled via prefers-reduced-motion in CSS.
+          contain: paint limits blur repaint area. */}
+      <div className="blob-container absolute inset-0 z-[1]">
+        {/* Orb 1 — primary float */}
+        <div
+          className="blob blob-a hidden md:block"
+          style={{
+            width: "clamp(400px, 40vw, 600px)",
+            height: "clamp(400px, 40vw, 600px)",
+            background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%)",
+            left: "15%",
+            top: "25%",
+            filter: "blur(80px)",
+          }}
+          aria-hidden="true"
+        />
 
-      {/* Animated glow orb 2 — hidden on mobile to save GPU */}
-      <motion.div
-        ref={orb2Ref}
-        className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full z-[1] will-change-transform hidden md:block"
-        style={{
-          background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.06) 0%, transparent 70%)",
-          right: "10%",
-          bottom: "20%",
-          filter: "blur(100px)",
-        }}
-        animate={{
-          x: [0, -30, 20, 0],
-          y: [0, 25, -15, 0],
-          scale: [1, 1.15, 0.9, 1],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-      />
+        {/* Orb 2 — secondary float */}
+        <div
+          className="blob blob-b hidden md:block"
+          style={{
+            width: "clamp(350px, 35vw, 500px)",
+            height: "clamp(350px, 35vw, 500px)",
+            background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.06) 0%, transparent 70%)",
+            right: "10%",
+            bottom: "20%",
+            filter: "blur(100px)",
+          }}
+          aria-hidden="true"
+        />
+      </div>
 
       {/* Soft white glow behind center text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]" aria-hidden="true">
         <div className="w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-surface-elevated/25 rounded-full blur-3xl" />
       </div>
 
-      {/* Dot grid — very subtle */}
+      {/* Dot grid — Linear-style, white neutral dots */}
       <div
-        className="absolute inset-0 z-[1] opacity-[0.02]"
+        className="absolute inset-0 z-[1] pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(circle, oklch(55% 0.18 160) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
       />
 
-      {/* Noise overlay */}
-      <div className="absolute inset-0 noise-overlay" />
+      {/* Noise texture overlay — SVG turbulence, ultra-subtle */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: "256px 256px",
+          backgroundRepeat: "repeat",
+          mixBlendMode: "overlay",
+        }}
+      />
+
     </div>
   );
 });

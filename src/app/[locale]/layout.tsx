@@ -38,10 +38,13 @@ export default async function RootLayout({
       className={`${onest.variable} ${unbounded.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">
+        <a href="#main-content" className="skip-link">
+          Перейти к содержимому
+        </a>
         <NextIntlClientProvider messages={messages}>
           <SmoothScrollProvider>
             <Navbar locale={locale} />
-            <div className="flex-1">{children}</div>
+            <div id="main-content" className="flex-1">{children}</div>
           </SmoothScrollProvider>
         </NextIntlClientProvider>
       </body>

@@ -37,7 +37,37 @@
       "customers": "Customers",
       "countries": "Countries",
       "years": "Years"
-    }
+    },
+    "cisLabel": "CIS Presence",
+    "stats": {
+      "revenue": {
+        "label": "Revenue / mo",
+        "change": "+35%",
+        "changePositive": true
+      },
+      "countries": {
+        "label": "Countries",
+        "change": "+8",
+        "changePositive": true
+      },
+      "customers": {
+        "label": "Partners",
+        "change": "+12%",
+        "changePositive": true
+      },
+      "growth": {
+        "label": "Growth / yr",
+        "change": "+7%",
+        "changePositive": true
+      },
+      "title": "Real-time Stats"
+    },
+    "certBadges": {
+      "gmpIsoHalal": "GMP · ISO · Halal",
+      "countries50": "50+ countries",
+      "clients10k": "10K+ customers"
+    },
+    "videoCard": "Natural formulas by M-International"
   },
   "certificates": {
     "title": "International Certificates",

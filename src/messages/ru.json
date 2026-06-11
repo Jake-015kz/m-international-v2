@@ -38,7 +38,37 @@
       "customers": "Клиентов",
       "countries": "Стран",
       "years": "Лет на рынке"
-    }
+    },
+    "cisLabel": "Присутствие в СНГ",
+    "stats": {
+      "revenue": {
+        "label": "Оборот / мес",
+        "change": "+35%",
+        "changePositive": true
+      },
+      "countries": {
+        "label": "Стран",
+        "change": "+8",
+        "changePositive": true
+      },
+      "customers": {
+        "label": "Партнёров",
+        "change": "+12%",
+        "changePositive": true
+      },
+      "growth": {
+        "label": "Рост / год",
+        "change": "+7%",
+        "changePositive": true
+      },
+      "title": "Статистика в реальном времени"
+    },
+    "certBadges": {
+      "gmpIsoHalal": "GMP · ISO · Halal",
+      "countries50": "50+ стран",
+      "clients10k": "10K+ клиентов"
+    },
+    "videoCard": "Натуральные формулы M-International"
   },
   "certificates": {
     "title": "Международные сертификаты",

@@ -37,7 +37,37 @@
       "customers": "Клиенттер",
       "countries": "Елдер",
       "years": "Жыл"
-    }
+    },
+    "cisLabel": "СНГ қамту",
+    "stats": {
+      "revenue": {
+        "label": "Ай сайынғы айналым",
+        "change": "+35%",
+        "changePositive": true
+      },
+      "countries": {
+        "label": "Елдер",
+        "change": "+8",
+        "changePositive": true
+      },
+      "customers": {
+        "label": "Серіктестер",
+        "change": "+12%",
+        "changePositive": true
+      },
+      "growth": {
+        "label": "Жылдық өсу",
+        "change": "+7%",
+        "changePositive": true
+      },
+      "title": "Нақты уақыт статистикасы"
+    },
+    "certBadges": {
+      "gmpIsoHalal": "GMP · ISO · Halal",
+      "countries50": "50+ ел",
+      "clients10k": "10K+ клиент"
+    },
+    "videoCard": "M-International табиғи формулалары"
   },
   "certificates": {
     "title": "Халықаралық сертификаттар",
