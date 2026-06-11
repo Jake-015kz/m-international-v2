@@ -1,163 +1,112 @@
-# ТЕХНИЧЕСКИЙ ОТЧЕТ — Operation: Clean Slate
+# ТЕХНИЧЕСКИЙ ОТЧЕТ — Design Audit Fix
 
-**Дата:** 2026-06-11  
-**Репозиторий:** https://github.com/Jake-015kz/m-international-v2  
-**Коммит:** `dc9acfe` — "initial: elite autonomous architecture v2.0"
-
----
-
-## ЭТАП 1: SKILL HUNTING ✓
-
-Созданы 3 файла навыков в /storage/skills/:
-
-1. **clean_arch_rules.md** — структура папок Next.js 16, разделение Server/Client компонентов, next-intl v4 конфигурация, Tailwind 4 правила, шрифты
-2. **ui_kit_standards.md** — атомарный дизайн, типизация пропсов, GlassCard паттерн, цветовая система, типографика для СНГ
-3. **motion_manifesto.md** — Lenis smooth scroll, Framer Motion паттерны (FadeInUp, Stagger, Floating, Parallax), GSAP последовательности, производительность
+**Дата:** 2026-06-11
+**Репозиторий:** https://github.com/Jake-015kz/m-international-v2
+**Коммит:** `a0e3cd0` — "fix: design audit — remove AI slop patterns, optimize performance"
 
 ---
 
-## ЭТАП 2: МИГРАЦИЯ ДАННЫХ ✓
+## P0: КРИТИЧЕСКИЕ ИСПРАВЛЕНИЯ (нарушения DESIGN.md)
 
-Перенесены из /storage/repos/m-internation.kz:
+### 1. Gradient Text — убран
+- `Hero.tsx:102` — `hero-gradient-text` → `text-text-primary font-black`
+- `globals.css` — удалены `.hero-gradient-text` и `@keyframes gradient-shift`
 
-- `src/messages/ru.json` — полная русская локализация (hero, products, about, business, contacts, footer, catalog)
-- `src/messages/en.json` — полная английская локализация
-- `src/messages/kk.json` — полная казахская локализация
-- Продукты: MiCrystal, GreenMAX, MiMAX, BluMAX, NutriMAX, FlexiMAX, MachoMAN, MiSHROOM, Ye-Katerina, Mi MASK, Mi SERUM, Magicare, MiFresh, MiTOWN, Essential Oil, Relax Tea, MiWellness, Shaker
+### 2. Hero-metric template — убран
+- `Hero.tsx` — удалён массив `stats` и оба блока статистики (десктоп + мобильный)
+- Убраны gsap-анимации для statsRef
 
----
+### 3. Glassmorphism — убран
+- `Hero.tsx:68` — `hero-glass-badge` → `bg-accent-50 border border-accent-100`
+- `ProductCard.tsx:32` — `card-premium-v2` → `product-card-hover`
+- `CTASection.tsx:41` — убран `btn-premium-glow`
+- `globals.css` — удалён весь блок PREMIUM UI V2 (235 строк):
+  - `.hero-glass-badge`, `.hero-glass-btn`, `.glass-card-premium`
+  - `.card-premium-v2` (inner glow + shine sweep)
+  - `.btn-premium-glow`, `.float-premium`, `.pulse-ring`, `.shimmer-premium`, `.hero-stat-card`
+  - `@keyframes mesh-float`, `blob-drift-*`, `conic-rotate`, `gradient-shift`, `particle-float*`
 
-## ЭТАП 3: АРХИТЕКТУРА ✓
+### 4. Избыточные анимации — убраны
+- `HeroBackground.tsx` — удалён `hero-conic-glow` (вращающийся conic-gradient)
+- `HeroBackground.tsx` — удалены Particles (24 анимированных div с Framer Motion)
+- `HeroBackground.tsx` — `hero-mesh-gradient` (анимированный) → `mesh-gradient` (статичный)
+- Удалён `particlesRef` из gsap контекста
 
-### Структура папок:
-```
-src/
-├── app/
-│   ├── globals.css          # Tailwind 4 + CSS variables + noise overlay
-│   ├── layout.tsx           # Root layout + NextIntlClientProvider
-│   └── page.tsx             # Home → Hero
-├── components/
-│   ├── ui/                  # Атомарные компоненты
-│   │   ├── Button.tsx       # forwardRef, variant/size props
-│   │   ├── GlassCard.tsx    # backdrop-blur-3xl, border-white/20
-│   │   ├── Container.tsx    # responsive container
-│   │   ├── Badge.tsx        # label component
-│   │   └── index.ts         # barrel export
-│   ├── sections/hero/       # Hero секция
-│   │   ├── Hero.tsx         # Main hero with animations
-│   │   ├── HeroBackground.tsx  # Image + glow + noise
-│   │   ├── FloatingCards.tsx   # 3 floating widgets
-│   │   ├── CTAButton.tsx    # Animated button wrapper
-│   │   └── index.ts
-│   ├── layout/              # (пусто — для Header/Footer)
-│   └── providers/           # (пусто — для context providers)
-├── lib/
-│   ├── utils.ts             # cn() — clsx + tailwind-merge
-│   ├── fonts.ts             # Unbounded + Onest (cyrillic subsets)
-│   ├── constants.ts         # SITE_CONFIG, LOCALES
-│   ├── i18n.ts              # next-intl getRequestConfig
-│   └── routing.ts           # next-intl routing definition
-├── messages/                # ru.json, en.json, kk.json
-├── services/                # (пусто — для API)
-├── hooks/                   # (пусто — для custom hooks)
-└── types/
-    └── index.ts             # ProductData, NavItem, StatData
-```
-
-### Шрифты:
-- **Unbounded** (variable: --font-unbounded): weights 400-900, cyrillic + latin
-- **Onest** (variable: --font-onest): weights 300-700, cyrillic + latin
-
-### next-intl v4:
-- Middleware: `middleware.ts` (matcher: `/`, `/(ru|en|kk)/:path*`)
-- Routing: `src/lib/routing.ts` (locales: ru/en/kk, default: ru, localePrefix: always)
-- i18n config: `src/lib/i18n.ts`
-- next.config.ts: `withNextIntl()` wrapper
+### 5. Изображения — сжаты
+- `mishroom.png` 7,744KB → `mishroom.webp` 42KB (99.5% уменьшение)
+- `micrystal.png` 824KB → `micrystal.webp` 63KB (92.4% уменьшение)
+- `mitown2.png` 626KB → `mitown2.webp` 48KB (92.3% уменьшение)
+- ProductsSection.tsx — обновлены ссылки на .webp
 
 ---
 
-## ЭТАП 4: HERO РЕАЛИЗАЦИЯ ✓
+## P1: СЕРЬЁЗНЫЕ ИСПРАВЛЕНИЯ
 
-### Заголовок:
-"Интеллект природы для вашего долголетия"
-- Unbounded font, weight 900 (Black) для "Интеллект природы"
-- Unbounded font, weight 200 (ExtraLight) для "для вашего долголетия"
-- Размер: clamp(2rem, 5vw, 3.5rem), line-height 1.1, letter-spacing normal
+### 6. Product Card Grid — вариативность
+- `ProductsSection.tsx` — сетка `lg:grid-cols-3` → `lg:grid-cols-4`
+- GreenMAX добавлен `featured: true` (теперь 2 featured карточки с `col-span-2`)
+- Результат: 2 крупных + 6 стандартных вместо 1 крупного + 7 одинаковых
 
-### Элементы:
-- Видео: `/media/hero-bg.mp4` (уже в репозитории)
-- Фон: `/media/hero-bg.png` (уже в репозитории)
-- Radial glow за текстом
-- Noise overlay texture
+### 7. MLM-тексты — переработаны
+- `BusinessSection.tsx` — убран блок "Высокий доход с первого дня"
+- `BusinessSection.tsx` — убрана цитата "мост к финансовой свободе"
+- `BusinessSection.tsx` — заголовок: "Высокий доход с первого дня" → "Обучение, поддержка, глобальный рынок"
+- "Равные возможности" → "Сообщество 10 000+"
+- "Одна из самых комплексных систем" → "Комплексная система вознаграждений за результат"
 
-### 3 плавающие карточки (Framer Motion):
-1. **Левая** — видео-превью с play-кнопкой, "AI-формулы работают на ваше здоровье"
-2. **Правая верхняя** — "Стабильный результат" с иконкой
-3. **Права нижняя** — "Высокое качество" с аватарами
-
-Каждая каршка с анимацией левитации `y: [0, -12, 0]` (yoyo, easeInOut)
-
-### Статистика (нижняя панель):
-- 10 000+ клиентов
-- 50+ стран
-- 15 лет опыта
-
-### CTA кнопки:
-- Primary: "Смотреть каталог"
-- Ghost: "О компании"
+### 8. About-секция — 2x2 grid
+- `AboutSection.tsx` — 4 одинаковых блока с alternating layout → 2x2 grid
+- Удалён массив `values`, значения вписаны inline
 
 ---
 
-## ЭТАП 5: SELF-HEALING & PUSH ✓
+## P2: УЛУЧШЕНИЯ
 
-### Ошибка #1: `next: not found`
-- **Причина:** node_modules не установлены
-- **Решение:** `npm install` (44s, 390 packages)
+### 9. Lenis на мобильных — отключён
+- `SmoothScrollProvider.tsx` — добавлена проверка `window.matchMedia("(max-width: 767px)")`
+- На мобильных Lenis не инициализируется
 
-### Ошибка #2: `ReferenceError: next_config is not defined`
-- **Причина:** case mismatch в next.config.ts — `next_config` вместо `nextConfig`
-- **Решение:** patch replace `next_config` → `nextConfig`
+### 10. CTA-секция — асимметричный layout
+- `CTASection.tsx` — центрированный тёмный блок → `flex-row` с текстом слева и кнопками справа
+- Убраны decorative orbs и floating particles
 
-### Результат билда:
-```
-✓ Compiled successfully in 6.0s
-✓ TypeScript passed in 4.0s
-✓ Generating static pages (4/4) in 1059ms
-Route (app): /, /_not-found
-```
+### 11. Unbounded только для заголовков ≥20px
+- `ProductCard.tsx:107` — `font-unbounded` → `font-onest` для названий продуктов
+- `BusinessSection.tsx:122` — `font-unbounded` → `font-onest` для заголовков карточек
+- `ProductCard.tsx:118` — "Подробнее" `font-unbounded` → `font-onest`
 
-### Git push:
-```
-To https://github.com/Jake-015kz/m-international-v2.git
-   bf17302..dc9acfe  main → main
-```
+### 12. Language Switcher — добавлен
+- `Navbar.tsx` — переключатель RU/EN/KZ в десктопной навигации
+- Активный язык выделен `bg-surface-sunken`
+- Использует `LOCALES` из `@/lib/constants`
 
 ---
 
-## СТЕК ТЕХНОЛОГИЙ
+## СТАТИСТИКА
 
-| Технология | Версия |
-|---|---|
-| Next.js | 16.2.9 |
-| React | 19.2.4 |
-| TypeScript | 5.x |
-| Tailwind CSS | 4.x |
-| next-intl | 4.13.0 |
-| Framer Motion | 12.40.0 |
-| GSAP | 3.15.0 |
-| Lenis | 1.3.23 |
-| clsx | 2.1.1 |
-| tailwind-merge | 3.6.0 |
+- **Файлов изменено:** 16
+- **Строк добавлено:** 128
+- **Строк удалено:** 587
+- **TypeScript ошибок:** 0
+- **Удалено PNG:** 9.2MB → добавлено WebP: 153KB
+- **Удалено CSS-анимаций:** 12 (@keyframes)
+- **Удалено анимированных React-компонентов:** 1 (Particles, 24 motion.div)
 
 ---
 
-## СЛЕДУЮЩИЕ ШАГИ (рекомендации)
+## ФАЙЛЫ
 
-1. **Header/Footer** — создать в `src/components/layout/`
-2. **Products section** — карточки продуктов из messages.json
-3. **About section** — информация о компании
-4. **Business section** — MLM возможности
-5. **Contacts page** — контактная информация
-6. **Lenis SmoothScroll** — добавить SmoothScrollProvider
-7. **GSAP анимации** — для сложных последовательностей при скролле
-8. **Vercel deploy** — подключить авто-деплой из main
+| Файл | Изменение |
+|------|-----------|
+| `src/components/sections/hero/Hero.tsx` | -gradient-text, -stats, -glass-badge |
+| `src/components/sections/hero/HeroBackground.tsx` | -conic-glow, -particles, -mesh-animation |
+| `src/components/sections/products/ProductCard.tsx` | -card-premium-v2, font-unbounded→onest |
+| `src/components/sections/products/ProductsSection.tsx` | 4-col grid, +GreenMAX featured, .webp |
+| `src/components/sections/business/BusinessSection.tsx` | -MLM тексты, font-unbounded→onest |
+| `src/components/sections/about/AboutSection.tsx` | 2x2 grid |
+| `src/components/sections/cta/CTASection.tsx` | Asymmetric layout, -particles |
+| `src/components/layout/Navbar.tsx` | +Language switcher |
+| `src/components/layout/SmoothScrollProvider.tsx` | Lenis disabled on mobile |
+| `src/app/[locale]/globals.css` | -235 lines PREMIUM UI V2 |
+| `public/images/products/*.webp` | +3 webp files |
+| `public/images/products/*.png` | -3 large PNGs |
