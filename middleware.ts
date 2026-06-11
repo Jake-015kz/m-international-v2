@@ -5,22 +5,25 @@ import { NextRequest, NextResponse } from "next/server";
 const nextIntlMiddleware = createMiddleware(routing);
 
 export const config = {
-  matcher: ["/", "/(ru|en|kk)/:path*", "/(ru|en|kk)"],
+  // Exclude _next/static, _next/image, API routes, and static files
+  matcher: [
+    "/((?!_next/static|_next/image|api/|favicon.ico|.*\\.(?:png|jpg|jpeg|webp|svg|gif|ico|css|js|woff|woff2|ttf|eot)).*)",
+  ],
 };
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Redirect root "/" to default locale "/ru/"
-  if (pathname === "/") {
-    return NextResponse.redirect(new URL("/ru/", request.url), 307);
+  // Skip if pathname already has a valid locale prefix (e.g. /ru/, /en/, /kk/)
+  const hasLocalePrefix = routing.locales.some(
+    (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)
+  );
+
+  // If already has locale prefix, let next-intl handle it (no manual redirect)
+  if (hasLocalePrefix) {
+    return nextIntlMiddleware(request);
   }
 
-  // Redirect "/ru" (without trailing slash) to "/ru/"
-  const localeMatch = pathname.match(/^\/(ru|en|kk)$/);
-  if (localeMatch) {
-    return NextResponse.redirect(new URL(`${localeMatch[0]}/`, request.url), 307);
-  }
-
+  // For all other paths, let next-intl handle locale detection and redirect
   return nextIntlMiddleware(request);
 }
