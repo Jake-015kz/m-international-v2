@@ -1,14 +1,17 @@
 "use client";
 
-import { memo, useCallback, useState, useRef } from "react";
+import { memo, useCallback, useState, useRef, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Leaf, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
+import FilterBar from "./FilterBar";
+import ProductJsonLd from "./ProductJsonLd";
 import { useTranslations } from "next-intl";
 
 interface Product {
@@ -21,7 +24,18 @@ interface Product {
   image?: string;
   benefits?: string[];
   composition?: string;
+  category?: string;
 }
+
+const FILTER_OPTIONS = [
+  { key: "all", label: "Все" },
+  { key: "vision", label: "Зрение" },
+  { key: "detox", label: "Детокс" },
+  { key: "immunity", label: "Иммунитет" },
+  { key: "nutrition", label: "Питание" },
+  { key: "joints", label: "Суставы" },
+  { key: "mens", label: "Мужское" },
+];
 
 const ProductsSection = memo(function ProductsSection() {
   const t = useTranslations();
@@ -41,6 +55,7 @@ const ProductsSection = memo(function ProductsSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [prevEnabled, setPrevEnabled] = useState(false);
   const [nextEnabled, setNextEnabled] = useState(true);
+  const [activeFilter, setActiveFilter] = useState("all");
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -65,7 +80,7 @@ const ProductsSection = memo(function ProductsSection() {
   }, []);
 
   // Build products from i18n messages
-  const products: Product[] = [
+  const allProducts: Product[] = useMemo(() => [
     {
       name: tProducts("micrystal.name"),
       subtitle: tProducts("micrystal.subtitle"),
@@ -76,6 +91,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/micrystal.webp",
       benefits: tProducts.raw("micrystal.benefits") as unknown as string[],
       composition: tProducts("micrystal.composition"),
+      category: "vision",
     },
     {
       name: tProducts("greenmax.name"),
@@ -87,6 +103,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/greenmax.webp",
       benefits: tProducts.raw("greenmax.benefits") as unknown as string[],
       composition: tProducts("greenmax.composition"),
+      category: "detox",
     },
     {
       name: tProducts("mimax.name"),
@@ -97,6 +114,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/mimax.webp",
       benefits: tProducts.raw("mimax.benefits") as unknown as string[],
       composition: tProducts("mimax.composition"),
+      category: "immunity",
     },
     {
       name: tProducts("blumax.name"),
@@ -107,6 +125,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/blumax.webp",
       benefits: tProducts.raw("blumax.benefits") as unknown as string[],
       composition: tProducts("blumax.composition"),
+      category: "immunity",
     },
     {
       name: tProducts("nutrimax.name"),
@@ -117,6 +136,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/nutrimax.webp",
       benefits: tProducts.raw("nutrimax.benefits") as unknown as string[],
       composition: tProducts("nutrimax.composition"),
+      category: "nutrition",
     },
     {
       name: tProducts("fleximax.name"),
@@ -127,6 +147,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/fleximax.webp",
       benefits: tProducts.raw("fleximax.benefits") as unknown as string[],
       composition: tProducts("fleximax.composition"),
+      category: "joints",
     },
     {
       name: tProducts("machoman.name"),
@@ -137,6 +158,7 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/machoman.webp",
       benefits: tProducts.raw("machoman.benefits") as unknown as string[],
       composition: tProducts("machoman.composition"),
+      category: "mens",
     },
     {
       name: tProducts("mitown.name"),
@@ -147,12 +169,25 @@ const ProductsSection = memo(function ProductsSection() {
       image: "/images/products/mitown2.webp",
       benefits: tProducts.raw("mitown.benefits") as unknown as string[],
       composition: tProducts("mitown.composition"),
+      category: "nutrition",
     },
-  ];
+  ], [tProducts]);
+
+  // Instant client-side filtering
+  const filteredProducts = useMemo(() => {
+    if (activeFilter === "all") return allProducts;
+    return allProducts.filter((p) => p.category === activeFilter);
+  }, [allProducts, activeFilter]);
+
+  const handleFilterChange = useCallback((key: string) => {
+    setActiveFilter(key);
+  }, []);
 
   return (
     <>
-      <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-surface-alt">
+      <section id="products" className="relative py-16 md:py-24 overflow-hidden bg-bg-alt">
+        {/* JSON-LD Product markup */}
+        <ProductJsonLd products={allProducts} />
         {/* Background image */}
         <div className="absolute inset-0">
           <img src="/images/sections/supplements.webp" alt="" className="w-full h-full object-cover opacity-5" loading="lazy" />
@@ -175,33 +210,34 @@ const ProductsSection = memo(function ProductsSection() {
             </div>
           </ScrollReveal>
 
-          {/* Slider container */}
-          <div className="mt-6 md:mt-12 relative">
-            {/* Navigation buttons */}
-            <button
-              onClick={scrollPrev}
-              disabled={!prevEnabled}
-              className="absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-surface-elevated border border-border-subtle shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-surface-sunken hover:border-border-default disabled:opacity-30 disabled:cursor-not-allowed min-h-[44px] min-w-[44px]"
-              aria-label="Предыдущий слайд"
-            >
-              <ChevronLeft className="w-5 h-5 text-text-primary" />
-            </button>
-            <button
-              onClick={scrollNext}
-              disabled={!nextEnabled}
-              className="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-surface-elevated border border-border-subtle shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-surface-sunken hover:border-border-default disabled:opacity-30 disabled:cursor-not-allowed min-h-[44px] min-w-[44px]"
-              aria-label="Следующий слайд"
-            >
-              <ChevronRight className="w-5 h-5 text-text-primary" />
-            </button>
+          {/* Filter bar — instant, no reload */}
+          <ScrollReveal delay={0.1}>
+            <div className="mt-6 md:mt-8">
+              <FilterBar
+                options={FILTER_OPTIONS}
+                active={activeFilter}
+                onChange={handleFilterChange}
+              />
+            </div>
+          </ScrollReveal>
 
-            {/* Embla viewport */}
-            <div className="overflow-hidden px-2" ref={emblaRef}>
-              <div className="flex gap-3 md:gap-5 items-stretch">
-                {products.map((product, i) => (
-                  <div
+          {/* Product grid — animated with AnimatePresence */}
+          <div className="mt-6 md:mt-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFilter}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+              >
+                {filteredProducts.map((product, i) => (
+                  <motion.div
                     key={product.name}
-                    className="flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-[0_0_31%] min-w-0"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.4 }}
                   >
                     <ProductCard
                       name={product.name}
@@ -214,36 +250,30 @@ const ProductsSection = memo(function ProductsSection() {
                       image={product.image}
                       onClick={() => openModal(product)}
                     />
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
 
-            {/* Dots indicator */}
-            <div className="flex items-center justify-center gap-2 mt-6">
-              {products.map((_, i) => (
-                <button
-                  key={i}
-                  className={`rounded-full transition-all duration-300 min-h-[8px] min-w-[8px] ${
-                    i === selectedIndex
-                      ? "w-6 h-1.5 bg-accent-500"
-                      : "w-1.5 h-1.5 bg-text-tertiary/20 hover:bg-text-tertiary/40"
-                  }`}
-                  aria-label={`Перейти к слайду ${i + 1}`}
-                  onClick={() => emblaApi?.scrollTo(i)}
-                />
-              ))}
-            </div>
+            {filteredProducts.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-16"
+              >
+                <p className="text-fg-tertiary font-onest text-sm">В этой категории пока нет продуктов</p>
+              </motion.div>
+            )}
           </div>
 
           {/* CTA to full catalog */}
           <ScrollReveal delay={0.4}>
             <div className="mt-6 md:mt-12 text-center">
-              <a href="/catalog" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/20 min-h-[44px]">
+              <a href="/catalog" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-accent-500 hover:bg-accent-600 text-white font-unbounded font-bold text-sm rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-accent-500/20 min-h-[44px]">
                 {tProducts("cta") || "Смотреть весь каталог"}
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
-              <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-text-tertiary font-onest font-light">
+              <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-fg-tertiary font-onest font-light">
                 {t("products.features.certified")} · {t("products.features.natural")} · {t("products.features.tested")}
               </p>
             </div>

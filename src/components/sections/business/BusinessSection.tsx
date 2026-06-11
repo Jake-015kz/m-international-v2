@@ -1,26 +1,113 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useRef, useEffect, useState, useCallback } from "react";
 import { TrendingUp, Users, GraduationCap, Handshake, Star } from "lucide-react";
+import { motion, useInView, useMotionValue, useSpring, animate } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { BackgroundDecorations } from "@/components/ui";
+import { BackgroundDecorations, AnimatedGrid } from "@/components/ui";
+import GlassCard from "@/components/ui/GlassCard";
+
+/* ── Animated counter ── */
+function AnimatedCounter({ target, suffix = "", duration = 2 }: { target: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const motionVal = useMotionValue(0);
+  const springVal = useSpring(motionVal, { stiffness: 40, damping: 15 });
+  const [display, setDisplay] = useState("0");
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const controls = animate(motionVal, target, {
+      duration,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => {
+        setDisplay(Math.round(v).toLocaleString("ru-RU"));
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, target, duration, motionVal]);
+
+  useEffect(() => {
+    const unsub = springVal.on("change", (v) => {
+      setDisplay(Math.round(v).toLocaleString("ru-RU"));
+    });
+    return unsub;
+  }, [springVal]);
+
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
+
+/* ── Reward card with gradient border ── */
+function RewardCard({
+  icon,
+  title,
+  text,
+  gradient,
+  iconBg,
+  iconColor,
+  index,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  gradient: string;
+  iconBg: string;
+  iconColor: string;
+  index: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -4, transition: { duration: 0.3 } }}
+      className="group relative"
+    >
+      {/* Gradient border on hover */}
+      <div className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]`} />
+      <div className="relative h-full rounded-2xl bg-bg-elevated border border-border-subtle p-4 md:p-6 overflow-hidden">
+        {/* Inner glow */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+        <div className="relative z-10">
+          <motion.div
+            className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${iconBg} border flex items-center justify-center mb-3 md:mb-4 ${iconColor}`}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            transition={{ duration: 0.3 }}
+          >
+            {icon}
+          </motion.div>
+          <h3 className="font-onest font-bold text-sm md:text-base text-fg-primary mb-1.5">{title}</h3>
+          <p className="text-[11px] md:text-sm text-fg-secondary font-onest font-light leading-relaxed">{text}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 const BusinessSection = memo(function BusinessSection() {
   const t = useTranslations("business");
 
   const rewards = [
-    { icon: <GraduationCap className="w-5 h-5" />, title: t("steps.register.title"), text: t("steps.register.description"), gradient: "from-emerald-500/15 to-teal-500/15", iconBg: "bg-emerald-500/10 border-emerald-500/20", iconColor: "text-emerald-600" },
-    { icon: <Users className="w-5 h-5" />, title: "Сообщество 10 000+", text: "Присоединяйтесь к команде единомышленников в 50+ странах.", gradient: "from-blue-500/15 to-cyan-500/15", iconBg: "bg-blue-500/10 border-blue-500/20", iconColor: "text-blue-600" },
-    { icon: <Handshake className="w-5 h-5" />, title: t("reward3.title"), text: t("reward3.description"), gradient: "from-violet-500/15 to-purple-500/15", iconBg: "bg-violet-500/10 border-violet-500/20", iconColor: "text-violet-600" },
-    { icon: <TrendingUp className="w-5 h-5" />, title: "9 типов бонусов", text: "Комплексная система вознаграждений за результат.", gradient: "from-amber-500/15 to-orange-500/15", iconBg: "bg-amber-500/10 border-amber-500/20", iconColor: "text-amber-600" },
-    { icon: <Star className="w-5 h-5" />, title: "Глобальный рынок", text: "Бизнес без границ. 50+ стран для развития.", gradient: "from-sky-500/15 to-indigo-500/15", iconBg: "bg-sky-500/10 border-sky-500/20", iconColor: "text-sky-600" },
+    { icon: <GraduationCap className="w-5 h-5" />, title: t("steps.register.title"), text: t("steps.register.description"), gradient: "from-accent-400/30 to-accent-600/30", iconBg: "bg-accent-50 border-accent-200", iconColor: "text-accent-600" },
+    { icon: <Users className="w-5 h-5" />, title: "Сообщество 10 000+", text: "Присоединяйтесь к команде единомышленников в 50+ странах.", gradient: "from-blue-400/30 to-blue-600/30", iconBg: "bg-info-50 border-info-200", iconColor: "text-info-500" },
+    { icon: <Handshake className="w-5 h-5" />, title: t("reward3.title"), text: t("reward3.description"), gradient: "from-violet-400/30 to-violet-600/30", iconBg: "bg-violet-500/10 border-violet-500/20", iconColor: "text-violet-600" },
+    { icon: <TrendingUp className="w-5 h-5" />, title: "9 типов бонусов", text: "Комплексная система вознаграждений за результат.", gradient: "from-gold-400/30 to-gold-600/30", iconBg: "bg-gold-50 border-gold-200", iconColor: "text-gold-600" },
+    { icon: <Star className="w-5 h-5" />, title: "Глобальный рынок", text: "Бизнес без границ. 50+ стран для развития.", gradient: "from-sky-400/30 to-sky-600/30", iconBg: "bg-info-50 border-info-200", iconColor: "text-info-500" },
   ];
 
   return (
-    <section id="business" className="relative py-12 md:py-24 overflow-hidden bg-surface-base">
+    <section id="business" className="relative py-12 md:py-24 overflow-hidden bg-bg-base">
       {/* Background image with overlay */}
       <div className="absolute inset-0">
         <img src="/images/sections/business-team.webp" alt="" className="w-full h-full object-cover opacity-5" loading="lazy" />
@@ -41,22 +128,39 @@ const BusinessSection = memo(function BusinessSection() {
           />
         </ScrollReveal>
 
-        {/* Rewards grid */}
+        {/* Rewards grid — enhanced with hover-lift + gradient borders */}
         <div className="mt-6 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
           {rewards.map((r, i) => (
-            <ScrollReveal key={r.title} delay={i * 0.06}>
-              <div className={`group relative p-4 md:p-6 rounded-2xl bg-gradient-to-br ${r.gradient} border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 overflow-hidden`}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/5 to-transparent" />
-                <div className="relative z-10">
-                  <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${r.iconBg} border flex items-center justify-center mb-3 md:mb-4 ${r.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                    {r.icon}
-                  </div>
-                  <h3 className="font-onest font-bold text-sm md:text-base text-text-primary mb-1.5">{r.title}</h3>
-                  <p className="text-[11px] md:text-sm text-text-secondary font-onest font-light leading-relaxed">{r.text}</p>
-                </div>
-              </div>
-            </ScrollReveal>
+            <RewardCard key={r.title} {...r} index={i} />
           ))}
+        </div>
+
+        {/* Animated stats row */}
+        <div className="mt-10 md:mt-16">
+          <ScrollReveal>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+              {[
+                { value: 50, suffix: "+", label: "Стран" },
+                { value: 10000, suffix: "+", label: "Партнёров" },
+                { value: 9, suffix: "", label: "Типов бонусов" },
+                { value: 5, suffix: "+", label: "Лет на рынке" },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="text-center p-4 md:p-6 rounded-2xl bg-bg-elevated border border-border-subtle"
+                >
+                  <div className="font-unbounded font-bold text-xl md:text-3xl text-accent-500 mb-1">
+                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="text-[10px] md:text-xs text-fg-tertiary font-onest uppercase tracking-wider">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </Container>
     </section>

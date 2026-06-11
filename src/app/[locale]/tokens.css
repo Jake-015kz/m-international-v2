@@ -1,0 +1,574 @@
+/**
+ * @fileoverview Design tokens — Single source of truth for the visual language.
+ *
+ * STRUCTURE
+ * ═══════════════════════════════════════════════════════════════
+ * :root              → Light theme tokens (default)
+ * .dark              → Dark theme tokens (overrides)
+ * @theme inline      → Tailwind v4 utility mappings
+ *
+ * NAMING CONVENTION
+ * ═══════════════════════════════════════════════════════════════
+ * --{category}-{variant}-{modifier}
+ *
+ * Categories:
+ *   bg-    → Background surfaces
+ *   fg-    → Foreground (text) colors
+ *   accent-→ Brand accent (emerald)
+ *   border-→ Border colors
+ *   shadow-→ Shadow tokens
+ *   radius-→ Border radius scale
+ *   space- → Spacing scale
+ *   font-  → Font families / weights
+ *   text-  → Font sizes (type scale)
+ *   ease-  → Cubic-bezier easing curves
+ *   anim-  → Animation durations / delays
+ *   z-     → Z-index scale
+ *   dot-   → Dot grid pattern tokens
+ *   scroll-→ Scroll-driven animation tokens (Apple-style)
+ *   parallax- → Parallax layer tokens
+ *
+ * Token format: OKLCH for all colors (wide-gamut, perceptually uniform).
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   LINEAR-STYLE DOT GRID
+   Subtle background pattern — used on hero / feature sections.
+   Applied via background-image on a pseudo-element.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Dot grid: 24px spacing, 1px dots at 5% opacity (light) / 12% (dark) */
+  --dot-grid-size:    24px;
+  --dot-grid-dot:     oklch(0% 0 0 / 0.05);
+  --dot-grid-image:   radial-gradient(circle, var(--dot-grid-dot) 1px, transparent 1px);
+  --dot-grid:         var(--dot-grid-image) 0 0 / var(--dot-grid-size) var(--dot-grid-size);
+
+  /* ── Apple-style scroll-driven tokens (set via JS / @property) ── */
+  /* These tokens are animated by scroll-driven animations or JS IntersectionObserver.
+     Default values = fully visible / at rest state. */
+  --scroll-opacity:   1;        /* 0 → 1 on reveal (Apple-style fade-in) */
+  --scroll-y:         0px;      /* 40px → 0 on reveal (Apple-style slide-up) */
+  --scroll-scale:     1;        /* 0.92 → 1 on reveal (Apple-style scale-up) */
+  --scroll-blur:      0px;      /* 8px → 0 on reveal (Apple-style sharp-in) */
+  --parallax-y:       0px;      /* Range [-30px, +30px] for parallax layers */
+  --parallax-scale:   1;        /* Range [0.95, 1.05] for parallax scale */
+}
+
+.dark {
+  --dot-grid-dot: oklch(100% 0 0 / 0.12);
+  --dot-grid-image: radial-gradient(circle, var(--dot-grid-dot) 1px, transparent 1px);
+  --dot-grid: var(--dot-grid-image) 0 0 / var(--dot-grid-size) var(--dot-grid-size);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME (default)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Surface backgrounds ── */
+  --bg-base:      oklch(98.5% 0.003 160);
+  --bg-elevated:  oklch(100%  0.002 160);
+  --bg-sunken:    oklch(96%   0.004 160);
+  --bg-alt:       oklch(97%   0.003 160);
+  --bg-overlay:   oklch(18%   0.008 160 / 0.4);
+
+  /* ── Foreground (text) ── */
+  --fg-primary:   oklch(18%  0.008 160);
+  --fg-secondary: oklch(48%  0.012 160);
+  --fg-tertiary:  oklch(62%  0.010 160);
+  --fg-inverse:   oklch(98%  0.003 160);
+  --fg-accent:    oklch(55%  0.18  160);
+  --fg-on-accent: oklch(100% 0     0);
+
+  /* ── Brand accent (emerald) ── */
+  --accent-50:  oklch(97% 0.03  160);
+  --accent-100: oklch(93% 0.06  160);
+  --accent-200: oklch(85% 0.10  160);
+  --accent-300: oklch(75% 0.14  160);
+  --accent-400: oklch(65% 0.16  160);
+  --accent-500: oklch(55% 0.18  160);
+  --accent-600: oklch(48% 0.16  160);
+  --accent-700: oklch(40% 0.14  160);
+  --accent-800: oklch(32% 0.10  160);
+  --accent-900: oklch(22% 0.06  160);
+
+  /* ── Semantic colors ── */
+  --success-50:  oklch(97% 0.04 145);
+  --success-100: oklch(93% 0.08 145);
+  --success-500: oklch(60% 0.18 145);
+  --success-700: oklch(38% 0.12 145);
+
+  --warning-50:  oklch(97% 0.04 85);
+  --warning-100: oklch(93% 0.08 85);
+  --warning-500: oklch(70% 0.18 85);
+  --warning-700: oklch(45% 0.14 85);
+
+  --danger-50:   oklch(97% 0.04 25);
+  --danger-100:  oklch(93% 0.08 25);
+  --danger-500:  oklch(55% 0.20 25);
+  --danger-700:  oklch(38% 0.14 25);
+
+  --info-50:     oklch(97% 0.04 250);
+  --info-100:    oklch(93% 0.08 250);
+  --info-500:    oklch(55% 0.16 250);
+  --info-700:    oklch(38% 0.12 250);
+
+  /* ── Borders ── */
+  --border-subtle:  oklch(90% 0.006 160);
+  --border-default: oklch(82% 0.008 160);
+  --border-focus:   oklch(55% 0.18  160);
+
+  /* ── Glow effects (multi-layered for premium feel) ── */
+  --glow-accent-sm:
+    0 0 8px  oklch(55% 0.18 160 / 0.08),
+    0 0 20px oklch(55% 0.18 160 / 0.04);
+  --glow-accent-md:
+    0 0 16px oklch(55% 0.18 160 / 0.12),
+    0 0 40px oklch(55% 0.18 160 / 0.06);
+  --glow-accent-lg:
+    0 0 32px oklch(55% 0.18 160 / 0.18),
+    0 0 80px oklch(55% 0.18 160 / 0.08);
+  --glow-accent-xl:
+    0 0 48px oklch(55% 0.18 160 / 0.22),
+    0 0 120px oklch(55% 0.18 160 / 0.10);
+
+  /* ── Shadows (layered for realism; Linear-style dark shadows for cards: 0 1px 3px oklch(0 0 0 / 0.3)) ── */
+  --shadow-xs:
+    0 1px 2px oklch(0% 0 0 / 0.04);
+  --shadow-sm:
+    0 1px 3px oklch(0% 0 0 / 0.06),
+    0 1px 2px oklch(0% 0 0 / 0.04);
+  --shadow-md:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 4px 8px oklch(0% 0 0 / 0.06),
+    0 2px 4px oklch(0% 0 0 / 0.04);
+  --shadow-lg:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 8px 16px oklch(0% 0 0 / 0.08),
+    0 4px 8px  oklch(0% 0 0 / 0.04);
+  --shadow-xl:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 16px 32px oklch(0% 0 0 / 0.10),
+    0 8px 16px oklch(0% 0 0 / 0.06);
+  --shadow-2xl:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 24px 48px oklch(0% 0 0 / 0.12),
+    0 12px 24px oklch(0% 0 0 / 0.06);
+
+  /* ── Border radius scale ── */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ── Spacing scale (4px base) ── */
+  --space-0:   0px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+
+  /* ── Typography families ── */
+  --font-sans:     var(--font-onest, "system-ui", "arial");
+  --font-heading:  var(--font-unbounded, "system-ui", "arial");
+  --font-mono:     "SF Mono", "Fira Code", "JetBrains Mono", monospace;
+
+  /* ── Type scale (major third, 1.25 ratio) ── */
+  --text-2xs:   0.64rem;
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-lg:    1.125rem;
+  --text-xl:    1.25rem;
+  --text-2xl:   1.5rem;
+  --text-3xl:   1.875rem;
+  --text-4xl:   2.25rem;
+  --text-5xl:   3rem;
+  --text-6xl:   3.75rem;
+  --text-7xl:   4.5rem;
+
+  /* ── Animation easing curves ── */
+  --ease-linear:      cubic-bezier(0, 0, 1, 1);
+  --ease-in:          cubic-bezier(0.42, 0, 1, 1);
+  --ease-out:         cubic-bezier(0, 0, 0.58, 1);
+  --ease-in-out:      cubic-bezier(0.42, 0, 0.58, 1);
+  --ease-spring:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ── Animation durations ── */
+  --anim-instant:   75ms;
+  --anim-fast:      150ms;
+  --anim-normal:    300ms;
+  --anim-slow:      500ms;
+  --anim-slower:    700ms;
+  --anim-glacial:   1000ms;
+
+  --stagger-xs:   30ms;
+  --stagger-sm:   50ms;
+  --stagger-md:   80ms;
+  --stagger-lg:   120ms;
+
+  /* ── Z-index scale ── */
+  --z-base:     0;
+  --z-dropdown: 10;
+  --z-sticky:   20;
+  --z-overlay:  30;
+  --z-modal:    40;
+  --z-toast:    50;
+  --z-max:      9999;
+
+  /* ── Warm gold accent (Light Luxury) ── */
+  --gold-50:  oklch(97% 0.03 85);
+  --gold-100: oklch(94% 0.06 85);
+  --gold-200: oklch(88% 0.10 85);
+  --gold-300: oklch(80% 0.14 85);
+  --gold-400: oklch(72% 0.16 85);
+  --gold-500: oklch(65% 0.18 85);
+  --gold-600: oklch(56% 0.16 85);
+  --gold-700: oklch(46% 0.13 85);
+  --gold-800: oklch(36% 0.10 85);
+  --gold-900: oklch(24% 0.06 85);
+
+  /* ── Extra shadow layers (premium float) ── */
+  --shadow-float:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 12px 28px oklch(0% 0 0 / 0.08),
+    0 6px 14px oklch(0% 0 0 / 0.04);
+  --shadow-float-lg:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 20px 48px oklch(0% 0 0 / 0.12),
+    0 10px 24px oklch(0% 0 0 / 0.06);
+
+  /* ── Backdrop blur scale ── */
+  --blur-xs:   2px;
+  --blur-sm:   4px;
+  --blur-md:   8px;
+  --blur-lg:   12px;
+  --blur-xl:   16px;
+  --blur-2xl:  24px;
+  --blur-3xl:  40px;
+
+  /* ── Gradient presets ── */
+  --gradient-radial-glow:
+    radial-gradient(circle at 50% 50%, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%);
+  --gradient-shimmer:
+    linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%);
+  --gradient-mesh:
+    radial-gradient(ellipse 50% 40% at 20% 50%, oklch(55% 0.18 160 / 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 40%, oklch(65% 0.18 85 / 0.03) 0%, transparent 55%);
+
+  /* ── Legacy aliases (from existing codebase) ── */
+  --background: var(--bg-base);
+  --foreground: var(--fg-primary);
+  --surface-base:     var(--bg-base);
+  --surface-elevated: var(--bg-elevated);
+  --surface-sunken:   var(--bg-sunken);
+  --surface-alt:      var(--bg-alt);
+  --text-primary:   var(--fg-primary);
+  --text-secondary: var(--fg-secondary);
+  --text-tertiary:  var(--fg-tertiary);
+  --text-inverse:   var(--fg-inverse);
+  --border-subtle:  var(--border-subtle);
+  --border-default: var(--border-default);
+  --accent-primary:   var(--accent-500);
+  --accent-secondary: var(--accent-200);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK THEME
+   ═══════════════════════════════════════════════════════════════ */
+.dark {
+  /* ── Surface backgrounds ── */
+  --bg-base:      oklch(8%  0.005 160);
+  --bg-elevated:  oklch(12% 0.007 160);
+  --bg-sunken:    oklch(5%  0.003 160);
+  --bg-alt:       oklch(10% 0.006 160);
+  --bg-overlay:   oklch(0%  0     0   / 0.6);
+
+  /* ── Foreground (text) ── */
+  --fg-primary:   oklch(92% 0.006 160);
+  --fg-secondary: oklch(65% 0.010 160);
+  --fg-tertiary:  oklch(50% 0.008 160);
+  --fg-inverse:   oklch(12% 0.007 160);
+  --fg-accent:    oklch(70% 0.15  160);
+  --fg-on-accent: oklch(100% 0     0);
+
+  /* ── Brand accent ── */
+  --accent-50:  oklch(18% 0.04  160);
+  --accent-100: oklch(24% 0.06  160);
+  --accent-200: oklch(32% 0.08  160);
+  --accent-300: oklch(42% 0.10  160);
+  --accent-400: oklch(55% 0.14  160);
+  --accent-500: oklch(70% 0.15  160);
+  --accent-600: oklch(78% 0.12  160);
+  --accent-700: oklch(85% 0.08  160);
+  --accent-800: oklch(90% 0.05  160);
+  --accent-900: oklch(95% 0.03  160);
+
+  /* ── Semantic colors ── */
+  --success-50:  oklch(15% 0.04 145);
+  --success-100: oklch(22% 0.06 145);
+  --success-500: oklch(65% 0.16 145);
+  --success-700: oklch(80% 0.08 145);
+
+  --warning-50:  oklch(15% 0.04 85);
+  --warning-100: oklch(22% 0.06 85);
+  --warning-500: oklch(72% 0.16 85);
+  --warning-700: oklch(85% 0.08 85);
+
+  --danger-50:   oklch(15% 0.04 25);
+  --danger-100:  oklch(22% 0.06 25);
+  --danger-500:  oklch(60% 0.18 25);
+  --danger-700:  oklch(78% 0.10 25);
+
+  --info-50:     oklch(15% 0.04 250);
+  --info-100:    oklch(22% 0.06 250);
+  --info-500:    oklch(65% 0.14 250);
+  --info-700:    oklch(80% 0.08 250);
+
+  /* ── Borders ── */
+  --border-subtle:  oklch(20% 0.008 160);
+  --border-default: oklch(28% 0.010 160);
+  --border-focus:   oklch(70% 0.15  160);
+
+  /* ── Glow effects (multi-layered for premium feel) ── */
+  --glow-accent-sm:
+    0 0 12px oklch(70% 0.15 160 / 0.12),
+    0 0 30px oklch(70% 0.15 160 / 0.06);
+  --glow-accent-md:
+    0 0 24px oklch(70% 0.15 160 / 0.18),
+    0 0 60px oklch(70% 0.15 160 / 0.08);
+  --glow-accent-lg:
+    0 0 48px oklch(70% 0.15 160 / 0.22),
+    0 0 100px oklch(70% 0.15 160 / 0.10);
+  --glow-accent-xl:
+    0 0 64px oklch(70% 0.15 160 / 0.28),
+    0 0 140px oklch(70% 0.15 160 / 0.12);
+
+  /* ── Shadows (Linear-style: 0 1px 3px oklch(0 0 0 / 0.3) base layer) ── */
+  --shadow-xs:
+    0 1px 2px oklch(0% 0 0 / 0.20);
+  --shadow-sm:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 1px 2px oklch(0% 0 0 / 0.20);
+  --shadow-md:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 4px 8px  oklch(0% 0 0 / 0.30),
+    0 2px 4px  oklch(0% 0 0 / 0.20);
+  --shadow-lg:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 8px 16px oklch(0% 0 0 / 0.35),
+    0 4px 8px  oklch(0% 0 0 / 0.20);
+  --shadow-xl:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 16px 32px oklch(0% 0 0 / 0.40),
+    0 8px 16px oklch(0% 0 0 / 0.25);
+  --shadow-2xl:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 24px 48px oklch(0% 0 0 / 0.50),
+    0 12px 24px oklch(0% 0 0 / 0.30);
+
+  /* ── Legacy aliases ── */
+  --background: var(--bg-base);
+  --foreground: var(--fg-primary);
+  --surface-base:     var(--bg-base);
+  --surface-elevated: var(--bg-elevated);
+  --surface-sunken:   var(--bg-sunken);
+  --surface-alt:      var(--bg-alt);
+  --text-primary:   var(--fg-primary);
+  --text-secondary: var(--fg-secondary);
+  --text-tertiary:  var(--fg-tertiary);
+  --text-inverse:   var(--fg-inverse);
+  --border-subtle:  var(--border-subtle);
+  --border-default: var(--border-default);
+  --accent-primary:   var(--accent-500);
+  --accent-secondary: var(--accent-200);
+
+  /* ── Warm gold accent (Light Luxury) — dark ── */
+  --gold-50:  oklch(18% 0.04 85);
+  --gold-100: oklch(24% 0.06 85);
+  --gold-200: oklch(32% 0.08 85);
+  --gold-300: oklch(42% 0.10 85);
+  --gold-400: oklch(55% 0.14 85);
+  --gold-500: oklch(65% 0.16 85);
+  --gold-600: oklch(74% 0.13 85);
+  --gold-700: oklch(82% 0.09 85);
+  --gold-800: oklch(88% 0.06 85);
+  --gold-900: oklch(94% 0.03 85);
+
+  /* ── Extra shadow layers (premium float) — dark ── */
+  --shadow-float:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 12px 28px oklch(0% 0 0 / 0.20),
+    0 6px 14px oklch(0% 0 0 / 0.10);
+  --shadow-float-lg:
+    0 1px 3px oklch(0 0 0 / 0.30),
+    0 20px 48px oklch(0% 0 0 / 0.30),
+    0 10px 24px oklch(0% 0 0 / 0.15);
+
+  /* ── Backdrop blur scale ── */
+  --blur-xs:   2px;
+  --blur-sm:   4px;
+  --blur-md:   8px;
+  --blur-lg:   12px;
+  --blur-xl:   16px;
+  --blur-2xl:  24px;
+  --blur-3xl:  40px;
+
+  /* ── Gradient presets — dark ── */
+  --gradient-radial-glow:
+    radial-gradient(circle at 50% 50%, oklch(70% 0.15 160 / 0.12) 0%, transparent 70%);
+  --gradient-shimmer:
+    linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 55%, transparent 60%);
+  --gradient-mesh:
+    radial-gradient(ellipse 50% 40% at 20% 50%, oklch(70% 0.15 160 / 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 40%, oklch(65% 0.18 85 / 0.04) 0%, transparent 55%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TAILWIND v4 THEME MAPPINGS
+   All custom tokens are exposed as Tailwind utilities via @theme.
+   ═══════════════════════════════════════════════════════════════ */
+@theme inline {
+  /* ── Font families ── */
+  --font-sans:     var(--font-onest);
+  --font-heading:  var(--font-unbounded);
+  --font-mono:     var(--font-mono, monospace);
+
+  /* ── Surface colors ── */
+  --color-bg-base:      var(--bg-base);
+  --color-bg-elevated:  var(--bg-elevated);
+  --color-bg-sunken:    var(--bg-sunken);
+  --color-bg-alt:       var(--bg-alt);
+  --color-bg-overlay:   var(--bg-overlay);
+
+  /* ── Foreground colors ── */
+  --color-fg-primary:   var(--fg-primary);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-tertiary:  var(--fg-tertiary);
+  --color-fg-inverse:   var(--fg-inverse);
+  --color-fg-accent:    var(--fg-accent);
+  --color-fg-on-accent: var(--fg-on-accent);
+
+  /* ── Accent palette ── */
+  --color-accent-50:  var(--accent-50);
+  --color-accent-100: var(--accent-100);
+  --color-accent-200: var(--accent-200);
+  --color-accent-300: var(--accent-300);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
+  --color-accent-800: var(--accent-800);
+  --color-accent-900: var(--accent-900);
+
+  /* ── Semantic palettes ── */
+  --color-success-50:  var(--success-50);
+  --color-success-100: var(--success-100);
+  --color-success-500: var(--success-500);
+  --color-success-700: var(--success-700);
+
+  --color-warning-50:  var(--warning-50);
+  --color-warning-100: var(--warning-100);
+  --color-warning-500: var(--warning-500);
+  --color-warning-700: var(--warning-700);
+
+  --color-danger-50:   var(--danger-50);
+  --color-danger-100:  var(--danger-100);
+  --color-danger-500:  var(--danger-500);
+  --color-danger-700:  var(--danger-700);
+
+  --color-info-50:     var(--info-50);
+  --color-info-100:    var(--info-100);
+  --color-info-500:    var(--info-500);
+  --color-info-700:    var(--info-700);
+
+  /* ── Border colors ── */
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-focus:   var(--border-focus);
+
+  /* ── Shadows (mapping to Tailwind shadow utilities) ── */
+  --shadow-xs:  var(--shadow-xs);
+  --shadow-sm:  var(--shadow-sm);
+  --shadow-md:  var(--shadow-md);
+  --shadow-lg:  var(--shadow-lg);
+  --shadow-xl:  var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  /* ── Glow effects ── */
+  --shadow-glow-sm:  var(--glow-accent-sm);
+  --shadow-glow-md:  var(--glow-accent-md);
+  --shadow-glow-lg:  var(--glow-accent-lg);
+  --shadow-glow-xl:  var(--glow-accent-xl);
+
+  /* ── Border radius ── */
+  --radius-xs:   var(--radius-xs);
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-2xl:  var(--radius-2xl);
+
+  /* ── Spacing scale ── */
+  --spacing-0-5: var(--space-0-5);
+  --spacing-1-5: var(--space-1-5);
+
+  /* ── Type scale ── */
+  --text-2xs: var(--text-2xs);
+
+  /* ── Animation durations ── */
+  --duration-instant: var(--anim-instant);
+  --duration-fast:    var(--anim-fast);
+  --duration-normal:  var(--anim-normal);
+  --duration-slow:    var(--anim-slow);
+  --duration-slower:  var(--anim-slower);
+  --duration-glacial: var(--anim-glacial);
+
+  /* ── Z-index scale ── */
+  --z-dropdown: var(--z-dropdown);
+  --z-sticky:   var(--z-sticky);
+  --z-overlay:  var(--z-overlay);
+  --z-modal:    var(--z-modal);
+  --z-toast:    var(--z-toast);
+  --z-max:      var(--z-max);
+
+  /* ── Dot grid pattern ── */
+  --dot-grid:         var(--dot-grid);
+  --dot-grid-size:    var(--dot-grid-size);
+
+  /* ── Scroll-driven animation tokens (Apple-style) ── */
+  --scroll-opacity:   var(--scroll-opacity, 1);
+  --scroll-y:         var(--scroll-y, 0px);
+  --scroll-scale:     var(--scroll-scale, 1);
+  --scroll-blur:      var(--scroll-blur, 0px);
+  --parallax-y:       var(--parallax-y, 0px);
+  --parallax-scale:   var(--parallax-scale, 1);
+
+  /* ── Light Luxury additions ── */
+  --shadow-float:    var(--shadow-float);
+  --shadow-float-lg: var(--shadow-float-lg);
+  --color-gold-50:  var(--gold-50);
+  --color-gold-100: var(--gold-100);
+  --color-gold-200: var(--gold-200);
+  --color-gold-300: var(--gold-300);
+  --color-gold-400: var(--gold-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+  --color-gold-700: var(--gold-700);
+  --color-gold-800: var(--gold-800);
+  --color-gold-900: var(--gold-900);
+}
