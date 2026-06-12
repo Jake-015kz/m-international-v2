@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { MotionProvider } from "@/components/motion";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo/jsonld";
+import TechGridBackground from "@/components/effects/TechGridBackground";
 import "./globals.css";
 import "./animations.css";
 
@@ -72,7 +73,9 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col relative">
+        <TechGridBackground />
+        <div className="relative z-[2] flex flex-col flex-1">
         <a href="#main-content" className="skip-link">
           Перейти к содержимому
         </a>
@@ -84,6 +87,7 @@ export default async function RootLayout({
             </SmoothScrollProvider>
           </MotionProvider>
         </NextIntlClientProvider>
+        </div>
       </body>
     </html>
   );
