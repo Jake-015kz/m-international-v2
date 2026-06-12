@@ -3,23 +3,11 @@
 import { motion } from "framer-motion";
 import { type ReactNode } from "react";
 
-/* ── Apple-style line-by-line text reveal ──
- *
- * Each child is treated as a separate "line" and revealed sequentially
- * with clip-path + opacity + translateY.  The animation uses a
- * spring-ish cubic-bezier that matches Apple's keynote style.
- *
- * Usage:
- *   <TextReveal>
- *     <span>Line one</span>
- *     <span>Line two</span>
- *   </TextReveal>
- */
+/* ── Apple-style line-by-line text reveal ── */
 
-const STAGGER_DELAY = 0;          // seconds between each line
-const LINE_DELAY = 0.1;          // stagger between lines
+const STAGGER_DELAY = 0;
+const LINE_DELAY = 0.1;
 
-/* Per-line wrapper — clips its content during reveal */
 function RevealLine({
   children,
   delay,
@@ -37,7 +25,7 @@ function RevealLine({
         transition={{
           delay,
           duration: 0.9,
-          ease: [0.16, 1, 0.3, 1],   // Apple-style spring curve
+          ease: [0.16, 1, 0.3, 1],
         }}
       >
         {children}
@@ -70,18 +58,20 @@ export function TextReveal({
   );
 }
 
-/* ── Single-word / single-char reveal (for hero title emphasis) ── */
+/* ── Word-by-word reveal with blur + opacity (premium hero style) ── */
 
 export function TextRevealWords({
   text,
   className,
   stagger = 0.06,
   initialDelay = 0,
+  accentIndex,
 }: {
   text: string;
   className?: string;
   stagger?: number;
   initialDelay?: number;
+  accentIndex?: number; // index of word to highlight with gradient
 }) {
   const words = text.split(" ");
 
@@ -91,15 +81,52 @@ export function TextRevealWords({
         <span key={i} className="overflow-hidden mr-[0.3em] last:mr-0">
           <motion.span
             className="inline-block"
-            initial={{ opacity: 0, y: "100%" }}
-            animate={{ opacity: 1, y: "0%" }}
+            initial={{ opacity: 0, y: "100%", filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: "0%", filter: "blur(0px)" }}
             transition={{
               delay: initialDelay + i * stagger,
-              duration: 0.7,
+              duration: 0.8,
               ease: [0.16, 1, 0.3, 1],
             }}
           >
             {word}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/* ── Character-by-character reveal for extra premium feel ── */
+
+export function TextRevealChars({
+  text,
+  className,
+  stagger = 0.03,
+  initialDelay = 0,
+}: {
+  text: string;
+  className?: string;
+  stagger?: number;
+  initialDelay?: number;
+}) {
+  const chars = text.split("");
+
+  return (
+    <span className={className ?? ""}>
+      {chars.map((char, i) => (
+        <span key={i} className="inline-block overflow-hidden">
+          <motion.span
+            className="inline-block"
+            initial={{ opacity: 0, y: "100%", filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: "0%", filter: "blur(0px)" }}
+            transition={{
+              delay: initialDelay + i * stagger,
+              duration: 0.6,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
           </motion.span>
         </span>
       ))}

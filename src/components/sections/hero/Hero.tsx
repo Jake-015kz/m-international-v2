@@ -8,6 +8,7 @@ import { MagneticButton } from "@/components/ui";
 import { TextRevealWords } from "@/components/ui/TextReveal";
 import { usePrefersReducedMotion } from "@/lib/motion";
 import ParallaxOrbs from "./ParallaxOrbs";
+import ScrollIndicator from "./ScrollIndicator";
 
 /* ── Three.js Background — dynamic import, ssr:false ── */
 const ThreeBackground = dynamic(
@@ -211,8 +212,18 @@ const Hero = memo(function Hero() {
               }}
               className="w-full sm:w-auto ql-cta-primary font-onest font-semibold text-sm sm:text-base group"
             >
+              {/* Shimmer sweep */}
               <motion.span
-                className="inline-block"
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(105deg, transparent 40%, oklch(65%_0.16_85_/_0.15) 50%, transparent 60%)",
+                  backgroundSize: "200% 100%",
+                }}
+                animate={reducedMotion ? {} : { backgroundPosition: ["200% 0", "-200% 0"] }}
+                transition={{ duration: 3, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }}
+              />
+              <motion.span
+                className="relative inline-block"
                 whileHover={reducedMotion ? {} : { x: 2 }}
                 transition={{ duration: 0.2 }}
               >
@@ -298,6 +309,8 @@ const Hero = memo(function Hero() {
           </motion.div>
         </div>
       </motion.div>
+      {/* ── Scroll indicator ── */}
+      {!reducedMotion && <ScrollIndicator />}
     </section>
   );
 });

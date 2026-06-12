@@ -5,7 +5,7 @@ export { default as ScrollReveal } from "./ScrollReveal";
 export { default as SectionHeader } from "./SectionHeader";
 export { default as BackgroundDecorations } from "./BackgroundDecorations";
 export { default as GlassCard } from "./GlassCard";
-export { TextReveal, TextRevealWords } from "./TextReveal";
+export { TextReveal, TextRevealWords, TextRevealChars } from "./TextReveal";
 export { default as Input } from "./Input";
 export { default as Skeleton } from "./Skeleton";
 export { default as Divider } from "./Divider";
