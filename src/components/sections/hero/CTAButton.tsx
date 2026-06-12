@@ -16,7 +16,7 @@ interface CTAButtonProps {
 const CTAButton = memo(function CTAButton({ children, onClick, variant = "primary", size = "md", className }: CTAButtonProps) {
   return (
     <motion.div
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ borderColor: "oklch(1 0 0 / 0.2)", filter: "brightness(115%)" }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 500, damping: 30, mass: 0.8 }}
       className={className}

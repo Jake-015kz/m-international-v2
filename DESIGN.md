@@ -170,6 +170,68 @@
 - Hover transitions: 0.3s
 - Hero entrance: 0.8s с 0.2s delay
 
+### Паттерны
+
+#### Apple-style Text Reveal
+
+Пословное или посимвольное появление текста при скролле — визуальная техника, характерная для лендингов Apple.
+
+**Принципы:**
+- Каждое слово/символ появляется с `clip-path` или `opacity` + `transform`
+- Задержка между словами: 30–80ms (stagger-scroll)
+- Анимация запускается, когда элемент входит в viewport (IntersectionObserver)
+- Использовать `--scroll-opacity`, `--scroll-y`, `--scroll-scale`, `--scroll-blur` токены из `tokens.css`
+- На мобильных: упростить до посекционного reveal (не пословного)
+- `prefers-reduced-motion: reduce` — мгновенно показывать весь текст
+
+**CSS-подход (Intersection Observer + @property):**
+```css
+.text-reveal-word {
+  opacity: var(--scroll-opacity);
+  transform: translateY(var(--scroll-y)) scale(var(--scroll-scale));
+  filter: blur(var(--scroll-blur));
+  transition:
+    opacity 0.6s var(--ease-spring),
+    transform 0.6s var(--ease-spring),
+    filter 0.4s var(--ease-smooth);
+}
+
+/* Состояние «после reveal» (JS добавляет класс) */
+.text-reveal-word.is-visible {
+  --scroll-opacity: 1;
+  --scroll-y: 0px;
+  --scroll-scale: 1;
+  --scroll-blur: 0px;
+}
+```
+
+**Stagger через :nth-child:**
+```css
+.text-reveal-word:nth-child(1)  { transition-delay: 0ms; }
+.text-reveal-word:nth-child(2)  { transition-delay: 50ms; }
+.text-reveal-word:nth-child(3)  { transition-delay: 100ms; }
+.text-reveal-word:nth-child(4)  { transition-delay: 150ms; }
+```
+
+#### Linear-style Background Pattern
+
+Точечная сетка на секции через `background-image: radial-gradient` (токен `--dot-grid` из `tokens.css`):
+```css
+.hero-section {
+  position: relative;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--dot-grid);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+```
+
 ## Компоненты
 
 ### Кнопки

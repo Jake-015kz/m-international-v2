@@ -1,0 +1,263 @@
+/**
+ * @fileoverview Animation utilities — composable animation classes.
+ *
+ * These utilities use the design token custom properties for durations
+ * and easing curves, ensuring consistency across all animations.
+ *
+ * USAGE
+ * ═══════════════════════════════════════════════════════════════
+ * Combine a base animation class with duration/easing modifiers:
+ *
+ *   <div class="anim-fade-up anim-duration-slow anim-ease-spring">
+ *   <div class="anim-scale-in anim-delay-100">
+ *
+ * STAGGER PATTERN
+ * ═══════════════════════════════════════════════════════════════
+ * Use inline style with --anim-stagger-index for staggered lists:
+ *
+ *   {items.map((item, i) => (
+ *     <div
+ *       class="anim-fade-up"
+ *       style={{ "--anim-stagger-index": i } as CSSProperties}
+ *     >
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION BASE CLASSES
+   Each defines a keyframe + default timing.
+   Override with duration/ease/delay utilities below.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Fade Up (most common entrance) ── */
+@keyframes anim-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-up {
+  animation: anim-fade-up var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Fade Down ── */
+@keyframes anim-fade-down {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-down {
+  animation: anim-fade-down var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Fade Left ── */
+@keyframes anim-fade-left {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.anim-fade-left {
+  animation: anim-fade-left var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Fade Right ── */
+@keyframes anim-fade-right {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.anim-fade-right {
+  animation: anim-fade-right var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Scale In (for cards, modals) ── */
+@keyframes anim-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.anim-scale-in {
+  animation: anim-scale-in var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Scale Up (larger entrance) ── */
+@keyframes anim-scale-up {
+  from { opacity: 0; transform: scale(0.8) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.anim-scale-up {
+  animation: anim-scale-up var(--anim-glacial, 1000ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Fade Only (no transform) ── */
+@keyframes anim-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.anim-fade {
+  animation: anim-fade var(--anim-normal, 300ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94)) both;
+}
+
+/* ── Blur In ── */
+@keyframes anim-blur-in {
+  from { opacity: 0; filter: blur(8px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+.anim-blur-in {
+  animation: anim-blur-in var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Slide Up (full height, for bottom sheets) ── */
+@keyframes anim-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.anim-slide-up {
+  animation: anim-slide-up var(--anim-slow, 500ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ── Rotate In (for badges, icons) ── */
+@keyframes anim-rotate-in {
+  from { opacity: 0; transform: rotate(-8deg) scale(0.8); }
+  to   { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+
+.anim-rotate-in {
+  animation: anim-rotate-in var(--anim-slower, 700ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DURATION OVERRIDES
+   Usage: class="anim-fade-up anim-duration-fast"
+   ═══════════════════════════════════════════════════════════════ */
+.anim-duration-instant { animation-duration: var(--anim-instant, 75ms) !important; }
+.anim-duration-fast    { animation-duration: var(--anim-fast, 150ms) !important; }
+.anim-duration-normal  { animation-duration: var(--anim-normal, 300ms) !important; }
+.anim-duration-slow    { animation-duration: var(--anim-slow, 500ms) !important; }
+.anim-duration-slower  { animation-duration: var(--anim-slower, 700ms) !important; }
+.anim-duration-glacial { animation-duration: var(--anim-glacial, 1000ms) !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   EASING OVERRIDES
+   Usage: class="anim-fade-up anim-ease-spring"
+   ═══════════════════════════════════════════════════════════════ */
+.anim-ease-linear     { animation-timing-function: var(--ease-linear, cubic-bezier(0, 0, 1, 1)) !important; }
+.anim-ease-in         { animation-timing-function: var(--ease-in, cubic-bezier(0.42, 0, 1, 1)) !important; }
+.anim-ease-out        { animation-timing-function: var(--ease-out, cubic-bezier(0, 0, 0.58, 1)) !important; }
+.anim-ease-in-out     { animation-timing-function: var(--ease-in-out, cubic-bezier(0.42, 0, 0.58, 1)) !important; }
+.anim-ease-spring     { animation-timing-function: var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)) !important; }
+.anim-ease-bounce     { animation-timing-function: var(--ease-spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)) !important; }
+.anim-ease-smooth     { animation-timing-function: var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94)) !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   DELAY UTILITIES
+   Usage: class="anim-fade-up anim-delay-100"
+   ═══════════════════════════════════════════════════════════════ */
+.anim-delay-0     { animation-delay: 0ms !important; }
+.anim-delay-50    { animation-delay: 50ms !important; }
+.anim-delay-100   { animation-delay: 100ms !important; }
+.anim-delay-150   { animation-delay: 150ms !important; }
+.anim-delay-200   { animation-delay: 200ms !important; }
+.anim-delay-300   { animation-delay: 300ms !important; }
+.anim-delay-400   { animation-delay: 400ms !important; }
+.anim-delay-500   { animation-delay: 500ms !important; }
+.anim-delay-700   { animation-delay: 700ms !important; }
+.anim-delay-1000  { animation-delay: 1000ms !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   STAGGER UTILITY
+   Usage: style={{ "--anim-stagger-index": i }}
+   Delay = index * stagger-delay (default 80ms)
+   ═══════════════════════════════════════════════════════════════ */
+.anim-stagger {
+  animation-delay: calc(var(--anim-stagger-index, 0) * var(--anim-stagger-delay, 80ms)) !important;
+}
+
+.anim-stagger-xs { --anim-stagger-delay: 30ms; }
+.anim-stagger-sm { --anim-stagger-delay: 50ms; }
+.anim-stagger-md { --anim-stagger-delay: 80ms; }
+.anim-stagger-lg { --anim-stagger-delay: 120ms; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FILL MODE
+   ═══════════════════════════════════════════════════════════════ */
+.anim-fill-forwards  { animation-fill-mode: forwards !important; }
+.anim-fill-backwards { animation-fill-mode: backwards !important; }
+.anim-fill-both      { animation-fill-mode: both !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PLAY STATE
+   ═══════════════════════════════════════════════════════════════ */
+.anim-paused  { animation-play-state: paused !important; }
+.anim-running { animation-play-state: running !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   INFINITE LOOP ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes anim-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.anim-spin {
+  animation: anim-spin 1s linear infinite;
+}
+
+@keyframes anim-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+.anim-pulse {
+  animation: anim-pulse 2s ease-in-out infinite;
+}
+
+@keyframes anim-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.anim-bounce {
+  animation: anim-bounce 1s ease-in-out infinite;
+}
+
+@keyframes anim-shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+.anim-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: anim-shimmer 2s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSITION UTILITIES (CSS transitions, not keyframes)
+   ═══════════════════════════════════════════════════════════════ */
+.transition-base {
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: var(--anim-normal, 300ms);
+  transition-timing-function: var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+}
+
+.transition-transform {
+  transition-property: transform, opacity;
+  transition-duration: var(--anim-normal, 300ms);
+  transition-timing-function: var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+}
+
+.transition-spring {
+  transition-timing-function: var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.transition-bounce {
+  transition-timing-function: var(--ease-spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
