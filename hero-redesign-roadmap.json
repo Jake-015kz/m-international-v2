@@ -1,0 +1,120 @@
+{
+  "tasks": [
+    {
+      "id": "hero-1",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Audit current Hero & ThreeBackground — baseline metrics",
+      "description": "Measure current LCP, CLS, INP on Hero. Screenshot current state. Record particle count, shader complexity, bundle size impact of ThreeBackground.",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/sections/hero/ThreeBackground.tsx",
+        "src/components/sections/hero/HeroBackground.tsx"
+      ],
+      "acceptance": "Baseline metrics recorded. Screenshots saved. Known issues documented."
+    },
+    {
+      "id": "hero-2",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Upgrade ThreeBackground — GPGPU particles with custom shaders",
+      "description": "Replace current particle system with GPGPU-based approach: vertex shader for position/velocity, fragment shader for glow. Add cursor repulsion (not attraction) for premium feel. Target: 3000 particles at 60fps on mid-range mobile.",
+      "files": [
+        "src/components/sections/hero/ThreeBackground.tsx"
+      ],
+      "code": "Key changes:\n- Use ShaderMaterial with custom vertex/fragment GLSL\n- Add uTime, uPointer uniforms\n- Particle repulsion from cursor: pos += normalize(pos - cursor) * force\n- Additive blending for glow effect\n- dpr={[1, 2]} on Canvas\n- Fallback: CSS dot-grid + gradient for reduced-motion",
+      "acceptance": "Particles repel from cursor. 60fps on iPhone 12 equivalent. Graceful fallback."
+    },
+    {
+      "id": "hero-3",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Add mesh gradient + aurora glow layers behind particles",
+      "description": "Layer 1: Deep dark base (oklch(8% 0.005 160)). Layer 2: Mesh gradient with 3 radial gradients (violet, blue, amber). Layer 3: Aurora animation via CSS @keyframes. Layer 4: Particles on top. All layers use pointer-events-none.",
+      "files": [
+        "src/components/sections/hero/HeroBackground.tsx"
+      ],
+      "code": "CSS:\n.aurora-bg {\n  background:\n    radial-gradient(ellipse 80% 50% at 20% 30%, rgba(139,92,246,0.12) 0%, transparent 50%),\n    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(59,130,246,0.1) 0%, transparent 50%),\n    radial-gradient(ellipse 60% 40% at 50% 80%, rgba(245,158,11,0.06) 0%, transparent 50%),\n    oklch(8% 0.005 160);\n}\n@keyframes aurora {\n  0%, 100% { opacity: 0.6; transform: translate(0, 0) scale(1); }\n  33% { opacity: 0.8; transform: translate(2%, -1%) scale(1.02); }\n  66% { opacity: 0.7; transform: translate(-1%, 2%) scale(0.98); }\n}",
+      "acceptance": "Aurora animates smoothly. No layout shift. Works without JS."
+    },
+    {
+      "id": "hero-4",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Refactor Hero content layout — asymmetric split for desktop",
+      "description": "Desktop: Left-aligned text (60% width) + right-side floating product cards (40%). Mobile: Centered stack. Remove center bias per design-taste-frontend rules. Keep trust bar inline.",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/sections/hero/FloatingCards.tsx"
+      ],
+      "code": "Desktop layout:\n<div className='flex items-center gap-12'>\n  <div className='flex-[0_0_60%]'> {/* Text content} </div>\n  <div className='flex-[0_0_40%]'> {/* FloatingCards} </div>\n</div>\n\nMobile: stack vertically, center text",
+      "acceptance": "Desktop: asymmetric split. Mobile: centered stack. No horizontal scroll."
+    },
+    {
+      "id": "hero-5",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Upgrade typography — premium font stack + compact sizes for Cyrillic",
+      "description": "Replace Inter with Geist for display. Keep Onest for body. Apply CIS rules: line-height >= 1.1, letter-spacing: normal, clamp(2rem, 5vw, 3.5rem) for H1. Add gradient text accent on key word only (not full headline).",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/app/[locale]/layout.tsx"
+      ],
+      "code": "H1 spec:\nfont-family: var(--font-geist);\nfont-size: clamp(2rem, 5vw, 3.5rem);\nfont-weight: 700;\nline-height: 1.1;\nletter-spacing: normal;\n\nGradient accent on ONE word only:\n<span className='bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent'>{keyword}</span>",
+      "acceptance": "Cyrillic reads perfectly. No tight spacing. Gradient on single word only."
+    },
+    {
+      "id": "hero-6",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Add scroll-driven parallax + content fade on scroll",
+      "description": "Background particles parallax (y: 0% → 30%). Content fades out (opacity: 1 → 0) as user scrolls. Use useScroll + useTransform. Respect reduced-motion: disable parallax, keep content visible.",
+      "files": [
+        "src/components/sections/hero/Hero.tsx"
+      ],
+      "code": "const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });\nconst bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);\nconst contentOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0]);\n\n// Apply only if !reducedMotion",
+      "acceptance": "Smooth parallax on scroll. Content fades. No jank. Reduced-motion: static."
+    },
+    {
+      "id": "hero-7",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Add premium micro-interactions — magnetic CTA + text reveal",
+      "description": "Verify MagneticButton works with spring physics (useMotionValue, NOT useState). Add TextRevealWords with blur+opacity entrance. Add scroll indicator animation at bottom. All animations use spring physics.",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/ui/MagneticButton.tsx",
+        "src/components/ui/TextReveal.tsx"
+      ],
+      "code": "MagneticButton must use:\nconst x = useMotionValue(0);\nconst springX = useSpring(x, { stiffness: 150, damping: 15 });\n// NOT useState for position!\n\nTextRevealWords:\ninitial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}\nanimate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}\nstagger: 0.06 per word",
+      "acceptance": "Magnetic effect smooth. Text reveals word-by-word. No layout shift."
+    },
+    {
+      "id": "hero-8",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Performance optimization — lazy load, code split, 60fps guard",
+      "description": "Dynamic import ThreeBackground with ssr:false. Add performance budget: max 3000 particles on mobile, 5000 on desktop. Add will-change: transform on animated elements. Test on throttled CPU.",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/sections/hero/ThreeBackground.tsx"
+      ],
+      "code": "const ThreeBackground = dynamic(() => import('./ThreeBackground'), {\n  ssr: false,\n  loading: () => <div className='absolute inset-0 bg-[oklch(8%_0.005_160)]' />,\n});\n\n// Particle count based on device:\nconst isMobile = typeof window !== 'undefined' && window.innerWidth < 768;\nconst particleCount = isMobile ? 2000 : 3500;",
+      "acceptance": "60fps on mid-range mobile. No SSR for Three.js. LCP < 2.5s."
+    },
+    {
+      "id": "hero-9",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Accessibility audit — reduced motion, contrast, focus states",
+      "description": "Verify usePrefersReducedMotion disables all motion. Check contrast ratios (WCAG AA). Add focus-visible states to CTA buttons. Test keyboard navigation. Add aria-labels to decorative elements.",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/sections/hero/ThreeBackground.tsx"
+      ],
+      "code": "Reduced motion fallback:\n{reducedMotion ? (\n  <div className='aurora-bg absolute inset-0' />\n) : (\n  <ThreeBackground />\n)}\n\nContrast: text on gradient = min 4.5:1\nFocus: ring-2 ring-violet-500 ring-offset-2 ring-offset-black",
+      "acceptance": "Passes axe-core. Reduced motion works. Keyboard navigable."
+    },
+    {
+      "id": "hero-10",
+      "workspace": "/storage/repos/m-international-v2",
+      "title": "Vercel deploy + visual regression check",
+      "description": "Push to main. Verify Vercel auto-deploy. Screenshot production. Compare with baseline. Check Core Web Vitals in Vercel Analytics. Report metrics.",
+      "files": [
+        "src/components/sections/hero/*"
+      ],
+      "acceptance": "Deployed to production. LCP improved or maintained. No CLS regression. Visual matches design intent."
+    }
+  ]
+}

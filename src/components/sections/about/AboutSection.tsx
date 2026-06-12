@@ -145,7 +145,7 @@ const AboutSection = memo(function AboutSection() {
             badge={
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100">
                 <Target className="w-3.5 h-3.5 text-accent-600" />
-                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">{tNav("about")}</span>
+                <span className="text-xs font-onest font-semibold text-accent-600">{tNav("about")}</span>
               </div>
             }
             title={t("title")}

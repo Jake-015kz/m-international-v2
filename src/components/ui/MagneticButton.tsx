@@ -79,7 +79,7 @@ const MagneticButton = memo(function MagneticButton({
       ref={ref}
       type={type}
       className={cn(
-        "relative inline-flex items-center justify-center font-unbounded font-bold rounded-xl transition-colors duration-300 overflow-hidden",
+        "relative inline-flex items-center justify-center font-onest font-semibold rounded-xl transition-colors duration-300 overflow-hidden",
         variantStyles[variant],
         sizeStyles[size],
         disabled && "opacity-50 cursor-not-allowed pointer-events-none",

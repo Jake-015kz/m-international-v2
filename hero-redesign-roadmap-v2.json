@@ -1,0 +1,123 @@
+{
+  "version": "2.0",
+  "created": "2026-06-12",
+  "workspace": "/storage/repos/m-international-v2",
+  "style": "Elite Light Luxury",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Verify managed skills are complete and up-to-date",
+      "action": "verify_skills",
+      "skills": [
+        "popular-web-designs",
+        "motion-dev",
+        "nextjs-expert",
+        "react-three-3-d-expert",
+        "impeccable",
+        "style-transfer"
+      ],
+      "status": "in_progress",
+      "files": [
+        "/storage/managed_skills/popular-web-designs.md",
+        "/storage/managed_skills/motion-dev.md",
+        "/storage/managed_skills/nextjs-expert.md",
+        "/storage/managed_skills/react-three-3-d-expert.md",
+        "/storage/managed_skills/impeccable.md",
+        "/storage/managed_skills/style-transfer.md"
+      ],
+      "acceptance": "All 6 skill files exist, >5000 bytes each, valid markdown with frontmatter or headers"
+    },
+    {
+      "id": 2,
+      "title": "Upgrade ThreeBackground — GPGPU particles with glow shader",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/ThreeBackground.tsx"
+      ],
+      "acceptance": "Particles use custom vertex/fragment shaders with additive blending. Cursor repulsion. 60fps on mid-range mobile. Reduced-motion fallback."
+    },
+    {
+      "id": 3,
+      "title": "Add Aurora mesh gradient layer to HeroBackground",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/HeroBackground.tsx"
+      ],
+      "acceptance": "Aurora animates smoothly via CSS @keyframes. 3 radial gradients (violet, blue, amber) on deep dark base. No layout shift. Works without JS."
+    },
+    {
+      "id": 4,
+      "title": "Refactor Hero layout — asymmetric split desktop, centered mobile",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/Hero.tsx"
+      ],
+      "acceptance": "Desktop: 60/40 split text/cards. Mobile: centered stack. No horizontal scroll. Trust bar inline."
+    },
+    {
+      "id": 5,
+      "title": "Upgrade typography — Unbounded + Onest with CIS rules",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/app/[locale]/globals.css"
+      ],
+      "acceptance": "H1: clamp(2rem,5vw,3.5rem), line-height 1.1, letter-spacing normal. Gradient accent on ONE word only. Cyrillic reads perfectly."
+    },
+    {
+      "id": 6,
+      "title": "Add scroll-driven parallax + content fade",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/Hero.tsx"
+      ],
+      "acceptance": "Background parallax y:0%->30%. Content fade opacity:1->0 on scroll. Respects reduced-motion."
+    },
+    {
+      "id": 7,
+      "title": "Premium micro-interactions — magnetic CTA + text reveal",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/ui/MagneticButton.tsx"
+      ],
+      "acceptance": "Magnetic effect with spring physics. TextRevealWords with blur+opacity. Scroll indicator animation."
+    },
+    {
+      "id": 8,
+      "title": "Performance optimization — lazy load, code split, 60fps guard",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/sections/hero/ThreeBackground.tsx"
+      ],
+      "acceptance": "Dynamic import with ssr:false. Adaptive particle count. will-change:transform. LCP < 2.5s."
+    },
+    {
+      "id": 9,
+      "title": "Accessibility audit — reduced motion, contrast, focus",
+      "action": "code",
+      "status": "pending",
+      "files": [
+        "src/components/sections/hero/Hero.tsx",
+        "src/components/sections/hero/ThreeBackground.tsx"
+      ],
+      "acceptance": "Passes axe-core. Reduced motion works. Keyboard navigable. WCAG AA contrast."
+    },
+    {
+      "id": 10,
+      "title": "Vercel deploy + visual regression check",
+      "action": "deploy",
+      "status": "pending",
+      "files": [],
+      "acceptance": "Deployed to production. LCP improved or maintained. No CLS regression."
+    }
+  ]
+}

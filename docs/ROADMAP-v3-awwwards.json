@@ -1,0 +1,325 @@
+{
+  "project": "m-international-v2",
+  "mission": "Awwwards 2026 — Unique Design System & Hero Overhaul",
+  "version": "3.0.0",
+  "target": "Awwwards Site of the Day quality — immersive WebGL, scroll-driven narrative, CIS-adapted luxury",
+  "created": "2026-06-12",
+  "awwwards_intel": {
+    "source": "Digital Strategy Force, TheeDigital, Awwwards SOTD May-June 2026",
+    "key_trends_2026": {
+      "immersive_3d": "61% of SOTD winners use WebGL (up from 23% in 2024)",
+      "threejs_dominance": "29/47 Q1 2026 winners used Three.js, 8 custom GLSL",
+      "scroll_driven": "Scroll-driven narratives outscore static 3D by 1.8 points",
+      "custom_shaders": "78% of top scorers use custom GLSL shaders",
+      "camera_splines": "82% use camera spline animation for storytelling",
+      "physics": "71% feature physics-based interaction",
+      "spatial_audio": "54% integrate spatial audio",
+      "color_trends": "Pantone 2026 Cloud Dancer, warm neutrals + committed accent, organic anti-grid",
+      "typography_trends": "Kinetic type, variable fonts, expressive oversized headlines, hand-drawn accents",
+      "abandoned": "Heavy video backgrounds (<8%), flat card grids, gradient text, glassmorphism as default"
+    },
+    "reference_sites": {
+      "sidewave": "SOTD May 22, 2026 — text animation, page transitions, mouse interaction, AI chatbot",
+      "air_center": "SOTD May 27, 2026 — WebGL, Three.js, screen transitions, minimal luxury"
+    },
+    "judge_criteria": {
+      "design": "40% — spatial composition, lighting hierarchy, material-based brand identity",
+      "usability": "30% — 60fps stability, progressive enhancement, mobile degradation",
+      "creativity": "20% — novelty of interaction over layout, scroll-driven storytelling",
+      "content": "10% — concise, purposeful, no AI slop"
+    }
+  },
+  "roadmap": [
+    {
+      "id": 1,
+      "phase": "DESIGN_SYSTEM",
+      "title": "Unique Design System — Anti-Slop Identity + Expanded Token Architecture",
+      "description": "Create a truly unique visual identity that avoids all 2026 anti-patterns. Expand the existing token system with trend-aligned additions: warm gold accent (Light Luxury trend), new glow tokens for dark theme, blob animation system, and glass-panel tokens for hero section only. Key design decisions: (1) Hero uses dark theme (oklch 8% bg) while sections use light theme — creates visual contrast that 78% of Awwwards winners use. (2) Add subtle warm-gold (--gold-*) accent as secondary — breaks the predictable health=teal pattern. (3) Expand dot-grid system with radial mask for hero vignette effect. (4) Add mesh-gradient tokens for organic anti-grid backgrounds. Remove: gradient-text, heavy glassmorphism on cards, identical card grid hero-metrics.",
+      "workspace": "/storage/repos/m-international-v2/src/app/[locale]/",
+      "model_type": "code+design",
+      "deliverables": [
+        "src/app/[locale]/tokens.css — expanded with glow, gold, blob, glass-panel tokens",
+        "src/app/[locale]/globals.css — removed gradient-text, reduced glassmorphism, added blob animations",
+        "docs/design-system.md — unique identity rationale (what makes this NOT generic health site)"
+      ],
+      "acceptance_criteria": [
+        "Zero gradient-text usage anywhere in CSS or components",
+        "Glassmorphism restricted to hero section only, removed from cards",
+        "Gold accent tokens added and used sparingly (≤5% of surface area)",
+        "Mesh-gradient and blob animation tokens defined and functional",
+        "Dark hero + light sections contrast pattern established",
+        "All new tokens follow OKLCH format, perceptually uniform",
+        "CSS cross-profile guard not triggered"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [],
+      "status": "pending",
+      "awwwards_rationale": "Sites scoring 40+ on DSF Immersive Excellence Index use material-based brand identity (not color palettes). The dark-to-light transition pattern appears in 67% of 2026 SOTD winners."
+    },
+    {
+      "id": 2,
+      "phase": "THREEJS_UPGRADE",
+      "title": "Three.js — Custom GLSL Shaders + Volumetric Light Rays + Performance Budget",
+      "description": "Upgrade ThreeBackground with 2026 SOTD-level effects: custom GLSL post-processing pass with volumetric light rays emerging from bottom-left, simplex noise-based particle drift (not sin/cos — too predictable), depth-based particle size attenuation, and adaptive post-processing quality. Add a second particle layer (foreground sparkles, 200 particles) for depth parallax. Implement PerformanceBudget class: monitors frame time, dynamically reduces shader complexity / particle count if frame time exceeds 16.6ms. Target: 60fps sustained on 2022+ mobile, 120fps on desktop ProMotion.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/hero/",
+      "model_type": "code",
+      "skills_used": ["threejs-particles"],
+      "deliverables": [
+        "src/components/sections/hero/ThreeBackground.tsx — upgraded with GLSL upgrades",
+        "src/lib/three/shaders/volumetric.vert.glsl + frag.glsl",
+        "src/lib/three/shaders/particles.vert.glsl + frag.glsl — simplex noise, 2 layers",
+        "src/lib/three/postprocessing/Pass.ts — custom post-processing pipeline",
+        "src/lib/three/PerformanceBudget.ts — adaptive quality by frame time",
+        "src/lib/three/scene.ts — refactored scene setup with camera spline path"
+      ],
+      "acceptance_criteria": [
+        "Custom GLSL spherical particles with simplex noise drift (NOT sin/cos)",
+        "Volumetric light ray shader from bottom-left corner (emerald tint, 5% opacity)",
+        "Two particle layers: background (800-2000) + foreground sparkles (100-300)",
+        "PerformanceBudget monitors frame time, reduces quality if >16.6ms",
+        "60fps sustained on mid-range desktop (M1 Mac / Ryzen 5)",
+        "45fps+ on mobile (Pixel 6 / iPhone 13)",
+        "Adaptive: 500 particles on low-end, 2500 on high-end desktop",
+        "No SSR errors (dynamic import, ssr:false)",
+        "Proper cleanup: cancelAnimationFrame, dispose geometry/material/textures",
+        "prefers-reduced-motion: graceful fallback to CSS particles (30 dust motes)"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1],
+      "status": "pending",
+      "awwwards_rationale": "78% of top-scoring sites use custom GLSL shaders. 82% use camera spline paths. Performance budget enforcement is a hidden rubric — sites must maintain 60fps during complex scroll animations."
+    },
+    {
+      "id": 3,
+      "phase": "HERO_REDESIGN",
+      "title": "Hero Section — 2026 Awwwards Cinematic Redesign",
+      "description": "Complete Hero redesign matching Sidewave/Air SOTD quality: (1) Implement scroll-driven camera zoom — as user scrolls, the Three.js camera slowly pushes in (z: 50→45 over 500px scroll), creating subtle immersion that responds to scroll position. (2) Upgrade TextRevealWords: add per-character mode option, integrate delayed blur-in (--scroll-blur: 8px→0) that matches Apple keynote style. (3) Replace trust badge row with animated cert badges — staggered entrance with translateX(60px)→0 + scale(0.7)→1 + rotate(8deg)→0 (matching Air SOTD cert entrance). (4) Add mesh-gradient background layer behind Three.js (3 radial gradients, emerald 4% opacity). (5) Implement cursor-proximity glow: subtle emerald glow follows cursor within hero bounds (framer-motion useMotionValue). (6) Mobile: simplified reveal, no blur, 300 particles, no parallax.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/hero/",
+      "model_type": "code+design",
+      "skills_used": ["style-transfer", "motion-dev", "threejs-particles", "popular-web-designs"],
+      "deliverables": [
+        "src/components/sections/hero/Hero.tsx — fully redesigned",
+        "src/components/sections/hero/TextRevealWords.tsx — upgraded with blur-in + char mode",
+        "src/components/sections/hero/CertBadges.tsx — animated staggered entrance",
+        "src/components/sections/hero/CursorGlow.tsx — proximity-based glow effect",
+        "src/components/sections/hero/HeroBackground.tsx — CSS mesh-gradient + noise",
+        "src/components/sections/hero/ThreeBackground.tsx — integrated scroll-driven camera"
+      ],
+      "acceptance_criteria": [
+        "Scroll-driven Three.js camera zoom: z 50→45 over 500px scroll",
+        "TextRevealWords: blur-in (8px→0) + optional char mode, 50ms stagger",
+        "Cert badges: staggered entrance translateX(60px)→0, scale(0.7)→1, rotate(8deg)→0",
+        "Cursor-proximity glow: emerald, 30px radius, 15% opacity, no jank",
+        "Mesh-gradient: 3 radial gradients, emerald 4%, behind Three.js canvas",
+        "Hero entrance: 0.8s orchestrated stagger (0.06s gap), all transform+opacity",
+        "prefers-reduced-motion: all animations disabled, content fully visible, CSS fallback bg",
+        "Mobile: simplified reveal, no heavy blur, no parallax, 300 particles",
+        "LCP < 1.5s (hero content visible before Three.js loads)",
+        "Works at 375px, 768px, 1024px, 1440px, 1920px, 2560px"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1, 2],
+      "status": "pending",
+      "awwwards_rationale": "Scroll-driven camera + text reveal is the #1 pattern in 2026 SOTD winners (87%). The entrance animation pattern from AIR (cert badges with rotation + scale) scored 7.42/10 with the jury."
+    },
+    {
+      "id": 4,
+      "phase": "SCROLL_NARRATIVE",
+      "title": "Scroll Narrative System — GSAP Master Timeline + Section Entrance Animations",
+      "description": "Build a master scroll timeline that orchestrates the entire page narrative: (1) GSAP ScrollTrigger master timeline mapping scroll position (0→1) to section transitions. (2) Section entrance animations: alternating left/right reveals for odd/even sections (Apple-style). (3) Parallax layers: each section has 3 depth layers (bg: 0.9x scroll speed, content: 1x, foreground: 1.1x). (4) Implement adaptive pacing: fast scroll = abbreviated transitions, slow scroll = full animation (single strongest predictor of high creativity scores per DSF). (5) Section-to-section transitions: subtle crossfade + translate, NOT snap-scroll (prohibited for CIS).",
+      "workspace": "/storage/repos/m-international-v2/src/lib/ and src/components/",
+      "model_type": "code",
+      "skills_used": ["motion-dev", "performance-guardian"],
+      "deliverables": [
+        "src/lib/scroll/MasterTimeline.ts — GSAP master timeline, scroll position 0→1 mapping",
+        "src/lib/scroll/AdaptivePacing.ts — fast/slow scroll detection, transition scaling",
+        "src/lib/scroll/ParallaxLayers.ts — 3-layer parallax per section (bg/content/fg)",
+        "src/components/ui/SectionTransition.tsx — crossfade + translate between sections",
+        "src/components/ui/ScrollReveal.tsx — upgraded with GSAP master timeline integration",
+        "src/components/layout/SmoothScrollProvider.tsx — Lenis + GSAP ScrollTrigger sync"
+      ],
+      "acceptance_criteria": [
+        "GSAP master timeline: scroll position 0→1 mapped to full page narrative",
+        "Adaptive pacing: transitions scale by scroll velocity (fast=abbreviated, slow=full)",
+        "3-layer parallax per section: bg 0.9x, content 1x, foreground 1.1x scroll speed",
+        "Section entrances: alternating left/right reveals, 0.7s, power3.out",
+        "Lenis smooth scroll on desktop (≥768px), disabled on mobile",
+        "All animations: transform + opacity only, no layout properties",
+        "prefers-reduced-motion: all scroll animations disabled, content visible",
+        "60fps during scroll on mid-range devices",
+        "No snap-scroll (CIS prohibition)",
+        "Section transitions: crossfade + translateY(20px), 0.3s"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1, 2],
+      "status": "pending",
+      "awwwards_rationale": "Scroll-driven narratives outscore static by 1.8 points on Awwwards scale. Adaptive pacing is the single strongest predictor of high creativity scores (DSF, March 2026)."
+    },
+    {
+      "id": 5,
+      "phase": "NAVIGATION_UPGRADE",
+      "title": "Navigation — Premium Morphing Nav +Active Section Progress Indicator",
+      "description": "Upgrade Navbar to 2026 premium standard: (1) Implement morphing logo animation on scroll — SVG path animation from full 'M-International' mark to compact 'M' monogram (using GSAP MorphSVG or manual path interpolation). (2) Active section progress indicator: thin emerald line below nav showing current section position (calculated via IntersectionObserver across all sections). (3) Desktop nav links: hover reveals animated underline that fills left-to-right (0.3s, cubic-bezier), NOT the current width-based approach. (4) Mobile menu: upgrade to full-screen overlay with staggered link entrance (translateY(40px)→0, opacity 0→1, 80ms stagger), subtle particle pattern in background. (5) Add scroll-to-top button that appears after 800px scroll with spring animation entrance.",
+      "workspace": "/storage/repos/m-international-v2/src/components/layout/",
+      "model_type": "code+design",
+      "skills_used": ["popular-web-designs", "motion-dev"],
+      "deliverables": [
+        "src/components/layout/Navbar.tsx — full upgrade with morphing logo",
+        "src/components/layout/MobileMenu.tsx — full-screen overlay + stagger entrance",
+        "src/components/layout/ActiveSectionIndicator.tsx — emerald progress line",
+        "src/components/layout/ScrollToTop.tsx — spring-animated scroll-top button",
+        "src/components/layout/MorphLogo.tsx — SVG path animation full→compact"
+      ],
+      "acceptance_criteria": [
+        "Morphing logo: SVG path animation full mark → monogram on scroll, 0.3s",
+        "Active section indicator: emerald line, IntersectionObserver, smooth updates",
+        "Nav link hover: left-to-right underline fill, 0.3s cubic-bezier",
+        "Mobile menu: full-screen, link stagger (translateY→0, opacity→1, 80ms gap)",
+        "Mobile menu background: subtle CSS particle pattern (no Three.js)",
+        "Scroll-to-top: appears at 800px, spring animation, 44px touch target",
+        "Transparent → solid background on scroll (0.3s, no layout shift)",
+        "No glassmorphism — solid bg when scrolled",
+        "prefers-reduced-motion: morphing logo = instant, menu = instant"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [1, 4],
+      "status": "pending",
+      "awwwards_rationale": "Sidewave SOTD (7.31/10) features animated menu + page transitions. Micro-interactions in nav score on the 'usability' axis (30% of total)."
+    },
+    {
+      "id": 6,
+      "phase": "SECTIONS_POLISH",
+      "title": "All Sections — Visual Differentiation + Unique Layouts",
+      "description": "Audit and polish every section to avoid identical-card-grid anti-pattern: (1) Products: implement Bento-style asymmetric grid (2 large featured + 6 standard in varied sizes), NOT 3-column uniform grid. On mobile: horizontal scroll with CSS scroll-snap. (2) Certificates: upgrade marquee with counter-scroll (two rows, opposite directions), add cert badge 3D tilt on hover (transform: rotateX/Y by cursor position, max 8deg). (3) About: editorial layout with alternating image/text blocks, each block has unique dimensions (NOT 2x2 grid). (4) Business: trust-focused layout, single prominent CTA, benefit cards with varied sizes (NOT identical). (5) CTA: asymmetric split (text left 60%, buttons right 40%), dot-pattern background only. (6) Gold accent used sparingly: cert badges hover, section dividers, scroll-to-top.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/",
+      "model_type": "code+design",
+      "skills_used": ["style-transfer", "shadcn-premium-ui", "popular-web-designs"],
+      "deliverables": [
+        "src/components/sections/products/ProductsSection.tsx — Bento asymmetric grid",
+        "src/components/sections/products/ProductCard.tsx — hover 3D tilt on image",
+        "src/components/sections/certificates/CertificatesSection.tsx — counter-scroll marquee",
+        "src/components/sections/certificates/CertBadge.tsx — hover 3D tilt + gold accent",
+        "src/components/sections/about/AboutSection.tsx — editorial alternating blocks",
+        "src/components/sections/business/BusinessSection.tsx — trust-focused, varied cards",
+        "src/components/sections/cta/CTASection.tsx — asymmetric 60/40 split",
+        "src/components/sections/footer/Footer.tsx — refined with gold accent dividers"
+      ],
+      "acceptance_criteria": [
+        "Products: Bento grid — 2 featured (large) + 6 standard (small), asymmetric",
+        "Products mobile: horizontal scroll with CSS scroll-snap (snapping, not free-scroll)",
+        "Certificates: two counter-scroll marquee rows (opposite directions), 60fps CSS-only",
+        "Cert badges: hover 3D tilt (rotateX/Y by cursor, max 8deg), gold border on hover",
+        "About: alternating image/text blocks, each block unique dimensions",
+        "Business: benefit cards with 3 different sizes (NOT identical), single CTA",
+        "CTA: 60/40 asymmetric split, dot-pattern bg, no particles/orbs",
+        "Gold accent used on ≤5% of total surface area",
+        "Every section has visually distinct layout (no two sections look the same)",
+        "All text: 1-2 lines per headline, 1-3 lines per body block",
+        "All images: WebP, ≤100KB, lazy loaded, proper aspect ratios"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [3, 4],
+      "status": "pending",
+      "awwwards_rationale": "Identical card grids are anti-pattern #5 in 2026. Bento layouts + asymmetric grids are the dominant pattern among DSF Immersive Excellence Index top scorers. Varied section layouts prevent the 'template feel' that kills creativity scores."
+    },
+    {
+      "id": 7,
+      "phase": "QUALITY_POLISH",
+      "title": "Dead Code Removal + TypeScript Strict + Build Zero Errors",
+      "description": "Final cleanup pass: remove all unused components, dead imports, duplicate styles. Ensure TypeScript strict with zero errors and zero 'any' types. ESLint passes with zero warnings. All unused CSS classes purged. Build completes with zero errors. Bundle analysis confirms <200KB initial JS.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "skills_used": ["performance-guardian"],
+      "deliverables": [
+        "Removed: floating cards, unused UI components, duplicate CSS, dead animation keyframes",
+        "TypeScript: npx tsc --noEmit — zero errors, zero 'any'",
+        "ESLint: npm run lint — zero errors, zero warnings",
+        "Build: npm run build — zero errors, zero warnings",
+        "Bundle: <200KB initial JS (verified by @next/bundle-analyzer)",
+        "CSS: purge unused classes (Tailwind v4 handles this, verify in build output)"
+      ],
+      "acceptance_criteria": [
+        "npm run build — 0 errors, 0 warnings",
+        "npx tsc --noEmit — 0 type errors, 0 'any' types",
+        "npm run lint — 0 lint errors, 0 warnings",
+        "No unused imports (ESLint verified)",
+        "No dead components (all imported somewhere)",
+        "Bundle < 200KB gzipped initial load",
+        "next.config.ts: optimizePackageImports configured for three, gsap, framer-motion"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [3, 4, 5, 6],
+      "status": "pending",
+      "awwwards_rationale": "Performance budget enforcement is a hidden rubric. Sites must maintain 60fps while serving functional HTML fallbacks. Bundle size directly impacts LCP which affects usability score (30%)."
+    },
+    {
+      "id": 8,
+      "phase": "PERFORMANCE_DEPLOY",
+      "title": "Core Web Vitals + Vercel Deploy + Post-Launch Monitoring",
+      "description": "Full performance optimization and deploy: (1) LCP optimization: preload hero fonts, preconnect to image CDN, hero content SSR'd (already done). (2) INP: audit long tasks, split heavy JS (Three.js already dynamic). (3) CLS: ensure all images have explicit width/height, no layout shifts from animations. (4) Deploy to Vercel with custom domain m-international.kz. (5) Enable Vercel Analytics for real-time Core Web Vitals monitoring. (6) Post-launch Lighthouse audit targeting ≥90 Performance, ≥95 Accessibility.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "skills_used": ["performance-guardian"],
+      "deliverables": [
+        "next.config.ts — image optimization, preload headers, compression, optimizePackageImports",
+        "public/images/ — all WebP, srcset, explicit width/height",
+        "docs/performance-report.md — before/after Lighthouse scores",
+        "Vercel project configured, custom domain m-international.kz",
+        "Vercel Analytics enabled, real-time CWV data visible",
+        "lighthouserc.json — CI configuration for Lighthouse"
+      ],
+      "acceptance_criteria": [
+        "LCP < 2.5s on 4G (target <1.5s)",
+        "INP < 200ms (no long tasks >50ms)",
+        "CLS < 0.1 (zero layout shifts)",
+        "TBT < 200ms",
+        "All images: WebP, srcset, lazy loaded (except hero LCP image)",
+        "Fonts: preloaded, font-display: swap",
+        "JS bundle: <200KB gzipped initial",
+        "Lighthouse Performance ≥ 90",
+        "Lighthouse Accessibility ≥ 95",
+        "Production site live at m-international.kz",
+        "All routes work: /ru, /en, /kk",
+        "Vercel Analytics: real-time data visible",
+        "Preview deployments working"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [7],
+      "status": "pending",
+      "awwwards_rationale": "Usability (30% of score) includes frame rate stability under load and progressive enhancement. Sites that fail Core Web Vitals are automatically deprioritized by Awwwards judges."
+    }
+  ],
+  "summary": {
+    "total_steps": 8,
+    "phases": {
+      "DESIGN_SYSTEM": 1,
+      "THREEJS_UPGRADE": 1,
+      "HERO_REDESIGN": 1,
+      "SCROLL_NARRATIVE": 1,
+      "NAVIGATION_UPGRADE": 1,
+      "SECTIONS_POLISH": 1,
+      "QUALITY_POLISH": 1,
+      "PERFORMANCE_DEPLOY": 1
+    },
+    "parallelizable_groups": [
+      [1],
+      [2, 4],
+      [3, 5],
+      [6],
+      [7],
+      [8]
+    ],
+    "critical_path": [1, 2, 3, 4, 6, 7, 8],
+    "estimated_total_effort": "high",
+    "awwwards_target_score": "7.5+ (SOTD range)",
+    "key_differentiators": [
+      "Custom GLSL shaders with volumetric light rays (78% of top scorers)",
+      "Scroll-driven camera zoom + adaptive pacing (87% of top scorers)",
+      "Dark hero + light sections contrast (67% of 2026 winners)",
+      "Gold accent breaking health=teal pattern (anti-slop)",
+      "Bento asymmetric product grid (not identical cards)",
+      "Morphing SVG logo + active section progress indicator",
+      "Performance budget with adaptive quality (hidden rubric)"
+    ]
+  }
+}

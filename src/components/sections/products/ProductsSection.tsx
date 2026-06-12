@@ -199,7 +199,7 @@ const ProductsSection = memo(function ProductsSection() {
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100 mb-4">
                 <Sparkles className="w-3.5 h-3.5 text-accent-600" />
-                <span className="text-xs font-unbounded font-bold text-accent-600 uppercase tracking-wider">
+                <span className="text-xs font-onest font-semibold text-accent-600">
                   {tProducts("features.natural")}
                 </span>
               </div>
@@ -221,12 +221,12 @@ const ProductsSection = memo(function ProductsSection() {
             </div>
           </ScrollReveal>
 
-          {/* Product grid — animated with AnimatePresence */}
+          {/* Product grid — asymmetric with 2 visual tiers */}
           <div className="mt-6 md:mt-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFilter}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
@@ -238,6 +238,7 @@ const ProductsSection = memo(function ProductsSection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.06, duration: 0.4 }}
+                    className={product.featured && i < 2 ? "sm:col-span-2 lg:col-span-2" : ""}
                   >
                     <ProductCard
                       name={product.name}

@@ -36,7 +36,11 @@ const SectionHeader = memo(function SectionHeader({
       </h2>
 
       {description && (
-        <p className="text-sm md:text-base text-text-secondary font-onest font-light leading-relaxed max-w-md mx-auto">
+        <p className={cn(
+          "text-sm md:text-base text-text-secondary font-onest font-light leading-relaxed max-w-md",
+          align === "center" && "mx-auto",
+          align === "left" && "ml-0"
+        )}>
           {description}
         </p>
       )}

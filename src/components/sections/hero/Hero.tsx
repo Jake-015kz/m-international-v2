@@ -2,10 +2,23 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import dynamic from "next/dynamic";
 import { memo, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { MagneticButton } from "@/components/ui";
+import { TextRevealWords } from "@/components/ui/TextReveal";
 import { usePrefersReducedMotion } from "@/lib/motion";
+
+/* ── Three.js Background — dynamic import, ssr:false ── */
+const ThreeBackground = dynamic(
+  () => import("./ThreeBackground"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="absolute inset-0 bg-[oklch(8%_0.005_160)]" />
+    ),
+  }
+);
 
 /* ── Animation config ── */
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -55,7 +68,7 @@ const Hero = memo(function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
-  /* Parallax on background image */
+  /* Parallax on background */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -71,55 +84,55 @@ const Hero = memo(function Hero() {
       className="relative overflow-hidden min-h-[100dvh] min-h-screen flex items-center"
       aria-label="Главная секция"
     >
-      {/* ── Background image with parallax ── */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{
-          y: reducedMotion ? 0 : bgY,
-          scale: reducedMotion ? 1 : bgScale,
-        }}
-      >
-        <Image
-          src="/images/sections/hero-nature.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-          placeholder="blur"
-          blurDataURL="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiTjU7QB0FA=="
-        />
-        {/* Dark scrim for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-        {/* Bottom glow bleed into next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[var(--surface-base)] to-transparent" />
-        {/* Subtle dot overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
+      {/* ── Three.js Particle Background (desktop) ── */}
+      {!reducedMotion && (
+        <motion.div
+          className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "radial-gradient(circle, oklch(100% 0 0) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
+            y: bgY,
+            scale: bgScale,
+          }}
+        >
+          <ThreeBackground
+            color="#34d399"
+            interactive={true}
+          />
+        </motion.div>
+      )}
+
+      {/* ── CSS Fallback Background (reduced motion or mobile) ── */}
+      {reducedMotion && (
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background:
+              "linear-gradient(160deg, oklch(8% 0.005 160) 0%, oklch(12% 0.008 160) 40%, oklch(10% 0.006 160) 100%)",
           }}
         />
-      </motion.div>
-
-      {/* ── Ambient glow orbs (desktop only) ── */}
-      {!reducedMotion && (
-        <>
-          <div className="absolute top-[20%] left-[15%] w-[500px] h-[500px] rounded-full pointer-events-none opacity-30 mix-blend-screen hidden lg:block"
-            style={{
-              background: "radial-gradient(circle, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%)",
-              filter: "blur(80px)",
-            }}
-          />
-          <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] rounded-full pointer-events-none opacity-20 mix-blend-screen hidden lg:block"
-            style={{
-              background: "radial-gradient(circle, oklch(70% 0.15 85 / 0.06) 0%, transparent 70%)",
-              filter: "blur(100px)",
-            }}
-          />
-        </>
       )}
+
+      {/* ── Dot grid overlay ── */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.04]"
+        style={{
+          backgroundImage: "radial-gradient(circle, oklch(100% 0 0) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* ── Noise texture ── */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: "256px 256px",
+          backgroundRepeat: "repeat",
+          mixBlendMode: "overlay",
+        }}
+      />
+
+      {/* ── Bottom gradient bleed ── */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent z-[2]" />
 
       {/* ── Content ── */}
       <motion.div
@@ -144,24 +157,21 @@ const Hero = memo(function Hero() {
             </span>
           </motion.div>
 
-          {/* ── Headline ── */}
-          <h1 className="font-unbounded font-bold text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.1] tracking-normal mb-4 sm:mb-5">
-            <span className="block text-white">
-              {t("title").split(". ")[0]}
-              {t("title").includes(".") ? "." : ""}
-            </span>
-            {t("title").split(". ")[1] && (
-              <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-white via-white/90 to-white/50 bg-clip-text text-transparent font-light">
-                {t("title").split(". ")[1]}
-              </span>
-            )}
+          {/* ── Headline — TextRevealWords, NO gradient-text ── */}
+          <h1 className="font-unbounded font-bold text-[clamp(2rem,5vw,3.5rem)] leading-[1.1] tracking-normal mb-4 sm:mb-5">
+            <TextRevealWords
+              text={t("title")}
+              className="text-white"
+              stagger={0.06}
+              initialDelay={0.2}
+            />
           </h1>
 
-          {/* ── Subtitle ── */}
+          {/* ── Subtitle — compact 1-2 lines ── */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.7, ease: EASE }}
+            transition={{ delay: 0.6, duration: 0.7, ease: EASE }}
             className="text-sm sm:text-base lg:text-lg text-white/50 font-onest font-light leading-relaxed mb-8 sm:mb-10 max-w-xl mx-auto lg:mx-0"
           >
             {t("lead")}
@@ -171,7 +181,7 @@ const Hero = memo(function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.7, ease: EASE }}
+            transition={{ delay: 0.7, duration: 0.7, ease: EASE }}
             className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-10 sm:mb-14"
           >
             <MagneticButton
@@ -180,17 +190,17 @@ const Hero = memo(function Hero() {
               onClick={() => {
                 document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full sm:w-auto px-8 py-4 bg-white text-[oklch(18%_0.01_160)] hover:bg-white/90 font-onest font-semibold text-sm sm:text-base shadow-[0_4px_24px_rgba(255,255,255,0.15)] hover:shadow-[0_4px_32px_rgba(255,255,255,0.25)] border-0"
+              className="w-full sm:w-auto cta-primary cta-shine font-onest font-semibold text-sm sm:text-base"
             >
               {t("cta")}
             </MagneticButton>
             <MagneticButton
-              variant="outline"
+              variant="secondary"
               size="lg"
               onClick={() => {
                 document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full sm:w-auto px-8 py-4 bg-white/[0.06] hover:bg-white/[0.12] border-white/[0.12] hover:border-white/[0.2] text-white font-onest font-medium text-sm sm:text-base mobile-no-backdrop"
+              className="w-full sm:w-auto cta-secondary font-onest font-medium text-sm sm:text-base mobile-no-backdrop"
             >
               {t("aboutLink")}
             </MagneticButton>
@@ -200,15 +210,14 @@ const Hero = memo(function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
             className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap"
           >
-            {/* Cert badges */}
             {TRUST_ITEMS.map((item, i) => (
               <div
                 key={item.key}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] mobile-no-backdrop"
-                style={{ animationDelay: `${0.9 + i * 0.08}s` }}
+                style={{ animationDelay: `${1.0 + i * 0.08}s` }}
               >
                 <span className="text-emerald-400/70" aria-hidden="true">
                   <TrustIcon icon={item.icon} />
@@ -219,10 +228,8 @@ const Hero = memo(function Hero() {
               </div>
             ))}
 
-            {/* Divider */}
             <div className="w-px h-5 bg-white/10 hidden sm:block" aria-hidden="true" />
 
-            {/* Quick stats */}
             <div className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs text-white/40 font-onest">
               <span>
                 <strong className="text-white/70 font-semibold">50+</strong> {t("stat.countries")}

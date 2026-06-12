@@ -44,7 +44,7 @@ function MarqueeRow({ items, direction = "left", duration = 35 }: { items: typeo
               />
             </div>
             <div className="flex flex-col gap-0.5 min-w-0">
-              <span className="font-unbounded font-bold text-[8px] sm:text-[10px] md:text-xs whitespace-nowrap text-text-primary truncate">
+              <span className="font-onest font-semibold text-[8px] sm:text-[10px] md:text-xs whitespace-nowrap text-text-primary truncate">
                 {cert.name}
               </span>
               <span className="text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-wider text-text-tertiary hidden md:block truncate">

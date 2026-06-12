@@ -1,0 +1,422 @@
+{
+  "project": "m-international-v2",
+  "version": "0.1.0",
+  "target": "Awwwards-worthy landing page for M-International (MLM/BADy, CIS market)",
+  "constraints": {
+    "stack": "Next.js 16 + React 19 + TypeScript + Tailwind CSS 4",
+    "i18n": "next-intl v4 (ru, en, kk)",
+    "animation": "Framer Motion + GSAP ScrollTrigger + Lenis (desktop only)",
+    "fonts": "Unbounded (headings >=20px), Onest (body/UI)",
+    "deploy": "Vercel",
+    "cis_rules": {
+      "heading_size": "clamp(2rem, 5vw, 3.5rem)",
+      "line_height": ">= 1.1 for headings, 1.6-1.7 for body",
+      "letter_spacing": "normal for Cyrillic, NO negative values",
+      "no_snap_scroll": true,
+      "no_split_screen_cta": true,
+      "text_length": "1-3 lines per screen, visual/video over long text blocks"
+    },
+    "design_prohibitions": [
+      "No gradient text",
+      "No hero-metric templates",
+      "No glassmorphism as default",
+      "No identical card grids",
+      "No nested cards",
+      "No side-stripe borders",
+      "No Inter/DM Sans/Space Grotesk/Fraunces/Cormorant",
+      "No em dashes",
+      "No zero imagery"
+    ]
+  },
+  "roadmap": [
+    {
+      "id": 1,
+      "phase": "RESEARCH",
+      "title": "Awwwards Design Research and Pattern Library",
+      "description": "Research current Awwwards SOTD patterns for health/wellness/lifestyle categories. Build a pattern library of 15-20 reference sites with notes on scroll animation techniques, typography treatments, color strategies, and micro-interaction patterns. Focus on sites that balance premium aesthetics with conversion-focused MLM/business positioning.",
+      "workspace": "/storage/repos/m-international-v2/docs/",
+      "model_type": "vision+reasoning",
+      "deliverables": [
+        "docs/awwwards-research.md - 15-20 reference sites with annotated screenshots",
+        "docs/pattern-library.md - Scroll animation, typography, color, CTA patterns",
+        "docs/anti-patterns.md - What to avoid based on Awwwards jury feedback"
+      ],
+      "acceptance_criteria": [
+        "Minimum 15 reference sites analyzed with specific technique notes",
+        "Pattern library covers: hero treatments, scroll reveals, card layouts, CTA designs",
+        "Anti-patterns documented with visual examples",
+        "All research specific to health/premium/lifestyle category"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": []
+    },
+    {
+      "id": 2,
+      "phase": "FOUNDATION",
+      "title": "Design Token System and CSS Architecture Overhaul",
+      "description": "Audit and enhance the existing token system in globals.css. Ensure all OKLCH color tokens, typography scale, spacing system, animation tokens, and z-index scale are complete and consistent. Add missing tokens for scroll-driven animations. Implement CSS custom property fallbacks for older browsers.",
+      "workspace": "/storage/repos/m-international-v2/src/app/[locale]/",
+      "model_type": "code",
+      "deliverables": [
+        "globals.css - Complete token system with all DESIGN.md tokens implemented",
+        "tokens.css - Scroll animation tokens, stagger delays, glow effects",
+        "CSS @theme block - All tokens mapped to Tailwind utilities"
+      ],
+      "acceptance_criteria": [
+        "All TOKENS.md tokens implemented as CSS custom properties",
+        "Scroll animation tokens: --scroll-opacity, --scroll-y, --scroll-scale, --scroll-blur",
+        "Dark mode support via .dark class with automatic token switching",
+        "All Tailwind utilities verified: bg-bg-base, text-fg-primary, shadow-glow-sm",
+        "No pure #000 or #fff, all tinted to brand hue (~160)"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": []
+    },
+    {
+      "id": 3,
+      "phase": "FOUNDATION",
+      "title": "Typography System - Unbounded and Onest Implementation",
+      "description": "Implement the complete typography system per DESIGN.md. Ensure Unbounded is used ONLY for headings >=20px. Onest for all body text, UI elements, buttons, nav, product card titles. Configure font-optical-sizing, font-kerning, text-wrap: balance for headings. Set correct line-height and letter-spacing: normal for Cyrillic.",
+      "workspace": "/storage/repos/m-international-v2/src/",
+      "model_type": "code",
+      "deliverables": [
+        "src/lib/typography.ts - Typography utility classes and variants",
+        "globals.css - Font-face declarations, base typography styles",
+        "All components audited - Unbounded only on headings >=20px"
+      ],
+      "acceptance_criteria": [
+        "Unbounded used exclusively for display/heading elements >=20px",
+        "Onest used for all body, UI, buttons, product names, card content",
+        "line-height: 1.1 for headings, 1.6-1.7 for body text",
+        "letter-spacing: normal on all Cyrillic text",
+        "text-wrap: balance on all headings",
+        "font-optical-sizing: auto and font-kerning: normal set",
+        "No typography violations in any component"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [2]
+    },
+    {
+      "id": 4,
+      "phase": "HERO",
+      "title": "Hero Section - Awwwards-Level Cinematic Treatment",
+      "description": "Redesign the Hero section to Awwwards quality. Implement: full-viewport cinematic hero with nature imagery, Apple-style text reveal animation on scroll (word-by-word), parallax background with scale and translateY, ambient glow orbs (desktop only), trust badge bar with certifications, dual CTA layout, dot grid overlay with radial mask, noise texture overlay. Remove gradient-text on subtitle. Mobile: simplified reveal.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/hero/",
+      "model_type": "code+vision",
+      "deliverables": [
+        "Hero.tsx - Redesigned with text reveal, parallax, trust bar",
+        "HeroBackground.tsx - Enhanced with dot grid, noise, glow orbs",
+        "TextReveal.tsx - Reusable word/char reveal component",
+        "Hero.module.css - Scoped animations (stagger, reveal keyframes)"
+      ],
+      "acceptance_criteria": [
+        "Text reveal: word-by-word on desktop, section-level on mobile",
+        "Parallax: background moves at different rate than content on scroll",
+        "No gradient-text anywhere in hero",
+        "Trust badges: GMP, ISO, Halal, 50+ countries visible",
+        "prefers-reduced-motion: all animations disabled, content visible immediately",
+        "Mobile: no heavy blur/backdrop-filter, simplified animations",
+        "Hero works at 375px, 768px, 1024px, 1440px, 1920px",
+        "First Contentful Paint < 1.5s"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1, 2, 3]
+    },
+    {
+      "id": 5,
+      "phase": "ANIMATION",
+      "title": "Scroll Animation System - GSAP ScrollTrigger and Lenis",
+      "description": "Build a comprehensive scroll animation system. Implement: Lenis smooth scroll (desktop only), GSAP ScrollTrigger for section-level reveal animations, Apple-style text reveal component (reusable), parallax layers, stagger animations for card grids, progress indicator. All animations: transform + opacity only, ease-out curves, 0.7s duration, 0.06s stagger.",
+      "workspace": "/storage/repos/m-international-v2/src/lib/ and src/components/",
+      "model_type": "code",
+      "deliverables": [
+        "src/lib/scroll.ts - Lenis init, GSAP ScrollTrigger config, reduced-motion check",
+        "src/components/ui/TextReveal.tsx - Reusable text reveal component",
+        "src/components/ui/ScrollSection.tsx - Section wrapper with reveal animation",
+        "src/components/ui/ParallaxLayer.tsx - Reusable parallax container",
+        "src/components/layout/SmoothScrollProvider.tsx - Updated with mobile check"
+      ],
+      "acceptance_criteria": [
+        "Lenis smooth scroll active on desktop (>=768px), disabled on mobile",
+        "GSAP ScrollTrigger: section reveals with 0.7s duration, power3.out ease",
+        "TextReveal: supports word-by-word and character-by-character modes",
+        "All animations use transform + opacity only",
+        "prefers-reduced-motion: all scroll animations disabled",
+        "No layout thrashing, will-change used appropriately",
+        "Scroll animation performance: 60fps on mid-range devices"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [2]
+    },
+    {
+      "id": 6,
+      "phase": "SECTIONS",
+      "title": "Certificates Marquee - Infinite Scroll Animation",
+      "description": "Build a horizontal infinite marquee for certification badges (GMP, ISO, Halal, FDA, HACCP). Use CSS animation for 60fps performance. Implement: seamless loop, pause on hover, reduced-motion fallback (static row), proper ARIA labels. Logos as optimized SVG or WebP.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/certificates/",
+      "model_type": "code",
+      "deliverables": [
+        "CertificatesSection.tsx - Marquee with infinite scroll",
+        "globals.css - @keyframes marquee animation",
+        "public/images/certs/ - Optimized certification logos (SVG or WebP)"
+      ],
+      "acceptance_criteria": [
+        "Infinite horizontal scroll with seamless loop (no visible jump)",
+        "CSS-only animation (no JS animation loop) for performance",
+        "Pause on hover/focus",
+        "prefers-reduced-motion: static horizontal row, no animation",
+        "Certification logos: optimized, consistent sizing, proper alt text",
+        "Works on mobile with touch support"
+      ],
+      "estimated_complexity": "low",
+      "depends_on": [2, 5]
+    },
+    {
+      "id": 7,
+      "phase": "SECTIONS",
+      "title": "Products Section - Premium Card Grid with Hover Interactions",
+      "description": "Redesign the products section with a premium, varied card grid. Asymmetric grid with varied card sizes, rich imagery, subtle hover interactions. Each card: product image (WebP), name (Onest), short description (1-2 lines), CTA. Hover: scale(1.02) + shadow increase + subtle image zoom. No glassmorphism. Mobile: horizontal scroll with snap.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/products/",
+      "model_type": "code+vision",
+      "deliverables": [
+        "ProductsSection.tsx - Asymmetric grid layout",
+        "ProductCard.tsx - Redesigned with hover interactions, Onest font",
+        "ProductCard.module.css - Scoped hover animations",
+        "public/images/products/ - All product images as WebP (<=100KB each)"
+      ],
+      "acceptance_criteria": [
+        "Grid: asymmetric layout with varied sizes/positions",
+        "Product names: Onest font (NOT Unbounded)",
+        "Hover: scale(1.02) + shadow-md to shadow-lg, image subtle zoom",
+        "No glassmorphism (no backdrop-blur decorative usage)",
+        "All product images: WebP format, <=100KB each, lazy loaded",
+        "Mobile: horizontal scroll with touch snap, no hover effects",
+        "8 products with at least 2 visual tiers (featured/standard)",
+        "prefers-reduced-motion: no hover transforms, static cards"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [2, 3, 5]
+    },
+    {
+      "id": 8,
+      "phase": "SECTIONS",
+      "title": "About Section - Editorial Layout with Scroll-Triggered Timeline",
+      "description": "Redesign the About section with an editorial, magazine-style layout. Replace 2x2 grid with: large typographic statement, alternating image/text blocks, company timeline with scroll-triggered reveal, values as large icons with short descriptions. Use GSAP ScrollTrigger for timeline. Keep text minimal (1-2 lines per point).",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/about/",
+      "model_type": "code+vision",
+      "deliverables": [
+        "AboutSection.tsx - Editorial layout with alternating blocks",
+        "AboutTimeline.tsx - Scroll-triggered timeline component",
+        "public/images/about/ - Optimized about section images (WebP)"
+      ],
+      "acceptance_criteria": [
+        "Alternating layout: image-text, text-image (NOT 2x2 identical grid)",
+        "Timeline: scroll-triggered reveal with GSAP ScrollTrigger",
+        "Text: maximum 1-2 lines per value/point",
+        "Images: high-quality, optimized WebP, proper aspect ratios",
+        "No identical card grids, each block has unique layout",
+        "Mobile: single column, stacked layout",
+        "prefers-reduced-motion: timeline items visible immediately"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1, 5]
+    },
+    {
+      "id": 9,
+      "phase": "SECTIONS",
+      "title": "Business/MLM Section - Trust-Focused Conversion Layout",
+      "description": "Redesign the Business section to convert visitors to MLM partners without cheap MLM tropes. Asymmetric layout, 3-step process with icons, social proof, benefit cards with varied sizes, single prominent CTA. Remove all aggressive MLM language. Tone: professional, science-backed, community-focused.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/business/",
+      "model_type": "code",
+      "deliverables": [
+        "BusinessSection.tsx - Asymmetric conversion layout",
+        "BusinessStep.tsx - Step component for 3-step process",
+        "BusinessCard.tsx - Benefit card (Onest font, varied sizes)"
+      ],
+      "acceptance_criteria": [
+        "Layout: asymmetric (NOT centered, NOT identical cards)",
+        "Benefit cards: Onest font (NOT Unbounded), varied sizes",
+        "Text: 1-2 lines per benefit, NO aggressive MLM language",
+        "Social proof: 10K+ partners, 50+ countries, 15 years",
+        "Single prominent CTA",
+        "No financial freedom / high income from day 1 language",
+        "Mobile: single column, stacked, touch-friendly CTAs (>=44px)"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [3, 5]
+    },
+    {
+      "id": 10,
+      "phase": "SECTIONS",
+      "title": "CTA Section - Asymmetric Conversion Block",
+      "description": "Redesign the final CTA section. Large typographic headline (Unbounded), single sentence of supporting text, two buttons (primary + secondary), subtle background treatment (gradient or pattern, NOT decorative orbs/particles). Scroll-triggered entrance animation. Clean, conversion-focused.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/cta/",
+      "model_type": "code",
+      "deliverables": [
+        "CTASection.tsx - Clean asymmetric CTA block",
+        "CTA.module.css - Entrance animation, background treatment"
+      ],
+      "acceptance_criteria": [
+        "Layout: asymmetric (text left, buttons right on desktop)",
+        "Headline: Unbounded, display size, 1-2 lines maximum",
+        "Supporting text: single sentence, Onest font",
+        "Buttons: primary (filled, high contrast) + secondary (outline)",
+        "Background: subtle gradient or dot pattern (NOT decorative orbs)",
+        "No floating particles, no decorative orbs, no glassmorphism",
+        "Scroll-triggered entrance: fade + translateY",
+        "Mobile: stacked layout, full-width buttons"
+      ],
+      "estimated_complexity": "low",
+      "depends_on": [2, 3, 5]
+    },
+    {
+      "id": 11,
+      "phase": "NAVIGATION",
+      "title": "Navbar - Premium Navigation with Scroll Behavior",
+      "description": "Enhance the Navbar with premium scroll behavior. Transparent on hero to solid on scroll, SVG logo, desktop nav with Onest font, language switcher (RU/EN/KZ), mobile hamburger menu with animation, CTA button in nav, active section indicator. No glassmorphism.",
+      "workspace": "/storage/repos/m-international-v2/src/components/layout/",
+      "model_type": "code",
+      "deliverables": [
+        "Navbar.tsx - Enhanced with scroll behavior, mobile menu",
+        "MobileMenu.tsx - Animated mobile navigation",
+        "LanguageSwitcher.tsx - Verify RU/EN/KZ implementation"
+      ],
+      "acceptance_criteria": [
+        "Transparent on hero to solid background on scroll (0.3s transition)",
+        "Logo: SVG, proper sizing, links to top",
+        "Desktop nav: Onest font, >=44px touch targets",
+        "Language switcher: RU/EN/KZ, active state highlighted",
+        "Mobile: hamburger with animated open/close",
+        "CTA button in nav: visible on desktop and mobile",
+        "Active section: highlights current section on scroll",
+        "No glassmorphism, solid background when scrolled"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [2, 3]
+    },
+    {
+      "id": 12,
+      "phase": "I18N",
+      "title": "Content and Copy - Humanized RU/EN/KZ Translations",
+      "description": "Create and humanize all site copy in 3 languages. Use humanizer + humanizer-ru skills. Hero: headline, subheadline, CTA. Products: 8 names + descriptions. About: mission, values, timeline. Business: headline, steps, benefits, CTA. CTA section: headline + subtext. Footer: newsletter, contact. All text: short, specific, NO AI-isms.",
+      "workspace": "/storage/repos/m-international-v2/src/i18n/messages/",
+      "model_type": "text",
+      "deliverables": [
+        "src/i18n/messages/ru.json - Complete Russian translations (humanized)",
+        "src/i18n/messages/en.json - Complete English translations",
+        "src/i18n/messages/kk.json - Complete Kazakh translations",
+        "docs/copy-review.md - Copy review checklist per section"
+      ],
+      "acceptance_criteria": [
+        "All 3 languages: complete coverage (no missing keys)",
+        "Russian text: humanized via humanizer-ru, NO AI-isms",
+        "English text: humanized via humanizer, natural tone",
+        "Kazakh text: grammatically correct, natural phrasing",
+        "All headlines: 1-2 lines maximum",
+        "All body text: 1-3 lines per block",
+        "No em dashes, no leverage, no synergy, no paradigm shift",
+        "next-intl useTranslations() used correctly in all components"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": []
+    },
+    {
+      "id": 13,
+      "phase": "PERFORMANCE",
+      "title": "Performance Optimization - Core Web Vitals",
+      "description": "Optimize the entire site for Core Web Vitals. Target: LCP < 2.5s, FID < 100ms, CLS < 0.1. All images WebP with srcset and lazy loading. Fonts preloaded with font-display: swap. Code splitting for heavy components (GSAP, Lenis). Remove unused CSS. Minimize JS bundle. Preload critical resources.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "deliverables": [
+        "next.config.ts - Image optimization, preload headers, compression",
+        "public/images/ - All images optimized (WebP, proper sizes)",
+        "docs/performance-report.md - Before/after Lighthouse scores",
+        "lighthouserc.json - Lighthouse CI configuration"
+      ],
+      "acceptance_criteria": [
+        "LCP < 2.5s on 4G connection",
+        "FID < 100ms (no long tasks > 50ms)",
+        "CLS < 0.1 (no layout shifts)",
+        "All images: WebP, srcset, lazy loaded (except hero LCP image)",
+        "Fonts: preloaded, font-display: swap",
+        "JS bundle: < 200KB gzipped (initial load)",
+        "Lighthouse score: >= 90 on Performance, >= 95 on Accessibility"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [4, 6, 7, 8, 9, 10, 11]
+    },
+    {
+      "id": 14,
+      "phase": "QA",
+      "title": "Cross-Browser QA and Accessibility Audit",
+      "description": "Comprehensive QA across browsers, devices, and accessibility. Test: Chrome, Firefox, Safari, Edge. Devices: 375px to 1920px. Reduced motion, keyboard navigation, screen reader, color contrast (WCAG AA), touch targets (>=44px). Document all issues and fixes.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code+vision",
+      "deliverables": [
+        "docs/qa-report.md - Complete QA checklist with pass/fail per item",
+        "docs/accessibility-audit.md - WCAG 2.2 AA compliance report",
+        "All identified issues fixed in code"
+      ],
+      "acceptance_criteria": [
+        "All browsers: visual parity (no layout breaks)",
+        "All breakpoints: proper layout, no horizontal overflow",
+        "prefers-reduced-motion: all animations disabled, content visible",
+        "Keyboard: all interactive elements reachable, visible focus rings",
+        "Screen reader: meaningful alt text, proper heading hierarchy",
+        "Color contrast: all text meets WCAG AA (4.5:1 normal, 3:1 large)",
+        "Touch targets: all interactive elements >= 44x44px on mobile",
+        "No console errors or warnings in any browser"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [4, 6, 7, 8, 9, 10, 11, 12]
+    },
+    {
+      "id": 15,
+      "phase": "DEPLOY",
+      "title": "Vercel Deploy and Post-Launch Monitoring",
+      "description": "Deploy to Vercel and set up post-launch monitoring. Connect GitHub repo, configure build settings, set up custom domain (m-international.kz), enable Vercel Analytics, configure preview deployments, set up monitoring, create rollback plan.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "deliverables": [
+        "Vercel project configured and deployed",
+        "Custom domain: m-international.kz pointing to Vercel",
+        "Vercel Analytics enabled",
+        "docs/deploy.md - Deployment process documentation",
+        "docs/monitoring.md - Monitoring setup and alert thresholds"
+      ],
+      "acceptance_criteria": [
+        "Production site live at m-international.kz",
+        "All routes work: /ru, /en, /kk (no 404s)",
+        "i18n: language switcher changes URL and content correctly",
+        "Vercel Analytics: real-time data visible in dashboard",
+        "Preview deployments: working for pull requests",
+        "SSL: valid HTTPS certificate",
+        "Performance: production Lighthouse score >= 85",
+        "Rollback: documented and tested"
+      ],
+      "estimated_complexity": "low",
+      "depends_on": [13, 14]
+    }
+  ],
+  "summary": {
+    "total_steps": 15,
+    "phases": {
+      "RESEARCH": 1,
+      "FOUNDATION": 2,
+      "HERO": 1,
+      "ANIMATION": 1,
+      "SECTIONS": 5,
+      "NAVIGATION": 1,
+      "I18N": 1,
+      "PERFORMANCE": 1,
+      "QA": 1,
+      "DEPLOY": 1
+    },
+    "parallelizable_groups": [
+      [1, 2, 12],
+      [6, 11],
+      [7, 8, 9, 10]
+    ],
+    "critical_path": [1, 2, 3, 5, 4, 7, 8, 13, 14, 15]
+  }
+}

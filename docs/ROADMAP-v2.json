@@ -1,0 +1,472 @@
+{
+  "project": "m-international-v2",
+  "mission": "Elite Evolution 2026",
+  "version": "2.0.0",
+  "target": "Awwwards-worthy premium site — M-International (MLM/БАДы, CIS market)",
+  "created": "2026-06-12",
+  "skills_reference": "/storage/managed_skills/",
+  "constraints": {
+    "stack": "Next.js 16 + React 19 + TypeScript + Tailwind CSS 4",
+    "i18n": "next-intl v4 (ru, en, kk)",
+    "animation": "Framer Motion + GSAP ScrollTrigger + Lenis (desktop only)",
+    "3d": "Three.js particles + grid (dynamic import, ssr:false)",
+    "fonts": "Unbounded (headings >=20px), Onest (body/UI)",
+    "deploy": "Vercel",
+    "cis_rules": {
+      "heading_size": "clamp(2rem, 5vw, 3.5rem)",
+      "line_height": ">= 1.1 headings, 1.65 body",
+      "letter_spacing": "normal (NO negative on Cyrillic)",
+      "no_snap_scroll": true,
+      "no_split_screen_cta": true,
+      "max_text_per_block": "1-3 lines"
+    },
+    "performance_budget": {
+      "lcp": "<2.5s",
+      "inp": "<200ms",
+      "cls": "<0.1",
+      "tbt": "<200ms",
+      "js_bundle": "<200KB gzipped",
+      "lighthouse_performance": ">=90",
+      "lighthouse_accessibility": ">=95"
+    }
+  },
+  "roadmap": [
+    {
+      "id": 1,
+      "phase": "SKILLS",
+      "title": "Elite Arsenal — Create 7 Managed Skills",
+      "description": "Create 7 .md skill files in /storage/managed_skills/ covering: popular-web-designs (Stripe/Linear/Awwwards patterns), motion-dev (Framer Motion + GSAP + Lenis), nextjs16-best-practices (RSC, streaming, optimization), threejs-particles (digital dust WebGL background), shadcn-premium-ui (atomic reusable components), style-transfer (Awwwards visual language adaptation), performance-guardian (Core Web Vitals checklist).",
+      "workspace": "/storage/managed_skills/",
+      "model_type": "knowledge",
+      "deliverables": [
+        "/storage/managed_skills/1-popular-web-designs.md",
+        "/storage/managed_skills/2-motion-dev.md",
+        "/storage/managed_skills/3-nextjs16-best-practices.md",
+        "/storage/managed_skills/4-threejs-particles.md",
+        "/storage/managed_skills/5-shadcn-premium-ui.md",
+        "/storage/managed_skills/6-style-transfer.md",
+        "/storage/managed_skills/7-performance-guardian.md"
+      ],
+      "acceptance_criteria": [
+        "All 7 skill files exist and are complete",
+        "Each skill has actionable code examples",
+        "CIS adaptation rules documented in relevant skills",
+        "Performance budget defined in performance-guardian"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [],
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "phase": "FOUNDATION",
+      "title": "Three.js Digital Dust Background — Installation & Scene",
+      "description": "Install three + @types/three. Create ThreeBackground component with: custom ShaderMaterial particles (2000 count),InteractiveGrid helper, mouse parallax tracking, adaptive quality by device (500-2500 particles), proper cleanup on unmount. Use dynamic import with ssr:false in Hero.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/hero/",
+      "model_type": "code",
+      "skills_used": ["threejs-particles", "nextjs16-best-practices", "performance-guardian"],
+      "deliverables": [
+        "npm install three @types/three",
+        "src/components/sections/hero/ThreeBackground.tsx",
+        "src/lib/three/scene.ts (scene setup, camera, renderer)",
+        "src/lib/three/particles.ts (particle system logic)",
+        "Hero.tsx — updated with dynamic ThreeBackground import"
+      ],
+      "acceptance_criteria": [
+        "Three.js installs without errors",
+        "Particle system renders at 60fps on mid-range desktop",
+        "Particles drift gently with sin/cos wave motion",
+        "Mouse parallax subtly shifts particles (±2 units)",
+        "Grid visible below particles (8% opacity emerald)",
+        "Adaptive particle count: 800 mobile, 2000 desktop",
+        "No SSR errors (dynamic import, ssr:false)",
+        "Proper cleanup: cancelAnimationFrame, dispose geometry/material",
+        "Reduced motion: CSS-only fallback (30 dust particles)"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1],
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "phase": "FOUNDATION",
+      "title": "UI Component Audit — Remove Dead Code, Fix Typography",
+      "description": "Audit all UI components against shadcn-premium-ui skill. Fix: Unbounded used ONLY for headings >=20px, Onest for ALL body/UI text. Remove: gradient-text usage, glassmorphism as default, identical card grids, any DM Sans/Inter/Space Grotesk imports. Ensure: line-height >= 1.1 headings, letter-spacing normal on Cyrillic, touch targets >=44px.",
+      "workspace": "/storage/repos/m-international-v2/src/components/ui/",
+      "model_type": "code",
+      "skills_used": ["shadcn-premium-ui", "style-transfer"],
+      "deliverables": [
+        "src/components/ui/index.ts — verified barrel export",
+        "All components audited: Button, Badge, Container, SectionHeader, GlassCard, Skeleton, Card, Input, etc.",
+        "Hero.tsx — removed gradient-text from subtitle",
+        "globals.css — verified CIS typography rules"
+      ],
+      "acceptance_criteria": [
+        "Zero gradient-text usage anywhere",
+        "Unbounded ONLY in elements >=20px font-size",
+        "Onest for ALL body, buttons, nav, product text, captions",
+        "line-height >= 1.1 on all headings",
+        "letter-spacing: normal on all Cyrillic text",
+        "No Inter, DM Sans, Space Grotesk, Fraunces, Cormorant imports",
+        "GlassCard exists but NOT used as default (opt-in only)",
+        "All interactive elements >=44px touch target",
+        "focus-visible ring on all interactive elements"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [1],
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "phase": "HERO",
+      "title": "Hero Section — Awwwards-Level Cinematic Redesign",
+      "description": "Redesign Hero using style-transfer skill patterns. Implement: Three.js particle background (dynamic import), word-by-word text reveal via TextRevealWords, parallax on background (scale 1→1.15, translateY 0→30%), trust badge bar (GMP/ISO/Halal + 50+ countries), dual CTA layout, dot grid overlay with radial mask, noise texture (3% opacity), bottom gradient bleed. Mobile: simplified reveal, no heavy blur.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/hero/",
+      "model_type": "code+vision",
+      "skills_used": ["style-transfer", "motion-dev", "threejs-particles", "popular-web-designs"],
+      "deliverables": [
+        "src/components/sections/hero/Hero.tsx — redesigned",
+        "src/components/sections/hero/TextRevealWords.tsx — word-by-word reveal",
+        "src/components/sections/hero/HeroBackground.tsx — CSS fallback bg",
+        "Hero.module.css — scoped animations (stagger, reveal)"
+      ],
+      "acceptance_criteria": [
+        "Three.js particle background renders correctly",
+        "Text reveal: word-by-word on desktop, section-level on mobile",
+        "Parallax: background moves at different rate than content",
+        "No gradient-text anywhere",
+        "Trust badges: GMP, ISO, Halal + 50+ countries, 10K+ partners",
+        "Dual CTA: primary (filled) + secondary (outline)",
+        "prefers-reduced-motion: all animations disabled, content visible",
+        "Mobile: no heavy blur/backdrop-filter, simplified animations",
+        "Works at 375px, 768px, 1024px, 1440px, 1920px",
+        "LCP < 1.5s (hero image preloaded)"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [2, 3],
+      "status": "pending"
+    },
+    {
+      "id": 5,
+      "phase": "ANIMATION",
+      "title": "Scroll Animation System — GSAP ScrollTrigger + Lenis",
+      "description": "Build comprehensive scroll animation system using motion-dev skill. Lenis smooth scroll (desktop >=768px only), GSAP ScrollTrigger for section reveals, Apple-style text reveal component (reusable), parallax layers, stagger animations for card grids. All animations: transform + opacity only, ease-out curves, 0.7s duration, 0.06s stagger.",
+      "workspace": "/storage/repos/m-international-v2/src/lib/ and src/components/",
+      "model_type": "code",
+      "skills_used": ["motion-dev", "performance-guardian"],
+      "deliverables": [
+        "src/lib/scroll.ts — Lenis init, GSAP ScrollTrigger config",
+        "src/lib/motion.ts — usePrefersReducedMotion, animation presets",
+        "src/components/ui/TextReveal.tsx — word/char reveal component",
+        "src/components/ui/ScrollReveal.tsx — section reveal wrapper",
+        "src/components/layout/SmoothScrollProvider.tsx — updated with mobile check"
+      ],
+      "acceptance_criteria": [
+        "Lenis smooth scroll on desktop (>=768px), disabled on mobile",
+        "GSAP ScrollTrigger: section reveals, 0.7s duration, power3.out",
+        "TextReveal: supports word-by-word and character modes",
+        "All animations use transform + opacity only",
+        "prefers-reduced-motion: all scroll animations disabled",
+        "60fps on mid-range devices during scroll",
+        "No layout thrashing, will-change used appropriately"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [3],
+      "status": "pending"
+    },
+    {
+      "id": 6,
+      "phase": "SECTIONS",
+      "title": "Certificates Marquee — Infinite Scroll + Trust Bar",
+      "description": "Build horizontal infinite marquee for certification badges (GMP, ISO, Halal, FDA, HACCP). CSS-only animation for 60fps. Seamless loop, pause on hover, reduced-motion fallback (static row). Logos as optimized SVG.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/certificates/",
+      "model_type": "code",
+      "skills_used": ["popular-web-designs", "motion-dev"],
+      "deliverables": [
+        "CertificatesSection.tsx — marquee with infinite scroll",
+        "globals.css — @keyframes marquee animation",
+        "public/images/certs/ — optimized certification SVGs"
+      ],
+      "acceptance_criteria": [
+        "Infinite horizontal scroll with seamless loop (no visible jump)",
+        "CSS-only animation (no JS animation loop)",
+        "Pause on hover/focus",
+        "prefers-reduced-motion: static horizontal row",
+        "Cert logos: optimized SVG, consistent sizing, proper alt text",
+        "Works on mobile with touch support"
+      ],
+      "estimated_complexity": "low",
+      "depends_on": [3, 5],
+      "status": "pending"
+    },
+    {
+      "id": 7,
+      "phase": "SECTIONS",
+      "title": "Products Section — Asymmetric Premium Grid",
+      "description": "Redesign products section with asymmetric card grid. Rich imagery, Onest font for product names, 1-2 line descriptions. Hover: scale(1.02) + shadow. 2 visual tiers (featured + standard). Mobile: horizontal scroll with snap. No glassmorphism. All images WebP <=100KB.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/products/",
+      "model_type": "code+vision",
+      "skills_used": ["style-transfer", "shadcn-premium-ui"],
+      "deliverables": [
+        "ProductsSection.tsx — asymmetric grid",
+        "ProductCard.tsx — redesigned with Onest font, hover interactions",
+        "ProductCard.module.css — scoped hover animations",
+        "public/images/products/ — all WebP, <=100KB each"
+      ],
+      "acceptance_criteria": [
+        "Asymmetric grid with varied card sizes (NOT identical)",
+        "Product names: Onest font (NOT Unbounded)",
+        "Hover: scale(1.02) + shadow-md to shadow-lg",
+        "No glassmorphism",
+        "All images: WebP, <=100KB, lazy loaded",
+        "Mobile: horizontal scroll with touch snap",
+        "8 products with 2 visual tiers",
+        "prefers-reduced-motion: no hover transforms"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [3, 5],
+      "status": "pending"
+    },
+    {
+      "id": 8,
+      "phase": "SECTIONS",
+      "title": "About Section — Editorial Layout with Timeline",
+      "description": "Redesign About with editorial, magazine-style layout. Alternating image/text blocks, company timeline with GSAP ScrollTrigger reveal, values as large icons + short text (1-2 lines max). NOT 2x2 grid.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/about/",
+      "model_type": "code+vision",
+      "skills_used": ["style-transfer", "motion-dev"],
+      "deliverables": [
+        "AboutSection.tsx — editorial alternating blocks",
+        "AboutTimeline.tsx — scroll-triggered timeline",
+        "public/images/about/ — optimized WebP images"
+      ],
+      "acceptance_criteria": [
+        "Alternating layout: image-text, text-image (NOT 2x2 grid)",
+        "Timeline: scroll-triggered reveal with GSAP",
+        "Text: max 1-2 lines per value/point",
+        "Images: WebP, proper aspect ratios",
+        "Each block has unique layout",
+        "Mobile: single column stacked",
+        "prefers-reduced-motion: timeline items visible immediately"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [1, 5],
+      "status": "pending"
+    },
+    {
+      "id": 9,
+      "phase": "SECTIONS",
+      "title": "Business Section — Trust-Focused Conversion Layout",
+      "description": "Redesign Business section for MLM partner conversion without cheap tropes. Asymmetric layout, 3-step process, social proof, benefit cards with varied sizes, single prominent CTA. NO aggressive 'financial freedom' language. Tone: professional, science-backed.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/business/",
+      "model_type": "code",
+      "skills_used": ["style-transfer", "shadcn-premium-ui"],
+      "deliverables": [
+        "BusinessSection.tsx — asymmetric conversion layout",
+        "BusinessStep.tsx — 3-step process component",
+        "BusinessCard.tsx — benefit card (Onest, varied sizes)"
+      ],
+      "acceptance_criteria": [
+        "Asymmetric layout (NOT centered, NOT identical cards)",
+        "Benefit cards: Onest font (NOT Unbounded)",
+        "Text: 1-2 lines per benefit",
+        "NO aggressive MLM language",
+        "Social proof: 10K+ partners, 50+ countries, 15 years",
+        "Single prominent CTA",
+        "Mobile: single column, touch-friendly CTAs >=44px"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [3, 5],
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "phase": "SECTIONS",
+      "title": "CTA Section — Asymmetric Conversion Block",
+      "description": "Final CTA: large Unbounded headline (1-2 lines), single sentence Onest subtext, two buttons (primary + outline), subtle dot pattern background. Scroll-triggered entrance. No floating particles or decorative orbs.",
+      "workspace": "/storage/repos/m-international-v2/src/components/sections/cta/",
+      "model_type": "code",
+      "skills_used": ["style-transfer", "popular-web-designs"],
+      "deliverables": [
+        "CTASection.tsx — clean asymmetric CTA block",
+        "globals.css — CTA entrance animation"
+      ],
+      "acceptance_criteria": [
+        "Asymmetric: text left, buttons right (desktop)",
+        "Headline: Unbounded, 1-2 lines max",
+        "Subtext: single sentence, Onest",
+        "Buttons: primary (filled) + secondary (outline)",
+        "Background: dot pattern only (no orbs/particles)",
+        "Scroll-triggered entrance: fade + translateY",
+        "Mobile: stacked, full-width buttons"
+      ],
+      "estimated_complexity": "low",
+      "depends_on": [3, 5],
+      "status": "pending"
+    },
+    {
+      "id": 11,
+      "phase": "NAVIGATION",
+      "title": "Navbar — Premium Navigation with Scroll Behavior",
+      "description": "Enhance Navbar: transparent→solid on scroll (0.3s), SVG logo, Onest font nav links, language switcher (RU/EN/KZ), animated mobile hamburger, CTA button in nav, active section indicator. No glassmorphism.",
+      "workspace": "/storage/repos/m-international-v2/src/components/layout/",
+      "model_type": "code",
+      "skills_used": ["popular-web-designs", "motion-dev"],
+      "deliverables": [
+        "Navbar.tsx — scroll behavior, mobile menu",
+        "MobileMenu.tsx — animated mobile nav",
+        "LanguageSwitcher.tsx — RU/EN/KZ"
+      ],
+      "acceptance_criteria": [
+        "Transparent on hero → solid on scroll (0.3s)",
+        "Logo: SVG, links to top",
+        "Desktop nav: Onest, >=44px touch targets",
+        "Language switcher: RU/EN/KZ, active state",
+        "Mobile: animated hamburger open/close",
+        "CTA button in nav (desktop + mobile)",
+        "Active section indicator via IntersectionObserver",
+        "No glassmorphism, solid bg when scrolled"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [3, 5],
+      "status": "pending"
+    },
+    {
+      "id": 12,
+      "phase": "I18N",
+      "title": "Content — Humanized RU/EN/KZ Translations",
+      "description": "Create and humanize all site copy in 3 languages. Focus on short text (1-3 lines per block), NO AI-isms. Use humanizer + humanizer-ru. Tone: premium, science-backed, professional.",
+      "workspace": "/storage/repos/m-international-v2/src/messages/",
+      "model_type": "text",
+      "skills_used": ["style-transfer"],
+      "deliverables": [
+        "src/messages/ru.json — complete Russian (humanized)",
+        "src/messages/en.json — complete English",
+        "src/messages/kk.json — complete Kazakh",
+        "docs/copy-review.md — per-section copy checklist"
+      ],
+      "acceptance_criteria": [
+        "All 3 languages: complete coverage (no missing keys)",
+        "Russian: humanized via humanizer-ru, NO AI-isms",
+        "English: humanized, natural tone",
+        "Kazakh: grammatically correct",
+        "All headlines: 1-2 lines max",
+        "All body: 1-3 lines per block",
+        "No em dashes, no 'leverage', no 'synergy', no 'paradigm shift'",
+        "next-intl useTranslations() used correctly"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [],
+      "status": "pending"
+    },
+    {
+      "id": 13,
+      "phase": "QUALITY",
+      "title": "Dead Code Removal + TypeScript Strict + Build 100/100",
+      "description": "Remove all dead/unused code. Ensure TypeScript strict mode passes with zero errors. Remove any 'any' types. Remove unused CSS classes. Ensure ESLint passes. Build must complete with zero errors and zero warnings.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "skills_used": ["nextjs16-best-practices", "shadcn-premium-ui"],
+      "deliverables": [
+        "Removed: dead components, unused imports, unused CSS, duplicate code",
+        "TypeScript: npx tsc --noEmit — zero errors",
+        "ESLint: npm run lint — zero errors",
+        "Build: npm run build — zero errors, zero warnings",
+        "Bundle: next/bundle-analyzer — verified <200KB initial JS"
+      ],
+      "acceptance_criteria": [
+        "npm run build — 0 errors, 0 warnings",
+        "npx tsc --noEmit — 0 type errors",
+        "npm run lint — 0 lint errors",
+        "No 'any' types remain",
+        "No unused imports (verified by ESLint)",
+        "No dead components (all imported somewhere)",
+        "Bundle < 200KB gzipped (initial load)",
+        "next.config.ts: optimizePackageImports configured"
+      ],
+      "estimated_complexity": "medium",
+      "depends_on": [4, 6, 7, 8, 9, 10, 11],
+      "status": "pending"
+    },
+    {
+      "id": 14,
+      "phase": "PERFORMANCE",
+      "title": "Core Web Vitals Optimization — LCP/INP/CLS/TBT",
+      "description": "Full performance optimization pass using performance-guardian skill. Target: LCP <2.5s, INP <200ms, CLS <0.1, TBT <200ms. Optimize all images, preload critical resources, implement streaming, code-split heavy libs, audit with Lighthouse.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "skills_used": ["performance-guardian", "nextjs16-best-practices"],
+      "deliverables": [
+        "next.config.ts — image optimization, preload headers, compression",
+        "public/images/ — all WebP, proper sizes, srcset",
+        "docs/performance-report.md — before/after Lighthouse scores",
+        "lighthouserc.json — CI configuration"
+      ],
+      "acceptance_criteria": [
+        "LCP < 2.5s on 4G",
+        "INP < 200ms (no long tasks >50ms)",
+        "CLS < 0.1 (no layout shifts)",
+        "TBT < 200ms",
+        "All images: WebP, srcset, lazy loaded (except hero LCP)",
+        "Fonts: preloaded, font-display: swap",
+        "JS bundle: < 200KB gzipped",
+        "Lighthouse Performance >= 90",
+        "Lighthouse Accessibility >= 95",
+        "Three.js: adaptive quality by device"
+      ],
+      "estimated_complexity": "high",
+      "depends_on": [13],
+      "status": "pending"
+    },
+    {
+      "id": 15,
+      "phase": "DEPLOY",
+      "title": "Vercel Deploy + Post-Launch Monitoring",
+      "description": "Deploy to Vercel. Configure custom domain, Vercel Analytics, preview deployments. Post-launch: monitor Core Web Vitals in real-time, verify i18n, test checkout/conversion flow.",
+      "workspace": "/storage/repos/m-international-v2/",
+      "model_type": "code",
+      "skills_used": ["performance-guardian"],
+      "deliverables": [
+        "Vercel project configured and deployed",
+        "Custom domain: m-international.kz",
+        "Vercel Analytics enabled",
+        "docs/deploy.md — deployment docs",
+        "docs/monitoring.md — monitoring setup"
+      ],
+      "acceptance_criteria": [
+        "Production site live at m-international.kz",
+        "All routes work: /ru, /en, /kk",
+        "i18n: language switcher changes URL and content",
+        "Vercel Analytics: real-time data visible",
+        "Preview deployments working",
+        "SSL: valid HTTPS",
+        "Production Lighthouse >= 85 Performance",
+        "Rollback documented and tested"
+      ],
+      "estimated_complexity": "low",
+      "depends_on": [14],
+      "status": "pending"
+    }
+  ],
+  "summary": {
+    "total_steps": 15,
+    "phases": {
+      "SKILLS": 1,
+      "FOUNDATION": 2,
+      "HERO": 1,
+      "ANIMATION": 1,
+      "SECTIONS": 5,
+      "NAVIGATION": 1,
+      "I18N": 1,
+      "QUALITY": 1,
+      "PERFORMANCE": 1,
+      "DEPLOY": 1
+    },
+    "parallelizable_groups": [
+      [2, 3, 12],
+      [6, 10, 11],
+      [7, 8, 9]
+    ],
+    "critical_path": [1, 2, 3, 4, 5, 7, 8, 13, 14, 15]
+  }
+}

@@ -77,8 +77,6 @@ function RewardCard({
       {/* Gradient border on hover */}
       <div className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]`} />
       <div className="relative h-full rounded-2xl bg-bg-elevated border border-border-subtle p-4 md:p-6 overflow-hidden">
-        {/* Inner glow */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
         <div className="relative z-10">
           <motion.div
             className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${iconBg} border flex items-center justify-center mb-3 md:mb-4 ${iconColor}`}

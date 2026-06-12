@@ -25,6 +25,7 @@ function getLocalizedHref(href: string, locale: string): string {
 export default function Navbar({ locale: propLocale }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const currentLocale = useLocale() || propLocale || "ru";
   const t = useTranslations("nav");
@@ -36,46 +37,14 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     { href: "/contacts", label: t("contacts") },
   ];
 
-  // Smart scroll: hide on scroll down, show on scroll up
+  // Solid on scroll — transparent on hero
   useEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
-
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
     const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        const scrollDelta = currentScrollY - lastScrollY;
-
-        // Always show when near top
-        if (currentScrollY < 80) {
-          nav.style.transform = "translateY(0)";
-          nav.style.opacity = "1";
-        } else if (scrollDelta > 2) {
-          // Scrolling down — hide
-          nav.style.transform = "translateY(-100%)";
-          nav.style.opacity = "0";
-        } else if (scrollDelta < -2) {
-          // Scrolling up — show
-          nav.style.transform = "translateY(0)";
-          nav.style.opacity = "1";
-        }
-
-        lastScrollY = currentScrollY;
-        ticking = false;
-      });
+      setIsScrolled(window.scrollY > 60);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -85,14 +54,11 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
     } else {
       document.body.style.overflow = "";
-      document.body.style.touchAction = "";
     }
     return () => {
       document.body.style.overflow = "";
-      document.body.style.touchAction = "";
     };
   }, [isMobileOpen]);
 
@@ -117,7 +83,11 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-out bg-surface-base/90 backdrop-blur-md border-b border-border-subtle/50"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+          isScrolled
+            ? "bg-surface-base border-b border-border-subtle/50 shadow-sm"
+            : "bg-transparent border-b border-transparent"
+        }`}
         role="navigation"
         aria-label="Основная навигация"
       >
@@ -161,7 +131,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                   <Link
                     key={loc}
                     href={getLocaleHref(loc)}
-                    className={`px-2 py-1 text-xs font-onest font-medium rounded-xl transition-colors duration-200 ${
+                    className={`px-2 py-1 text-xs font-onest font-medium rounded-lg transition-colors duration-200 ${
                       loc === currentLocale
                         ? "text-text-primary bg-surface-sunken"
                         : "text-text-tertiary hover:text-text-secondary"
@@ -176,7 +146,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
               <Link
                 href={`/${currentLocale}/contacts`}
-                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-medium bg-[oklch(18%_0.01_160)] text-white hover:bg-[oklch(25%_0.01_160)] border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_2px_8px_oklch(55%_0.18_160_/_0.1),0_1px_2px_rgba(0,0,0,0.15)]"
+                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-onest font-semibold bg-[oklch(18%_0.01_160)] text-white hover:bg-[oklch(25%_0.01_160)] border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_2px_8px_oklch(55%_0.18_160_/_0.1),0_1px_2px_rgba(0,0,0,0.15)] min-h-[44px]"
               >
                 {t("contacts")}
               </Link>
@@ -184,23 +154,23 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
               {/* Mobile hamburger */}
               <button
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 z-50"
+                className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 z-50 p-1"
                 aria-label={isMobileOpen ? "Закрыть меню" : "Открыть меню"}
                 aria-expanded={isMobileOpen}
                 aria-controls="mobile-menu"
               >
-                <span className={`block w-5 h-px bg-text-primary transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
-                <span className={`block w-5 h-px bg-text-primary transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""}`} />
+                <span className={`block w-5 h-px transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-[3.5px] bg-text-primary" : "bg-text-primary"}`} />
+                <span className={`block w-5 h-px transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-[3.5px] bg-text-primary" : "bg-text-primary"}`} />
               </button>
             </div>
           </div>
         </Container>
       </nav>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile menu */}
       <div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 bg-surface-base/95 backdrop-blur-xl transition-all duration-500 md:hidden mobile-no-backdrop ${
+        className={`fixed inset-0 z-40 bg-surface-base transition-all duration-500 md:hidden ${
           isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         role="dialog"
@@ -214,7 +184,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
               <li key={link.href}>
                 <Link
                   href={getLocalizedHref(link.href, currentLocale)}
-                  className={`font-unbounded text-xl font-bold transition-all duration-500 py-2 ${
+                  className={`font-onest text-lg font-semibold transition-all duration-500 py-2 min-h-[44px] inline-flex items-center ${
                     isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
                   style={{ transitionDelay: isMobileOpen ? `${i * 80}ms` : "0ms" }}
@@ -225,13 +195,13 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
             ))}
           </ul>
 
-          {/* Language switcher in mobile menu */}
+          {/* Language switcher */}
           <div className="flex items-center gap-2 mt-2" role="group" aria-label="Выбор языка">
             {LOCALES.map((loc) => (
               <Link
                 key={loc}
                 href={getLocaleHref(loc)}
-                className={`px-4 py-2 text-sm font-onest font-medium rounded-xl transition-colors duration-200 ${
+                className={`px-4 py-2 text-sm font-onest font-medium rounded-xl transition-colors duration-200 min-h-[44px] inline-flex items-center ${
                   loc === currentLocale
                     ? "text-text-primary bg-surface-sunken"
                     : "text-text-tertiary hover:text-text-secondary"
@@ -246,7 +216,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
           <Link
             href={`/${currentLocale}/contacts`}
-            className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-medium bg-[oklch(18%_0.01_160)] text-white border border-white/[0.08] transition-all duration-500 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] ${
+            className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[oklch(18%_0.01_160)] text-white border border-white/[0.08] transition-all duration-500 min-h-[44px] ${
               isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms" }}
