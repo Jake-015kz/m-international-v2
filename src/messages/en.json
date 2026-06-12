@@ -27,7 +27,7 @@
     "contacts": "Contacts"
   },
   "hero": {
-    "label": "International company",
+    "label": "Natural supplements · 50+ countries",
     "title": "Nature's Intelligence. Your Longevity.",
     "lead": "Health biotech in 50+ countries.",
     "subtitle": "Immunity. Detox. Longevity. 50+ countries.",
@@ -37,6 +37,12 @@
       "customers": "Customers",
       "countries": "Countries",
       "years": "Years"
+    },
+    "trust": {
+      "gmp": "GMP",
+      "iso": "ISO 9001",
+      "halal": "Halal",
+      "countries": "50+ countries"
     },
     "cisLabel": "CIS Presence",
     "stats": {
