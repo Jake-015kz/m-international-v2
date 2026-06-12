@@ -93,12 +93,15 @@
       "id": 8,
       "title": "Performance optimization — lazy load, code split, 60fps guard",
       "action": "code",
-      "status": "pending",
+      "status": "completed",
       "files": [
         "src/components/sections/hero/Hero.tsx",
-        "src/components/sections/hero/ThreeBackground.tsx"
+        "src/components/sections/hero/ThreeBackground.tsx",
+        "src/components/effects/ParticlesCanvas.tsx",
+        "src/components/effects/ParticlesField.tsx",
+        "src/components/sections/hero/ParallaxOrbs.tsx"
       ],
-      "acceptance": "Dynamic import with ssr:false. Adaptive particle count. will-change:transform. LCP < 2.5s."
+      "acceptance": "Dynamic import with ssr:false. Adaptive particle count. will-change:transform. IntersectionObserver lazy load. frameloop=demand. LCP < 2.5s."
     },
     {
       "id": 9,
