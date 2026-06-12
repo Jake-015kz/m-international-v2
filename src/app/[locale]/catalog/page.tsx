@@ -9,7 +9,9 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Sparkles, Shield, Leaf, Award, Eye } from "lucide-react";
 import ProductModal from "@/components/sections/products/ProductModal";
 import FilterBar from "@/components/sections/products/FilterBar";
-import GlassCard from "@/components/ui/GlassCard";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 
 type Product = {
   name: string;
@@ -165,10 +167,11 @@ function HeroBanner({ title, description, t }: { title: string; description: str
   );
 }
 
-/* ── Enhanced product card with 3D tilt ── */
+/* ── Product card using shadcn components ── */
 function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: string) => string }) {
   return (
-    <GlassCard tilt variant="default" className="group flex flex-col h-full cursor-pointer overflow-hidden card-premium-v2" style={{ "--card-glow-color": `${product.color}18` } as React.CSSProperties}>
+    <Card className="group flex flex-col h-full cursor-pointer overflow-hidden border-border-subtle/60 bg-bg-elevated/80 backdrop-blur-xl hover:shadow-lg transition-shadow duration-300">
+      {/* Image area */}
       <div
         className="relative h-44 sm:h-56 overflow-hidden"
         style={{ background: `linear-gradient(135deg, ${product.color}12 0%, ${product.color}20 100%)` }}
@@ -180,59 +183,61 @@ function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: 
           loading="lazy"
         />
         {product.badge && (
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm shadow-sm z-10">
-            <Sparkles className="w-3 h-3" style={{ color: product.color }} />
-            <span className="text-[10px] font-unbounded font-bold" style={{ color: product.color }}>
-              {product.badge}
-            </span>
-          </div>
+          <Badge
+            variant="secondary"
+            className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm shadow-sm text-[10px] font-unbounded font-bold border-0"
+            style={{ color: product.color }}
+          >
+            <Sparkles className="w-3 h-3 mr-1" />
+            {product.badge}
+          </Badge>
         )}
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-bg-elevated to-transparent" />
       </div>
 
-      <div className="flex flex-col flex-1 p-4 md:p-5">
-        <span className="text-[10px] font-medium font-onest uppercase tracking-wider mb-1" style={{ color: product.color }}>
+      <CardHeader className="pb-1 pt-4 px-4 md:px-5">
+        <CardDescription
+          className="text-[10px] font-onest uppercase tracking-wider mb-0.5"
+          style={{ color: product.color }}
+        >
           {product.subtitle}
-        </span>
-        <h3 className="font-onest font-bold text-sm md:text-base text-fg-primary mb-1.5">{product.name}</h3>
-        <p className="text-[11px] md:text-xs text-fg-secondary font-onest font-light leading-relaxed mb-2 line-clamp-2 flex-1">
+        </CardDescription>
+        <CardTitle className="font-onest font-bold text-sm md:text-base text-fg-primary leading-[1.2]">
+          {product.name}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className="px-4 md:px-5 pt-0 pb-2 flex-1">
+        <p className="text-[11px] md:text-xs text-fg-secondary font-onest font-light leading-relaxed line-clamp-2">
           {product.description}
         </p>
+        {product.benefits && product.benefits.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-2">
+            {product.benefits.slice(0, 3).map((b) => (
+              <Badge
+                key={b}
+                variant="outline"
+                className="text-[10px] font-onest px-2 py-0.5"
+                style={{ borderColor: `${product.color}30`, color: product.color }}
+              >
+                {b}
+              </Badge>
+            ))}
+          </div>
+        )}
+      </CardContent>
 
-        <div className="flex flex-wrap gap-1 mb-3">
-          {product.benefits?.slice(0, 3).map((b) => (
-            <span key={b} className="pill-premium" style={{ "--pill-bg": `${product.color}10`, "--pill-fg": product.color, "--pill-border": `${product.color}20` } as React.CSSProperties}>
-              {b}
-            </span>
-          ))}
-        </div>
-
-        {/* Premium CTA button */}
-        <button
-          type="button"
-          className="btn-premium-glow w-full mt-auto"
-          style={
-            {
-              "--btn-glow-color": `${product.color}40`,
-              background: product.color,
-              color: "#fff",
-            } as React.CSSProperties
-          }
+      <CardFooter className="px-4 md:px-5 pb-4 pt-0">
+        <Button
+          size="sm"
+          className="w-full"
+          style={{ background: product.color, color: "#fff" }}
         >
           <Eye className="w-3.5 h-3.5" />
           {tCatalog("details")}
-        </button>
-
-        {/* Bottom accent line */}
-        <div
-          className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700 ease-out z-20 opacity-80"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${product.color}60, ${product.color}, ${product.color}60, transparent)`,
-          }}
-          aria-hidden="true"
-        />
-      </div>
-    </GlassCard>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
 
