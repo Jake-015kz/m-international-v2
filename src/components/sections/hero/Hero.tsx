@@ -84,6 +84,7 @@ const Hero = memo(function Hero() {
       ref={sectionRef}
       className="relative overflow-hidden min-h-[100dvh] flex items-center"
       aria-label="Главная секция"
+      style={{ contain: "layout style paint" }}
     >
       {/* ── Three.js Particle Background (desktop) ── */}
       {!reducedMotion && (
@@ -92,6 +93,7 @@ const Hero = memo(function Hero() {
           style={{
             y: bgY,
             scale: bgScale,
+            willChange: "transform",
           }}
         >
           <ThreeBackground
@@ -148,6 +150,7 @@ const Hero = memo(function Hero() {
         style={{
           opacity: reducedMotion ? 1 : contentOpacity,
           y: reducedMotion ? 0 : contentY,
+          willChange: "transform, opacity",
         }}
       >
         <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">

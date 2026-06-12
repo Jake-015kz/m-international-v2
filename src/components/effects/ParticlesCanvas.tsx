@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState, useMemo } from "react";
+import { Suspense, useEffect, useRef, useState, useMemo } from "react";
 import ParticlesField from "./ParticlesField";
 
 interface ParticlesCanvasProps {
@@ -49,10 +49,28 @@ export default function ParticlesCanvas({
   cameraZ = 60,
 }: ParticlesCanvasProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const lowEnd = useMemo(() => isLowEndDevice(), []);
 
   // Adaptive DPR: cap at 1.5 on low-end, 2 on high-end
   const adaptiveDpr: [number, number] = dpr ?? (lowEnd ? [1, 1.5] : [1, 2]);
+
+  // Intersection Observer — only render when in viewport
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInViewport(entry.isIntersecting);
+      },
+      { rootMargin: "100px" } // start loading 100px before visible
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Fade-in after mount to avoid flash
   useEffect(() => {
@@ -65,48 +83,56 @@ export default function ParticlesCanvas({
 
   return (
     <div
+      ref={containerRef}
       className="absolute inset-0 z-0 transition-opacity duration-1000"
-      style={{ opacity: isVisible ? 1 : 0 }}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        willChange: "transform",
+        contain: "layout style paint",
+      }}
       aria-hidden="true"
     >
-      <Canvas
-        dpr={adaptiveDpr}
-        camera={{
-          position: [0, 0, cameraZ],
-          fov: cameraFov,
-          near: 0.1,
-          far: 500,
-        }}
-        gl={{
-          antialias: !lowEnd,
-          alpha: true,
-          powerPreference: "high-performance",
-          stencil: false,
-          depth: true,
-        }}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        }}
-        performance={{ min: 0.5 }}
-        frameloop="always"
-      >
-        <Suspense fallback={<LoadingFallback />}>
-          <ParticlesField
-            count={effectiveCount}
-            spread={spread}
-            color={color}
-            color2={color2}
-            size={size}
-            mouseInfluence={mouseInfluence}
-            connectionDistance={connectionDistance}
-            showConnections={showConnections && !lowEnd}
-          />
-        </Suspense>
-      </Canvas>
+      {isInViewport && (
+        <Canvas
+          dpr={adaptiveDpr}
+          camera={{
+            position: [0, 0, cameraZ],
+            fov: cameraFov,
+            near: 0.1,
+            far: 500,
+          }}
+          gl={{
+            antialias: !lowEnd,
+            alpha: true,
+            powerPreference: "high-performance",
+            stencil: false,
+            depth: true,
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          performance={{ min: 0.5 }}
+          frameloop="demand"
+          flat
+        >
+          <Suspense fallback={<LoadingFallback />}>
+            <ParticlesField
+              count={effectiveCount}
+              spread={spread}
+              color={color}
+              color2={color2}
+              size={size}
+              mouseInfluence={mouseInfluence}
+              connectionDistance={connectionDistance}
+              showConnections={showConnections && !lowEnd}
+            />
+          </Suspense>
+        </Canvas>
+      )}
     </div>
   );
 }

@@ -22,7 +22,7 @@ const ParallaxOrbs = memo(function ParallaxOrbs() {
     <>
       <motion.div
         className="absolute z-[1] pointer-events-none"
-        style={{ y: orb1Y, x: orb1X }}
+        style={{ y: orb1Y, x: orb1X, willChange: "transform" }}
       >
         <div
           className="w-[400px] h-[400px] rounded-full opacity-[0.05]"
@@ -37,7 +37,7 @@ const ParallaxOrbs = memo(function ParallaxOrbs() {
       </motion.div>
       <motion.div
         className="absolute z-[1] pointer-events-none"
-        style={{ y: orb2Y }}
+        style={{ y: orb2Y, willChange: "transform" }}
       >
         <div
           className="w-[300px] h-[300px] rounded-full opacity-[0.03]"

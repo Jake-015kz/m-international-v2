@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useMemo, useEffect } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 interface ParticlesFieldProps {
@@ -169,10 +169,14 @@ export default function ParticlesField({
 
   // ── Animation loop ──
   const clock = useMemo(() => new THREE.Clock(), []);
+  const { invalidate } = useThree();
 
   useFrame(() => {
     const elapsed = clock.getElapsedTime();
     frameCount.current++;
+
+    // Force re-render in demand mode
+    invalidate();
 
     // Smooth mouse activation
     smoothMouseActive.current +=
