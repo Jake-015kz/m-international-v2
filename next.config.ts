@@ -36,10 +36,7 @@ const nextConfig: NextConfig = {
   },
 
   // ── Build config ──
-  // Skip ESLint during production builds (lint in CI separately)
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // ESLint runs in CI via GitHub Actions before deploy
 
   // ── Headers for caching + security ──
   async headers() {
