@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import { memo, useRef } from "react";
@@ -8,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { MagneticButton } from "@/components/ui";
 import { TextRevealWords } from "@/components/ui/TextReveal";
 import { usePrefersReducedMotion } from "@/lib/motion";
+import ParallaxOrbs from "./ParallaxOrbs";
 
 /* ── Three.js Background — dynamic import, ssr:false ── */
 const ThreeBackground = dynamic(
@@ -135,6 +135,9 @@ const Hero = memo(function Hero() {
         }}
       />
 
+      {/* ── Decorative floating orbs with parallax ── */}
+      {!reducedMotion && <ParallaxOrbs />}
+
       {/* ── Bottom gradient bleed ── */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent z-[2]" />
 
@@ -150,42 +153,54 @@ const Hero = memo(function Hero() {
 
           {/* ── Badge ── */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6, ease: EASE }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.06] backdrop-blur-sm mb-6 sm:mb-8 mobile-no-backdrop"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.06] backdrop-blur-sm mb-6 sm:mb-8"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+            <motion.span
+              className="w-1.5 h-1.5 rounded-full bg-emerald-400"
+              animate={reducedMotion ? {} : { opacity: [0.5, 1, 0.5], scale: [1, 1.3, 1] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden="true"
+            />
             <span className="text-[11px] sm:text-xs font-onest font-medium text-white/70 tracking-wide">
               {t("label")}
             </span>
           </motion.div>
 
-          {/* ── Headline — TextRevealWords, NO gradient-text ── */}
+          {/* ── Headline — two-line split with word reveal ── */}
           <h1 className="font-unbounded font-bold text-[clamp(2rem,5vw,3.5rem)] leading-[1.1] tracking-normal mb-4 sm:mb-5">
             <TextRevealWords
               text={t("title")}
               className="text-white"
-              stagger={0.06}
+              stagger={0.08}
               initialDelay={0.2}
             />
           </h1>
 
-          {/* ── Subtitle — compact 1-2 lines ── */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.7, ease: EASE }}
-            className="text-sm sm:text-base lg:text-lg text-white/50 font-onest font-light leading-relaxed mb-8 sm:mb-10 max-w-xl mx-auto lg:mx-0"
+          {/* ── Subtitle — line-reveal with clip-path ── */}
+          <motion.div
+            className="overflow-hidden mb-8 sm:mb-10"
+            initial={reducedMotion ? {} : { opacity: 0 }}
+            animate={reducedMotion ? {} : { opacity: 1 }}
+            transition={{ delay: 0.55, duration: 0.5 }}
           >
-            {t("lead")}
-          </motion.p>
+            <motion.p
+              initial={reducedMotion ? {} : { y: 24, opacity: 0 }}
+              animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
+              className="text-sm sm:text-base lg:text-lg text-white/50 font-onest font-light leading-relaxed max-w-xl mx-auto lg:mx-0"
+            >
+              {t("lead")}
+            </motion.p>
+          </motion.div>
 
           {/* ── CTA Buttons ── */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.7, ease: EASE }}
+            initial={reducedMotion ? {} : { opacity: 0, y: 24, scale: 0.96 }}
+            animate={reducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.75, duration: 0.8, ease: EASE }}
             className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-10 sm:mb-14"
           >
             <MagneticButton
@@ -194,9 +209,30 @@ const Hero = memo(function Hero() {
               onClick={() => {
                 document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full sm:w-auto cta-primary cta-shine font-onest font-semibold text-sm sm:text-base"
+              className="w-full sm:w-auto cta-primary cta-shine font-onest font-semibold text-sm sm:text-base group"
             >
-              {t("cta")}
+              <motion.span
+                className="inline-block"
+                whileHover={reducedMotion ? {} : { x: 2 }}
+                transition={{ duration: 0.2 }}
+              >
+                {t("cta")}
+              </motion.span>
+              <motion.svg
+                className="w-4 h-4 ml-2 opacity-50 group-hover:opacity-100 transition-opacity"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={reducedMotion ? {} : { x: 0 }}
+                whileHover={reducedMotion ? {} : { x: 3 }}
+                transition={{ duration: 0.2 }}
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </motion.svg>
             </MagneticButton>
             <MagneticButton
               variant="secondary"
@@ -204,7 +240,7 @@ const Hero = memo(function Hero() {
               onClick={() => {
                 document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full sm:w-auto cta-secondary font-onest font-medium text-sm sm:text-base mobile-no-backdrop"
+              className="w-full sm:w-auto cta-secondary font-onest font-medium text-sm sm:text-base"
             >
               {t("aboutLink")}
             </MagneticButton>
@@ -212,16 +248,22 @@ const Hero = memo(function Hero() {
 
           {/* ── Trust bar ── */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={reducedMotion ? {} : { opacity: 0 }}
+            animate={reducedMotion ? {} : { opacity: 1 }}
             transition={{ delay: 0.9, duration: 0.8 }}
             className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap"
           >
             {TRUST_ITEMS.map((item, i) => (
-              <div
+              <motion.div
                 key={item.key}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] mobile-no-backdrop"
-                style={{ animationDelay: `${1.0 + i * 0.08}s` }}
+                initial={reducedMotion ? {} : { opacity: 0, scale: 0.8 }}
+                animate={reducedMotion ? {} : { opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 1.0 + i * 0.1,
+                  duration: 0.5,
+                  ease: [0.34, 1.56, 0.64, 1],
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06]"
               >
                 <span className="text-emerald-400/70" aria-hidden="true">
                   <TrustIcon icon={item.icon} />
@@ -229,19 +271,30 @@ const Hero = memo(function Hero() {
                 <span className="text-[10px] sm:text-[11px] text-white/40 font-onest font-medium whitespace-nowrap">
                   {t(`trust.${item.key}`)}
                 </span>
-              </div>
+              </motion.div>
             ))}
 
-            <div className="w-px h-5 bg-white/10 hidden sm:block" aria-hidden="true" />
+            <motion.div
+              className="w-px h-5 bg-white/10 hidden sm:block"
+              aria-hidden="true"
+              initial={reducedMotion ? {} : { scaleY: 0 }}
+              animate={reducedMotion ? {} : { scaleY: 1 }}
+              transition={{ delay: 1.4, duration: 0.4 }}
+            />
 
-            <div className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs text-white/40 font-onest">
+            <motion.div
+              className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs text-white/40 font-onest"
+              initial={reducedMotion ? {} : { opacity: 0, y: 8 }}
+              animate={reducedMotion ? {} : { opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.5, ease: EASE }}
+            >
               <span>
                 <strong className="text-white/70 font-semibold">50+</strong> {t("stat.countries")}
               </span>
               <span className="hidden sm:inline">
                 <strong className="text-white/70 font-semibold">10K+</strong> {t("stat.customers")}
               </span>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>

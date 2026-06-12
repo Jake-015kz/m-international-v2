@@ -12,3 +12,4 @@ export { default as Divider } from "./Divider";
 export { default as Spinner } from "./Spinner";
 export { default as MagneticButton } from "./MagneticButton";
 export { default as AnimatedGrid } from "./AnimatedGrid";
+export { default as AnimatedBadge } from "./AnimatedBadge";

@@ -1,7 +1,11 @@
+"use client";
+
 import { memo } from "react";
+import { motion } from "framer-motion";
 import { Send, MapPin, Phone, Mail, Clock } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { useTranslations } from "next-intl";
+import { EASE_REVEAL, STAGGER_NORMAL } from "@/lib/motion";
 
 const Footer = memo(function Footer() {
   const t = useTranslations("footer");
@@ -31,9 +35,27 @@ const Footer = memo(function Footer() {
       <div className="h-px w-full bg-gradient-to-r from-transparent via-accent-500/30 to-transparent" />
 
       <Container className="relative z-10 py-8 md:py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: STAGGER_NORMAL },
+            },
+          }}
+        >
           {/* Brand + Contacts */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_REVEAL } },
+            }}
+            className="sm:col-span-2 lg:col-span-1"
+          >
             <h3 className="font-unbounded font-bold text-base md:text-xl text-white mb-2 md:mb-3">M-International</h3>
             <p className="text-[11px] md:text-sm text-white/40 font-onest font-light leading-relaxed mb-3 md:mb-4">
               {t("subscription.description")}
@@ -73,10 +95,15 @@ const Footer = memo(function Footer() {
                 </svg>
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Company links */}
-          <div>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_REVEAL } },
+            }}
+          >
             <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("company")}</h4>
             <ul className="space-y-1.5 md:space-y-2">
               {footerLinks.company.map((link) => (
@@ -85,10 +112,15 @@ const Footer = memo(function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Catalog links */}
-          <div>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_REVEAL } },
+            }}
+          >
             <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("catalog")}</h4>
             <ul className="space-y-1.5 md:space-y-2">
               {footerLinks.catalog.map((link) => (
@@ -97,10 +129,16 @@ const Footer = memo(function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Newsletter */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_REVEAL } },
+            }}
+            className="sm:col-span-2 lg:col-span-1"
+          >
             <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("subscription.title")}</h4>
             <p className="text-[11px] md:text-xs text-white/40 font-onest font-light mb-3">{t("subscription.description")}</p>
             <div className="flex flex-col sm:flex-row gap-2">
@@ -113,11 +151,17 @@ const Footer = memo(function Footer() {
                 OK
               </button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Bottom bar */}
-        <div className="mt-8 md:mt-14 pt-5 md:pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <motion.div
+          className="mt-8 md:mt-14 pt-5 md:pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           <p className="text-[10px] md:text-xs text-white/30 font-onest">
             {t("copyright").replace("{year}", String(new Date().getFullYear()))}
           </p>
@@ -126,7 +170,7 @@ const Footer = memo(function Footer() {
               <a key={link.label} href={link.href} className="text-[10px] md:text-xs text-white/30 hover:text-white/50 font-onest transition-colors duration-200">{link.label}</a>
             ))}
           </div>
-        </div>
+        </motion.div>
       </Container>
     </footer>
   );

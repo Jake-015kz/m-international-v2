@@ -21,7 +21,10 @@ function getAdaptiveCount(count?: number): number {
   const w = window.innerWidth;
   const dpr = window.devicePixelRatio || 1;
   const cores = navigator.hardwareConcurrency || 4;
-  if (cores <= 4 || w < 768 || dpr < 2) return 800;
+
+  // Mobile: aggressively reduce
+  if (w < 768) return 600;
+  if (cores <= 4 || dpr < 2) return 800;
   if (w < 1440) return 2000;
   return 3000;
 }
@@ -41,8 +44,10 @@ export default function ParticlesField({
   const mouseRef = useRef(new THREE.Vector3(0, 0, 0));
   const mouseActiveRef = useRef(0);
   const smoothMouseActive = useRef(0);
-  const { size: viewportSize, viewport } = useThree();
+  const frameCount = useRef(0);
+  const lastLineUpdate = useRef(0);
 
+  const { size: viewportSize, viewport } = useThree();
   const particleCount = getAdaptiveCount(count);
 
   // ── Generate particle data ──
@@ -55,7 +60,6 @@ export default function ParticlesField({
 
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
-        // Spherical-ish distribution for depth
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(2 * Math.random() - 1);
         const r = spread * (0.6 + 0.4 * Math.random());
@@ -72,8 +76,8 @@ export default function ParticlesField({
         baseSizes[i] = size * (0.5 + Math.random() * 1.0);
       }
 
-      // Connection lines buffer
-      const maxConnections = Math.floor(particleCount * 3);
+      // Connection lines buffer — cap total connections for perf
+      const maxConnections = Math.min(Math.floor(particleCount * 3), 6000);
       const connectionPositions = new Float32Array(maxConnections * 6);
 
       return {
@@ -122,7 +126,7 @@ export default function ParticlesField({
           pos.x += sin(orbitAngle) * 0.4;
           pos.y += cos(orbitAngle) * 0.3;
 
-          // Cursor repulsion — particles flee from mouse
+          // Cursor repulsion
           vec3 mouse3d = uMouse * 50.0;
           mouse3d.z = 0.0;
           vec3 diff = pos - mouse3d;
@@ -136,20 +140,14 @@ export default function ParticlesField({
 
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
 
-          // Depth-based size attenuation
           float depthFactor = 60.0 / -mvPosition.z;
           gl_PointSize = baseSize * uPixelRatio * depthFactor * 2.0;
           gl_PointSize = clamp(gl_PointSize, 0.5, 6.0);
 
           gl_Position = projectionMatrix * mvPosition;
 
-          // Alpha: depth falloff
           vAlpha = smoothstep(100.0, 8.0, -mvPosition.z) * 0.85;
-
-          // Glow intensity near mouse
           vGlow = smoothstep(20.0, 2.0, dist) * uMouseActive;
-
-          // Distance from center for vignette
           vDistFromCenter = length(pos.xy) / 60.0;
         }
       `,
@@ -165,14 +163,10 @@ export default function ParticlesField({
           float dist = length(gl_PointCoord - vec2(0.5));
           if (dist > 0.5) discard;
 
-          // Soft circle with bright core
           float core = smoothstep(0.45, 0.08, dist);
           float glow = smoothstep(0.5, 0.0, dist) * 0.35;
 
-          // Color blend: base emerald -> violet near mouse
           vec3 col = mix(uColor, uColor2, vGlow * 0.7);
-
-          // Vignette — fade edges
           float vignette = 1.0 - smoothstep(0.5, 1.2, vDistFromCenter);
 
           float alpha = (core + glow) * vAlpha * vignette;
@@ -217,7 +211,7 @@ export default function ParticlesField({
     return geo;
   }, [connectionPositions]);
 
-  // ── Mouse tracking via global window listener ──
+  // ── Mouse tracking ──
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
       mouseRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -258,12 +252,13 @@ export default function ParticlesField({
 
   useFrame(() => {
     const elapsed = clock.getElapsedTime();
+    frameCount.current++;
 
     // Smooth mouse activation blend
     smoothMouseActive.current +=
       (mouseActiveRef.current - smoothMouseActive.current) * 0.06;
 
-    // Update shader uniforms
+    // Update shader uniforms every frame (cheap)
     particleMaterial.uniforms.uTime.value = elapsed;
     particleMaterial.uniforms.uPixelRatio.value = Math.min(
       window.devicePixelRatio || 1,
@@ -287,8 +282,8 @@ export default function ParticlesField({
       linesRef.current.rotation.x = Math.sin(elapsed * 0.006) * 0.025;
     }
 
-    // ── Draw connection lines between nearby particles ──
-    if (showConnections && linesRef.current) {
+    // ── OPTIMIZED: Update connection lines only every 3 frames (~20fps) ──
+    if (showConnections && linesRef.current && frameCount.current % 3 === 0) {
       const posAttr = pointsGeometry.getAttribute(
         "position"
       ) as THREE.BufferAttribute;
@@ -300,9 +295,12 @@ export default function ParticlesField({
       const lineArray = linePosAttr.array as Float32Array;
 
       let lineIdx = 0;
-      const maxLines = Math.floor(lineArray.length / 6);
+      const maxLines = Math.min(Math.floor(lineArray.length / 6), 2000);
       const connDist2 = connectionDistance * connectionDistance;
-      const step = Math.max(1, Math.floor(particleCount / 200)); // Sample for perf
+
+      // Adaptive sampling: fewer checks on weaker devices
+      const sampleBase = particleCount > 2000 ? 4 : particleCount > 1000 ? 3 : 2;
+      const step = Math.max(1, Math.floor(particleCount / (200 * sampleBase)));
 
       outer: for (let i = 0; i < particleCount; i += step) {
         const ix = posArray[i * 3];
@@ -344,8 +342,7 @@ export default function ParticlesField({
 
       // Update line opacity based on mouse
       const mat = linesRef.current.material as THREE.LineBasicMaterial;
-      mat.opacity =
-        0.04 + smoothMouseActive.current * 0.06;
+      mat.opacity = 0.04 + smoothMouseActive.current * 0.06;
     }
   });
 

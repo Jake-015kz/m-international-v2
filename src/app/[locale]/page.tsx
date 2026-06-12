@@ -55,11 +55,11 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <CertificatesSection />
-      <ProductsSection />
-      <AboutSection />
-      <BusinessSection />
-      <CTASection />
+      <div className="cv-auto"><CertificatesSection /></div>
+      <div className="cv-auto"><ProductsSection /></div>
+      <div className="cv-auto"><AboutSection /></div>
+      <div className="cv-auto"><BusinessSection /></div>
+      <div className="cv-auto"><CTASection /></div>
       <Footer />
     </main>
   );

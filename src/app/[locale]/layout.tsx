@@ -4,6 +4,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { onest, unbounded } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { MotionProvider } from "@/components/motion";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo/jsonld";
 import "./globals.css";
 import "./animations.css";
@@ -76,10 +77,12 @@ export default async function RootLayout({
           Перейти к содержимому
         </a>
         <NextIntlClientProvider messages={messages}>
-          <SmoothScrollProvider>
-            <Navbar locale={locale} />
-            <div id="main-content" className="flex-1">{children}</div>
-          </SmoothScrollProvider>
+          <MotionProvider>
+            <SmoothScrollProvider>
+              <Navbar locale={locale} />
+              <div id="main-content" className="flex-1">{children}</div>
+            </SmoothScrollProvider>
+          </MotionProvider>
         </NextIntlClientProvider>
       </body>
     </html>

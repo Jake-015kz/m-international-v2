@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useMemo } from "react";
 import ParticlesField from "./ParticlesField";
 
 interface ParticlesCanvasProps {
@@ -27,6 +27,14 @@ function LoadingFallback() {
   );
 }
 
+function isLowEndDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  const w = window.innerWidth;
+  const cores = navigator.hardwareConcurrency || 4;
+  const dpr = window.devicePixelRatio || 1;
+  return w < 768 || cores <= 4 || dpr < 2;
+}
+
 export default function ParticlesCanvas({
   count,
   spread = 60,
@@ -36,11 +44,15 @@ export default function ParticlesCanvas({
   mouseInfluence = 12,
   connectionDistance = 8,
   showConnections = true,
-  dpr = [1, 2],
+  dpr,
   cameraFov = 60,
   cameraZ = 60,
 }: ParticlesCanvasProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const lowEnd = useMemo(() => isLowEndDevice(), []);
+
+  // Adaptive DPR: cap at 1.5 on low-end, 2 on high-end
+  const adaptiveDpr: [number, number] = dpr ?? (lowEnd ? [1, 1.5] : [1, 2]);
 
   // Fade-in after mount to avoid flash
   useEffect(() => {
@@ -55,7 +67,7 @@ export default function ParticlesCanvas({
       aria-hidden="true"
     >
       <Canvas
-        dpr={dpr}
+        dpr={adaptiveDpr}
         camera={{
           position: [0, 0, cameraZ],
           fov: cameraFov,
@@ -63,7 +75,7 @@ export default function ParticlesCanvas({
           far: 500,
         }}
         gl={{
-          antialias: true,
+          antialias: !lowEnd,
           alpha: true,
           powerPreference: "high-performance",
           stencil: false,
@@ -77,17 +89,18 @@ export default function ParticlesCanvas({
           height: "100%",
         }}
         performance={{ min: 0.5 }}
+        frameloop="always"
       >
         <Suspense fallback={<LoadingFallback />}>
           <ParticlesField
-            count={count}
+            count={lowEnd ? Math.min(count ?? 800, 800) : count}
             spread={spread}
             color={color}
             color2={color2}
             size={size}
             mouseInfluence={mouseInfluence}
             connectionDistance={connectionDistance}
-            showConnections={showConnections}
+            showConnections={showConnections && !lowEnd}
           />
         </Suspense>
       </Canvas>

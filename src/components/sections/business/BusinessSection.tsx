@@ -1,53 +1,60 @@
 "use client";
 
-import { memo, useRef, useEffect, useState, useCallback } from "react";
+import { memo, useRef, useCallback } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { TrendingUp, Users, GraduationCap, Handshake, Star } from "lucide-react";
-import { motion, useInView, useMotionValue, useSpring, animate } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations, AnimatedGrid } from "@/components/ui";
 import GlassCard from "@/components/ui/GlassCard";
+import { StaggerContainer, CountUp } from "@/components/motion";
 
-/* ── Animated counter ── */
-function AnimatedCounter({ target, suffix = "", duration = 2 }: { target: number; suffix?: string; duration?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const motionVal = useMotionValue(0);
-  const springVal = useSpring(motionVal, { stiffness: 40, damping: 15 });
-  const [display, setDisplay] = useState("0");
+/* ── 3D Tilt Card ── */
+function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  useEffect(() => {
-    if (!isInView) return;
+  const rotateX = useTransform(y, [-100, 100], [8, -8]);
+  const rotateY = useTransform(x, [-100, 100], [-8, 8]);
+  const springRotateX = useSpring(rotateX, { stiffness: 200, damping: 20 });
+  const springRotateY = useSpring(rotateY, { stiffness: 200, damping: 20 });
 
-    const controls = animate(motionVal, target, {
-      duration,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => {
-        setDisplay(Math.round(v).toLocaleString("ru-RU"));
-      },
-    });
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set(e.clientX - centerX);
+    y.set(e.clientY - centerY);
+  }, [x, y]);
 
-    return () => controls.stop();
-  }, [isInView, target, duration, motionVal]);
-
-  useEffect(() => {
-    const unsub = springVal.on("change", (v) => {
-      setDisplay(Math.round(v).toLocaleString("ru-RU"));
-    });
-    return unsub;
-  }, [springVal]);
+  const handleMouseLeave = useCallback(() => {
+    x.set(0);
+    y.set(0);
+  }, [x, y]);
 
   return (
-    <span ref={ref}>
-      {display}
-      {suffix}
-    </span>
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{
+        rotateX: springRotateX,
+        rotateY: springRotateY,
+        transformPerspective: 800,
+        transformStyle: "preserve-3d",
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.div>
   );
 }
 
-/* ── Reward card with gradient border ── */
+/* ── Reward card with gradient border + 3D tilt ── */
 function RewardCard({
   icon,
   title,
@@ -71,24 +78,26 @@ function RewardCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -4, transition: { duration: 0.3 } }}
-      className="group relative"
     >
-      {/* Gradient border on hover */}
-      <div className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]`} />
-      <div className="relative h-full rounded-2xl bg-bg-elevated border border-border-subtle p-4 md:p-6 overflow-hidden">
-        <div className="relative z-10">
-          <motion.div
-            className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${iconBg} border flex items-center justify-center mb-3 md:mb-4 ${iconColor}`}
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ duration: 0.3 }}
-          >
-            {icon}
-          </motion.div>
-          <h3 className="font-onest font-bold text-sm md:text-base text-fg-primary mb-1.5">{title}</h3>
-          <p className="text-[11px] md:text-sm text-fg-secondary font-onest font-light leading-relaxed">{text}</p>
+      <TiltCard className="group relative h-full">
+        {/* Gradient border on hover */}
+        <motion.div
+          className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]`}
+        />
+        <div className="relative h-full rounded-2xl bg-bg-elevated border border-border-subtle p-4 md:p-6 overflow-hidden">
+          <div className="relative z-10">
+            <motion.div
+              className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${iconBg} border flex items-center justify-center mb-3 md:mb-4 ${iconColor}`}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+            >
+              {icon}
+            </motion.div>
+            <h3 className="font-onest font-bold text-sm md:text-base text-fg-primary mb-1.5">{title}</h3>
+            <p className="text-[11px] md:text-sm text-fg-secondary font-onest font-light leading-relaxed">{text}</p>
+          </div>
         </div>
-      </div>
+      </TiltCard>
     </motion.div>
   );
 }
@@ -126,7 +135,7 @@ const BusinessSection = memo(function BusinessSection() {
           />
         </ScrollReveal>
 
-        {/* Rewards grid — enhanced with hover-lift + gradient borders */}
+        {/* Rewards grid — enhanced with 3D tilt + hover-lift + gradient borders */}
         <div className="mt-6 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
           {rewards.map((r, i) => (
             <RewardCard key={r.title} {...r} index={i} />
@@ -136,28 +145,25 @@ const BusinessSection = memo(function BusinessSection() {
         {/* Animated stats row */}
         <div className="mt-10 md:mt-16">
           <ScrollReveal>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5" staggerDelay={0.1}>
               {[
                 { value: 50, suffix: "+", label: "Стран" },
                 { value: 10000, suffix: "+", label: "Партнёров" },
                 { value: 9, suffix: "", label: "Типов бонусов" },
                 { value: 5, suffix: "+", label: "Лет на рынке" },
-              ].map((stat, i) => (
+              ].map((stat) => (
                 <motion.div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  whileHover={{ y: -4, transition: { duration: 0.3 } }}
                   className="text-center p-4 md:p-6 rounded-2xl bg-bg-elevated border border-border-subtle"
                 >
                   <div className="font-unbounded font-bold text-xl md:text-3xl text-accent-500 mb-1">
-                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                    <CountUp to={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="text-[10px] md:text-xs text-fg-tertiary font-onest uppercase tracking-wider">{stat.label}</div>
                 </motion.div>
               ))}
-            </div>
+            </StaggerContainer>
           </ScrollReveal>
         </div>
       </Container>

@@ -1089,3 +1089,117 @@ video {
 .text-pretty {
   text-wrap: pretty;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO SECTION — TYPOGRAPHY & ENTRANCE ANIMATION UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Badge glow pulse ring ── */
+.hero-badge-glow {
+  position: relative;
+}
+
+.hero-badge-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(70% 0.15 160 / 0.15) 50%,
+    transparent 100%
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero-badge-glow:hover::before {
+  opacity: 1;
+}
+
+/* ── Trust badge hover ── */
+.hero-trust-badge {
+  transition: all var(--anim-normal) var(--ease-smooth);
+}
+
+.hero-trust-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ── Hero title gradient accent on hover (optional enhancement) ── */
+.hero-title-gradient {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    oklch(70% 0.15 160) 50%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Mobile: disable backdrop-blur for performance ── */
+@media (max-width: 639px) {
+  .mobile-no-backdrop,
+  .mobile-no-backdrop::before,
+  .mobile-no-backdrop::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .mobile-no-reduced-motion {
+    /* Re-enable slight blur on mobile for key elements */
+  }
+}
+
+/* ── Hero entrance scale keyframes ── */
+@keyframes hero-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-scale-in {
+  animation: hero-scale-in 0.8s var(--ease-spring) both;
+}
+
+/* ── Floating glow orbs (complement to Three.js) ── */
+@keyframes hero-orb-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  25%      { transform: translate3d(20px, -15px, 0) scale(1.05); }
+  50%      { transform: translate3d(-10px, 10px, 0) scale(0.95); }
+  75%      { transform: translate3d(5px, -8px, 0) scale(1.02); }
+}
+
+.hero-orb {
+  animation: hero-orb-drift 20s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+.hero-orb-delayed {
+  animation-delay: 5s;
+}
+
+.hero-orb-reverse {
+  animation-direction: reverse;
+  animation-delay: 8s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb,
+  .hero-orb-delayed,
+  .hero-orb-reverse {
+    animation: none !important;
+  }
+}

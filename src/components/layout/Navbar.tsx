@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Container from "@/components/ui/Container";
 import { LOCALES } from "@/lib/constants";
 
@@ -36,6 +37,11 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     { href: "/about", label: t("about") },
     { href: "/contacts", label: t("contacts") },
   ];
+
+  /* ── Framer Motion scroll-driven background opacity ── */
+  const { scrollY } = useScroll();
+  const rawBgOpacity = useTransform(scrollY, [0, 80], [0, 0.95]);
+  const bgOpacity = useSpring(rawBgOpacity, { stiffness: 100, damping: 20 });
 
   // Solid on scroll — transparent on hero
   useEffect(() => {
@@ -81,16 +87,30 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
   return (
     <>
-      <nav
+      <motion.nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
-          isScrolled
-            ? "bg-surface-base border-b border-border-subtle/50 shadow-sm"
-            : "bg-transparent border-b border-transparent"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ease-out"
+        style={{
+          backgroundColor: useTransform(
+            bgOpacity,
+            (v) => `rgba(10, 10, 10, ${v})`
+          ),
+          backdropFilter: useTransform(
+            bgOpacity,
+            (v) => v > 0.3 ? "blur(12px)" : "blur(0px)"
+          ),
+        }}
         role="navigation"
         aria-label="Основная навигация"
       >
+        {/* Border — fades in on scroll */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-px bg-white/[0.08]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isScrolled ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+
         <Container>
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
@@ -98,11 +118,18 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
               href={`/${currentLocale}`}
               className="flex items-center gap-2 font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50 group"
             >
-              <svg className="w-6 h-6 md:w-7 md:h-7 text-accent-600 group-hover:text-accent-500 transition-colors duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <motion.svg
+                className="w-6 h-6 md:w-7 md:h-7 text-accent-600 group-hover:text-accent-500 transition-colors duration-300"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              >
                 <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                 <path d="M10 22V10L16 16L22 10V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <circle cx="16" cy="16" r="3" fill="currentColor" opacity="0.15"/>
-              </svg>
+              </motion.svg>
               <span className="hidden sm:inline">M-International</span>
               <span className="sm:hidden">M-Int</span>
             </Link>
@@ -159,44 +186,68 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 aria-expanded={isMobileOpen}
                 aria-controls="mobile-menu"
               >
-                <span className={`block w-5 h-px transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-[3.5px] bg-text-primary" : "bg-text-primary"}`} />
-                <span className={`block w-5 h-px transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-[3.5px] bg-text-primary" : "bg-text-primary"}`} />
+                <motion.span
+                  className="block w-5 h-px bg-text-primary"
+                  animate={isMobileOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.span
+                  className="block w-5 h-px bg-text-primary"
+                  animate={isMobileOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
               </button>
             </div>
           </div>
         </Container>
-      </nav>
+      </motion.nav>
 
       {/* Mobile menu */}
-      <div
+      <motion.div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 bg-surface-base transition-all duration-500 md:hidden ${
-          isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className="fixed inset-0 z-40 bg-surface-base md:hidden"
         role="dialog"
         aria-modal="true"
         aria-hidden={!isMobileOpen}
         aria-label="Мобильное меню"
+        initial={false}
+        animate={isMobileOpen ? { opacity: 1, pointerEvents: "auto" as const } : { opacity: 0, pointerEvents: "none" as const }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="flex flex-col items-center justify-center h-full gap-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
           <ul className="flex flex-col items-center gap-6" role="list">
             {NAV_LINKS.map((link, i) => (
-              <li key={link.href}>
+              <motion.li
+                key={link.href}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isMobileOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{
+                  delay: isMobileOpen ? i * 0.08 : 0,
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              >
                 <Link
                   href={getLocalizedHref(link.href, currentLocale)}
-                  className={`font-onest text-lg font-semibold transition-all duration-500 py-2 min-h-[44px] inline-flex items-center ${
-                    isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  } ${isActive(link.href) ? "text-accent-600" : "text-text-primary"}`}
-                  style={{ transitionDelay: isMobileOpen ? `${i * 80}ms` : "0ms" }}
+                  className={`font-onest text-lg font-semibold py-2 min-h-[44px] inline-flex items-center ${
+                    isActive(link.href) ? "text-accent-600" : "text-text-primary"
+                  }`}
                 >
                   {link.label}
                 </Link>
-              </li>
+              </motion.li>
             ))}
           </ul>
 
           {/* Language switcher */}
-          <div className="flex items-center gap-2 mt-2" role="group" aria-label="Выбор языка">
+          <motion.div
+            className="flex items-center gap-2 mt-2"
+            role="group"
+            aria-label="Выбор языка"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isMobileOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: isMobileOpen ? NAV_LINKS.length * 0.08 : 0, duration: 0.4 }}
+          >
             {LOCALES.map((loc) => (
               <Link
                 key={loc}
@@ -212,19 +263,22 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 {LOCALE_LABELS[loc]}
               </Link>
             ))}
-          </div>
+          </motion.div>
 
-          <Link
-            href={`/${currentLocale}/contacts`}
-            className={`mt-2 inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[oklch(18%_0.01_160)] text-white border border-white/[0.08] transition-all duration-500 min-h-[44px] ${
-              isMobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-            style={{ transitionDelay: isMobileOpen ? `${NAV_LINKS.length * 80}ms` : "0ms" }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isMobileOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: isMobileOpen ? NAV_LINKS.length * 0.08 + 0.1 : 0, duration: 0.4 }}
           >
-            {t("contacts")}
-          </Link>
+            <Link
+              href={`/${currentLocale}/contacts`}
+              className="inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[oklch(18%_0.01_160)] text-white border border-white/[0.08] min-h-[44px]"
+            >
+              {t("contacts")}
+            </Link>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

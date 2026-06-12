@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Shield, BadgeCheck } from "lucide-react";
@@ -19,6 +20,8 @@ const CERTIFICATES = [
   { id: "halal-mm-bm-nm", name: "HALAL MM-BM-NM", description: "Сертификат Халал — MM-BM-NM 2026", image: "/images/certificates/certificate-halal-mm-bm-nm-2026.webp", color: "#2a7aaa" },
 ];
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 /* ── Marquee Row ── */
 function MarqueeRow({ items, direction = "left", duration = 35 }: { items: typeof CERTIFICATES; direction?: "left" | "right"; duration?: number }) {
   const doubled = [...items, ...items];
@@ -30,9 +33,15 @@ function MarqueeRow({ items, direction = "left", duration = 35 }: { items: typeo
         style={{ "--marquee-duration": `${duration}s` } as React.CSSProperties}
       >
         {doubled.map((cert, i) => (
-          <div
+          <motion.div
             key={`${cert.id}-${i}`}
             className="flex-shrink-0 flex items-center gap-1.5 sm:gap-2.5 md:gap-3 px-2.5 sm:px-4 md:px-5 py-1.5 sm:py-2.5 md:py-3 rounded-full border border-border-subtle bg-surface-elevated/60 backdrop-blur-sm transition-all duration-300 hover:border-border-default hover:shadow-sm group cursor-default"
+            whileHover={{
+              scale: 1.05,
+              borderColor: `${cert.color}40`,
+              boxShadow: `0 4px 20px ${cert.color}15`,
+            }}
+            transition={{ duration: 0.3, ease: EASE }}
           >
             <div className="relative w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8 flex-shrink-0">
               <Image
@@ -51,8 +60,13 @@ function MarqueeRow({ items, direction = "left", duration = 35 }: { items: typeo
                 {cert.description}
               </span>
             </div>
-            <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full flex-shrink-0 opacity-40 group-hover:opacity-100 transition-opacity duration-300" style={{ background: cert.color }} />
-          </div>
+            <motion.div
+              className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full flex-shrink-0 opacity-40"
+              style={{ background: cert.color }}
+              whileHover={{ opacity: 1, scale: 1.5 }}
+              transition={{ duration: 0.2 }}
+            />
+          </motion.div>
         ))}
       </div>
     </div>
@@ -88,16 +102,39 @@ const CertificatesSection = memo(function CertificatesSection() {
         </ScrollReveal>
 
         {/* Marquee rows with real certificate images */}
-        <div className="mt-6 md:mt-12 space-y-2 md:space-y-4 overflow-hidden" aria-hidden="true">
-          <MarqueeRow items={row1} direction="left" duration={35} />
+        <motion.div
+          className="mt-6 md:mt-12 space-y-2 md:space-y-4 overflow-hidden"
+          aria-hidden="true"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            <MarqueeRow items={row1} direction="left" duration={35} />
+          </motion.div>
           {row2.length > 0 && (
-            <MarqueeRow items={row2} direction="right" duration={40} />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+            >
+              <MarqueeRow items={row2} direction="right" duration={40} />
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {/* Bottom trust line */}
         <ScrollReveal delay={0.3}>
-          <div className="mt-6 md:mt-8 text-center">
+          <motion.div
+            className="mt-6 md:mt-8 text-center"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.5, ease: EASE }}
+          >
             <div className="inline-flex items-center gap-2 text-text-tertiary">
               <BadgeCheck className="w-3.5 h-3.5" aria-hidden="true" />
               <p className="text-[9px] md:text-[10px] uppercase tracking-wider font-onest">
@@ -105,7 +142,7 @@ const CertificatesSection = memo(function CertificatesSection() {
               </p>
               <BadgeCheck className="w-3.5 h-3.5" aria-hidden="true" />
             </div>
-          </div>
+          </motion.div>
         </ScrollReveal>
       </Container>
     </section>
