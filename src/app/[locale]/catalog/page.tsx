@@ -222,6 +222,15 @@ function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: 
           <Eye className="w-3.5 h-3.5" />
           {tCatalog("details")}
         </button>
+
+        {/* Bottom accent line */}
+        <div
+          className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700 ease-out z-20 opacity-80"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${product.color}60, ${product.color}, ${product.color}60, transparent)`,
+          }}
+          aria-hidden="true"
+        />
       </div>
     </GlassCard>
   );
