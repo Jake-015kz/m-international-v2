@@ -298,7 +298,7 @@ const AboutSection = memo(function AboutSection() {
   const t = useTranslations("about");
   const tNav = useTranslations("nav");
   return (
-    <section id="about" className="relative py-12 md:py-24 overflow-hidden bg-bg-alt" style={{ contentVisibility: "auto", containIntrinsicSize: "0 800px" }}>
+    <section id="about" className="relative py-12 md:py-24 overflow-hidden bg-bg-alt cv-auto">
       <BackgroundDecorations variant="section" />
 
       <Container className="relative z-10">

@@ -31,7 +31,7 @@ const Footer = memo(function Footer() {
   };
 
   return (
-    <footer id="contacts" className="relative bg-accent-900 text-text-inverse overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "0 500px" }}>
+    <footer id="contacts" className="relative bg-accent-900 text-text-inverse overflow-hidden cv-auto">
       <div className="h-px w-full bg-gradient-to-r from-transparent via-accent-500/30 to-transparent" />
 
       <Container className="relative z-10 py-8 md:py-14">

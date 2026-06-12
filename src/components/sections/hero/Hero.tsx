@@ -82,7 +82,7 @@ const Hero = memo(function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden min-h-[100dvh] flex items-center"
+      className="relative overflow-hidden min-h-[100dvh] flex items-center hero-safe-height"
       role="region"
       aria-labelledby="hero-heading"
       style={{ contain: "layout style paint" }}
