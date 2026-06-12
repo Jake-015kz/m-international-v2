@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { memo } from "react";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import type { ReactNode } from "react";
 
 interface CTAButtonProps {
@@ -13,6 +13,18 @@ interface CTAButtonProps {
   className?: string;
 }
 
+const variantMap = {
+  primary: "default",
+  secondary: "secondary",
+  ghost: "ghost",
+} as const;
+
+const sizeMap = {
+  sm: "sm",
+  md: "default",
+  lg: "lg",
+} as const;
+
 const CTAButton = memo(function CTAButton({ children, onClick, variant = "primary", size = "md", className }: CTAButtonProps) {
   return (
     <motion.div
@@ -21,7 +33,7 @@ const CTAButton = memo(function CTAButton({ children, onClick, variant = "primar
       transition={{ type: "spring", stiffness: 500, damping: 30, mass: 0.8 }}
       className={className}
     >
-      <Button onClick={onClick} variant={variant} size={size}>
+      <Button onClick={onClick} variant={variantMap[variant]} size={sizeMap[size]}>
         {children}
       </Button>
     </motion.div>
