@@ -1,402 +1,193 @@
 {
-  "common": {
-    "loading": "Loading...",
-    "error": "Error",
-    "retry": "Retry",
-    "close": "Close",
-    "open": "Open",
-    "menu": "Menu"
-  },
-  "errors": {
-    "title": "An error occurred",
-    "description": "Try refreshing the page",
-    "retry": "Try again"
-  },
-  "errorPage": {
-    "title": "Error",
-    "subtitle": "Something went wrong",
-    "description": "An error occurred while loading the page. Please try again.",
-    "retry": "Try again",
-    "home": "Go to homepage"
-  },
   "nav": {
     "home": "Home",
-    "catalog": "Products",
+    "catalog": "Catalog",
     "about": "About",
     "business": "Business",
     "contacts": "Contacts"
   },
   "hero": {
-    "label": "Natural supplements · 50+ countries",
-    "title": "Nature's Intelligence. Your Longevity.",
-    "lead": "Health biotech in 50+ countries.",
-    "subtitle": "Immunity. Detox. Longevity. 50+ countries.",
-    "cta": "View catalog",
-    "aboutLink": "About us",
+    "badge": "Premium Quality",
+    "title": "M-International",
+    "subtitle": "Natural supplements for health and longevity",
+    "description": "Certified products for immunity, detox and longevity. Available in 50+ countries worldwide.",
+    "ctaPrimary": "Product Catalog",
+    "ctaSecondary": "About Us",
     "stat": {
-      "customers": "Customers",
       "countries": "Countries",
+      "customers": "Partners",
+      "products": "Products",
       "years": "Years"
-    },
-    "trust": {
-      "gmp": "GMP",
-      "iso": "ISO 9001",
-      "halal": "Halal",
-      "countries": "50+ countries"
-    },
-    "cisLabel": "CIS Presence",
-    "stats": {
-      "revenue": {
-        "label": "Revenue / mo",
-        "change": "+35%",
-        "changePositive": true
-      },
-      "countries": {
-        "label": "Countries",
-        "change": "+8",
-        "changePositive": true
-      },
-      "customers": {
-        "label": "Partners",
-        "change": "+12%",
-        "changePositive": true
-      },
-      "growth": {
-        "label": "Growth / yr",
-        "change": "+7%",
-        "changePositive": true
-      },
-      "title": "Real-time Stats"
-    },
-    "certBadges": {
-      "gmpIsoHalal": "GMP · ISO · Halal",
-      "countries50": "50+ countries",
-      "clients10k": "10K+ customers"
-    },
-    "videoCard": "Natural formulas by M-International"
+    }
   },
   "certificates": {
-    "title": "International Certificates",
-    "description": "Products certified to GMP, ISO, Halal, FDA standards",
-    "certified": "CERTIFIED",
-    "gmp": "GMP — Good Manufacturing Practice",
-    "iso": "ISO 9001:2015",
-    "halal": "Halal Certificate",
-    "mesti": "Malaysian Quality Standard",
-    "fda": "FDA Approval",
-    "natural": "100% natural ingredients",
-    "eac": "Eurasian Conformity",
-    "vegan": "Vegan Certified"
+    "certified": "Certified",
+    "title": "Our Certificates",
+    "description": "M-International products are certified by international quality standards: HALAL, GMP, ISO, FDA."
   },
   "products": {
-    "title": "Nature's Intelligence for Your Health",
-    "description": "Immunity. Detox. Longevity. 50+ countries.",
+    "title": "Our Products",
+    "description": "Natural supplements for health, immunity and longevity. Every product undergoes strict quality control.",
+    "cta": "View full catalog",
+    "features": {
+      "natural": "100% natural",
+      "certified": "Certified",
+      "tested": "Clinically tested"
+    },
     "micrystal": {
       "name": "MiCrystal",
-      "subtitle": "Vision Care",
-      "description": "Cellular nutrition for eyes. Elderberry extract, lutein, astaxanthin. Relieves dryness and screen fatigue.",
-      "benefits": [
-        "Sharp vision",
-        "Dry eye protection",
-        "Reduces eye pressure"
-      ],
-      "short": "Natural supplements for eye health and vision clarity.",
-      "composition": "Elderberry, FloraGLO, lutein, astaxanthin."
+      "subtitle": "Vision support",
+      "description": "Comprehensive eye health support. Lutein, zeaxanthin and vitamins for visual acuity.",
+      "short": "Eye health and visual acuity",
+      "composition": "Lutein, zeaxanthin, blueberry extract, vitamins A, C, E, zinc",
+      "benefits": ["Vision support", "Oxidative stress protection", "Improved night vision"]
     },
     "greenmax": {
       "name": "GreenMAX",
-      "subtitle": "Detox & Cleansing",
-      "description": "3-in-1 formula: gut cleansing, microflora restoration, liver protection. Prebiotics, fiber, antioxidants.",
-      "benefits": [
-        "Cleanses the gut",
-        "Restores microflora",
-        "Protects liver"
-      ],
-      "short": "Healthy gut — strong immunity.",
-      "composition": "Burdock root, chlorophyll, milk thistle, probiotics."
+      "subtitle": "Detox & Cleanse",
+      "description": "Powerful plant-based complex for body detoxification and liver support.",
+      "short": "Deep body cleanse",
+      "composition": "Chlorella, spirulina, milk thistle, artocarpus",
+      "benefits": ["Detoxification", "Liver support", "Energy boost"]
     },
     "mimax": {
       "name": "MiMAX",
-      "subtitle": "Antioxidant",
-      "description": "Astaxanthin — antioxidant 6,000x stronger than vitamin C. Slows aging, strengthens heart and vessels.",
-      "benefits": [
-        "Antioxidant protection",
-        "Heart health",
-        "Skin rejuvenation"
-      ],
-      "short": "Powerful antioxidant for active longevity.",
-      "composition": "Astaxanthin, sea buckthorn, bilberry, pine extract."
+      "subtitle": "Energy & Endurance",
+      "description": "Natural energy booster for increased stamina and vitality.",
+      "short": "Energy and vitality",
+      "composition": "Ginseng extract, guarana, B-vitamins, coenzyme Q10",
+      "benefits": ["Energy", "Endurance", "Focus"]
     },
     "blumax": {
       "name": "BluMAX",
-      "subtitle": "Immunity & Brain",
-      "description": "Blue-green algae AFA with neuropeptides. 60+ minerals for immunity, memory and focus.",
-      "benefits": [
-        "Immunity boost",
-        "Better memory",
-        "Vascular cleansing"
-      ],
-      "short": "Immunity and brain support.",
-      "composition": "AFA algae, mushrooms, vitamin C."
+      "subtitle": "Immunity",
+      "description": "Enhanced formula for strengthening the immune system and infection protection.",
+      "short": "Powerful immunity",
+      "composition": "Echinacea, zinc, vitamin C, elderberry, propolis",
+      "benefits": ["Immune support", "Antioxidant protection", "Fast recovery"]
     },
     "nutrimax": {
       "name": "NutriMAX",
-      "subtitle": "Protein Shake",
-      "description": "Plant protein with spirulina and chlorella. Energy, recovery, weight management.",
-      "benefits": [
-        "Post-workout recovery",
-        "Weight management",
-        "Bone strength"
-      ],
-      "short": "Healthy meal replacement. Plant protein.",
-      "composition": "Soy protein, spirulina, chlorella, moringa."
+      "subtitle": "Nutrition",
+      "description": "Complete vitamin and mineral complex for daily body support.",
+      "short": "Vitamins and minerals",
+      "composition": "Vitamins A, C, D, E, B-complex, iron, magnesium, selenium",
+      "benefits": ["Complete nutrition", "Deficiency correction", "Overall health"]
     },
     "fleximax": {
-      "name": "FlexiMAX",
-      "subtitle": "Joint Health",
-      "description": "Plant glucosamine, turmeric, hyaluronic acid. Relieves pain, restores cartilage.",
-      "benefits": [
-        "Pain and inflammation relief",
-        "Cartilage restoration",
-        "Mobility recovery"
-      ],
-      "short": "Relieves inflammation. Restores mobility.",
-      "composition": "Turmeric, glucosamine, hyaluronic acid, chondroitin."
+      "name": "FleXiMAX",
+      "subtitle": "Joints & Bones",
+      "description": "Joint mobility support and bone strength with collagen and glucosamine.",
+      "short": "Healthy joints",
+      "composition": "Collagen, glucosamine, chondroitin, MSM, vitamin D3",
+      "benefits": ["Joint mobility", "Bone strength", "Cartilage recovery"]
     },
     "machoman": {
-      "name": "MachoMAN",
+      "name": "Macho Man",
       "subtitle": "Men's Health",
-      "description": "Maca, L-arginine, ginseng. Testosterone support, libido and stamina.",
-      "benefits": [
-        "Testosterone boost",
-        "Libido enhancement",
-        "Energy & stamina"
-      ],
-      "short": "Natural men's health support.",
-      "composition": "Maca, L-arginine, ginseng, grapefruit."
-    },
-    "mishroom": {
-      "name": "MiSHROOM",
-      "subtitle": "Mushroom Nutrition",
-      "description": "Mushroom complex for complete nutrition. Rich in vitamins and minerals.",
-      "benefits": [
-        "Complete nutrition",
-        "Immune support",
-        "Body tone"
-      ],
-      "short": "Mushroom complex for nutrition and immunity.",
-      "composition": "Mushroom complex, vitamins, minerals."
-    },
-    "yekaterina": {
-      "name": "Ye-Katerina",
-      "subtitle": "Women's Hygiene",
-      "description": "Natural pads with aloe vera and silver ions. Antibacterial protection every day."
-    },
-    "mi-mask": {
-      "name": "Mi MASK",
-      "subtitle": "Ginseng Face Mask",
-      "description": "Ginseng mask for skin nourishment, hydration and rejuvenation."
-    },
-    "mi-serum": {
-      "name": "Mi SERUM",
-      "subtitle": "Ginseng Cell Serum",
-      "description": "Ginseng serum for deep skin nourishment and cell renewal."
-    },
-    "magicare": {
-      "name": "Magicare",
-      "subtitle": "Skin Care",
-      "description": "Natural skin care. Coming soon."
-    },
-    "mifresh": {
-      "name": "MiFresh",
-      "subtitle": "Freshness & Hygiene",
-      "description": "Daily hygiene without harsh chemicals. Coming soon."
+      "description": "Special formula for men's health support and vitality.",
+      "short": "Strength and energy",
+      "composition": "Tongkat ali, maca peruana, zinc, vitamin E",
+      "benefits": ["Men's health", "Endurance", "Hormonal balance"]
     },
     "mitown": {
-      "name": "MiTOWN",
-      "subtitle": "Cordyceps Coffee",
-      "description": "100% Arabica with cordyceps. Energy and vitality without side effects."
-    },
-    "essential-oil": {
-      "name": "Essential Oil",
-      "subtitle": "Aromatherapy Oils",
-      "description": "Natural essential oils for aromatherapy and relaxation."
-    },
-    "relax": {
-      "name": "Relax Tea",
-      "subtitle": "Calming Tea",
-      "description": "Herbal tea for stress relief and deep sleep. Caffeine-free."
-    },
-    "miwellness": {
-      "name": "MiWellness",
-      "subtitle": "Wellness",
-      "description": "Comprehensive body support. Coming soon."
-    },
-    "shaker": {
-      "name": "Shaker",
-      "subtitle": "Shaker",
-      "description": "Shaker for healthy nutrition. Coming soon."
-    },
-    "features": {
-      "natural": "Natural ingredients",
-      "certified": "International certificates",
-      "tested": "Clinically tested"
-    },
-    "cta": "View full catalog"
+      "name": "Mi Town",
+      "subtitle": "Detox Coffee",
+      "description": "Detox coffee with milk thistle and ginger for cleansing and energy.",
+      "short": "Cleanse with pleasure",
+      "composition": "Instant coffee, milk thistle, ginger, turmeric",
+      "benefits": ["Detox", "Energy without caffeine", "Digestive support"]
+    }
   },
   "about": {
     "title": "About Us",
-    "description": "M International — a global natural healthcare company. Science-backed premium products for health and longevity.",
-    "mission": "Mission",
-    "missionText": "Setting a new standard in the MLM industry — building trust and social value.",
-    "vision": "Vision",
-    "visionText": "Become the world's No.1 company through innovative products, advanced technologies and a people-centric rewards system.",
-    "coreValue": "Values",
-    "valuesText": "Quality, honesty, innovation and care for people.",
-    "learnMore": "Learn more",
+    "description": "M-International is an international company specializing in manufacturing and promoting natural health supplements. We operate in 50+ countries worldwide.",
+    "mission": "Our Mission",
+    "missionText": "Making health accessible to everyone. We create the highest quality products to help people live longer and better.",
+    "vision": "Our Vision",
+    "visionText": "To become a global leader in the natural supplement industry, combining science and nature for the health of humanity.",
+    "coreValue": "Core Values",
+    "valuesText": "Quality, integrity, innovation and care for people — the foundation of everything we do.",
+    "motto": "Motto",
+    "mottoText": "Health is the greatest wealth. We help preserve it.",
     "team": "Our Journey",
+    "teamDescription": "Years of growth, development and victories",
     "timeline": {
-      "2019": {
-        "title": "Grand Opening in Mongolia",
-        "description": "The beginning of the company's global journey."
-      },
-      "2020": {
-        "title": "Growth in Mongolia",
-        "description": "Diamond Director and 1st anniversary in Ulaanbaatar."
-      },
-      "2021": {
-        "title": "Triple Diamond",
-        "description": "Triple Diamond Director in Mongolia."
-      },
-      "2022": {
-        "title": "Kazakhstan Market Entry",
-        "description": "Crown Diamond in Kazakhstan."
-      },
-      "2023": {
-        "title": "Global Expansion",
-        "description": "Launch in Turkey. Leadership tour across 30 countries."
-      },
-      "2024": {
-        "title": "International Summits",
-        "description": "M Travel: Directors Summit."
-      },
-      "2025": {
-        "title": "Top Leaders Summit",
-        "description": "10 events in 6 months. Summit in Almaty."
-      }
+      "2019": { "title": "Launch in Mongolia", "description": "The beginning of the company's global journey." },
+      "2020": { "title": "First Successes", "description": "Team growth and product line expansion." },
+      "2021": { "title": "Triple Diamond", "description": "Triple Diamond Director in Mongolia." },
+      "2022": { "title": "Kazakhstan", "description": "Entry into the Kazakhstan market. Crown Diamond." },
+      "2023": { "title": "Global Expansion", "description": "Launch in Turkey. Leader tour across 30 countries." },
+      "2024": { "title": "Team Growth", "description": "10,000+ partners. New certificates." },
+      "2025": { "title": "Top Leaders Summit", "description": "10 events in 6 months. Summit in Almaty." }
     }
   },
   "business": {
     "title": "Business with M-International",
-    "description": "Hybrid rewards system with 9 bonus types. Earn from day one.",
-    "intro": "M International offers a rewards system with 9 bonus types for maximum earnings.",
-    "rewardsTitle": "System Advantages",
-    "reward1": {
-      "title": "Equal opportunity",
-      "description": "Rewards based on results, not seniority."
-    },
-    "reward2": {
-      "title": "Hybrid system",
-      "description": "Multiple bonus layers including binary structures."
-    },
-    "reward3": {
-      "title": "Win-Win",
-      "description": "Your success = your team's success."
-    },
-    "memberTitle": "Become a Member",
-    "memberDescription": "Thousands worldwide already earn with M International.",
-    "memberQuote": "M International — your chance to build real wealth.",
-    "centricTitle": "Member-Centric",
-    "centricDescription": "We develop talent and leadership through emotional intelligence.",
+    "description": "Join the international team and build a borderless business. 9 types of bonuses and full support.",
     "joinTitle": "Join Us",
-    "joinSubtitle": "Be Part of the Team",
-    "joinButton": "JOIN NOW",
-    "cta": "Learn more",
+    "howToStart": "How to Start",
+    "reward3": {
+      "title": "Travel",
+      "description": "Bonus trips around the world for top team leaders."
+    },
     "steps": {
-      "register": {
-        "title": "Register",
-        "description": "Access to catalog and business tools."
-      },
-      "training": {
-        "title": "Training",
-        "description": "Free program: products, sales, team building."
-      },
-      "income": {
-        "title": "Earn",
-        "description": "Start earning from day one."
-      }
+      "register": { "title": "Registration", "description": "Fill out the form and get access to the catalog and business tools." },
+      "training": { "title": "Training", "description": "Free program: products, sales, team building." },
+      "income": { "title": "Income", "description": "Earn from day one. 9 types of bonuses await you." }
     }
   },
   "cta": {
     "title": "Ready to Start?",
-    "description": "Get a consultation on products and business",
-    "contact": "Contact us",
-    "catalog": "View catalog"
+    "description": "Contact us and learn more about M-International opportunities.",
+    "contact": "Contact Us",
+    "catalog": "Catalog"
   },
   "footer": {
-    "backgroundText": "READY TO START?",
-    "subscription": {
-      "title": "Start your health journey",
-      "description": "Subscribe for exclusive offers and health tips",
-      "placeholder": "Your email",
-      "success": "Thank you for subscribing!"
-    },
-    "company": "Company",
-    "catalog": "Catalog",
-    "contacts": "Contacts",
-    "allProducts": "All products",
-    "detox": "Detox",
-    "immunity": "Immunity",
-    "nutrition": "Nutrition",
-    "privacy": "Privacy policy",
-    "terms": "Terms of use",
-    "copyright": "© {year} M-International. All rights reserved."
+    "description": "M-International is an international company producing natural supplements for health and longevity.",
+    "nav": "Navigation",
+    "contact": "Contact",
+    "copyright": "© 2025 M-International. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
   },
   "catalog": {
-    "title": "Product Catalog",
-    "description": "Natural supplements for your health",
+    "hero": { "subtitle": "Premium Quality" },
     "related": "Related products",
     "specifications": "Specifications",
     "certificates": "Certificates",
     "backToCatalog": "Back to catalog",
-    "details": "Learn more",
-    "contact": "Learn more"
+    "contact": "contact"
   },
   "aboutPage": {
     "title": "About M-International",
-    "description": "International manufacturer of natural supplements. Mission, vision, values.",
+    "description": "International company of natural supplements for health and longevity.",
     "mission": "Mission",
     "vision": "Vision",
     "values": "Values",
-    "visionText": "Become the world's No.1 company through innovative products and a people-centric rewards system.",
-    "valuesText": "Quality, honesty, innovation and care for people.",
     "hero": {
       "stat": {
-        "countries": "50+ countries",
-        "customers": "10K+ customers",
-        "years": "6 years"
+        "countries": "Countries",
+        "customers": "Partners",
+        "products": "Products",
+        "years": "Years"
       }
     },
-    "certificates": {
-      "title": "6 certificates"
-    }
-  },
-  "businessPage": {
-    "title": "Business with M-International",
-    "description": "Financial freedom through hybrid rewards. Training and support.",
-    "howToStart": "How to start"
+    "certificates": { "title": "Certificates" }
   },
   "contactsPage": {
     "title": "Contacts",
-    "description": "Consultation on products and business. 50+ countries.",
+    "description": "Contact us in any convenient way.",
+    "address": "Address",
+    "addressText": "Almaty, Timiryazeva str. 28B",
     "phone": "Phone",
     "email": "Email",
-    "instagram": "Instagram",
-    "tiktok": "TikTok",
-    "address": "Address",
-    "addressText": "No. 9-1, Jalan Tasik Utama 3, Medan Niaga Tasik Damai, Lakefields Sungai Besi, 57100 Kuala Lumpur, Malaysia.",
     "officeHours": "Office Hours",
-    "officeHoursText": "MON-FRI 10:00-18:00",
-    "note": "By appointment only."
+    "officeHoursText": "Mon-Fri: 9:00 AM - 6:00 PM",
+    "note": "Sat-Sun: closed",
+    "contact": "Send"
+  },
+  "common": {
+    "loading": "Loading..."
   }
 }
