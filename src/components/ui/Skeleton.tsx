@@ -19,7 +19,7 @@ const Skeleton = memo(function Skeleton({
   style,
   ...props
 }: SkeletonProps) {
-  const base = "bg-bg-sunken overflow-hidden relative";
+  const base = "bg-muted overflow-hidden relative";
 
   const variantClasses = {
     text: "h-4 rounded w-full",

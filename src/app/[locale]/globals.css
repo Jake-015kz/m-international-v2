@@ -6,6 +6,100 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ═══════════════════════════════════════════════════════════════
+   SHADCN THEME VARIABLES — mapped to existing OKLCH design tokens
+   ═══════════════════════════════════════════════════════════════ */
+@layer base {
+  :root {
+    --background: var(--bg-base);
+    --foreground: var(--fg-primary);
+    --card: var(--bg-elevated);
+    --card-foreground: var(--fg-primary);
+    --popover: var(--bg-elevated);
+    --popover-foreground: var(--fg-primary);
+    --primary: var(--accent-500);
+    --primary-foreground: var(--fg-on-accent);
+    --secondary: var(--bg-sunken);
+    --secondary-foreground: var(--fg-secondary);
+    --muted: var(--bg-alt);
+    --muted-foreground: var(--fg-tertiary);
+    --accent: var(--gold-50);
+    --accent-foreground: var(--gold-700);
+    --destructive: var(--danger-500);
+    --destructive-foreground: oklch(100% 0 0);
+    --success: var(--success-500);
+    --success-foreground: oklch(100% 0 0);
+    --warning: var(--warning-500);
+    --warning-foreground: oklch(100% 0 0);
+    --info: var(--info-500);
+    --info-foreground: oklch(100% 0 0);
+    --border: var(--border-subtle);
+    --input: var(--border-subtle);
+    --ring: var(--border-focus);
+    --radius: 0.75rem;
+    --radius-xs: 0.25rem;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.5rem;
+    --radius-3xl: 2rem;
+    --chart-1: oklch(55% 0.18 160);
+    --chart-2: oklch(70% 0.18 85);
+    --chart-3: oklch(55% 0.14 230);
+    --chart-4: oklch(55% 0.16 140);
+    --chart-5: oklch(65% 0.14 75);
+    --sidebar-background: var(--bg-elevated);
+    --sidebar-foreground: var(--fg-primary);
+    --sidebar-primary: var(--accent-500);
+    --sidebar-primary-foreground: var(--fg-on-accent);
+    --sidebar-accent: var(--bg-alt);
+    --sidebar-accent-foreground: var(--fg-secondary);
+    --sidebar-border: var(--border-subtle);
+    --shadow-ring: 0 0 0 3px oklch(55% 0.18 160 / 0.2);
+  }
+  .dark {
+    --background: var(--bg-base);
+    --foreground: var(--fg-primary);
+    --card: var(--bg-elevated);
+    --card-foreground: var(--fg-primary);
+    --popover: var(--bg-elevated);
+    --popover-foreground: var(--fg-primary);
+    --primary: var(--accent-500);
+    --primary-foreground: var(--fg-on-accent);
+    --secondary: var(--bg-sunken);
+    --secondary-foreground: var(--fg-secondary);
+    --muted: var(--bg-alt);
+    --muted-foreground: var(--fg-tertiary);
+    --accent: oklch(18% 0.04 85);
+    --accent-foreground: var(--gold-500);
+    --destructive: var(--danger-500);
+    --destructive-foreground: oklch(100% 0 0);
+    --success: var(--success-500);
+    --success-foreground: oklch(100% 0 0);
+    --warning: var(--warning-500);
+    --warning-foreground: oklch(100% 0 0);
+    --info: var(--info-500);
+    --info-foreground: oklch(100% 0 0);
+    --border: var(--border-subtle);
+    --input: var(--border-subtle);
+    --ring: var(--border-focus);
+    --chart-1: oklch(70% 0.15 160);
+    --chart-2: oklch(65% 0.18 85);
+    --chart-3: oklch(65% 0.18 85);
+    --chart-4: oklch(55% 0.14 230);
+    --chart-5: oklch(55% 0.16 140);
+    --sidebar-background: var(--bg-elevated);
+    --sidebar-foreground: var(--fg-primary);
+    --sidebar-primary: var(--accent-500);
+    --sidebar-primary-foreground: var(--fg-on-accent);
+    --sidebar-accent: var(--bg-alt);
+    --sidebar-accent-foreground: var(--fg-secondary);
+    --sidebar-border: var(--border-subtle);
+    --shadow-ring: 0 0 0 3px oklch(70% 0.15 160 / 0.3);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    BASE STYLES
    ═══════════════════════════════════════════════════════════════ */
 

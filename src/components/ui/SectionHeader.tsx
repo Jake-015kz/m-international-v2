@@ -38,7 +38,7 @@ const SectionHeader = memo(function SectionHeader({
         {badge && <div className="mb-4 md:mb-6">{badge}</div>}
         <h2
           className={cn(
-            "font-unbounded font-bold text-xl sm:text-2xl md:text-3xl leading-[1.1] tracking-normal text-text-primary",
+            "font-unbounded font-bold text-xl sm:text-2xl md:text-3xl leading-[1.1] tracking-normal text-foreground",
             "mb-2 md:mb-3"
           )}
         >
@@ -46,7 +46,7 @@ const SectionHeader = memo(function SectionHeader({
         </h2>
         {description && (
           <p className={cn(
-            "text-sm md:text-base text-text-secondary font-onest font-light leading-relaxed max-w-md",
+            "text-sm md:text-base text-muted-foreground font-onest font-light leading-relaxed max-w-md",
             align === "center" && "mx-auto",
             align === "left" && "ml-0"
           )}>
@@ -96,7 +96,7 @@ const SectionHeader = memo(function SectionHeader({
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_REVEAL } },
         }}
         className={cn(
-          "font-unbounded font-bold text-xl sm:text-2xl md:text-3xl leading-[1.1] tracking-normal text-text-primary",
+          "font-unbounded font-bold text-xl sm:text-2xl md:text-3xl leading-[1.1] tracking-normal text-foreground",
           "mb-2 md:mb-3"
         )}
       >
@@ -110,7 +110,7 @@ const SectionHeader = memo(function SectionHeader({
             visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_REVEAL } },
           }}
           className={cn(
-            "text-sm md:text-base text-text-secondary font-onest font-light leading-relaxed max-w-md",
+            "text-sm md:text-base text-muted-foreground font-onest font-light leading-relaxed max-w-md",
             align === "center" && "mx-auto",
             align === "left" && "ml-0"
           )}

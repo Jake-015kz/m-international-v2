@@ -13,6 +13,14 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
+        /* Gold accent badge */
+        gold: "border-[var(--gold-200)] bg-[var(--gold-50)] text-[var(--gold-700)]",
+        /* Emerald accent badge */
+        emerald: "border-[var(--accent-200)] bg-[var(--accent-50)] text-[var(--accent-700)]",
+        /* Success badge */
+        success: "border-transparent bg-success text-success-foreground",
+        /* Info badge */
+        info: "border-transparent bg-info text-info-foreground",
       },
     },
     defaultVariants: {

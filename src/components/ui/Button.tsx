@@ -18,6 +18,21 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        /* Luxury gold button — dark bg, gold border, shimmer */
+        luxury:
+          "relative overflow-hidden bg-[oklch(14%_0.006_85)] text-[oklch(88%_0.10_85)] border border-[oklch(65%_0.16_85_/_0.2)] shadow-[0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_oklch(65%_0.16_85_/_0.08)] hover:bg-[oklch(20%_0.008_85)] hover:border-[oklch(65%_0.16_85_/_0.35)] hover:shadow-[0_4px_24px_oklch(65%_0.16_85_/_0.12),0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_oklch(65%_0.16_85_/_0.12)] active:scale-[0.97]",
+        /* Luxury ghost — transparent, gold border hover */
+        "luxury-ghost":
+          "bg-transparent text-foreground border border-border hover:border-[var(--gold-400)] hover:text-[var(--gold-500)] active:scale-[0.97]",
+        /* Luxury gold gradient */
+        "luxury-gold":
+          "relative overflow-hidden bg-gradient-to-r from-[var(--gold-500)] to-[var(--gold-600)] text-white border border-transparent shadow-[0_1px_3px_rgba(0,0,0,0.25)] hover:shadow-[0_4px_24px_oklch(65%_0.16_85_/_0.15)] active:scale-[0.97]",
+        /* White CTA */
+        "cta-white":
+          "bg-white text-[oklch(18%_0.01_160)] border border-white/20 shadow-[0_4px_24px_rgba(255,255,255,0.15)] hover:bg-white/90 hover:border-white/30 hover:shadow-[0_4px_32px_rgba(255,255,255,0.25)] active:scale-[0.97]",
+        /* CTA outline (ghost on dark) */
+        "cta-outline":
+          "bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.12] hover:border-white/[0.18] active:scale-[0.97]",
       },
       size: {
         default:
@@ -25,6 +40,7 @@ const buttonVariants = cva(
         xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
         lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        xl: "h-11 gap-2 px-6 text-base rounded-xl",
         icon: "size-8",
         "icon-xs":
           "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",

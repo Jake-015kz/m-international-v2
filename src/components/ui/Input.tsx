@@ -20,14 +20,14 @@ const Input = memo(forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-fg-secondary mb-1.5"
+            className="block text-sm font-medium text-muted-foreground mb-1.5"
           >
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-tertiary pointer-events-none">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
               {leftIcon}
             </span>
           )}
@@ -35,14 +35,15 @@ const Input = memo(forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              "w-full rounded-lg border bg-bg-base px-4 py-2.5",
-              "text-fg-primary text-sm placeholder:text-fg-tertiary",
+              "flex w-full rounded-lg border bg-background px-4 py-2.5",
+              "text-foreground text-sm placeholder:text-muted-foreground",
               "transition-all duration-200",
-              "focus:outline-none focus:ring-2 focus:ring-border-focus/30 focus:border-border-focus",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:border-ring",
               "disabled:opacity-50 disabled:cursor-not-allowed",
+              "file:border-0 file:bg-transparent file:text-sm file:font-medium",
               error
-                ? "border-danger-500 focus:ring-danger-500/30"
-                : "border-border-default hover:border-border-focus/50",
+                ? "border-destructive focus-visible:ring-destructive/30"
+                : "border-input hover:border-ring/50",
               leftIcon && "pl-10",
               rightIcon && "pr-10",
               className
@@ -52,18 +53,18 @@ const Input = memo(forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-fg-tertiary pointer-events-none">
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
               {rightIcon}
             </span>
           )}
         </div>
         {error && (
-          <p id={`${inputId}-error`} className="mt-1.5 text-xs text-danger-500" role="alert">
+          <p id={`${inputId}-error`} className="mt-1.5 text-xs text-destructive" role="alert">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="mt-1.5 text-xs text-fg-tertiary">
+          <p id={`${inputId}-hint`} className="mt-1.5 text-xs text-muted-foreground">
             {hint}
           </p>
         )}

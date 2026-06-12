@@ -1,6 +1,6 @@
-export { Button } from "./Button";
+export { Button, buttonVariants } from "./Button";
 export { Badge, badgeVariants } from "./Badge";
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./Card";
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardLuxury, CardGlass, CardStat } from "./Card";
 export { Separator } from "./Separator";
 export { default as Container } from "./Container";
 export { default as ScrollReveal } from "./ScrollReveal";
