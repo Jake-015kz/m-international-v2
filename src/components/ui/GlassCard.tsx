@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef, useState, useCallback, memo } from "react";
+import { type ReactNode, type CSSProperties, useRef, useState, useCallback, memo } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,7 @@ interface GlassCardProps {
   tilt?: boolean;
   tiltStrength?: number;
   glowColor?: string;
+  style?: CSSProperties;
 }
 
 const variantStyles: Record<string, string> = {
@@ -30,6 +31,7 @@ const GlassCard = memo(function GlassCard({
   tilt = false,
   tiltStrength = 8,
   glowColor = "oklch(55% 0.18 160 / 0.15)",
+  style,
 }: GlassCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -82,12 +84,13 @@ const GlassCard = memo(function GlassCard({
       style={
         tilt
           ? {
+              ...style,
               rotateX: springRotateX,
               rotateY: springRotateY,
               transformPerspective: 800,
               transformStyle: "preserve-3d",
             }
-          : undefined
+          : style
       }
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}

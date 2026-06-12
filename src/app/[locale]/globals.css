@@ -764,43 +764,50 @@ video {
   position: relative;
   overflow: hidden;
   transition: transform 0.4s var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)),
-              box-shadow 0.4s ease;
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
 }
 
 .card-premium-v2:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--glow-accent-md, 0 0 16px rgba(0,200,100,0.12)),
-              0 8px 24px oklch(0% 0 0 / 0.08);
+  transform: translateY(-6px);
+  box-shadow:
+    var(--glow-accent-md, 0 0 16px rgba(0,200,100,0.12)),
+    0 12px 32px oklch(0% 0 0 / 0.1),
+    0 4px 12px oklch(0% 0 0 / 0.04);
+  border-color: var(--card-glow-color, oklch(55% 0.18 160 / 0.2));
 }
 
 /* ── Shine sweep on hover (GPU-composited) ── */
 .card-premium-v2::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
+  top: -50%;
+  left: -60%;
+  width: 50%;
+  height: 200%;
   background: linear-gradient(
     105deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.06) 45%,
-    rgba(255, 255, 255, 0.12) 50%,
-    rgba(255, 255, 255, 0.06) 55%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 58%,
     transparent 70%
   );
   z-index: 2;
   pointer-events: none;
+  transform: translateX(-100%) rotate(2deg);
   transition: none;
 }
 
 .card-premium-v2:hover::before {
-  animation: card-shine 0.8s ease forwards;
+  animation: card-shine 0.9s ease forwards;
 }
 
 @keyframes card-shine {
-  from { left: -60%; }
-  to   { left: 120%; }
+  from { transform: translateX(0%) rotate(2deg); }
+  to   { transform: translateX(350%) rotate(2deg); }
 }
 
 /* ── Inner glow overlay on hover ── */
@@ -809,13 +816,19 @@ video {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    circle at 50% 0%,
-    var(--card-glow-color, oklch(55% 0.18 160 / 0.08)) 0%,
-    transparent 70%
-  );
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      var(--card-glow-color, oklch(55% 0.18 160 / 0.15)) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 50% 100%,
+      var(--card-glow-color, oklch(55% 0.18 160 / 0.06)) 0%,
+      transparent 60%
+    );
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: 1;
 }

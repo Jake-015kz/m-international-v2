@@ -97,10 +97,11 @@ const ProductCard = memo(function ProductCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col h-full overflow-hidden rounded-2xl bg-bg-elevated border border-border-subtle card-premium-v2",
+        "group relative flex flex-col h-full overflow-hidden rounded-2xl border border-border-subtle/60 card-premium-v2",
+        "bg-bg-elevated/80 backdrop-blur-xl",
         featured && "sm:col-span-2"
       )}
-      style={{ "--card-glow-color": `${color}25` } as React.CSSProperties}
+      style={{ "--card-glow-color": `${color}30` } as React.CSSProperties}
       aria-label={`${name} — ${subtitle}`}
     >
       {/* Product image area — with parallax */}
@@ -150,7 +151,7 @@ const ProductCard = memo(function ProductCard({
       )}
 
       {/* Content */}
-      <div className={`relative z-10 flex flex-col flex-1 ${featured ? "p-5 md:p-8" : "p-4 md:p-6"}`}>
+      <div className={`relative z-10 flex flex-col flex-1 ${featured ? "p-5 md:p-8" : "p-4 md:p-6"} bg-bg-elevated/40 backdrop-blur-sm rounded-b-2xl`}>
         <span
           className="text-[10px] md:text-xs font-medium font-onest uppercase tracking-wider mb-1.5"
           style={{ color }}
@@ -185,8 +186,10 @@ const ProductCard = memo(function ProductCard({
 
       {/* Bottom accent line */}
       <div
-        className="h-0.5 w-0 group-hover:w-full transition-all duration-500 opacity-60"
-        style={{ background: `linear-gradient(90deg, ${color}, transparent)` }}
+        className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700 ease-out z-20 opacity-80"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${color}60, ${color}, ${color}60, transparent)`,
+        }}
         aria-hidden="true"
       />
     </article>
