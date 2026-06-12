@@ -6,7 +6,7 @@ export const onest = localFont({
   variable: "--font-onest",
   display: "swap",
   preload: true,
-  fallback: ["system-ui", "arial"],
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Arial", "sans-serif"],
   src: [
     { path: "../fonts/onest/gNMZW3F-SZuj7zOT0IfSjTS16cPhqx-Zsg.ttf", weight: "300" },
     { path: "../fonts/onest/gNMZW3F-SZuj7zOT0IfSjTS16cPh9R-Zsg.ttf", weight: "400" },
@@ -20,7 +20,7 @@ export const unbounded = localFont({
   variable: "--font-unbounded",
   display: "swap",
   preload: true,
-  fallback: ["system-ui", "arial"],
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Arial", "sans-serif"],
   src: [
     { path: "../fonts/unbounded/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG6xjx040.ttf", weight: "400" },
     { path: "../fonts/unbounded/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG6yrx040.ttf", weight: "500" },

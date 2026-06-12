@@ -571,4 +571,15 @@
   --color-gold-700: var(--gold-700);
   --color-gold-800: var(--gold-800);
   --color-gold-900: var(--gold-900);
+
+  /* ── Display type scale (Unbounded, hero headings) ── */
+  --text-display-sm: clamp(1.75rem, 4.5vw, 3.5rem);
+  --text-display-md: clamp(2rem, 5.5vw, 4.5rem);
+  --text-display-lg: clamp(2.5rem, 7vw, 6rem);
+
+  /* ── Heading type scale (Unbounded) ── */
+  --text-heading-xl: clamp(1.5rem, 3.5vw, 2.75rem);
+  --text-heading-lg: clamp(1.25rem, 2.8vw, 2rem);
+  --text-heading-md: clamp(1.1rem, 2vw, 1.5rem);
+  --text-heading-sm: clamp(0.95rem, 1.5vw, 1.15rem);
 }
