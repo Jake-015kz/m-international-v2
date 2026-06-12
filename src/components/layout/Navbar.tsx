@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
 import Container from "@/components/ui/Container";
 import { LOCALES } from "@/lib/constants";
 
@@ -27,6 +27,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const pathname = usePathname();
   const currentLocale = useLocale() || propLocale || "ru";
   const t = useTranslations("nav");
@@ -38,10 +39,35 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     { href: "/contacts", label: t("contacts") },
   ];
 
-  /* ── Framer Motion scroll-driven background opacity ── */
+  /* ── Smart hide/show: hide on scroll down, show on scroll up ── */
   const { scrollY } = useScroll();
-  const rawBgOpacity = useTransform(scrollY, [0, 80], [0, 0.95]);
-  const bgOpacity = useSpring(rawBgOpacity, { stiffness: 100, damping: 20 });
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (!ticking.current) {
+      ticking.current = true;
+      requestAnimationFrame(() => {
+        const diff = latest - lastScrollY.current;
+        /* At top: always show */
+        if (latest < 80) {
+          setIsVisible(true);
+        } else if (diff > 8) {
+          /* Scrolling down: hide */
+          setIsVisible(false);
+        } else if (diff < -4) {
+          /* Scrolling up: show */
+          setIsVisible(true);
+        }
+        lastScrollY.current = latest;
+        ticking.current = false;
+      });
+    }
+  });
+
+  /* ── Framer Motion scroll-driven background opacity ── */
+  const rawBgOpacity = useTransform(scrollY, [0, 80], [0, 0.92]);
+  const bgOpacity = useSpring(rawBgOpacity, { stiffness: 120, damping: 25 });
 
   // Solid on scroll — transparent on hero
   useEffect(() => {
@@ -70,15 +96,16 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
   const isActive = useCallback(
     (href: string) => {
-      if (href === "/") return pathname === `/${currentLocale}` || pathname === "/";
-      return pathname.startsWith(`/${currentLocale}${href}`) || pathname.startsWith(href);
+      const p = pathname || "/";
+      if (href === "/") return p === `/${currentLocale}` || p === "/";
+      return p.startsWith(`/${currentLocale}${href}`) || p.startsWith(href);
     },
     [pathname, currentLocale]
   );
 
   const getLocaleHref = useCallback(
     (targetLocale: string) => {
-      const pathWithoutLocale = pathname.replace(/^\/(ru|en|kk)/, "") || "/";
+      const pathWithoutLocale = (pathname || "/").replace(/^\/(ru|en|kk)/, "") || "/";
       if (pathWithoutLocale === "/") return `/${targetLocale}`;
       return `/${targetLocale}${pathWithoutLocale}`;
     },
@@ -89,23 +116,40 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
     <>
       <motion.nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ease-out"
-        style={{
-          backgroundColor: useTransform(
-            bgOpacity,
-            (v) => `rgba(10, 10, 10, ${v})`
-          ),
-          backdropFilter: useTransform(
-            bgOpacity,
-            (v) => v > 0.3 ? "blur(12px)" : "blur(0px)"
-          ),
+        className="fixed top-0 left-0 right-0 z-50"
+        initial={{ y: -100 }}
+        animate={{
+          y: isVisible ? 0 : -100,
+        }}
+        transition={{
+          duration: 0.4,
+          ease: [0.16, 1, 0.3, 1],
         }}
         role="navigation"
         aria-label="Основная навигация"
       >
+        {/* ── Background layer — gold-tinted blur ── */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundColor: useTransform(
+              bgOpacity,
+              (v) => `rgba(12, 10, 6, ${v})`
+            ),
+            backdropFilter: useTransform(
+              bgOpacity,
+              (v) => v > 0.3 ? "blur(16px) saturate(1.2)" : "blur(0px)"
+            ),
+            WebkitBackdropFilter: useTransform(
+              bgOpacity,
+              (v) => v > 0.3 ? "blur(16px) saturate(1.2)" : "blur(0px)"
+            ),
+          }}
+        />
+
         {/* Border — fades in on scroll */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 h-px bg-white/[0.08]"
+          className="absolute bottom-0 left-0 right-0 h-px bg-[oklch(65%_0.16_85_/_0.08)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: isScrolled ? 1 : 0 }}
           transition={{ duration: 0.3 }}
@@ -119,7 +163,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
               className="flex items-center gap-2 font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50 group"
             >
               <motion.svg
-                className="w-6 h-6 md:w-7 md:h-7 text-accent-600 group-hover:text-accent-500 transition-colors duration-300"
+                className="w-6 h-6 md:w-7 md:h-7 text-[oklch(72%_0.16_85)] group-hover:text-[oklch(78%_0.14_85)] transition-colors duration-300"
                 viewBox="0 0 32 32"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,32 +179,38 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
             </Link>
 
             {/* Desktop links */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-7">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={getLocalizedHref(link.href, currentLocale)}
-                  className={`text-sm font-onest font-light transition-colors duration-200 relative group ${
-                    isActive(link.href) ? "text-accent-600" : "text-text-secondary hover:text-text-primary"
+                  className={`text-[13px] font-onest font-light transition-colors duration-200 relative group py-1 ${
+                    isActive(link.href)
+                      ? "text-[oklch(72%_0.14_85)]"
+                      : "text-text-secondary hover:text-text-primary"
                   }`}
                 >
                   {link.label}
-                  <span className={`absolute -bottom-1 left-0 h-px bg-accent-500 transition-all duration-300 ${isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"}`} />
+                  <span
+                    className={`absolute -bottom-0.5 left-0 h-px bg-[oklch(65%_0.16_85)] transition-all duration-300 ${
+                      isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
                 </Link>
               ))}
             </div>
 
             {/* CTA + Language + Mobile toggle */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Language switcher — desktop */}
-              <div className="hidden md:flex items-center gap-1 mr-2" role="group" aria-label="Выбор языка">
+              <div className="hidden md:flex items-center gap-0.5 mr-1" role="group" aria-label="Выбор языка">
                 {LOCALES.map((loc) => (
                   <Link
                     key={loc}
                     href={getLocaleHref(loc)}
-                    className={`px-2 py-1 text-xs font-onest font-medium rounded-lg transition-colors duration-200 ${
+                    className={`px-2 py-1 text-[11px] font-onest font-medium rounded-lg transition-colors duration-200 ${
                       loc === currentLocale
-                        ? "text-text-primary bg-surface-sunken"
+                        ? "text-[oklch(72%_0.14_85)] bg-[oklch(65%_0.16_85_/_0.08)]"
                         : "text-text-tertiary hover:text-text-secondary"
                     }`}
                     aria-label={`Switch to ${LOCALE_LABELS[loc]}`}
@@ -173,7 +223,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
               <Link
                 href={`/${currentLocale}/contacts`}
-                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-onest font-semibold bg-[oklch(18%_0.01_160)] text-white hover:bg-[oklch(25%_0.01_160)] border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_2px_8px_oklch(55%_0.18_160_/_0.1),0_1px_2px_rgba(0,0,0,0.15)] min-h-[44px]"
+                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-onest font-semibold bg-[oklch(16%_0.008_85)] text-white hover:bg-[oklch(22%_0.01_85)] border border-[oklch(65%_0.16_85_/_0.12)] hover:border-[oklch(65%_0.16_85_/_0.22)] transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_2px_12px_oklch(65%_0.16_85_/_0.08),0_1px_2px_rgba(0,0,0,0.15)] min-h-[44px]"
               >
                 {t("contacts")}
               </Link>
@@ -214,8 +264,8 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
         animate={isMobileOpen ? { opacity: 1, pointerEvents: "auto" as const } : { opacity: 0, pointerEvents: "none" as const }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-          <ul className="flex flex-col items-center gap-6" role="list">
+        <div className="flex flex-col items-center justify-center h-full gap-5 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
+          <ul className="flex flex-col items-center gap-5" role="list">
             {NAV_LINKS.map((link, i) => (
               <motion.li
                 key={link.href}
@@ -230,7 +280,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 <Link
                   href={getLocalizedHref(link.href, currentLocale)}
                   className={`font-onest text-lg font-semibold py-2 min-h-[44px] inline-flex items-center ${
-                    isActive(link.href) ? "text-accent-600" : "text-text-primary"
+                    isActive(link.href) ? "text-[oklch(72%_0.14_85)]" : "text-text-primary"
                   }`}
                 >
                   {link.label}
@@ -241,7 +291,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
           {/* Language switcher */}
           <motion.div
-            className="flex items-center gap-2 mt-2"
+            className="flex items-center gap-2 mt-1"
             role="group"
             aria-label="Выбор языка"
             initial={{ opacity: 0, y: 20 }}
@@ -254,7 +304,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 href={getLocaleHref(loc)}
                 className={`px-4 py-2 text-sm font-onest font-medium rounded-xl transition-colors duration-200 min-h-[44px] inline-flex items-center ${
                   loc === currentLocale
-                    ? "text-text-primary bg-surface-sunken"
+                    ? "text-[oklch(72%_0.14_85)] bg-[oklch(65%_0.16_85_/_0.08)]"
                     : "text-text-tertiary hover:text-text-secondary"
                 }`}
                 aria-label={`Switch to ${LOCALE_LABELS[loc]}`}
@@ -272,7 +322,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
           >
             <Link
               href={`/${currentLocale}/contacts`}
-              className="inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[oklch(18%_0.01_160)] text-white border border-white/[0.08] min-h-[44px]"
+              className="inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[oklch(16%_0.008_85)] text-white border border-[oklch(65%_0.16_85_/_0.12)] min-h-[44px]"
             >
               {t("contacts")}
             </Link>

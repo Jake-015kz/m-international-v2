@@ -613,26 +613,54 @@ video {
 .ql-heading-md { font-family: var(--font-heading); font-size: var(--text-heading-md); font-weight: 400; line-height: 1.15; letter-spacing: normal; }
 .ql-heading-sm { font-family: var(--font-heading); font-size: var(--text-heading-sm); font-weight: 400; line-height: 1.2; letter-spacing: normal; }
 
-/* ── CTA: Quiet Luxury primary ── */
+/* ── CTA: Quiet Luxury primary — gold accent, dark bg ── */
 .ql-cta-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-6);
-  background: var(--graphite-900);
-  color: var(--graphite-50);
-  border-radius: var(--radius-full);
+  background: oklch(14% 0.006 85);
+  color: oklch(88% 0.10 85);
+  border-radius: 0.75rem;
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
   font-size: var(--text-sm);
   letter-spacing: normal;
   transition: all var(--anim-normal) var(--ease-smooth);
-  border: 1px solid transparent;
+  border: 1px solid oklch(65% 0.16 85 / 0.2);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 oklch(65% 0.16 85 / 0.08);
+  position: relative;
+  overflow: hidden;
+}
+.ql-cta-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    oklch(65% 0.16 85 / 0.06) 45%,
+    oklch(65% 0.16 85 / 0.1) 50%,
+    oklch(65% 0.16 85 / 0.06) 55%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s var(--ease-smooth);
+  pointer-events: none;
 }
 .ql-cta-primary:hover {
-  background: var(--graphite-800);
-  box-shadow: var(--glow-gold-sm);
+  background: oklch(20% 0.008 85);
+  border-color: oklch(65% 0.16 85 / 0.35);
+  box-shadow:
+    0 4px 24px oklch(65% 0.16 85 / 0.12),
+    0 1px 3px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 oklch(65% 0.16 85 / 0.12);
+}
+.ql-cta-primary:hover::before {
+  transform: translateX(100%);
 }
 .ql-cta-primary:active {
   transform: scale(0.97);

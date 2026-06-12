@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 interface MagneticButtonProps {
   children: ReactNode;
   className?: string;
-  variant?: "primary" | "secondary" | "ghost" | "outline";
+  variant?: "primary" | "secondary" | "ghost" | "outline" | "luxury";
   size?: "sm" | "md" | "lg";
   magneticStrength?: number;
   disabled?: boolean;
@@ -25,6 +25,8 @@ const variantStyles: Record<string, string> = {
     "bg-transparent hover:bg-bg-alt text-fg-secondary hover:text-fg-primary",
   outline:
     "bg-transparent border border-border-default hover:border-fg-accent text-fg-primary hover:text-fg-accent",
+  luxury:
+    "bg-[oklch(16%_0.008_85)] hover:bg-[oklch(22%_0.01_85)] text-[oklch(88%_0.10_85)] border border-[oklch(65%_0.16_85_/_0.2)] hover:border-[oklch(65%_0.16_85_/_0.35)] shadow-[0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_oklch(65%_0.16_85_/_0.08)] hover:shadow-[0_4px_24px_oklch(65%_0.16_85_/_0.12),0_1px_3px_rgba(0,0,0,0.25)]",
 };
 
 const sizeStyles: Record<string, string> = {
