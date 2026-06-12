@@ -123,6 +123,16 @@
       "status": "pending",
       "files": [],
       "acceptance": "Deployed to production. LCP improved or maintained. No CLS regression."
+    },
+    {
+      "id": 11,
+      "title": "Final QA — fix next.config deprecation, verify clean build, deploy ready",
+      "action": "verify",
+      "status": "completed",
+      "files": [
+        "next.config.ts"
+      ],
+      "acceptance": "No build warnings. TypeScript clean. All pages render. Ready for Vercel deploy."
     }
   ]
 }

@@ -3,12 +3,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/lib/i18n.ts");
 
-const eslintConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-} as any;
-
 const nextConfig = {
   // ── Image optimization ──
   images: {
@@ -35,9 +29,6 @@ const nextConfig = {
 
   // ── Compression ──
   compress: true,
-
-  // ── ESLint: skip during Vercel builds (runs in CI before deploy) ──
-  ...eslintConfig,
 
   // ── Experimental features for perf ──
   experimental: {
