@@ -242,6 +242,36 @@
   --gold-800: oklch(36% 0.10 85);
   --gold-900: oklch(24% 0.06 85);
 
+  /* ── Quiet Luxury: Warm neutral borders ── */
+  --border-warm:      oklch(88% 0.008 85);
+  --border-warm-hover:oklch(78% 0.010 85);
+
+  /* ── Quiet Luxury: Deep graphite text ── */
+  --graphite-50:  oklch(96% 0.002 260);
+  --graphite-100: oklch(92% 0.003 260);
+  --graphite-200: oklch(82% 0.005 260);
+  --graphite-300: oklch(68% 0.006 260);
+  --graphite-400: oklch(52% 0.007 260);
+  --graphite-500: oklch(42% 0.008 260);
+  --graphite-600: oklch(34% 0.008 260);
+  --graphite-700: oklch(26% 0.006 260);
+  --graphite-800: oklch(18% 0.004 260);
+  --graphite-900: oklch(10% 0.002 260);
+
+  /* ── Quiet Luxury: Gold glow effects ── */
+  --glow-gold-sm:
+    0 0 8px  oklch(65% 0.18 85 / 0.06),
+    0 0 20px oklch(65% 0.18 85 / 0.03);
+  --glow-gold-md:
+    0 0 16px oklch(65% 0.18 85 / 0.10),
+    0 0 40px oklch(65% 0.18 85 / 0.05);
+  --glow-gold-lg:
+    0 0 32px oklch(65% 0.18 85 / 0.14),
+    0 0 80px oklch(65% 0.18 85 / 0.06);
+
+  /* ── Quiet Luxury: Noise grain SVG data URI ── */
+  --noise-url: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
   /* ── Extra shadow layers (premium float) ── */
   --shadow-float:
     0 1px 3px oklch(0 0 0 / 0.30),
@@ -409,6 +439,36 @@
   --gold-800: oklch(88% 0.06 85);
   --gold-900: oklch(94% 0.03 85);
 
+  /* ── Quiet Luxury: Warm neutral borders — dark ── */
+  --border-warm:      oklch(24% 0.008 85);
+  --border-warm-hover:oklch(32% 0.010 85);
+
+  /* ── Quiet Luxury: Deep graphite text — dark ── */
+  --graphite-50:  oklch(96% 0.002 260);
+  --graphite-100: oklch(92% 0.003 260);
+  --graphite-200: oklch(82% 0.005 260);
+  --graphite-300: oklch(68% 0.006 260);
+  --graphite-400: oklch(52% 0.007 260);
+  --graphite-500: oklch(42% 0.008 260);
+  --graphite-600: oklch(34% 0.008 260);
+  --graphite-700: oklch(26% 0.006 260);
+  --graphite-800: oklch(18% 0.004 260);
+  --graphite-900: oklch(10% 0.002 260);
+
+  /* ── Quiet Luxury: Gold glow effects — dark ── */
+  --glow-gold-sm:
+    0 0 12px oklch(65% 0.16 85 / 0.10),
+    0 0 30px oklch(65% 0.16 85 / 0.05);
+  --glow-gold-md:
+    0 0 24px oklch(65% 0.16 85 / 0.14),
+    0 0 60px oklch(65% 0.16 85 / 0.06);
+  --glow-gold-lg:
+    0 0 48px oklch(65% 0.16 85 / 0.18),
+    0 0 100px oklch(65% 0.16 85 / 0.08);
+
+  /* ── Quiet Luxury: Noise grain SVG data URI ── */
+  --noise-url: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
   /* ── Extra shadow layers (premium float) — dark ── */
   --shadow-float:
     0 1px 3px oklch(0 0 0 / 0.30),
@@ -571,6 +631,27 @@
   --color-gold-700: var(--gold-700);
   --color-gold-800: var(--gold-800);
   --color-gold-900: var(--gold-900);
+
+  /* ── Quiet Luxury: Graphite text palette ── */
+  --color-graphite-50:  var(--graphite-50);
+  --color-graphite-100: var(--graphite-100);
+  --color-graphite-200: var(--graphite-200);
+  --color-graphite-300: var(--graphite-300);
+  --color-graphite-400: var(--graphite-400);
+  --color-graphite-500: var(--graphite-500);
+  --color-graphite-600: var(--graphite-600);
+  --color-graphite-700: var(--graphite-700);
+  --color-graphite-800: var(--graphite-800);
+  --color-graphite-900: var(--graphite-900);
+
+  /* ── Quiet Luxury: Warm border utilities ── */
+  --color-border-warm:       var(--border-warm);
+  --color-border-warm-hover: var(--border-warm-hover);
+
+  /* ── Quiet Luxury: Gold glow shadows ── */
+  --shadow-glow-gold-sm: var(--glow-gold-sm);
+  --shadow-glow-gold-md: var(--glow-gold-md);
+  --shadow-glow-gold-lg: var(--glow-gold-lg);
 
   /* ── Display type scale (Unbounded, hero headings) ── */
   --text-display-sm: clamp(1.75rem, 4.5vw, 3.5rem);
