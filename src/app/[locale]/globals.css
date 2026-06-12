@@ -755,6 +755,157 @@ video {
   transform: scale(0.97);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM PRODUCT CARD V2 — Shine + Glow
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Card wrapper ── */
+.card-premium-v2 {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.4s ease;
+}
+
+.card-premium-v2:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-accent-md, 0 0 16px rgba(0,200,100,0.12)),
+              0 8px 24px oklch(0% 0 0 / 0.08);
+}
+
+/* ── Shine sweep on hover (GPU-composited) ── */
+.card-premium-v2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 70%
+  );
+  z-index: 2;
+  pointer-events: none;
+  transition: none;
+}
+
+.card-premium-v2:hover::before {
+  animation: card-shine 0.8s ease forwards;
+}
+
+@keyframes card-shine {
+  from { left: -60%; }
+  to   { left: 120%; }
+}
+
+/* ── Inner glow overlay on hover ── */
+.card-premium-v2::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 50% 0%,
+    var(--card-glow-color, oklch(55% 0.18 160 / 0.08)) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-premium-v2:hover::after {
+  opacity: 1;
+}
+
+/* ── Premium glow button (filled accent) ── */
+.btn-premium-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-family: var(--font-unbounded, 'system-ui');
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-on-accent, #fff);
+  background: var(--accent-500, oklch(55% 0.18 160));
+  border: 1px solid transparent;
+  min-height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.3s ease,
+              background 0.3s ease;
+}
+
+.btn-premium-glow:hover {
+  transform: translateY(-2px);
+  background: var(--accent-400, oklch(65% 0.16 160));
+  box-shadow:
+    0 0 12px var(--btn-glow-color, oklch(55% 0.18 160 / 0.3)),
+    0 0 32px var(--btn-glow-color, oklch(55% 0.18 160 / 0.12)),
+    0 4px 12px oklch(0% 0 0 / 0.1);
+}
+
+.btn-premium-glow:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ── Pill / chip style for category badge ── */
+.pill-premium {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--pill-bg, oklch(12% 0.007 160));
+  color: var(--pill-fg, var(--fg-secondary));
+  border: 1px solid var(--pill-border, var(--border-subtle));
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* ── Mobile: disable expensive effects ── */
+@media (max-width: 767px) {
+  .card-premium-v2::before,
+  .card-premium-v2::after {
+    display: none !important;
+  }
+  .card-premium-v2:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-premium-glow:hover {
+    box-shadow: var(--shadow-sm);
+    transform: none;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .card-premium-v2::before {
+    animation: none !important;
+  }
+  .card-premium-v2:hover {
+    transform: none;
+  }
+  .btn-premium-glow:hover {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nav-enter,
   .nav-glass,
@@ -762,7 +913,9 @@ video {
   .mobile-menu-backdrop,
   .hamburger-line,
   .lang-pill,
-  .nav-cta {
+  .nav-cta,
+  .card-premium-v2::before,
+  .card-premium-v2::after {
     animation: none !important;
     transition-duration: 0.01ms !important;
   }

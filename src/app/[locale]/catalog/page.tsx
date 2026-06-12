@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Footer } from "@/components/sections/footer";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { Sparkles, Shield, Leaf, Award } from "lucide-react";
+import { Sparkles, Shield, Leaf, Award, Eye } from "lucide-react";
 import ProductModal from "@/components/sections/products/ProductModal";
 import FilterBar from "@/components/sections/products/FilterBar";
 import GlassCard from "@/components/ui/GlassCard";
@@ -168,7 +168,7 @@ function HeroBanner({ title, description, t }: { title: string; description: str
 /* ── Enhanced product card with 3D tilt ── */
 function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: string) => string }) {
   return (
-    <GlassCard tilt variant="default" className="group flex flex-col h-full cursor-pointer overflow-hidden">
+    <GlassCard tilt variant="default" className="group flex flex-col h-full cursor-pointer overflow-hidden card-premium-v2" style={{ "--card-glow-color": `${product.color}18` } as React.CSSProperties}>
       <div
         className="relative h-44 sm:h-56 overflow-hidden"
         style={{ background: `linear-gradient(135deg, ${product.color}12 0%, ${product.color}20 100%)` }}
@@ -199,24 +199,29 @@ function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: 
           {product.description}
         </p>
 
-        <div className="flex flex-wrap gap-1 mb-2">
+        <div className="flex flex-wrap gap-1 mb-3">
           {product.benefits?.slice(0, 3).map((b) => (
-            <span key={b} className="px-2 py-0.5 rounded-lg bg-bg-sunken text-[9px] md:text-[10px] text-fg-secondary font-onest">
+            <span key={b} className="pill-premium" style={{ "--pill-bg": `${product.color}10`, "--pill-fg": product.color, "--pill-border": `${product.color}20` } as React.CSSProperties}>
               {b}
             </span>
           ))}
         </div>
 
-        <div className="inline-flex items-center gap-1.5 text-xs font-medium transition-all duration-300 group-hover:gap-3 min-h-[44px]">
-          <span style={{ color: product.color }} className="font-onest font-bold">{tCatalog("contact")}</span>
-          <svg
-            className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
-            style={{ color: product.color }}
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </div>
+        {/* Premium CTA button */}
+        <button
+          type="button"
+          className="btn-premium-glow w-full mt-auto"
+          style={
+            {
+              "--btn-glow-color": `${product.color}40`,
+              background: product.color,
+              color: "#fff",
+            } as React.CSSProperties
+          }
+        >
+          <Eye className="w-3.5 h-3.5" />
+          {tCatalog("details")}
+        </button>
       </div>
     </GlassCard>
   );

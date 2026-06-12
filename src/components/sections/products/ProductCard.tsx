@@ -1,9 +1,9 @@
 "use client";
 
 import { type ReactNode, memo, useCallback, useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Eye } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface ProductCardProps {
@@ -32,7 +32,6 @@ const ParallaxImage = memo(function ParallaxImage({
   const y = useMotionValue(0);
   const springY = useSpring(y, { stiffness: 100, damping: 20 });
 
-  // Track mouse for subtle parallax
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
       if (!ref.current) return;
@@ -97,7 +96,11 @@ const ProductCard = memo(function ProductCard({
 
   return (
     <article
-      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl bg-bg-elevated border border-border-subtle hover:border-border-default transition-all duration-500 cursor-pointer product-card-hover ${featured ? "sm:col-span-2" : ""}`}
+      className={cn(
+        "group relative flex flex-col h-full overflow-hidden rounded-2xl bg-bg-elevated border border-border-subtle card-premium-v2",
+        featured && "sm:col-span-2"
+      )}
+      style={{ "--card-glow-color": `${color}25` } as React.CSSProperties}
       aria-label={`${name} — ${subtitle}`}
     >
       {/* Product image area — with parallax */}
@@ -161,20 +164,22 @@ const ProductCard = memo(function ProductCard({
           {description}
         </p>
         <div className="flex-1" />
+
+        {/* Premium CTA button */}
         <button
           type="button"
-          className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-unbounded font-bold tracking-wide uppercase transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md min-h-[40px]"
-          style={{
-            background: `linear-gradient(135deg, ${color}12, ${color}20)`,
-            color: color,
-            border: `1px solid ${color}25`,
-          }}
+          className="btn-premium-glow mt-4 w-full"
+          style={
+            {
+              "--btn-glow-color": `${color}40`,
+              background: `linear-gradient(135deg, ${color}, ${color})`,
+              color: "#fff",
+            } as React.CSSProperties
+          }
           onClick={() => onClick?.()}
         >
-          {t("contact")}
-          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+          <Eye className="w-3.5 h-3.5" />
+          {t("details")}
         </button>
       </div>
 
