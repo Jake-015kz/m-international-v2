@@ -37,13 +37,13 @@ function isLowEndDevice(): boolean {
 
 export default function ParticlesCanvas({
   count,
-  spread = 60,
-  color = "#34d399",
-  color2 = "#8b5cf6",
-  size = 0.18,
-  mouseInfluence = 12,
+  spread = 50,
+  color = "#D4A843",
+  color2 = "#F5E6A3",
+  size = 0.12,
+  mouseInfluence = 10,
   connectionDistance = 8,
-  showConnections = true,
+  showConnections = false,
   dpr,
   cameraFov = 60,
   cameraZ = 60,
@@ -59,6 +59,9 @@ export default function ParticlesCanvas({
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // Mobile: hard cap at 500 particles
+  const effectiveCount = lowEnd ? Math.min(count ?? 500, 500) : count;
 
   return (
     <div
@@ -93,7 +96,7 @@ export default function ParticlesCanvas({
       >
         <Suspense fallback={<LoadingFallback />}>
           <ParticlesField
-            count={lowEnd ? Math.min(count ?? 800, 800) : count}
+            count={effectiveCount}
             spread={spread}
             color={color}
             color2={color2}

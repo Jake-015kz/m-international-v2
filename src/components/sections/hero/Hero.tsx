@@ -94,12 +94,12 @@ const Hero = memo(function Hero() {
           }}
         >
           <ThreeBackground
-            color="#34d399"
-            color2="#8b5cf6"
+            color="#D4A843"
+            color2="#F5E6A3"
             interactive={true}
-            showConnections={true}
-            spread={80}
-            size={0.18}
+            showConnections={false}
+            spread={50}
+            size={0.12}
           />
         </motion.div>
       )}

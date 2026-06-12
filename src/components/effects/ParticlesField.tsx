@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useMemo, useEffect } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 interface ParticlesFieldProps {
@@ -17,199 +17,119 @@ interface ParticlesFieldProps {
 
 function getAdaptiveCount(count?: number): number {
   if (count) return count;
-  if (typeof window === "undefined") return 1500;
+  if (typeof window === "undefined") return 1000;
   const w = window.innerWidth;
-  const dpr = window.devicePixelRatio || 1;
   const cores = navigator.hardwareConcurrency || 4;
 
-  // Mobile: aggressively reduce
-  if (w < 768) return 600;
-  if (cores <= 4 || dpr < 2) return 800;
-  if (w < 1440) return 2000;
-  return 3000;
+  // Mobile: cap at 500 as per requirements
+  if (w < 768) return 500;
+  if (cores <= 4) return 700;
+  if (w < 1440) return 1200;
+  return 1800;
 }
 
 export default function ParticlesField({
   count,
-  spread = 60,
-  color = "#34d399",
-  color2 = "#8b5cf6",
-  size = 0.18,
-  mouseInfluence = 12,
+  spread = 50,
+  color = "#D4A843",
+  color2 = "#F5E6A3",
+  size = 0.12,
+  mouseInfluence = 10,
   connectionDistance = 8,
-  showConnections = true,
+  showConnections = false,
 }: ParticlesFieldProps) {
-  const pointsRef = useRef<THREE.Points>(null);
+  const instancedRef = useRef<THREE.InstancedMesh>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
   const mouseRef = useRef(new THREE.Vector3(0, 0, 0));
   const mouseActiveRef = useRef(0);
   const smoothMouseActive = useRef(0);
   const frameCount = useRef(0);
-  const lastLineUpdate = useRef(0);
 
-  const { size: viewportSize, viewport } = useThree();
   const particleCount = getAdaptiveCount(count);
 
-  // ── Generate particle data ──
-  const { positions, velocities, phases, baseSizes, connectionPositions } =
-    useMemo(() => {
-      const positions = new Float32Array(particleCount * 3);
-      const velocities = new Float32Array(particleCount * 3);
-      const phases = new Float32Array(particleCount);
-      const baseSizes = new Float32Array(particleCount);
+  // ── Shared geometry: small sphere for each particle ──
+  // Low poly for perf: 6 segments (icosahedron-like)
+  const sphereGeo = useMemo(
+    () => new THREE.IcosahedronGeometry(size, 1),
+    [size]
+  );
 
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        const r = spread * (0.6 + 0.4 * Math.random());
-
-        positions[i3] = r * Math.sin(phi) * Math.cos(theta);
-        positions[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-        positions[i3 + 2] = (Math.random() - 0.5) * 40;
-
-        velocities[i3] = (Math.random() - 0.5) * 0.012;
-        velocities[i3 + 1] = (Math.random() - 0.5) * 0.012;
-        velocities[i3 + 2] = (Math.random() - 0.5) * 0.006;
-
-        phases[i] = Math.random() * Math.PI * 2;
-        baseSizes[i] = size * (0.5 + Math.random() * 1.0);
-      }
-
-      // Connection lines buffer — cap total connections for perf
-      const maxConnections = Math.min(Math.floor(particleCount * 3), 6000);
-      const connectionPositions = new Float32Array(maxConnections * 6);
-
-      return {
-        positions,
-        velocities,
-        phases,
-        baseSizes,
-        connectionPositions,
-      };
-    }, [particleCount, spread, size]);
-
-  // ── Custom Shader Material for Particles ──
-  const particleMaterial = useMemo(() => {
-    return new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new THREE.Color(color) },
-        uColor2: { value: new THREE.Color(color2) },
-        uMouse: { value: new THREE.Vector3(0, 0, 0) },
-        uMouseActive: { value: 0 },
-        uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
-      },
-      vertexShader: /* glsl */ `
-        attribute float phase;
-        attribute float baseSize;
-
-        uniform float uTime;
-        uniform float uPixelRatio;
-        uniform vec3 uMouse;
-        uniform float uMouseActive;
-
-        varying float vAlpha;
-        varying float vGlow;
-        varying float vDistFromCenter;
-
-        void main() {
-          vec3 pos = position;
-
-          // Organic layered drift
-          pos.x += sin(uTime * 0.2 + phase) * 0.8;
-          pos.y += cos(uTime * 0.15 + phase * 1.4) * 0.6;
-          pos.z += sin(uTime * 0.1 + phase * 0.6) * 0.3;
-
-          // Slow orbital drift
-          float orbitAngle = uTime * 0.02 + phase;
-          pos.x += sin(orbitAngle) * 0.4;
-          pos.y += cos(orbitAngle) * 0.3;
-
-          // Cursor repulsion
-          vec3 mouse3d = uMouse * 50.0;
-          mouse3d.z = 0.0;
-          vec3 diff = pos - mouse3d;
-          float dist = length(diff);
-          float influence = uMouseActive * ${mouseInfluence.toFixed(1)};
-
-          if (dist < 18.0 && dist > 0.01) {
-            float force = pow(1.0 - dist / 18.0, 2.0) * influence;
-            pos += normalize(diff) * force;
-          }
-
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-
-          float depthFactor = 60.0 / -mvPosition.z;
-          gl_PointSize = baseSize * uPixelRatio * depthFactor * 2.0;
-          gl_PointSize = clamp(gl_PointSize, 0.5, 6.0);
-
-          gl_Position = projectionMatrix * mvPosition;
-
-          vAlpha = smoothstep(100.0, 8.0, -mvPosition.z) * 0.85;
-          vGlow = smoothstep(20.0, 2.0, dist) * uMouseActive;
-          vDistFromCenter = length(pos.xy) / 60.0;
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform vec3 uColor;
-        uniform vec3 uColor2;
-
-        varying float vAlpha;
-        varying float vGlow;
-        varying float vDistFromCenter;
-
-        void main() {
-          float dist = length(gl_PointCoord - vec2(0.5));
-          if (dist > 0.5) discard;
-
-          float core = smoothstep(0.45, 0.08, dist);
-          float glow = smoothstep(0.5, 0.0, dist) * 0.35;
-
-          vec3 col = mix(uColor, uColor2, vGlow * 0.7);
-          float vignette = 1.0 - smoothstep(0.5, 1.2, vDistFromCenter);
-
-          float alpha = (core + glow) * vAlpha * vignette;
-          alpha = clamp(alpha, 0.0, 0.9);
-
-          gl_FragColor = vec4(col, alpha);
-        }
-      `,
+  // ── Shared material: warm golden, translucent ──
+  const particleMat = useMemo(() => {
+    return new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(color),
+      emissive: new THREE.Color(color2),
+      emissiveIntensity: 0.35,
       transparent: true,
+      opacity: 0.55,
+      roughness: 0.4,
+      metalness: 0.1,
       depthWrite: false,
-      depthTest: true,
       blending: THREE.AdditiveBlending,
+      side: THREE.FrontSide,
     });
-  }, [color, color2, mouseInfluence]);
+  }, [color, color2]);
 
-  // ── Connection Lines Material ──
+  // ── Line material for connections ──
   const lineMaterial = useMemo(() => {
     return new THREE.LineBasicMaterial({
       color: new THREE.Color(color),
       transparent: true,
-      opacity: 0.08,
+      opacity: 0.06,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
   }, [color]);
 
-  // ── Geometry refs ──
-  const pointsGeometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute("phase", new THREE.BufferAttribute(phases, 1));
-    geo.setAttribute("baseSize", new THREE.BufferAttribute(baseSizes, 1));
-    return geo;
-  }, [positions, phases, baseSizes]);
+  // ── Initial particle data ──
+  const { basePositions, velocities, phases, scales } = useMemo(() => {
+    const basePositions = new Float32Array(particleCount * 3);
+    const velocities = new Float32Array(particleCount * 3);
+    const phases = new Float32Array(particleCount);
+    const scales = new Float32Array(particleCount);
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      // Spherical cloud distribution — denser at center
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const r = spread * Math.pow(Math.random(), 0.5); // sqrt for uniform volume
+
+      basePositions[i3] = r * Math.sin(phi) * Math.cos(theta);
+      basePositions[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      basePositions[i3 + 2] = (Math.random() - 0.5) * 30;
+
+      velocities[i3] = (Math.random() - 0.5) * 0.008;
+      velocities[i3 + 1] = (Math.random() - 0.5) * 0.008;
+      velocities[i3 + 2] = (Math.random() - 0.5) * 0.004;
+
+      phases[i] = Math.random() * Math.PI * 2;
+      // Varied sizes for depth — smaller on edges
+      const distFromCenter = r / spread;
+      scales[i] = 0.6 + Math.random() * 0.8 * (1 - distFromCenter * 0.5);
+    }
+
+    return { basePositions, velocities, phases, scales };
+  }, [particleCount, spread]);
+
+  // ── Connection lines buffer ──
+  const connectionPositions = useMemo(() => {
+    const maxConnections = Math.min(Math.floor(particleCount * 2), 3000);
+    return new Float32Array(maxConnections * 6);
+  }, [particleCount]);
 
   const linesGeometry = useMemo(() => {
     const geo = new THREE.BufferGeometry();
-    geo.setAttribute(
-      "position",
-      new THREE.BufferAttribute(connectionPositions, 3)
-    );
+    geo.setAttribute("position", new THREE.BufferAttribute(connectionPositions, 3));
     return geo;
   }, [connectionPositions]);
+
+  // ── Temp objects for matrix updates (avoid GC) ──
+  const tempMatrix = useMemo(() => new THREE.Matrix4(), []);
+  const tempPosition = useMemo(() => new THREE.Vector3(), []);
+  const tempQuaternion = useMemo(() => new THREE.Quaternion(), []);
+  const tempScale = useMemo(() => new THREE.Vector3(1, 1, 1), []);
+  const tempColor = useMemo(() => new THREE.Color(), []);
 
   // ── Mouse tracking ──
   useEffect(() => {
@@ -254,63 +174,100 @@ export default function ParticlesField({
     const elapsed = clock.getElapsedTime();
     frameCount.current++;
 
-    // Smooth mouse activation blend
+    // Smooth mouse activation
     smoothMouseActive.current +=
       (mouseActiveRef.current - smoothMouseActive.current) * 0.06;
 
-    // Update shader uniforms every frame (cheap)
-    particleMaterial.uniforms.uTime.value = elapsed;
-    particleMaterial.uniforms.uPixelRatio.value = Math.min(
-      window.devicePixelRatio || 1,
-      2
-    );
-    particleMaterial.uniforms.uMouse.value.set(
-      mouseRef.current.x,
-      mouseRef.current.y,
-      0
-    );
-    particleMaterial.uniforms.uMouseActive.value = smoothMouseActive.current;
+    if (!instancedRef.current) return;
 
-    // Gentle container rotation
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = elapsed * 0.012;
-      pointsRef.current.rotation.x = Math.sin(elapsed * 0.006) * 0.025;
+    const mesh = instancedRef.current;
+    const mouse3D = mouseRef.current;
+    const influence = mouseInfluence * smoothMouseActive.current;
+
+    // Update each instance matrix
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+
+      // Base position + organic drift
+      let x = basePositions[i3];
+      let y = basePositions[i3 + 1];
+      let z = basePositions[i3 + 2];
+
+      // Layered organic motion — very gentle
+      const phase = phases[i];
+      x += Math.sin(elapsed * 0.15 + phase) * 0.6;
+      y += Math.cos(elapsed * 0.12 + phase * 1.3) * 0.5;
+      z += Math.sin(elapsed * 0.08 + phase * 0.7) * 0.25;
+
+      // Slow orbital drift
+      const orbitAngle = elapsed * 0.015 + phase;
+      x += Math.sin(orbitAngle) * 0.3;
+      y += Math.cos(orbitAngle) * 0.2;
+
+      // Cursor repulsion — particles flee from mouse
+      if (influence > 0.01) {
+        const mx = mouse3D.x * 50;
+        const my = mouse3D.y * 50;
+        const dx = x - mx;
+        const dy = y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 15 && dist > 0.01) {
+          const force = Math.pow(1 - dist / 15, 2) * influence;
+          x += (dx / dist) * force;
+          y += (dy / dist) * force;
+        }
+      }
+
+      // Set position
+      tempPosition.set(x, y, z);
+
+      // Scale: base scale + subtle pulse
+      const s = scales[i] * (1 + Math.sin(elapsed * 0.3 + phase) * 0.08);
+      tempScale.setScalar(s);
+
+      // Build matrix
+      tempMatrix.compose(tempPosition, tempQuaternion, tempScale);
+      mesh.setMatrixAt(i, tempMatrix);
+
+      // Color variation: shift between warm gold and light cream
+      const colorMix = 0.3 + 0.7 * (1 - Math.sqrt(x * x + y * y) / spread);
+      tempColor.lerpColors(
+        new THREE.Color(color),
+        new THREE.Color(color2),
+        Math.max(0, Math.min(1, colorMix)) * 0.4
+      );
+      mesh.setColorAt(i, tempColor);
     }
 
-    if (linesRef.current) {
-      linesRef.current.rotation.y = elapsed * 0.012;
-      linesRef.current.rotation.x = Math.sin(elapsed * 0.006) * 0.025;
-    }
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
 
-    // ── OPTIMIZED: Update connection lines only every 3 frames (~20fps) ──
-    if (showConnections && linesRef.current && frameCount.current % 3 === 0) {
-      const posAttr = pointsGeometry.getAttribute(
-        "position"
-      ) as THREE.BufferAttribute;
-      const posArray = posAttr.array as Float32Array;
+    // Gentle group rotation
+    mesh.rotation.y = elapsed * 0.008;
+    mesh.rotation.x = Math.sin(elapsed * 0.004) * 0.02;
 
-      const linePosAttr = linesGeometry.getAttribute(
-        "position"
-      ) as THREE.BufferAttribute;
-      const lineArray = linePosAttr.array as Float32Array;
+    // ── Connection lines (throttled, desktop only) ──
+    if (showConnections && linesRef.current && frameCount.current % 4 === 0) {
+      const lineArray = (linesGeometry.getAttribute("position") as THREE.BufferAttribute)
+        .array as Float32Array;
 
       let lineIdx = 0;
-      const maxLines = Math.min(Math.floor(lineArray.length / 6), 2000);
+      const maxLines = Math.min(Math.floor(lineArray.length / 6), 1500);
       const connDist2 = connectionDistance * connectionDistance;
 
-      // Adaptive sampling: fewer checks on weaker devices
-      const sampleBase = particleCount > 2000 ? 4 : particleCount > 1000 ? 3 : 2;
-      const step = Math.max(1, Math.floor(particleCount / (200 * sampleBase)));
+      // Adaptive step for perf
+      const step = Math.max(1, Math.floor(particleCount / 150));
 
       outer: for (let i = 0; i < particleCount; i += step) {
-        const ix = posArray[i * 3];
-        const iy = posArray[i * 3 + 1];
-        const iz = posArray[i * 3 + 2];
+        const ix = basePositions[i * 3];
+        const iy = basePositions[i * 3 + 1];
+        const iz = basePositions[i * 3 + 2];
 
         for (let j = i + step; j < particleCount; j += step) {
-          const jx = posArray[j * 3];
-          const jy = posArray[j * 3 + 1];
-          const jz = posArray[j * 3 + 2];
+          const jx = basePositions[j * 3];
+          const jy = basePositions[j * 3 + 1];
+          const jz = basePositions[j * 3 + 2];
 
           const dx = ix - jx;
           const dy = iy - jy;
@@ -326,29 +283,27 @@ export default function ParticlesField({
             lineArray[base + 4] = jy;
             lineArray[base + 5] = jz;
             lineIdx++;
-
             if (lineIdx >= maxLines) break outer;
           }
         }
       }
 
-      // Zero out remaining
-      for (let i = lineIdx * 6; i < lineArray.length; i++) {
-        lineArray[i] = 0;
-      }
-
+      const linePosAttr = linesGeometry.getAttribute("position") as THREE.BufferAttribute;
       linePosAttr.needsUpdate = true;
       linesGeometry.setDrawRange(0, lineIdx * 2);
 
-      // Update line opacity based on mouse
       const mat = linesRef.current.material as THREE.LineBasicMaterial;
-      mat.opacity = 0.04 + smoothMouseActive.current * 0.06;
+      mat.opacity = 0.03 + smoothMouseActive.current * 0.04;
     }
   });
 
   return (
     <group>
-      <points ref={pointsRef} geometry={pointsGeometry} material={particleMaterial} />
+      <instancedMesh
+        ref={instancedRef}
+        args={[sphereGeo, particleMat, particleCount]}
+        frustumCulled={false}
+      />
       {showConnections && (
         <lineSegments
           ref={linesRef}

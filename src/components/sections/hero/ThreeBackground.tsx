@@ -58,8 +58,8 @@ interface ThreeBackgroundProps {
  */
 const ThreeBackground = memo(function ThreeBackground({
   particleCount,
-  color = "#34d399",
-  color2 = "#8b5cf6",
+  color = "#D4A843",
+  color2 = "#F5E6A3",
   interactive = true,
   showConnections = true,
   spread = 80,
