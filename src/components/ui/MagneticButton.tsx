@@ -13,6 +13,7 @@ interface MagneticButtonProps {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
   "aria-label"?: string;
 }
 
@@ -59,6 +60,7 @@ const MagneticButton = memo(function MagneticButton({
   disabled,
   type = "button",
   onClick,
+  onKeyDown,
   "aria-label": ariaLabel,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
@@ -136,6 +138,7 @@ const MagneticButton = memo(function MagneticButton({
       onMouseLeave={handleMouseLeave}
       whileTap={disabled ? undefined : { scale: 0.97 }}
       onClick={handleClick}
+      onKeyDown={onKeyDown}
       aria-label={ariaLabel}
     >
       {/* ── Glow halo that follows cursor ── */}

@@ -107,10 +107,12 @@
       "id": 9,
       "title": "Accessibility audit — reduced motion, contrast, focus",
       "action": "code",
-      "status": "pending",
+      "status": "completed",
       "files": [
         "src/components/sections/hero/Hero.tsx",
-        "src/components/sections/hero/ThreeBackground.tsx"
+        "src/components/sections/hero/ThreeBackground.tsx",
+        "src/components/ui/TextReveal.tsx",
+        "src/components/ui/MagneticButton.tsx"
       ],
       "acceptance": "Passes axe-core. Reduced motion works. Keyboard navigable. WCAG AA contrast."
     },

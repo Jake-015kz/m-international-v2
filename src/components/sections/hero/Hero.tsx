@@ -83,7 +83,8 @@ const Hero = memo(function Hero() {
     <section
       ref={sectionRef}
       className="relative overflow-hidden min-h-[100dvh] flex items-center"
-      aria-label="Главная секция"
+      role="region"
+      aria-labelledby="hero-heading"
       style={{ contain: "layout style paint" }}
     >
       {/* ── Three.js Particle Background (desktop) ── */}
@@ -174,12 +175,16 @@ const Hero = memo(function Hero() {
           </motion.div>
 
           {/* ── Headline — compact for CIS, word reveal ── */}
-          <h1 className="font-unbounded font-bold text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.1] tracking-normal mb-3 sm:mb-4">
+          <h1
+            id="hero-heading"
+            className="font-unbounded font-bold text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.1] tracking-normal mb-3 sm:mb-4"
+          >
             <TextRevealWords
               text={t("title")}
               className="text-white"
               stagger={0.08}
               initialDelay={0.2}
+              reducedMotion={reducedMotion}
             />
           </h1>
 
@@ -194,7 +199,7 @@ const Hero = memo(function Hero() {
               initial={reducedMotion ? {} : { y: 24, opacity: 0 }}
               animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
-              className="text-sm sm:text-base text-white/50 font-onest font-light leading-relaxed max-w-lg mx-auto lg:mx-0"
+              className="text-sm sm:text-base text-white/60 font-onest font-light leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
               {t("lead")}
             </motion.p>
@@ -210,10 +215,17 @@ const Hero = memo(function Hero() {
             <MagneticButton
               variant="luxury"
               size="lg"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               onClick={() => {
                 document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
               }}
               className="w-full sm:w-auto ql-cta-primary font-onest font-semibold text-sm sm:text-base group"
+              aria-label={t("cta")}
             >
               {/* Shimmer sweep */}
               <motion.span
@@ -251,10 +263,17 @@ const Hero = memo(function Hero() {
             <MagneticButton
               variant="secondary"
               size="lg"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               onClick={() => {
                 document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
               }}
               className="w-full sm:w-auto cta-secondary font-onest font-medium text-sm sm:text-base"
+              aria-label={t("aboutLink")}
             >
               {t("aboutLink")}
             </MagneticButton>
@@ -282,7 +301,7 @@ const Hero = memo(function Hero() {
                 <span className="text-[oklch(72%_0.16_85)]/60" aria-hidden="true">
                   <TrustIcon icon={item.icon} />
                 </span>
-                <span className="text-[10px] sm:text-[11px] text-white/35 font-onest font-medium whitespace-nowrap">
+                <span className="text-[10px] sm:text-[11px] text-white/50 font-onest font-medium whitespace-nowrap">
                   {t(`trust.${item.key}`)}
                 </span>
               </motion.div>
@@ -297,16 +316,16 @@ const Hero = memo(function Hero() {
             />
 
             <motion.div
-              className="flex items-center gap-3 sm:gap-5 text-[10px] sm:text-[11px] text-white/35 font-onest"
+              className="flex items-center gap-3 sm:gap-5 text-[10px] sm:text-[11px] text-white/50 font-onest"
               initial={reducedMotion ? {} : { opacity: 0, y: 8 }}
               animate={reducedMotion ? {} : { opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.5, ease: EASE }}
             >
               <span>
-                <strong className="text-[oklch(72%_0.12_85)]/70 font-semibold">50+</strong> {t("stat.countries")}
+                <strong className="text-[oklch(78%_0.12_85)] font-semibold">50+</strong> {t("stat.countries")}
               </span>
               <span className="hidden sm:inline">
-                <strong className="text-[oklch(72%_0.12_85)]/70 font-semibold">10K+</strong> {t("stat.customers")}
+                <strong className="text-[oklch(78%_0.12_85)] font-semibold">10K+</strong> {t("stat.customers")}
               </span>
             </motion.div>
           </motion.div>

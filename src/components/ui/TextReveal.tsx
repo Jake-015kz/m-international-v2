@@ -66,12 +66,14 @@ export function TextRevealWords({
   stagger = 0.06,
   initialDelay = 0,
   accentIndex,
+  reducedMotion = false,
 }: {
   text: string;
   className?: string;
   stagger?: number;
   initialDelay?: number;
   accentIndex?: number; // index of word to highlight with gradient
+  reducedMotion?: boolean;
 }) {
   const words = text.split(" ");
 
@@ -81,13 +83,14 @@ export function TextRevealWords({
         <span key={i} className="overflow-hidden mr-[0.3em] last:mr-0">
           <motion.span
             className="inline-block"
-            initial={{ opacity: 0, y: "100%", filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: "0%", filter: "blur(0px)" }}
-            transition={{
+            initial={reducedMotion ? false : { opacity: 0, y: "100%", filter: "blur(8px)" }}
+            animate={reducedMotion ? false : { opacity: 1, y: "0%", filter: "blur(0px)" }}
+            transition={reducedMotion ? undefined : {
               delay: initialDelay + i * stagger,
               duration: 0.8,
               ease: [0.16, 1, 0.3, 1],
             }}
+            style={reducedMotion ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
           >
             {word}
           </motion.span>
