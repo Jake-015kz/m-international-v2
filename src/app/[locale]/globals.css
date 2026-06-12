@@ -806,7 +806,7 @@ video {
 }
 
 @keyframes card-shine {
-  from { transform: translateX(0%) rotate(2deg); }
+  from { transform: translateX(-100%) rotate(2deg); }
   to   { transform: translateX(350%) rotate(2deg); }
 }
 
@@ -906,19 +906,6 @@ video {
   }
 }
 
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .card-premium-v2::before {
-    animation: none !important;
-  }
-  .card-premium-v2:hover {
-    transform: none;
-  }
-  .btn-premium-glow:hover {
-    transform: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .nav-enter,
   .nav-glass,
@@ -931,5 +918,9 @@ video {
   .card-premium-v2::after {
     animation: none !important;
     transition-duration: 0.01ms !important;
+  }
+  .card-premium-v2:hover,
+  .btn-premium-glow:hover {
+    transform: none !important;
   }
 }
