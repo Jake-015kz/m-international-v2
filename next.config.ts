@@ -19,8 +19,13 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
 
-  // ── Output optimization ──
-  output: "standalone",
+  // ── Transpile Three.js / R3F packages (ESM compatibility) ──
+  transpilePackages: [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/postprocessing",
+  ],
 
   // ── Compression ──
   compress: true,
@@ -28,7 +33,12 @@ const nextConfig: NextConfig = {
   // ── Experimental features for perf ──
   experimental: {
     optimizeCss: true,
-    optimizeServerReact: true,
+  },
+
+  // ── Build config ──
+  // Skip ESLint during production builds (lint in CI separately)
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 
   // ── Headers for caching + security ──
