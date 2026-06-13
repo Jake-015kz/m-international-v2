@@ -9,9 +9,8 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Shield, Leaf, Award, Eye } from "lucide-react";
 import ProductModal from "@/components/sections/products/ProductModal";
 import FilterBar from "@/components/sections/products/FilterBar";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
+import ProductCardV2 from "@/components/sections/products/ProductCardV2";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 
 type Product = {
   name: string;
@@ -23,6 +22,10 @@ type Product = {
   color: string;
   badge?: string;
   category: string;
+  price?: number;
+  oldPrice?: number;
+  rating?: number;
+  reviewCount?: number;
 };
 
 type Messages = {
@@ -87,41 +90,49 @@ function getProductsFromMessages(msgs: Messages): Product[] {
       name: p.micrystal.name, subtitle: p.micrystal.subtitle, description: p.micrystal.description,
       benefits: p.micrystal.benefits, composition: p.micrystal.composition,
       image: PRODUCT_IMAGES.micrystal, color: CATEGORY_COLORS.vision, badge: "Хит", category: "vision",
+      price: 8900, oldPrice: 12500, rating: 4.8, reviewCount: 124,
     },
     {
       name: p.greenmax.name, subtitle: p.greenmax.subtitle, description: p.greenmax.description,
       benefits: p.greenmax.benefits, composition: p.greenmax.composition,
       image: PRODUCT_IMAGES.greenmax, color: CATEGORY_COLORS.detox, badge: "Хит", category: "detox",
+      price: 6500, rating: 4.9, reviewCount: 256,
     },
     {
       name: p.mimax.name, subtitle: p.mimax.subtitle, description: p.mimax.description,
       benefits: p.mimax.benefits, composition: p.mimax.composition,
       image: PRODUCT_IMAGES.mimax, color: CATEGORY_COLORS.detox, category: "detox",
+      price: 7200, oldPrice: 8900, rating: 4.6, reviewCount: 89,
     },
     {
       name: p.blumax.name, subtitle: p.blumax.subtitle, description: p.blumax.description,
       benefits: p.blumax.benefits, composition: p.blumax.composition,
       image: PRODUCT_IMAGES.blumax, color: CATEGORY_COLORS.immunity, category: "immunity",
+      price: 9500, rating: 4.7, reviewCount: 167,
     },
     {
       name: p.nutrimax.name, subtitle: p.nutrimax.subtitle, description: p.nutrimax.description,
       benefits: p.nutrimax.benefits, composition: p.nutrimax.composition,
       image: PRODUCT_IMAGES.nutrimax, color: CATEGORY_COLORS.nutrition, category: "nutrition",
+      price: 5400, oldPrice: 7200, rating: 4.5, reviewCount: 98,
     },
     {
       name: p.fleximax.name, subtitle: p.fleximax.subtitle, description: p.fleximax.description,
       benefits: p.fleximax.benefits, composition: p.fleximax.composition,
       image: PRODUCT_IMAGES.fleximax, color: CATEGORY_COLORS.joints, category: "joints",
+      price: 11000, rating: 4.4, reviewCount: 72,
     },
     {
       name: p.machoman.name, subtitle: p.machoman.subtitle, description: p.machoman.description,
       benefits: p.machoman.benefits, composition: p.machoman.composition,
       image: PRODUCT_IMAGES.machoman, color: CATEGORY_COLORS.mens, category: "mens",
+      price: 8200, oldPrice: 10000, rating: 4.3, reviewCount: 55,
     },
     {
       name: p.mitown.name, subtitle: p.mitown.subtitle, description: p.mitown.description,
       benefits: p.mitown.benefits, composition: p.mitown.composition,
       image: PRODUCT_IMAGES.mitown, color: CATEGORY_COLORS.coffee, category: "coffee",
+      price: 4900, rating: 4.9, reviewCount: 312,
     },
   ];
 }
@@ -163,79 +174,6 @@ function HeroBanner({ title, description, t }: { title: string; description: str
         </motion.div>
       </Container>
     </section>
-  );
-}
-
-/* ── Product card using shadcn components ── */
-function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: string) => string }) {
-  return (
-    <Card className="group flex flex-col h-full cursor-pointer overflow-hidden border-border-subtle/60 bg-bg-elevated/80 backdrop-blur-xl hover:shadow-lg transition-shadow duration-300">
-      {/* Image area */}
-      <div
-        className="relative h-44 sm:h-56 overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${product.color}12 0%, ${product.color}20 100%)` }}
-      >
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-        {product.badge && (
-          <Badge
-            variant="secondary"
-            className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm shadow-sm text-[10px] font-unbounded font-bold border-0"
-            style={{ color: product.color }}
-          >
-            {product.badge}
-          </Badge>
-        )}
-        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-bg-elevated to-transparent" />
-      </div>
-
-      <CardHeader className="pb-1 pt-4 px-4 md:px-5">
-        <CardDescription
-          className="text-[10px] font-onest uppercase tracking-wider mb-0.5"
-          style={{ color: product.color }}
-        >
-          {product.subtitle}
-        </CardDescription>
-        <CardTitle className="font-onest font-bold text-sm md:text-base text-fg-primary leading-[1.2]">
-          {product.name}
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="px-4 md:px-5 pt-0 pb-2 flex-1">
-        <p className="text-[11px] md:text-xs text-fg-secondary font-onest font-light leading-relaxed line-clamp-2">
-          {product.description}
-        </p>
-        {product.benefits && product.benefits.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {product.benefits.slice(0, 3).map((b) => (
-              <Badge
-                key={b}
-                variant="outline"
-                className="text-[10px] font-onest px-2 py-0.5"
-                style={{ borderColor: `${product.color}30`, color: product.color }}
-              >
-                {b}
-              </Badge>
-            ))}
-          </div>
-        )}
-      </CardContent>
-
-      <CardFooter className="px-4 md:px-5 pb-4 pt-0">
-        <Button
-          size="sm"
-          className="w-full"
-          style={{ background: product.color, color: "#fff" }}
-        >
-          <Eye className="w-3.5 h-3.5" />
-          {tCatalog("details")}
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }
 
@@ -326,7 +264,22 @@ export default function CatalogPage() {
                 transition={{ delay: i * 0.04, duration: 0.35 }}
                 onClick={() => setSelectedProduct(product)}
               >
-                <ProductCard product={product} tCatalog={tCatalog} />
+                <ProductCardV2
+                  name={product.name}
+                  subtitle={product.subtitle}
+                  description={product.description}
+                  color={product.color}
+                  image={product.image}
+                  price={product.price}
+                  oldPrice={product.oldPrice}
+                  rating={product.rating}
+                  reviewCount={product.reviewCount}
+                  badge={product.badge}
+                  benefits={product.benefits}
+                  category={product.category}
+                  index={i}
+                  onClick={() => setSelectedProduct(product)}
+                />
               </motion.div>
             ))}
           </motion.div>
