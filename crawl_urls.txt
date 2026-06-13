@@ -1,0 +1,46 @@
+# Crawl results for https://global.m.international
+# Total unique routes: 34
+# Method: JS bundle static analysis (SPA - React)
+
+
+## PRODUCTS (15 pages)
+https://global.m.international/products
+https://global.m.international/products/blumax
+https://global.m.international/products/essential-oil
+https://global.m.international/products/fleximax
+https://global.m.international/products/greenmax
+https://global.m.international/products/machoman
+https://global.m.international/products/mi-mask
+https://global.m.international/products/mi-serum
+https://global.m.international/products/micrystal
+https://global.m.international/products/mimax
+https://global.m.international/products/mishroom
+https://global.m.international/products/mitown
+https://global.m.international/products/nutrimax
+https://global.m.international/products/relax
+https://global.m.international/products/ye-katerina
+
+## CATEGORIES (1 pages)
+https://global.m.international/product-means
+
+## INFO_PAGES (14 pages)
+https://global.m.international/about
+https://global.m.international/business
+https://global.m.international/contact
+https://global.m.international/exchange-policy
+https://global.m.international/liza-training
+https://global.m.international/our-story
+https://global.m.international/our-culture
+https://global.m.international/our-motto
+https://global.m.international/logo-core-value
+https://global.m.international/mlm-marketing
+https://global.m.international/member-centric
+https://global.m.international/shipping-and-fulfillment
+https://global.m.international/privacy-policy
+https://global.m.international/term-of-use
+
+## UTILITY (4 pages)
+https://global.m.international/
+https://global.m.international/login
+https://global.m.international/maintenance
+https://global.m.international/setting/profile

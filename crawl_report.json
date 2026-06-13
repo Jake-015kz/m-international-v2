@@ -1,0 +1,177 @@
+{
+  "site": "https://global.m.international",
+  "crawl_method": "JS bundle static analysis (SPA - React)",
+  "total_unique_routes": 34,
+  "routes": [
+    {
+      "url": "https://global.m.international/products",
+      "path": "/products",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/blumax",
+      "path": "/products/blumax",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/essential-oil",
+      "path": "/products/essential-oil",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/fleximax",
+      "path": "/products/fleximax",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/greenmax",
+      "path": "/products/greenmax",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/machoman",
+      "path": "/products/machoman",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/mi-mask",
+      "path": "/products/mi-mask",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/mi-serum",
+      "path": "/products/mi-serum",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/micrystal",
+      "path": "/products/micrystal",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/mimax",
+      "path": "/products/mimax",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/mishroom",
+      "path": "/products/mishroom",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/mitown",
+      "path": "/products/mitown",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/nutrimax",
+      "path": "/products/nutrimax",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/relax",
+      "path": "/products/relax",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/products/ye-katerina",
+      "path": "/products/ye-katerina",
+      "category": "products"
+    },
+    {
+      "url": "https://global.m.international/product-means",
+      "path": "/product-means",
+      "category": "categories"
+    },
+    {
+      "url": "https://global.m.international/about",
+      "path": "/about",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/business",
+      "path": "/business",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/contact",
+      "path": "/contact",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/exchange-policy",
+      "path": "/exchange-policy",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/liza-training",
+      "path": "/liza-training",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/our-story",
+      "path": "/our-story",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/our-culture",
+      "path": "/our-culture",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/our-motto",
+      "path": "/our-motto",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/logo-core-value",
+      "path": "/logo-core-value",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/mlm-marketing",
+      "path": "/mlm-marketing",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/member-centric",
+      "path": "/member-centric",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/shipping-and-fulfillment",
+      "path": "/shipping-and-fulfillment",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/privacy-policy",
+      "path": "/privacy-policy",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/term-of-use",
+      "path": "/term-of-use",
+      "category": "info_pages"
+    },
+    {
+      "url": "https://global.m.international/",
+      "path": "/",
+      "category": "utility"
+    },
+    {
+      "url": "https://global.m.international/login",
+      "path": "/login",
+      "category": "utility"
+    },
+    {
+      "url": "https://global.m.international/maintenance",
+      "path": "/maintenance",
+      "category": "utility"
+    },
+    {
+      "url": "https://global.m.international/setting/profile",
+      "path": "/setting/profile",
+      "category": "utility"
+    }
+  ]
+}
