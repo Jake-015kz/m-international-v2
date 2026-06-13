@@ -14,7 +14,8 @@
  * Categories:
  *   bg-    → Background surfaces
  *   fg-    → Foreground (text) colors
- *   accent-→ Brand accent (emerald)
+ *   accent-→ Brand accent (muted cyan-teal, hue 195)
+ *   coral- → Secondary warm accent (coral, hue 25)
  *   border-→ Border colors
  *   shadow-→ Shadow tokens
  *   radius-→ Border radius scale
@@ -27,6 +28,13 @@
  *   dot-   → Dot grid pattern tokens
  *   scroll-→ Scroll-driven animation tokens (Apple-style)
  *   parallax- → Parallax layer tokens
+ *
+ * AWWWARDS PALETTE v2 — "Organic Depth"
+ * ═══════════════════════════════════════════════════════════════
+ * Primary accent:   Muted cyan-teal (hue 195) — calm, premium, unique in wellness space
+ * Secondary accent: Warm coral (hue 25) — energy, warmth, CTAs
+ * Neutral base:     Warm off-white → deep charcoal (not pure black)
+ * Gold:             Retained as tertiary luxury accent (≤5% surface)
  *
  * Token format: OKLCH for all colors (wide-gamut, perceptually uniform).
  */
@@ -65,31 +73,43 @@
    ═══════════════════════════════════════════════════════════════ */
 :root {
   /* ── Surface backgrounds ── */
-  --bg-base:      oklch(98.5% 0.003 160);
-  --bg-elevated:  oklch(100%  0.002 160);
-  --bg-sunken:    oklch(96%   0.004 160);
-  --bg-alt:       oklch(97%   0.003 160);
-  --bg-overlay:   oklch(18%   0.008 160 / 0.4);
+  --bg-base:      oklch(97.5% 0.004 85);
+  --bg-elevated:  oklch(100%  0.002 85);
+  --bg-sunken:    oklch(95%   0.006 85);
+  --bg-alt:       oklch(96%   0.004 85);
+  --bg-overlay:   oklch(15%  0.008 85 / 0.5);
 
   /* ── Foreground (text) ── */
-  --fg-primary:   oklch(18%  0.008 160);
-  --fg-secondary: oklch(48%  0.012 160);
-  --fg-tertiary:  oklch(62%  0.010 160);
-  --fg-inverse:   oklch(98%  0.003 160);
-  --fg-accent:    oklch(55%  0.18  160);
+  --fg-primary:   oklch(15%  0.010 85);
+  --fg-secondary: oklch(45%  0.014 85);
+  --fg-tertiary:  oklch(58%  0.012 85);
+  --fg-inverse:   oklch(97%  0.004 85);
+  --fg-accent:    oklch(48%  0.14  195);
   --fg-on-accent: oklch(100% 0     0);
 
-  /* ── Brand accent (emerald) ── */
-  --accent-50:  oklch(97% 0.03  160);
-  --accent-100: oklch(93% 0.06  160);
-  --accent-200: oklch(85% 0.10  160);
-  --accent-300: oklch(75% 0.14  160);
-  --accent-400: oklch(65% 0.16  160);
-  --accent-500: oklch(55% 0.18  160);
-  --accent-600: oklch(48% 0.16  160);
-  --accent-700: oklch(40% 0.14  160);
-  --accent-800: oklch(32% 0.10  160);
-  --accent-900: oklch(22% 0.06  160);
+  /* ── Brand accent (muted cyan-teal, hue 195) ── */
+  --accent-50:  oklch(97% 0.02  195);
+  --accent-100: oklch(93% 0.04  195);
+  --accent-200: oklch(84% 0.08  195);
+  --accent-300: oklch(73% 0.11  195);
+  --accent-400: oklch(62% 0.13  195);
+  --accent-500: oklch(50% 0.14  195);
+  --accent-600: oklch(43% 0.12  195);
+  --accent-700: oklch(36% 0.10  195);
+  --accent-800: oklch(28% 0.07  195);
+  --accent-900: oklch(20% 0.05  195);
+
+  /* ── Warm coral secondary accent (hue 25) ── */
+  --coral-50:  oklch(97% 0.03 25);
+  --coral-100: oklch(94% 0.06 25);
+  --coral-200: oklch(87% 0.10 25);
+  --coral-300: oklch(78% 0.14 25);
+  --coral-400: oklch(68% 0.17 25);
+  --coral-500: oklch(58% 0.19 25);
+  --coral-600: oklch(50% 0.17 25);
+  --coral-700: oklch(42% 0.14 25);
+  --coral-800: oklch(33% 0.10 25);
+  --coral-900: oklch(24% 0.06 25);
 
   /* ── Semantic colors ── */
   --success-50:  oklch(97% 0.04 145);
@@ -113,23 +133,34 @@
   --info-700:    oklch(38% 0.12 250);
 
   /* ── Borders ── */
-  --border-subtle:  oklch(90% 0.006 160);
-  --border-default: oklch(82% 0.008 160);
-  --border-focus:   oklch(55% 0.18  160);
+  --border-subtle:  oklch(89% 0.008 85);
+  --border-default: oklch(80% 0.010 85);
+  --border-focus:   oklch(50% 0.14  195);
 
-  /* ── Glow effects (multi-layered for premium feel) ── */
+  /* ── Glow effects (teal accent) ── */
   --glow-accent-sm:
-    0 0 8px  oklch(55% 0.18 160 / 0.08),
-    0 0 20px oklch(55% 0.18 160 / 0.04);
+    0 0 8px  oklch(50% 0.14 195 / 0.08),
+    0 0 20px oklch(50% 0.14 195 / 0.04);
   --glow-accent-md:
-    0 0 16px oklch(55% 0.18 160 / 0.12),
-    0 0 40px oklch(55% 0.18 160 / 0.06);
+    0 0 16px oklch(50% 0.14 195 / 0.12),
+    0 0 40px oklch(50% 0.14 195 / 0.06);
   --glow-accent-lg:
-    0 0 32px oklch(55% 0.18 160 / 0.18),
-    0 0 80px oklch(55% 0.18 160 / 0.08);
+    0 0 32px oklch(50% 0.14 195 / 0.18),
+    0 0 80px oklch(50% 0.14 195 / 0.08);
   --glow-accent-xl:
-    0 0 48px oklch(55% 0.18 160 / 0.22),
-    0 0 120px oklch(55% 0.18 160 / 0.10);
+    0 0 48px oklch(50% 0.14 195 / 0.22),
+    0 0 120px oklch(50% 0.14 195 / 0.10);
+
+  /* ── Glow effects (coral secondary) ── */
+  --glow-coral-sm:
+    0 0 8px  oklch(58% 0.19 25 / 0.10),
+    0 0 20px oklch(58% 0.19 25 / 0.05);
+  --glow-coral-md:
+    0 0 16px oklch(58% 0.19 25 / 0.14),
+    0 0 40px oklch(58% 0.19 25 / 0.07);
+  --glow-coral-lg:
+    0 0 32px oklch(58% 0.19 25 / 0.20),
+    0 0 80px oklch(58% 0.19 25 / 0.08);
 
   /* ── Shadows (layered for realism; Linear-style dark shadows for cards: 0 1px 3px oklch(0 0 0 / 0.3)) ── */
   --shadow-xs:
@@ -293,12 +324,12 @@
 
   /* ── Gradient presets ── */
   --gradient-radial-glow:
-    radial-gradient(circle at 50% 50%, oklch(55% 0.18 160 / 0.08) 0%, transparent 70%);
+    radial-gradient(circle at 50% 50%, oklch(50% 0.14 195 / 0.10) 0%, transparent 70%);
   --gradient-shimmer:
     linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%);
   --gradient-mesh:
-    radial-gradient(ellipse 50% 40% at 20% 50%, oklch(55% 0.18 160 / 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 80% 40%, oklch(65% 0.18 85 / 0.03) 0%, transparent 55%);
+    radial-gradient(ellipse 50% 40% at 20% 50%, oklch(50% 0.14 195 / 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 40%, oklch(58% 0.19 25 / 0.03) 0%, transparent 55%);
 
   /* ── Legacy aliases (from existing codebase) ── */
   --background: var(--bg-base);
@@ -317,16 +348,16 @@
   --accent-secondary: var(--accent-200);
 
   /* ── Natural Light Palette — HEX aliases for quick reference ── */
-  --bg-body:       #F6FAF0;
-  --primary:       #4E9A3E;
-  --primary-dark:  #2F7D32;
-  --primary-soft:  #DFF0D8;
-  --accent:        #BBD05A;
-  --text-main:     #17351D;
-  --text-muted:    #5B705D;
+  --bg-body:       oklch(97.5% 0.004 85);
+  --primary:       oklch(50% 0.14 195);
+  --primary-dark:  oklch(36% 0.10 195);
+  --primary-soft:  oklch(93% 0.04 195);
+  --accent:        oklch(58% 0.19 25);
+  --text-main:     oklch(15% 0.010 85);
+  --text-muted:    oklch(45% 0.014 85);
   --text-on-hero:  #FFFFFF;
   --card-bg:       #FFFFFF;
-  --border-soft:   oklch(90% 0.006 160);
+  --border-soft:   oklch(89% 0.008 85);
   --shadow-soft:   0 1px 3px oklch(0% 0 0 / 0.06), 0 1px 2px oklch(0% 0 0 / 0.04);
 }
 
@@ -335,31 +366,43 @@
    ═══════════════════════════════════════════════════════════════ */
 .dark {
   /* ── Surface backgrounds ── */
-  --bg-base:      oklch(8%  0.005 160);
-  --bg-elevated:  oklch(12% 0.007 160);
-  --bg-sunken:    oklch(5%  0.003 160);
-  --bg-alt:       oklch(10% 0.006 160);
-  --bg-overlay:   oklch(0%  0     0   / 0.6);
+  --bg-base:      oklch(7%  0.006 85);
+  --bg-elevated:  oklch(11% 0.008 85);
+  --bg-sunken:    oklch(4%  0.004 85);
+  --bg-alt:       oklch(9%  0.007 85);
+  --bg-overlay:   oklch(0%  0     0   / 0.7);
 
   /* ── Foreground (text) ── */
-  --fg-primary:   oklch(92% 0.006 160);
-  --fg-secondary: oklch(65% 0.010 160);
-  --fg-tertiary:  oklch(50% 0.008 160);
-  --fg-inverse:   oklch(12% 0.007 160);
-  --fg-accent:    oklch(70% 0.15  160);
+  --fg-primary:   oklch(92% 0.008 85);
+  --fg-secondary: oklch(65% 0.012 85);
+  --fg-tertiary:  oklch(50% 0.010 85);
+  --fg-inverse:   oklch(10% 0.008 85);
+  --fg-accent:    oklch(70% 0.13  195);
   --fg-on-accent: oklch(100% 0     0);
 
-  /* ── Brand accent ── */
-  --accent-50:  oklch(18% 0.04  160);
-  --accent-100: oklch(24% 0.06  160);
-  --accent-200: oklch(32% 0.08  160);
-  --accent-300: oklch(42% 0.10  160);
-  --accent-400: oklch(55% 0.14  160);
-  --accent-500: oklch(70% 0.15  160);
-  --accent-600: oklch(78% 0.12  160);
-  --accent-700: oklch(85% 0.08  160);
-  --accent-800: oklch(90% 0.05  160);
-  --accent-900: oklch(95% 0.03  160);
+  /* ── Brand accent (muted cyan-teal) — dark ── */
+  --accent-50:  oklch(14% 0.03  195);
+  --accent-100: oklch(20% 0.05  195);
+  --accent-200: oklch(28% 0.07  195);
+  --accent-300: oklch(38% 0.09  195);
+  --accent-400: oklch(50% 0.12  195);
+  --accent-500: oklch(70% 0.13  195);
+  --accent-600: oklch(78% 0.11  195);
+  --accent-700: oklch(85% 0.08  195);
+  --accent-800: oklch(90% 0.05  195);
+  --accent-900: oklch(95% 0.03  195);
+
+  /* ── Warm coral secondary — dark ── */
+  --coral-50:  oklch(15% 0.04 25);
+  --coral-100: oklch(22% 0.06 25);
+  --coral-200: oklch(30% 0.08 25);
+  --coral-300: oklch(40% 0.10 25);
+  --coral-400: oklch(52% 0.14 25);
+  --coral-500: oklch(65% 0.16 25);
+  --coral-600: oklch(74% 0.13 25);
+  --coral-700: oklch(82% 0.09 25);
+  --coral-800: oklch(88% 0.06 25);
+  --coral-900: oklch(94% 0.03 25);
 
   /* ── Semantic colors ── */
   --success-50:  oklch(15% 0.04 145);
@@ -383,23 +426,34 @@
   --info-700:    oklch(80% 0.08 250);
 
   /* ── Borders ── */
-  --border-subtle:  oklch(20% 0.008 160);
-  --border-default: oklch(28% 0.010 160);
-  --border-focus:   oklch(70% 0.15  160);
+  --border-subtle:  oklch(18% 0.010 85);
+  --border-default: oklch(26% 0.012 85);
+  --border-focus:   oklch(70% 0.13  195);
 
-  /* ── Glow effects (multi-layered for premium feel) ── */
+  /* ── Glow effects (teal accent) — dark ── */
   --glow-accent-sm:
-    0 0 12px oklch(70% 0.15 160 / 0.12),
-    0 0 30px oklch(70% 0.15 160 / 0.06);
+    0 0 12px oklch(70% 0.13 195 / 0.14),
+    0 0 30px oklch(70% 0.13 195 / 0.07);
   --glow-accent-md:
-    0 0 24px oklch(70% 0.15 160 / 0.18),
-    0 0 60px oklch(70% 0.15 160 / 0.08);
+    0 0 24px oklch(70% 0.13 195 / 0.20),
+    0 0 60px oklch(70% 0.13 195 / 0.09);
   --glow-accent-lg:
-    0 0 48px oklch(70% 0.15 160 / 0.22),
-    0 0 100px oklch(70% 0.15 160 / 0.10);
+    0 0 48px oklch(70% 0.13 195 / 0.26),
+    0 0 100px oklch(70% 0.13 195 / 0.12);
   --glow-accent-xl:
-    0 0 64px oklch(70% 0.15 160 / 0.28),
-    0 0 140px oklch(70% 0.15 160 / 0.12);
+    0 0 64px oklch(70% 0.13 195 / 0.32),
+    0 0 140px oklch(70% 0.13 195 / 0.14);
+
+  /* ── Glow effects (coral secondary) — dark ── */
+  --glow-coral-sm:
+    0 0 12px oklch(65% 0.16 25 / 0.14),
+    0 0 30px oklch(65% 0.16 25 / 0.07);
+  --glow-coral-md:
+    0 0 24px oklch(65% 0.16 25 / 0.20),
+    0 0 60px oklch(65% 0.16 25 / 0.09);
+  --glow-coral-lg:
+    0 0 48px oklch(65% 0.16 25 / 0.26),
+    0 0 100px oklch(65% 0.16 25 / 0.12);
 
   /* ── Shadows (Linear-style: 0 1px 3px oklch(0 0 0 / 0.3) base layer) ── */
   --shadow-xs:
@@ -502,26 +556,26 @@
   --blur-3xl:  40px;
 
   /* ── Natural Light Palette — HEX aliases (dark overrides) ── */
-  --bg-body:       oklch(8% 0.005 160);
-  --primary:       #4E9A3E;
-  --primary-dark:  #2F7D32;
-  --primary-soft:  #DFF0D8;
-  --accent:        #BBD05A;
-  --text-main:     oklch(92% 0.006 160);
-  --text-muted:    oklch(65% 0.010 160);
+  --bg-body:       oklch(7% 0.006 85);
+  --primary:       oklch(70% 0.13 195);
+  --primary-dark:  oklch(85% 0.08 195);
+  --primary-soft:  oklch(20% 0.05 195);
+  --accent:        oklch(65% 0.16 25);
+  --text-main:     oklch(92% 0.008 85);
+  --text-muted:    oklch(65% 0.012 85);
   --text-on-hero:  #FFFFFF;
-  --card-bg:       oklch(12% 0.007 160);
-  --border-soft:   oklch(20% 0.008 160);
+  --card-bg:       oklch(11% 0.008 85);
+  --border-soft:   oklch(18% 0.010 85);
   --shadow-soft:   0 1px 3px oklch(0 0 0 / 0.30);
 
   /* ── Gradient presets — dark ── */
   --gradient-radial-glow:
-    radial-gradient(circle at 50% 50%, oklch(70% 0.15 160 / 0.12) 0%, transparent 70%);
+    radial-gradient(circle at 50% 50%, oklch(70% 0.13 195 / 0.14) 0%, transparent 70%);
   --gradient-shimmer:
     linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 55%, transparent 60%);
   --gradient-mesh:
-    radial-gradient(ellipse 50% 40% at 20% 50%, oklch(70% 0.15 160 / 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 80% 40%, oklch(65% 0.18 85 / 0.04) 0%, transparent 55%);
+    radial-gradient(ellipse 50% 40% at 20% 50%, oklch(70% 0.13 195 / 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 40%, oklch(65% 0.16 25 / 0.05) 0%, transparent 55%);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -549,7 +603,7 @@
   --color-fg-accent:    var(--fg-accent);
   --color-fg-on-accent: var(--fg-on-accent);
 
-  /* ── Accent palette ── */
+  /* ── Accent palette (teal) ── */
   --color-accent-50:  var(--accent-50);
   --color-accent-100: var(--accent-100);
   --color-accent-200: var(--accent-200);
@@ -560,6 +614,18 @@
   --color-accent-700: var(--accent-700);
   --color-accent-800: var(--accent-800);
   --color-accent-900: var(--accent-900);
+
+  /* ── Coral secondary palette ── */
+  --color-coral-50:  var(--coral-50);
+  --color-coral-100: var(--coral-100);
+  --color-coral-200: var(--coral-200);
+  --color-coral-300: var(--coral-300);
+  --color-coral-400: var(--coral-400);
+  --color-coral-500: var(--coral-500);
+  --color-coral-600: var(--coral-600);
+  --color-coral-700: var(--coral-700);
+  --color-coral-800: var(--coral-800);
+  --color-coral-900: var(--coral-900);
 
   /* ── Semantic palettes ── */
   --color-success-50:  var(--success-50);
@@ -678,6 +744,11 @@
   --shadow-glow-gold-sm: var(--glow-gold-sm);
   --shadow-glow-gold-md: var(--glow-gold-md);
   --shadow-glow-gold-lg: var(--glow-gold-lg);
+
+  /* ── Coral glow shadows ── */
+  --shadow-glow-coral-sm: var(--glow-coral-sm);
+  --shadow-glow-coral-md: var(--glow-coral-md);
+  --shadow-glow-coral-lg: var(--glow-coral-lg);
 
   /* ── Display type scale (Unbounded, hero headings) ── */
   --text-display-sm: clamp(1.75rem, 4.5vw, 3.5rem);

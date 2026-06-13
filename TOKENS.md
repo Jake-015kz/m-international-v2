@@ -5,22 +5,31 @@
 ### Surfaces
 | Token | Light | Dark | Usage |
 |-------|-------|------|-------|
-| `--bg-base` | oklch(98.5% 0.003 160) | oklch(8% 0.005 160) | Page background |
-| `--bg-elevated` | oklch(100% 0.002 160) | oklch(12% 0.007 160) | Cards, modals |
-| `--bg-sunken` | oklch(96% 0.004 160) | oklch(5% 0.003 160) | Inputs, code blocks |
-| `--bg-alt` | oklch(97% 0.003 160) | oklch(10% 0.006 160) | Alternating sections |
+| `--bg-base` | oklch(97.5% 0.004 85) | oklch(7% 0.006 85) | Page background |
+| `--bg-elevated` | oklch(100% 0.002 85) | oklch(11% 0.008 85) | Cards, modals |
+| `--bg-sunken` | oklch(95% 0.006 85) | oklch(4% 0.004 85) | Inputs, code blocks |
+| `--bg-alt` | oklch(96% 0.004 85) | oklch(9% 0.007 85) | Alternating sections |
 
 ### Foreground (Text)
 | Token | Light | Dark | Usage |
 |-------|-------|------|-------|
-| `--fg-primary` | oklch(18% 0.008 160) | oklch(92% 0.006 160) | Headings, body |
-| `--fg-secondary` | oklch(48% 0.012 160) | oklch(65% 0.010 160) | Descriptions, labels |
-| `--fg-tertiary` | oklch(62% 0.010 160) | oklch(50% 0.008 160) | Placeholders, hints |
-| `--fg-inverse` | oklch(98% 0.003 160) | oklch(12% 0.007 160) | Text on dark bg |
-| `--fg-accent` | oklch(55% 0.18 160) | oklch(70% 0.15 160) | Links, highlights |
+| `--fg-primary` | oklch(15% 0.010 85) | oklch(92% 0.008 85) | Headings, body |
+| `--fg-secondary` | oklch(45% 0.014 85) | oklch(65% 0.012 85) | Descriptions, labels |
+| `--fg-tertiary` | oklch(58% 0.012 85) | oklch(50% 0.010 85) | Placeholders, hints |
+| `--fg-inverse` | oklch(97% 0.004 85) | oklch(10% 0.008 85) | Text on dark bg |
+| `--fg-accent` | oklch(48% 0.14 195) | oklch(70% 0.13 195) | Links, highlights |
 
-### Accent (Emerald)
-Full 50–900 scale. Primary brand color: `--accent-500`.
+### Accent — Cyan-Teal (hue 195)
+Primary brand accent. Usage: ≤10% surface area.
+Full 50–900 scale. Primary: `--accent-500` (oklch 50% 0.14 195) ≈ #2A7C8A.
+
+### Accent — Warm Coral (hue 25)
+Secondary accent for CTAs and energy points. Full 50–900 scale.
+Primary: `--coral-500` (oklch 58% 0.19 25) ≈ #B8503A.
+
+### Gold (hue 85)
+Tertiary luxury accent. Usage: ≤5% surface area.
+Full 50–900 scale. Primary: `--gold-500` (oklch 65% 0.18 85) ≈ #C9A96E.
 
 ### Semantic
 - **Success**: `--success-500` (oklch 60% 0.18 145)
@@ -67,7 +76,7 @@ Full 50–900 scale. Primary brand color: `--accent-500`.
 
 ## Shadows
 Layered box-shadows: `--shadow-xs` through `--shadow-2xl`.
-Glow effects: `--glow-accent-sm/md/lg`.
+Glow effects: `--glow-accent-sm/md/lg` (teal), `--glow-coral-sm/md/lg` (coral), `--glow-gold-sm/md/lg` (gold).
 
 ## Animation
 
@@ -101,8 +110,11 @@ Add `.dark` class to `<html>` or `<body>`. All tokens automatically switch.
 All tokens are mapped to Tailwind utilities via `@theme inline`:
 - `bg-bg-base`, `bg-bg-elevated`, `bg-bg-sunken`
 - `text-fg-primary`, `text-fg-secondary`, `text-fg-tertiary`
-- `text-accent-500`, `bg-accent-500`
+- `text-accent-500`, `bg-accent-500`, `text-coral-500`, `bg-coral-500`
 - `shadow-glow-sm`, `shadow-glow-md`, `shadow-glow-lg`
 - `rounded-xs`, `rounded-sm`, `rounded-md`, etc.
 - `duration-instant`, `duration-fast`, `duration-normal`, etc.
 - `z-dropdown`, `z-modal`, `z-toast`
+
+---
+*Version: 2.0.0 — Organic Depth (Awwwards June 2026)*
