@@ -1,0 +1,41 @@
+{
+  "project": "m-international-v2",
+  "date": "2026-06-13",
+  "stack": ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "GSAP", "Framer Motion", "Three.js", "Zustand", "Zod", "Lenis", "shadcn/ui", "next-intl"],
+  "market": "CIS/СНГ",
+  "skills": {
+    "tier1": [
+      {"name": "nextjs-cis-premium", "cat": "frontend", "why": "Стек проекта + СНГ-адаптация"},
+      {"name": "frontend-design", "cat": "frontend", "why": "Anti-slop, production UI"},
+      {"name": "premium-web-patterns", "cat": "design", "why": "Bento, glassmorphism, scroll-anim"},
+      {"name": "animation-patterns", "cat": "design", "why": "Framer Motion + GSAP + CSS anim"},
+      {"name": "a11y-accessibility", "cat": "frontend", "why": "WCAG 2.2 AA compliance"}
+    ],
+    "tier2": [
+      {"name": "design-taste-frontend", "cat": "design", "why": "Metric-based UI architecture"},
+      {"name": "motion-nextjs", "cat": "design", "why": "Framer Motion deep patterns"},
+      {"name": "web-motion", "cat": "design", "why": "Animation debugging loop"},
+      {"name": "humanizer-ru", "cat": "design", "why": "Редактура RU текстов"},
+      {"name": "humanizer", "cat": "creative", "why": "Редактура EN текстов"},
+      {"name": "react-security", "cat": "frontend", "why": "OWASP Top 10:2025"},
+      {"name": "react-structure", "cat": "frontend", "why": "Feature-first architecture"},
+      {"name": "shadcn-skills", "cat": "frontend", "why": "shadcn/ui компоненты"},
+      {"name": "requesting-code-review", "cat": "dev", "why": "Pre-commit quality gates"},
+      {"name": "dogfood", "cat": "qa", "why": "Exploratory QA"}
+    ],
+    "tier3": [
+      {"name": "sketch", "cat": "creative", "why": "HTML mockups"},
+      {"name": "claude-design", "cat": "creative", "why": "One-off prototypes"},
+      {"name": "excalidraw", "cat": "creative", "why": "Диаграммы"},
+      {"name": "architecture-diagram", "cat": "creative", "why": "SVG диаграммы"},
+      {"name": "systematic-debugging", "cat": "dev", "why": "Отладка"},
+      {"name": "simplify-code", "cat": "dev", "why": "Рефакторинг"},
+      {"name": "spike", "cat": "dev", "why": "Эксперименты"},
+      {"name": "plan", "cat": "dev", "why": "Планирование"},
+      {"name": "test-driven-development", "cat": "dev", "why": "TDD"},
+      {"name": "codebase-inspection", "cat": "github", "why": "Метрики кода"}
+    ]
+  },
+  "excluded_categories": ["mlops", "data-science", "email", "social-media", "smart-home", "note-taking", "productivity", "media", "research", "autonomous-ai-agents", "backend", "devops", "core"],
+  "summary": {"total": 89, "selected": 25, "tier1": 5, "tier2": 10, "tier3": 10}
+}

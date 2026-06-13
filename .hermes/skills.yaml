@@ -1,0 +1,203 @@
+# M-International — Конфигурация скиллов проекта
+# Дата: 2026-06-13
+# Стек: Next.js 16, React 19, TypeScript 5, Tailwind CSS 4, GSAP, Framer Motion, Three.js
+# Тип: Премиальный маркетинговый лендинг (MLM/БАДы) для СНГ-рынка
+#
+# Скиллы разделены на 3 тиера по приоритету использования.
+# Tier 1 — критически важные, Tier 2 — высоко полезные, Tier 3 — специализированные.
+
+project:
+  name: m-international-v2
+  stack:
+    - Next.js 16
+    - React 19
+    - TypeScript 5
+    - Tailwind CSS 4
+    - GSAP 3.15
+    - Framer Motion 12.40
+    - Three.js 0.184
+    - Zustand 5
+    - Zod 4
+    - Lenis 1.3
+    - shadcn/ui 4.11.0
+    - next-intl 4.13.0
+  market: CIS/СНГ
+  language: ru/kz/en
+
+skills:
+  tier1:
+    - name: nextjs-cis-premium
+      category: frontend
+      priority: critical
+      description: Паттерны Next.js 16 + React 19 + TS + Tailwind 4 для СНГ-рынка. App Router, Server Components, GSAP, Lenis.
+      usage: Архитектурные решения, паттерны компонентов, лучшие практики.
+
+    - name: frontend-design
+      category: frontend
+      priority: critical
+      description: Production-grade интерфейсы без generic AI aesthetics. Anti-slop подход.
+      usage: Разработка уникальных компонентов, визуальных решений.
+
+    - name: premium-web-patterns
+      category: design
+      priority: critical
+      description: Bento grids, scroll-driven animations, glassmorphism, marquee, gradient borders. Адаптирован под СНГ.
+      usage: Hero-секции, карточки, анимации, интерактивные элементы.
+
+    - name: animation-patterns
+      category: design
+      priority: critical
+      description: Framer Motion, GSAP, CSS animations, scroll-triggered animations. Performance budgets.
+      usage: Все анимации — page transitions, scroll reveal, hover states.
+
+    - name: a11y-accessibility
+      category: frontend
+      priority: critical
+      description: WCAG 2.2 AA compliance. ARIA, keyboard navigation, screen reader support.
+      usage: Аудит и исправление доступности всех компонентов.
+
+  tier2:
+    - name: design-taste-frontend
+      category: design
+      priority: high
+      description: Senior UI/UX Engineer подход. Metric-based rules, CSS hardware acceleration.
+      usage: Архитектура компонентов, оптимизация CSS.
+
+    - name: motion-nextjs
+      category: design
+      priority: high
+      description: Глубокое покрытие Framer Motion для React/Next.js 16.
+      usage: Сложные анимационные последовательности.
+
+    - name: web-motion
+      category: design
+      priority: high
+      description: Agentic coding loop для веб-анимаций. Запись, анализ кадров, диагностика.
+      usage: Отладка и полировка анимаций.
+
+    - name: humanizer-ru
+      category: design
+      priority: high
+      description: Редактор русского текста. 21 паттерн, убирает AI-признаки и канцелярит.
+      usage: Редактирование всех текстов сайта на русском.
+
+    - name: humanizer
+      category: creative
+      priority: high
+      description: Аналог humanizer-ru для английского контента.
+      usage: Редактирование англоязычного контента.
+
+    - name: react-security
+      category: frontend
+      priority: high
+      description: OWASP Top 10:2025 для React 19 + Next.js 16.
+      usage: Аудит безопасности перед деплоем.
+
+    - name: react-structure
+      category: frontend
+      priority: high
+      description: Feature-first enterprise-grade React architecture. TypeScript strict.
+      usage: Рефакторинг архитектуры при росте проекта.
+
+    - name: shadcn-skills
+      category: frontend
+      priority: high
+      description: Установка, компоненты, блоки, формы, theming для shadcn/ui.
+      usage: Работа с UI-компонентами shadcn.
+
+    - name: requesting-code-review
+      category: software-development
+      priority: high
+      description: Pre-commit review — security scan, quality gates, auto-fix.
+      usage: Настройка CI/CD pipeline.
+
+    - name: dogfood
+      category: dogfood
+      priority: high
+      description: Exploratory QA — поиск багов, доказательства, отчёты.
+      usage: Тестирование перед релизом.
+
+  tier3:
+    - name: sketch
+      category: creative
+      priority: medium
+      description: Быстрые HTML mockups — 2-3 варианта дизайна для сравнения.
+      usage: Прототипирование новых секций.
+
+    - name: claude-design
+      category: creative
+      priority: medium
+      description: Дизайн one-off HTML artifacts (landing, deck, prototype).
+      usage: Быстрое прототипирование.
+
+    - name: excalidraw
+      category: creative
+      priority: medium
+      description: Hand-drawn диаграммы (arch, flow, seq) для документации.
+      usage: Документация архитектуры.
+
+    - name: architecture-diagram
+      category: creative
+      priority: medium
+      description: Dark-themed SVG диаграммы для презентаций.
+      usage: Презентационные материалы.
+
+    - name: systematic-debugging
+      category: software-development
+      priority: medium
+      description: 4-phase root cause debugging.
+      usage: Сложные баги.
+
+    - name: simplify-code
+      category: software-development
+      priority: medium
+      description: Parallel 3-agent cleanup — рефакторинг кода.
+      usage: Рефакторинг после активной разработки.
+
+    - name: spike
+      category: software-development
+      priority: medium
+      description: Throwaway experiments для валидации идей.
+      usage: Тестирование новых подходов.
+
+    - name: plan
+      category: software-development
+      priority: medium
+      description: Планирование задач с конкретными шагами и кодом.
+      usage: Планирование крупных фич.
+
+    - name: test-driven-development
+      category: software-development
+      priority: medium
+      description: TDD подход — тесты до кода.
+      usage: Критичные компоненты.
+
+    - name: codebase-inspection
+      category: github
+      priority: medium
+      description: Анализ кодовой базы — LOC, языки, соотношения.
+      usage: Метрики проекта.
+
+# Исключённые категории (не релевантны для фронтенд-лендинга):
+# excluded_categories:
+#   - mlops (ML/AI скиллы)
+#   - data-science
+#   - email
+#   - social-media
+#   - smart-home
+#   - note-taking
+#   - productivity
+#   - media (gif-search, heartmula, songsee, youtube-content)
+#   - research (arxiv, llm-wiki, polymarket, blogwatcher)
+#   - autonomous-ai-agents (claude-code, codex, opencode, hermes-agent)
+#   - backend (docker, github-*, watchers, hermes-optimizer)
+#   - devops (kanban-*)
+#   - core (Skill Factory, scrapling)
+
+summary:
+  total_available: 89
+  total_selected: 25
+  tier1_count: 5
+  tier2_count: 10
+  tier3_count: 10
+  excluded_count: 64
