@@ -17,45 +17,7 @@ import { MagneticButton } from "@/components/ui";
 import { TextRevealWords } from "@/components/ui/TextReveal";
 import { usePrefersReducedMotion } from "@/lib/motion";
 import FloatingStatCards from "./StatCards";
-
-/* ── Trust badge data ── */
-const TRUST_ITEMS = [
-  { key: "gmp", icon: "shield" },
-  { key: "iso", icon: "badge" },
-  { key: "halal", icon: "leaf" },
-  { key: "countries", icon: "globe" },
-] as const;
-
-function TrustIcon({ icon }: { icon: string }) {
-  const icons: Record<string, React.ReactNode> = {
-    shield: (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="M9 12l2 2 4-4" />
-      </svg>
-    ),
-    badge: (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="8" r="7" />
-        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-      </svg>
-    ),
-    leaf: (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-      </svg>
-    ),
-    globe: (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M2 12h20" />
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-      </svg>
-    ),
-  };
-  return <>{icons[icon]}</>;
-}
+import TrustBadges from "./TrustBadges";
 
 /* ── Slide 1: Main Hero ── */
 function SlideMain() {
@@ -170,26 +132,14 @@ function SlideMain() {
               </MagneticButton>
             </div>
 
-            {/* Trust bar */}
-            <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 flex-wrap">
-              {TRUST_ITEMS.map((item) => (
-                <div
-                  key={item.key}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/10 border border-white/15"
-                >
-                  <span className="text-white/70" aria-hidden="true">
-                    <TrustIcon icon={item.icon} />
-                  </span>
-                  <span className="text-[10px] sm:text-[11px] text-white/80 font-space-grotesk font-medium whitespace-nowrap">
-                    {t(`trust.${item.key}`)}
-                  </span>
-                </div>
-              ))}
-              <div className="w-px h-4 bg-white/20 hidden sm:block" aria-hidden="true" />
-              <div className="flex items-center gap-3 sm:gap-5 text-[10px] sm:text-[11px] text-white/80 font-space-grotesk">
-                <span><strong className="text-white font-semibold">50+</strong> {t("stat.countries")}</span>
-                <span className="hidden sm:inline"><strong className="text-white font-semibold">10K+</strong> {t("stat.customers")}</span>
-              </div>
+            {/* Trust badges — minimalist capsule row */}
+            <TrustBadges />
+
+            {/* Countries + customers stat — separate line below badges */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-3 mb-0">
+              <span className="text-[11px] sm:text-xs text-white/60 font-space-grotesk">
+                <strong className="text-white/80 font-semibold">10K+</strong> {t("stat.customers")}
+              </span>
             </div>
           </div>
 
