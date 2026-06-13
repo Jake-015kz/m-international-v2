@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectFade, Keyboard, A11y } from "swiper/modules";
@@ -143,9 +144,22 @@ function SlideMain() {
             </div>
           </div>
 
-          {/* Right: product image */}
+          {/* Right: product image — floating 3D presentation */}
           <div className="flex items-center justify-center relative order-2 mt-4 lg:mt-0">
-            <div className="relative">
+            <motion.div
+              className="relative"
+              animate={reducedMotion ? {} : { y: [0, -12, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Soft blurred shadow under the box for levitation effect */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 bottom-[-8%] w-[70%] h-[20%] pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, transparent 70%)",
+                  filter: "blur(16px)",
+                }}
+              />
+              {/* Glow behind product */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -169,7 +183,7 @@ function SlideMain() {
                   height: "auto",
                 }}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -247,9 +261,22 @@ function SlideProduct() {
             </div>
           </div>
 
-          {/* Right: product image */}
+          {/* Right: product image — floating 3D presentation */}
           <div className="flex items-center justify-center">
-            <div className="relative">
+            <motion.div
+              className="relative"
+              animate={reducedMotion ? {} : { y: [0, -12, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Soft blurred shadow under the box for levitation effect */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 bottom-[-8%] w-[70%] h-[20%] pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, transparent 70%)",
+                  filter: "blur(16px)",
+                }}
+              />
+              {/* Glow behind product */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -272,7 +299,7 @@ function SlideProduct() {
                   height: "auto",
                 }}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
