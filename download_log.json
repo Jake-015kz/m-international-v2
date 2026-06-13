@@ -1,0 +1,183 @@
+{
+  "copied": [
+    {
+      "slug": "micrystal",
+      "category": "vision",
+      "src": "/storage/repos/m-international-v2/public/images/products/micrystal.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/micrystal/micrystal_01.avif",
+      "size": 70888,
+      "duplicate": false
+    },
+    {
+      "slug": "micrystal",
+      "category": "vision",
+      "src": "/storage/repos/m-international-v2/public/images/products/micrystal.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/micrystal/micrystal_02.webp",
+      "size": 64584,
+      "duplicate": false
+    },
+    {
+      "slug": "greenmax",
+      "category": "detox",
+      "src": "/storage/repos/m-international-v2/public/images/products/greenmax.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/greenmax/greenmax_01.avif",
+      "size": 24336,
+      "duplicate": false
+    },
+    {
+      "slug": "greenmax",
+      "category": "detox",
+      "src": "/storage/repos/m-international-v2/public/images/products/greenmax.png",
+      "dest": "/storage/repos/m-international-v2/category_structure/greenmax/greenmax_02.png",
+      "size": 33033,
+      "duplicate": false
+    },
+    {
+      "slug": "greenmax",
+      "category": "detox",
+      "src": "/storage/repos/m-international-v2/public/images/products/greenmax.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/greenmax/greenmax_03.webp",
+      "size": 13982,
+      "duplicate": false
+    },
+    {
+      "slug": "mimax",
+      "category": "immunity",
+      "src": "/storage/repos/m-international-v2/public/images/products/mimax.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/mimax/mimax_01.avif",
+      "size": 30372,
+      "duplicate": false
+    },
+    {
+      "slug": "mimax",
+      "category": "immunity",
+      "src": "/storage/repos/m-international-v2/public/images/products/mimax.png",
+      "dest": "/storage/repos/m-international-v2/category_structure/mimax/mimax_02.png",
+      "size": 69017,
+      "duplicate": false
+    },
+    {
+      "slug": "mimax",
+      "category": "immunity",
+      "src": "/storage/repos/m-international-v2/public/images/products/mimax.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/mimax/mimax_03.webp",
+      "size": 16370,
+      "duplicate": false
+    },
+    {
+      "slug": "blumax",
+      "category": "immunity",
+      "src": "/storage/repos/m-international-v2/public/images/products/blumax.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/blumax/blumax_01.avif",
+      "size": 21113,
+      "duplicate": false
+    },
+    {
+      "slug": "blumax",
+      "category": "immunity",
+      "src": "/storage/repos/m-international-v2/public/images/products/blumax.png",
+      "dest": "/storage/repos/m-international-v2/category_structure/blumax/blumax_02.png",
+      "size": 46904,
+      "duplicate": false
+    },
+    {
+      "slug": "blumax",
+      "category": "immunity",
+      "src": "/storage/repos/m-international-v2/public/images/products/blumax.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/blumax/blumax_03.webp",
+      "size": 11678,
+      "duplicate": false
+    },
+    {
+      "slug": "nutrimax",
+      "category": "nutrition",
+      "src": "/storage/repos/m-international-v2/public/images/products/nutrimax.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/nutrimax/nutrimax_01.avif",
+      "size": 38778,
+      "duplicate": false
+    },
+    {
+      "slug": "nutrimax",
+      "category": "nutrition",
+      "src": "/storage/repos/m-international-v2/public/images/products/nutrimax.png",
+      "dest": "/storage/repos/m-international-v2/category_structure/nutrimax/nutrimax_02.png",
+      "size": 61867,
+      "duplicate": false
+    },
+    {
+      "slug": "nutrimax",
+      "category": "nutrition",
+      "src": "/storage/repos/m-international-v2/public/images/products/nutrimax.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/nutrimax/nutrimax_03.webp",
+      "size": 15198,
+      "duplicate": false
+    },
+    {
+      "slug": "fleximax",
+      "category": "joints",
+      "src": "/storage/repos/m-international-v2/public/images/products/fleximax.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/fleximax/fleximax_01.avif",
+      "size": 29409,
+      "duplicate": false
+    },
+    {
+      "slug": "fleximax",
+      "category": "joints",
+      "src": "/storage/repos/m-international-v2/public/images/products/fleximax.png",
+      "dest": "/storage/repos/m-international-v2/category_structure/fleximax/fleximax_02.png",
+      "size": 62667,
+      "duplicate": false
+    },
+    {
+      "slug": "fleximax",
+      "category": "joints",
+      "src": "/storage/repos/m-international-v2/public/images/products/fleximax.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/fleximax/fleximax_03.webp",
+      "size": 15116,
+      "duplicate": false
+    },
+    {
+      "slug": "macho-man",
+      "category": "mens",
+      "src": "/storage/repos/m-international-v2/public/images/products/machoman.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/macho-man/macho-man_01.avif",
+      "size": 23158,
+      "duplicate": false
+    },
+    {
+      "slug": "macho-man",
+      "category": "mens",
+      "src": "/storage/repos/m-international-v2/public/images/products/machoman.png",
+      "dest": "/storage/repos/m-international-v2/category_structure/macho-man/macho-man_02.png",
+      "size": 40980,
+      "duplicate": false
+    },
+    {
+      "slug": "macho-man",
+      "category": "mens",
+      "src": "/storage/repos/m-international-v2/public/images/products/machoman.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/macho-man/macho-man_03.webp",
+      "size": 13242,
+      "duplicate": false
+    },
+    {
+      "slug": "mi-town",
+      "category": "detox",
+      "src": "/storage/repos/m-international-v2/public/images/products/mitown2.avif",
+      "dest": "/storage/repos/m-international-v2/category_structure/mi-town/mi-town_01.avif",
+      "size": 53268,
+      "duplicate": false
+    },
+    {
+      "slug": "mi-town",
+      "category": "detox",
+      "src": "/storage/repos/m-international-v2/public/images/products/mitown2.webp",
+      "dest": "/storage/repos/m-international-v2/category_structure/mi-town/mi-town_02.webp",
+      "size": 50036,
+      "duplicate": false
+    }
+  ],
+  "already_exists": [],
+  "source_missing": [],
+  "errors": []
+}
