@@ -61,7 +61,6 @@ function TrustIcon({ icon }: { icon: string }) {
 function SlideMain() {
   const t = useTranslations("hero");
   const reducedMotion = usePrefersReducedMotion();
-  const EASE = [0.16, 1, 0.3, 1] as const;
 
   return (
     <div className="relative w-full h-full flex items-center">
@@ -105,51 +104,50 @@ function SlideMain() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: text */}
           <div className="text-center lg:text-left order-1">
-            {/* Badge */}
+            {/* Glassmorphism badge — Премиум качество */}
             <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-5 sm:mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-5 sm:mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-white" aria-hidden="true" />
-              <span className="text-[11px] sm:text-xs font-space-grotesk font-medium text-white tracking-wide">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+              <span className="text-[11px] sm:text-xs font-space-grotesk font-medium text-white/90 tracking-wide">
                 {t("label")}
               </span>
             </div>
 
-            {/* Headline */}
+            {/* Headline — monolithic M-International.kz */}
             <h1
-              className="font-unbounded font-bold leading-[1.1] tracking-normal mb-4 sm:mb-5"
-              style={{
-                fontSize: "clamp(32px, 7vw, 76px)",
-                color: "#FFFFFF",
-                textShadow: "0 2px 12px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15)",
-              }}
+              className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-sm mb-4 sm:mb-5 font-unbounded leading-[1.1]"
             >
-              <TextRevealWords
-                text={t("title")}
-                className="text-white"
-                stagger={0.08}
-                initialDelay={0.2}
-                reducedMotion={reducedMotion}
-              />
+              {reducedMotion ? (
+                "M-International.kz"
+              ) : (
+                <TextRevealWords
+                  text="M-International.kz"
+                  className="text-white"
+                  stagger={0.08}
+                  initialDelay={0.2}
+                  reducedMotion={false}
+                />
+              )}
             </h1>
 
-            {/* Subtitle */}
+            {/* Description */}
             <p
-              className="text-sm sm:text-base font-inter font-light leading-relaxed max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-10"
-              style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 6px rgba(0,0,0,0.2)" }}
+              className="text-white/80 leading-relaxed text-lg max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-10 font-inter"
             >
               {t("lead")}
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
+              {/* Primary — emerald with arrow */}
               <MagneticButton
                 variant="luxury"
                 size="lg"
                 onClick={() => {
                   document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full sm:w-auto ql-cta-primary font-space-grotesk font-semibold text-sm sm:text-base group"
+                className="w-full sm:w-auto ql-cta-primary font-space-grotesk font-semibold text-sm sm:text-base group !bg-emerald-600 hover:!bg-emerald-700 !border-emerald-600 hover:!border-emerald-700 !shadow-[0_4px_16px_rgba(5,150,105,0.25)] hover:!shadow-[0_6px_24px_rgba(5,150,105,0.35)]"
                 aria-label={t("cta")}
               >
                 <span className="relative inline-block">{t("cta")}</span>
@@ -158,13 +156,14 @@ function SlideMain() {
                   <path d="m12 5 7 7-7 7" />
                 </svg>
               </MagneticButton>
+              {/* Secondary — ghost style border-white/20 */}
               <MagneticButton
-                variant="secondary"
+                variant="ghost"
                 size="lg"
                 onClick={() => {
                   document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full sm:w-auto cta-secondary font-space-grotesk font-medium text-sm sm:text-base"
+                className="w-full sm:w-auto cta-secondary font-space-grotesk font-medium text-sm sm:text-base !bg-transparent !border !border-white/20 !text-white hover:!bg-white/10"
                 aria-label={t("aboutLink")}
               >
                 {t("aboutLink")}
