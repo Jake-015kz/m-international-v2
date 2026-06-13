@@ -360,3 +360,143 @@
   pointer-events: none;
   animation: gradient-rotate 4s linear infinite;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MICRO-INTERACTION KEYFRAMES — hover, pulse, glow effects
+   Added: 2025-06-13 — Task: interactive elements & micro-animations
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Pulse Ring — expanding ring on hover/click ── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.35; }
+  100% { transform: scale(1.6); opacity: 0;    }
+}
+
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pulse-ring:hover::after {
+  animation: pulse-ring 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Float — gentle vertical bob for decorative elements ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+.anim-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.anim-float-delayed {
+  animation: float 6s ease-in-out 2s infinite;
+}
+
+/* ── Glow Pulse — breathing glow for CTAs and badges ── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px  rgba(212, 175, 55, 0.15); }
+  50%      { box-shadow: 0 0 24px rgba(212, 175, 55, 0.30); }
+}
+
+.anim-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ── Shimmer Text — gradient sweep across text ── */
+@keyframes shimmer-text {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+.anim-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    currentColor 0%,
+    #d4af37 25%,
+    currentColor 50%,
+    #d4af37 75%,
+    currentColor 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-text 4s linear infinite;
+}
+
+/* ── Scale Bounce — attention-getting pop ── */
+@keyframes scale-bounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.08); }
+  60%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+.anim-scale-bounce {
+  animation: scale-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Border Dance — animated border color shift ── */
+@keyframes border-dance {
+  0%   { border-color: rgba(52, 152, 219, 0.2); }
+  33%  { border-color: rgba(230, 126, 34, 0.2); }
+  66%  { border-color: rgba(212, 175, 55, 0.2); }
+  100% { border-color: rgba(52, 152, 219, 0.2); }
+}
+
+.anim-border-dance {
+  animation: border-dance 4s ease-in-out infinite;
+}
+
+/* ── Marquee (infinite horizontal scroll) ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse var(--marquee-duration, 30s) linear infinite;
+}
+
+/* ── Section crossfade — smooth transition between sections ── */
+@keyframes section-crossfade {
+  from { opacity: 0; transform: translateY(30px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0);  }
+}
+
+.section-crossfade {
+  animation: section-crossfade 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Entrance stagger helper ── */
+.entrance-stagger > * {
+  animation: section-crossfade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.entrance-stagger > *:nth-child(1)  { animation-delay: 0ms; }
+.entrance-stagger > *:nth-child(2)  { animation-delay: 60ms; }
+.entrance-stagger > *:nth-child(3)  { animation-delay: 120ms; }
+.entrance-stagger > *:nth-child(4)  { animation-delay: 180ms; }
+.entrance-stagger > *:nth-child(5)  { animation-delay: 240ms; }
+.entrance-stagger > *:nth-child(6)  { animation-delay: 300ms; }
+.entrance-stagger > *:nth-child(7)  { animation-delay: 360ms; }
+.entrance-stagger > *:nth-child(8)  { animation-delay: 420ms; }
+.entrance-stagger > *:nth-child(9)  { animation-delay: 480ms; }
+.entrance-stagger > *:nth-child(10) { animation-delay: 540ms; }

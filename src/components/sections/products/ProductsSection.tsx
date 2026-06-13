@@ -226,7 +226,7 @@ const ProductsSection = memo(function ProductsSection() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFilter}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 entrance-stagger"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}

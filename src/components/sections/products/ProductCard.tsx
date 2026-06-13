@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Eye } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { MagneticButton } from "@/components/ui";
 
 interface ProductCardProps {
   name: string;
@@ -266,22 +267,24 @@ const ProductCard = memo(function ProductCard({
           </p>
           <div className="flex-1" />
 
-          {/* Premium CTA button */}
-          <button
-            type="button"
-            className="btn-premium-glow mt-4 w-full"
-            style={
-              {
-                "--btn-glow-color": `${color}40`,
-                background: `linear-gradient(135deg, ${color}, ${color})`,
-                color: "#fff",
-              } as React.CSSProperties
-            }
+          {/* Premium CTA button — magnetic + glow */}
+          <MagneticButton
+            variant="primary"
+            size="sm"
+            magneticStrength={0.15}
+            className="mt-4 w-full anim-glow-pulse"
             onClick={() => onClick?.()}
           >
             <Eye className="w-3.5 h-3.5" />
             {t("details")}
-          </button>
+            <motion.span
+              className="inline-block ml-1 opacity-50"
+              animate={{ x: [0, 3, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              →
+            </motion.span>
+          </MagneticButton>
         </div>
       </TiltCard>
     </motion.article>

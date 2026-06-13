@@ -370,7 +370,7 @@ const AboutSection = memo(function AboutSection() {
               <p className="text-xs md:text-sm text-fg-secondary font-onest mt-1.5 md:mt-2">3 простых шага к вашему успеху</p>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto entrance-stagger">
             {steps.map((s, i) => (
               <StepCard key={s.title} {...s} index={i} />
             ))}

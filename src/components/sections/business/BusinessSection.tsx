@@ -136,7 +136,7 @@ const BusinessSection = memo(function BusinessSection() {
         </ScrollReveal>
 
         {/* Rewards grid — enhanced with 3D tilt + hover-lift + gradient borders */}
-        <div className="mt-6 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
+        <div className="mt-6 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 entrance-stagger">
           {rewards.map((r, i) => (
             <RewardCard key={r.title} {...r} index={i} />
           ))}
@@ -145,7 +145,7 @@ const BusinessSection = memo(function BusinessSection() {
         {/* Animated stats row */}
         <div className="mt-10 md:mt-16">
           <ScrollReveal>
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5" staggerDelay={0.1}>
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 entrance-stagger" staggerDelay={0.1}>
               {[
                 { value: 50, suffix: "+", label: "Стран" },
                 { value: 10000, suffix: "+", label: "Партнёров" },

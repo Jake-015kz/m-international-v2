@@ -5,6 +5,7 @@ import { onest, unbounded, spaceGrotesk, inter } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { MotionProvider } from "@/components/motion";
+import CursorGlow from "@/components/effects/CursorGlow";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo/jsonld";
 // TechGridBackground removed — no canvas/WebGL effects
 import "./globals.css";
@@ -83,6 +84,7 @@ export default async function RootLayout({
               <Navbar locale={locale} />
               <div id="main-content" className="flex-1">{children}</div>
             </SmoothScrollProvider>
+            <CursorGlow />
           </MotionProvider>
         </NextIntlClientProvider>
         </body>
