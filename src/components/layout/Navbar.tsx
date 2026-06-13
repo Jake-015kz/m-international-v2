@@ -169,25 +169,25 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
             >
               <Image
                 src="/logo.svg"
-                alt="M-International"
+                alt="M-International.kz"
                 width={28}
                 height={28}
-                className="w-7 h-7 md:w-8 md:h-8"
+                className="w-7 h-7 md:w-8 md:h-8 shrink-0"
                 priority
               />
               <span
-                className={`hidden sm:inline transition-colors duration-300 ${
+                className={`hidden sm:inline font-inter text-sm font-semibold tracking-tight transition-colors duration-300 whitespace-nowrap ${
                   isScrolled ? "text-[var(--primary-dark)]" : "text-white"
                 }`}
               >
-                M-International
+                M-International.kz
               </span>
               <span
-                className={`sm:hidden transition-colors duration-300 ${
+                className={`sm:hidden font-inter text-xs font-semibold tracking-tight transition-colors duration-300 whitespace-nowrap ${
                   isScrolled ? "text-[var(--primary-dark)]" : "text-white"
                 }`}
               >
-                M-Int
+                M-Int.kz
               </span>
             </Link>
 
@@ -197,12 +197,12 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 <Link
                   key={link.href}
                   href={getLocalizedHref(link.href, currentLocale)}
-                  className={`text-[13px] font-onest font-light transition-colors duration-300 relative group py-1 ${
+                  className={`text-[13px] font-onest font-light relative py-1 group transition-opacity duration-300 ${
                     isActive(link.href)
-                      ? isScrolled ? "text-[var(--primary)]" : "text-white"
+                      ? isScrolled ? "text-[var(--primary)] opacity-100" : "text-white opacity-100"
                       : isScrolled
-                        ? "text-text-secondary hover:text-[var(--primary)]"
-                        : "text-white/80 hover:text-white"
+                        ? "text-text-secondary opacity-70 hover:opacity-100"
+                        : "text-white opacity-70 hover:opacity-100"
                   }`}
                 >
                   {link.label}
@@ -304,8 +304,8 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
               >
                 <Link
                   href={getLocalizedHref(link.href, currentLocale)}
-                  className={`font-onest text-lg font-semibold py-2 min-h-[44px] inline-flex items-center ${
-                    isActive(link.href) ? "text-[var(--primary)]" : "text-text-primary"
+                  className={`font-onest text-lg font-semibold py-2 min-h-[44px] inline-flex items-center transition-opacity duration-300 ${
+                    isActive(link.href) ? "text-[var(--primary)] opacity-100" : "text-text-primary opacity-70 hover:opacity-100"
                   }`}
                 >
                   {link.label}
