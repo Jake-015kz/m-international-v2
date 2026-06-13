@@ -90,11 +90,11 @@ const StarRating = memo(function StarRating({
 const CardSkeleton = memo(function CardSkeleton() {
   return (
     <div
-      className="flex flex-col h-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] overflow-hidden"
+      className="flex flex-col h-full rounded-2xl bg-[var(--bg-elevated)] overflow-hidden shadow-[0_4px_24px_oklch(0%_0_0_/_0.06),0_1px_4px_oklch(0%_0_0_/_0.04)]"
       aria-hidden="true"
       role="presentation"
     >
-      <div className="relative h-36 sm:h-44 md:h-52 bg-[var(--bg-sunken)]">
+      <div className="relative h-40 sm:h-48 md:h-56 bg-[var(--bg-sunken)]">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--bg-alt)] to-transparent animate-[shimmer_1.5s_infinite]" />
       </div>
       <div className="flex flex-col flex-1 p-3 sm:p-4 md:p-5 space-y-2.5">
@@ -184,10 +184,9 @@ const ProductCardV2 = memo(function ProductCardV2({
       ref={cardRef}
       className={cn(
         "group relative flex flex-col h-full rounded-2xl overflow-hidden",
-        "border border-[var(--border-subtle)] bg-[var(--bg-elevated)]",
-        "transition-colors duration-300",
-        "hover:border-[var(--border-warm-hover)]",
-        "hover:shadow-[0_8px_32px_oklch(0%_0_0_/_0.08),0_4px_12px_oklch(0%_0_0_/_0.04)]",
+        "bg-[var(--bg-elevated)] shadow-[0_4px_24px_oklch(0%_0_0_/_0.06),0_1px_4px_oklch(0%_0_0_/_0.04)]",
+        "transition-shadow duration-300",
+        "hover:shadow-[0_8px_40px_oklch(0%_0_0_/_0.1),0_2px_8px_oklch(0%_0_0_/_0.05)]",
         isOutOfStock && "opacity-60",
         featured && "sm:col-span-2"
       )}
@@ -250,7 +249,7 @@ const ProductCardV2 = memo(function ProductCardV2({
 
       {/* ── Image area ── */}
       <div
-        className="relative h-36 sm:h-44 md:h-52 overflow-hidden cursor-pointer"
+        className="relative h-40 sm:h-48 md:h-56 cursor-pointer"
         style={{
           background: `linear-gradient(160deg, ${color}06 0%, ${color}10 50%, ${color}06 100%)`,
         }}
@@ -261,12 +260,12 @@ const ProductCardV2 = memo(function ProductCardV2({
             src={image}
             alt={name}
             className={cn(
-              "w-full h-full object-contain p-3 sm:p-4",
+              "w-full h-full object-contain p-4 sm:p-5 md:p-6",
               isOutOfStock && "grayscale"
             )}
             loading="lazy"
             decoding="async"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           />
         ) : (
@@ -306,7 +305,7 @@ const ProductCardV2 = memo(function ProductCardV2({
               onWishlist?.();
             }}
             className={cn(
-              "w-8 h-8 rounded-full flex items-center justify-center",
+              "w-9 h-9 rounded-full flex items-center justify-center shrink-0",
               "bg-[var(--bg-elevated)]/80 backdrop-blur-sm border border-[var(--border-subtle)]",
               "hover:bg-[var(--bg-elevated)] hover:border-[var(--border-default)]",
               "transition-all duration-200",
@@ -319,7 +318,7 @@ const ProductCardV2 = memo(function ProductCardV2({
           >
             <Heart
               className={cn(
-                "w-3.5 h-3.5 transition-colors duration-200",
+                "w-4 h-4 transition-colors duration-200",
                 isWishlisted
                   ? "fill-[var(--coral-500)] text-[var(--coral-500)]"
                   : "text-[var(--fg-tertiary)]"

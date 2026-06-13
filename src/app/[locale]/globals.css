@@ -2,6 +2,10 @@
 @import "./tokens.css";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+@import "swiper/css/effect-fade";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -1944,5 +1948,85 @@ html, body {
 @supports (overflow-x: clip) {
   html, body {
     overflow-x: clip;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO SLIDER — Swiper overrides
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Swiper container */
+.hero-slider {
+  --swiper-pagination-bottom: 24px;
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-horizontal-gap: 6px;
+  --swiper-theme-color: oklch(72% 0.16 85);
+}
+
+.hero-slider .swiper-wrapper {
+  min-height: 520px;
+}
+
+@media (min-width: 768px) {
+  .hero-slider .swiper-wrapper {
+    min-height: 720px;
+  }
+}
+
+.hero-slider-slide {
+  height: auto;
+  min-height: 520px;
+}
+
+@media (min-width: 768px) {
+  .hero-slider-slide {
+    min-height: 720px;
+  }
+}
+
+/* Pagination bullets */
+.hero-slider-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: oklch(100% 0 0 / 0.25);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.hero-slider-bullet:hover {
+  background: oklch(100% 0 0 / 0.5);
+}
+
+.hero-slider-bullet-active {
+  width: 24px;
+  border-radius: 4px;
+  background: oklch(72% 0.16 85 / 0.9) !important;
+}
+
+/* Navigation arrows focus */
+.hero-slider-prev:focus-visible,
+.hero-slider-next:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+/* Swiper fade effect fix */
+.hero-slider .swiper-slide {
+  opacity: 0 !important;
+  transition: opacity 0.6s ease;
+}
+
+.hero-slider .swiper-slide-active {
+  opacity: 1 !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slider .swiper-slide {
+    transition: none !important;
   }
 }

@@ -51,7 +51,7 @@ const ParallaxImage = memo(function ParallaxImage({
   return (
     <div
       ref={ref}
-      className="relative z-10 h-36 sm:h-48 md:h-52 overflow-hidden"
+      className="relative z-10 h-40 sm:h-48 md:h-56"
       style={{
         background: `linear-gradient(135deg, ${color}18 0%, ${color}30 50%, ${color}18 100%)`,
       }}
@@ -61,7 +61,7 @@ const ParallaxImage = memo(function ParallaxImage({
       <motion.img
         src={src}
         alt={alt}
-        className="w-full h-full object-contain p-3"
+        className="w-full h-full object-contain p-4 sm:p-5 md:p-6"
         style={{ y: springY }}
         loading="lazy"
       />
@@ -119,7 +119,7 @@ function TiltCard({
   return (
     <motion.div
       ref={ref}
-      className="group relative flex flex-col h-full overflow-hidden rounded-2xl border border-border-subtle/60 bg-bg-elevated/80 backdrop-blur-xl"
+      className="group relative flex flex-col h-full overflow-hidden rounded-2xl bg-bg-elevated/80 backdrop-blur-xl shadow-[0_4px_24px_oklch(0%_0_0_/_0.06),0_1px_4px_oklch(0%_0_0_/_0.04)] hover:shadow-[0_8px_40px_oklch(0%_0_0_/_0.1),0_2px_8px_oklch(0%_0_0_/_0.05)] transition-shadow duration-300"
       style={{
         rotateX: springRX,
         rotateY: springRY,
@@ -204,7 +204,7 @@ const ProductCard = memo(function ProductCard({
           <ParallaxImage src={image} alt={name} color={color} />
         ) : (
           <div
-            className="relative z-10 h-36 sm:h-48 md:h-52 overflow-hidden"
+            className="relative z-10 h-40 sm:h-48 md:h-56"
             style={{
               background: `linear-gradient(135deg, ${color}18 0%, ${color}30 50%, ${color}18 100%)`,
             }}

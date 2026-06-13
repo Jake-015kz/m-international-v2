@@ -21,6 +21,18 @@
     "stat": {
       "countries": "Countries",
       "customers": "Partners"
+    },
+    "productSlide": {
+      "label": "Flagship Product",
+      "title": "GreenMAX",
+      "lead": "Powerful plant-based complex for body detoxification and liver support",
+      "cta": "Learn More"
+    },
+    "statsSlide": {
+      "label": "Numbers speak",
+      "title": "Growing together",
+      "lead": "50+ countries, 10,000+ partners and rapid growth — join our international team",
+      "cta": "About Us"
     }
   },
   "certificates": {
@@ -154,6 +166,7 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Use"
   },
+  "details": "Details",
   "catalog": {
     "hero": { "subtitle": "Premium Quality" },
     "related": "Related products",
