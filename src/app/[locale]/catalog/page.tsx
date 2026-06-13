@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Footer } from "@/components/sections/footer";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { Sparkles, Shield, Leaf, Award, Eye } from "lucide-react";
+import { Shield, Leaf, Award, Eye } from "lucide-react";
 import ProductModal from "@/components/sections/products/ProductModal";
 import FilterBar from "@/components/sections/products/FilterBar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
@@ -153,7 +153,6 @@ function HeroBanner({ title, description, t }: { title: string; description: str
         <motion.div style={{ opacity }} className="text-center max-w-2xl mx-auto">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-3 mobile-no-backdrop">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
               <span className="text-[11px] font-medium text-white/80">{t("hero.subtitle")}</span>
             </div>
             <h1 className="font-unbounded font-bold text-[1.65rem] sm:text-3xl md:text-4xl text-white mb-2">
@@ -188,7 +187,6 @@ function ProductCard({ product, tCatalog }: { product: Product; tCatalog: (key: 
             className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm shadow-sm text-[10px] font-unbounded font-bold border-0"
             style={{ color: product.color }}
           >
-            <Sparkles className="w-3 h-3 mr-1" />
             {product.badge}
           </Badge>
         )}

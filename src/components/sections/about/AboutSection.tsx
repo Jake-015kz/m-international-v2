@@ -67,7 +67,7 @@ const ValueCard = memo(function ValueCard({
       transition={{ delay: index * 0.1, duration: 0.5, ease: EASE_REVEAL }}
     >
       <motion.div
-        className="group relative p-4 md:p-5 rounded-2xl bg-bg-elevated border border-border-subtle overflow-hidden cursor-default"
+        className="group relative p-4 md:p-5 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] overflow-hidden cursor-default"
         style={{
           rotateX: springRotateX,
           rotateY: springRotateY,
@@ -263,7 +263,7 @@ function StepCard({
 }) {
   return (
     <motion.div
-      className="group relative p-5 md:p-8 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-float hover:-translate-y-2 text-center overflow-hidden"
+      className="group relative p-5 md:p-8 rounded-2xl bg-[#EEF7E8] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] hover:border-border-default transition-all duration-500 hover:shadow-float hover:-translate-y-2 text-center overflow-hidden"
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -386,7 +386,7 @@ const AboutSection = memo(function AboutSection() {
                 <p className="text-xs md:text-sm text-fg-secondary font-onest mt-1.5 md:mt-2">Заполните форму и начните свой путь с M-International</p>
               </div>
               <motion.div
-                className="p-5 md:p-8 rounded-2xl bg-bg-elevated border border-border-subtle shadow-sm"
+                className="p-5 md:p-8 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}

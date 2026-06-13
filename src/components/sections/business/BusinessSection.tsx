@@ -84,7 +84,7 @@ function RewardCard({
         <motion.div
           className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]`}
         />
-        <div className="relative h-full rounded-2xl bg-bg-elevated border border-border-subtle p-4 md:p-6 overflow-hidden">
+        <div className="relative h-full rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] p-4 md:p-6 overflow-hidden">
           <div className="relative z-10">
             <motion.div
               className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl ${iconBg} border flex items-center justify-center mb-3 md:mb-4 ${iconColor}`}
@@ -155,7 +155,7 @@ const BusinessSection = memo(function BusinessSection() {
                 <motion.div
                   key={stat.label}
                   whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                  className="text-center p-4 md:p-6 rounded-2xl bg-bg-elevated border border-border-subtle"
+                  className="text-center p-4 md:p-6 rounded-2xl bg-[#EEF7E8] border border-[var(--border-soft)] shadow-[var(--shadow-soft)]"
                 >
                   <div className="font-unbounded font-bold text-xl md:text-3xl text-accent-500 mb-1">
                     <CountUp to={stat.value} suffix={stat.suffix} />

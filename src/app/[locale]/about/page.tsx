@@ -50,7 +50,7 @@ export default function AboutPage() {
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-5">
             <ScrollReveal>
-              <div className="p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle h-full">
+              <div className="p-4 md:p-6 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] h-full">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Target className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
@@ -61,7 +61,7 @@ export default function AboutPage() {
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <div className="p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle h-full">
+              <div className="p-4 md:p-6 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] h-full">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Eye className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
@@ -72,7 +72,7 @@ export default function AboutPage() {
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.15}>
-              <div className="p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle h-full">
+              <div className="p-4 md:p-6 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] h-full">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Gem className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
@@ -83,7 +83,7 @@ export default function AboutPage() {
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
-              <div className="p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle h-full">
+              <div className="p-4 md:p-6 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] h-full">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mb-3">
                   <Rocket className="w-5 h-5 md:w-6 md:h-6 text-accent-600" />
                 </div>
@@ -108,7 +108,7 @@ export default function AboutPage() {
               { icon: <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />, value: "6", label: t("hero.stat.years") },
             ].map((s, i) => (
               <ScrollReveal key={s.label} delay={i * 0.1}>
-                <div className="text-center p-4 md:p-6 rounded-2xl bg-surface-elevated border border-border-subtle">
+                <div className="text-center p-4 md:p-6 rounded-2xl bg-[#EEF7E8] border border-[var(--border-soft)] shadow-[var(--shadow-soft)]">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-accent-50 border border-accent-100 flex items-center justify-center mx-auto mb-2 md:mb-3 text-accent-600">{s.icon}</div>
                   <div className="font-unbounded font-bold text-xl md:text-2xl text-text-primary">{s.value}</div>
                   <div className="text-[11px] md:text-xs text-text-secondary font-onest mt-0.5 md:mt-1">{s.label}</div>
@@ -157,7 +157,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 max-w-4xl mx-auto">
             {steps.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 0.12}>
-                <div className="group relative p-5 md:p-8 rounded-2xl bg-surface-elevated border border-border-subtle hover:border-border-default transition-all duration-500 hover:shadow-xl hover:-translate-y-2 text-center overflow-hidden">
+                <div className="group relative p-5 md:p-8 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] hover:border-border-default transition-all duration-500 hover:shadow-float hover:-translate-y-2 text-center overflow-hidden">
                   <span className="absolute top-3 right-4 font-unbounded text-4xl md:text-6xl font-black opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500 select-none" style={{ color: s.color }}>{s.num}</span>
                   <div className="relative z-10 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" style={{ background: `linear-gradient(135deg, ${s.color}15, ${s.color}08)`, border: `1px solid ${s.color}25`, color: s.color }}>{s.icon}</div>
                   <h4 className="font-unbounded font-bold text-sm md:text-lg text-text-primary mb-1.5 md:mb-2">{s.title}</h4>

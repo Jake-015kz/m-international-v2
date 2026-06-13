@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useState, useRef, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight, Leaf, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Leaf } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -198,7 +198,7 @@ const ProductsSection = memo(function ProductsSection() {
           <ScrollReveal>
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-100 mb-4">
-                <Sparkles className="w-3.5 h-3.5 text-accent-600" />
+                <Leaf className="w-3.5 h-3.5 text-accent-600" />
                 <span className="text-xs font-onest font-semibold text-accent-600">
                   {tProducts("features.natural")}
                 </span>

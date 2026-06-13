@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
 import Container from "@/components/ui/Container";
+import Image from "next/image";
 import { LOCALES } from "@/lib/constants";
 
 interface NavbarProps {
@@ -128,28 +129,32 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
         role="navigation"
         aria-label="Основная навигация"
       >
-        {/* ── Background layer — gold-tinted blur ── */}
+        {/* ── Background layer — white blur ── */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{
             backgroundColor: useTransform(
               bgOpacity,
-              (v) => `rgba(12, 10, 6, ${v})`
+              (v) => `rgba(255, 255, 255, ${v})`
             ),
             backdropFilter: useTransform(
               bgOpacity,
-              (v) => v > 0.3 ? "blur(16px) saturate(1.2)" : "blur(0px)"
+              (v) => v > 0.3 ? "blur(16px) saturate(1.1)" : "blur(0px)"
             ),
             WebkitBackdropFilter: useTransform(
               bgOpacity,
-              (v) => v > 0.3 ? "blur(16px) saturate(1.2)" : "blur(0px)"
+              (v) => v > 0.3 ? "blur(16px) saturate(1.1)" : "blur(0px)"
+            ),
+            boxShadow: useTransform(
+              bgOpacity,
+              (v) => v > 0.3 ? "0 1px 3px oklch(0% 0 0 / 0.06), 0 1px 2px oklch(0% 0 0 / 0.04)" : "none"
             ),
           }}
         />
 
         {/* Border — fades in on scroll */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 h-px bg-[oklch(65%_0.16_85_/_0.08)]"
+          className="absolute bottom-0 left-0 right-0 h-px bg-[oklch(90%_0.006_160)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: isScrolled ? 1 : 0 }}
           transition={{ duration: 0.3 }}
@@ -160,22 +165,30 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
             {/* Logo */}
             <Link
               href={`/${currentLocale}`}
-              className="flex items-center gap-2 font-unbounded font-bold text-base md:text-lg text-text-primary tracking-normal z-50 group"
+              className="flex items-center gap-2 font-unbounded font-bold text-base md:text-lg tracking-normal z-50 group"
             >
-              <motion.svg
-                className="w-6 h-6 md:w-7 md:h-7 text-[oklch(72%_0.16_85)] group-hover:text-[oklch(78%_0.14_85)] transition-colors duration-300"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              <Image
+                src="/logo.svg"
+                alt="M-International"
+                width={28}
+                height={28}
+                className="w-7 h-7 md:w-8 md:h-8"
+                priority
+              />
+              <span
+                className={`hidden sm:inline transition-colors duration-300 ${
+                  isScrolled ? "text-[var(--primary-dark)]" : "text-white"
+                }`}
               >
-                <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                <path d="M10 22V10L16 16L22 10V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="16" cy="16" r="3" fill="currentColor" opacity="0.15"/>
-              </motion.svg>
-              <span className="hidden sm:inline">M-International</span>
-              <span className="sm:hidden">M-Int</span>
+                M-International
+              </span>
+              <span
+                className={`sm:hidden transition-colors duration-300 ${
+                  isScrolled ? "text-[var(--primary-dark)]" : "text-white"
+                }`}
+              >
+                M-Int
+              </span>
             </Link>
 
             {/* Desktop links */}
@@ -184,17 +197,21 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 <Link
                   key={link.href}
                   href={getLocalizedHref(link.href, currentLocale)}
-                  className={`text-[13px] font-onest font-light transition-colors duration-200 relative group py-1 ${
+                  className={`text-[13px] font-onest font-light transition-colors duration-300 relative group py-1 ${
                     isActive(link.href)
-                      ? "text-[oklch(72%_0.14_85)]"
-                      : "text-text-secondary hover:text-text-primary"
+                      ? isScrolled ? "text-[var(--primary)]" : "text-white"
+                      : isScrolled
+                        ? "text-text-secondary hover:text-[var(--primary)]"
+                        : "text-white/80 hover:text-white"
                   }`}
                 >
                   {link.label}
                   <span
-                    className={`absolute -bottom-0.5 left-0 h-px bg-[oklch(65%_0.16_85)] transition-all duration-300 ${
-                      isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
+                    className={`absolute -bottom-0.5 left-0 h-px transition-all duration-300 ${
+                      isActive(link.href)
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    } ${isScrolled ? "bg-[var(--primary)]" : "bg-white"}`}
                   />
                 </Link>
               ))}
@@ -208,10 +225,14 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                   <Link
                     key={loc}
                     href={getLocaleHref(loc)}
-                    className={`px-2 py-1 text-[11px] font-onest font-medium rounded-lg transition-colors duration-200 ${
+                    className={`px-2 py-1 text-[11px] font-onest font-medium rounded-lg transition-colors duration-300 ${
                       loc === currentLocale
-                        ? "text-[oklch(72%_0.14_85)] bg-[oklch(65%_0.16_85_/_0.08)]"
-                        : "text-text-tertiary hover:text-text-secondary"
+                        ? isScrolled
+                          ? "text-[var(--primary)] bg-[var(--primary-soft)]"
+                          : "text-white bg-white/15"
+                        : isScrolled
+                          ? "text-text-tertiary hover:text-[var(--primary)]"
+                          : "text-white/60 hover:text-white/90"
                     }`}
                     aria-label={`Switch to ${LOCALE_LABELS[loc]}`}
                     aria-current={loc === currentLocale ? "true" : undefined}
@@ -223,7 +244,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
 
               <Link
                 href={`/${currentLocale}/contacts`}
-                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-onest font-semibold bg-[oklch(16%_0.008_85)] text-white hover:bg-[oklch(22%_0.01_85)] border border-[oklch(65%_0.16_85_/_0.12)] hover:border-[oklch(65%_0.16_85_/_0.22)] transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.06)] hover:shadow-[0_2px_12px_oklch(65%_0.16_85_/_0.08),0_1px_2px_rgba(0,0,0,0.15)] min-h-[44px]"
+                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl text-xs font-onest font-semibold bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)] border border-[var(--primary)] hover:border-[var(--primary-dark)] transition-all duration-300 shadow-[var(--shadow-soft)] hover:shadow-md min-h-[44px]"
               >
                 {t("contacts")}
               </Link>
@@ -237,12 +258,16 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 aria-controls="mobile-menu"
               >
                 <motion.span
-                  className="block w-5 h-px bg-text-primary"
+                  className={`block w-5 h-px transition-colors duration-300 ${
+                    isScrolled ? "bg-[var(--primary-dark)]" : "bg-white"
+                  }`}
                   animate={isMobileOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.3 }}
                 />
                 <motion.span
-                  className="block w-5 h-px bg-text-primary"
+                  className={`block w-5 h-px transition-colors duration-300 ${
+                    isScrolled ? "bg-[var(--primary-dark)]" : "bg-white"
+                  }`}
                   animate={isMobileOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.3 }}
                 />
@@ -280,7 +305,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 <Link
                   href={getLocalizedHref(link.href, currentLocale)}
                   className={`font-onest text-lg font-semibold py-2 min-h-[44px] inline-flex items-center ${
-                    isActive(link.href) ? "text-[oklch(72%_0.14_85)]" : "text-text-primary"
+                    isActive(link.href) ? "text-[var(--primary)]" : "text-text-primary"
                   }`}
                 >
                   {link.label}
@@ -304,7 +329,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
                 href={getLocaleHref(loc)}
                 className={`px-4 py-2 text-sm font-onest font-medium rounded-xl transition-colors duration-200 min-h-[44px] inline-flex items-center ${
                   loc === currentLocale
-                    ? "text-[oklch(72%_0.14_85)] bg-[oklch(65%_0.16_85_/_0.08)]"
+                    ? "text-[var(--primary)] bg-[var(--primary-soft)]"
                     : "text-text-tertiary hover:text-text-secondary"
                 }`}
                 aria-label={`Switch to ${LOCALE_LABELS[loc]}`}
@@ -322,7 +347,7 @@ export default function Navbar({ locale: propLocale }: NavbarProps) {
           >
             <Link
               href={`/${currentLocale}/contacts`}
-              className="inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[oklch(16%_0.008_85)] text-white border border-[oklch(65%_0.16_85_/_0.12)] min-h-[44px]"
+              className="inline-flex items-center px-8 py-3.5 rounded-xl text-sm font-onest font-semibold bg-[var(--primary)] text-white border border-[var(--primary)] min-h-[44px]"
             >
               {t("contacts")}
             </Link>

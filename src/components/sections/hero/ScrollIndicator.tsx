@@ -16,7 +16,7 @@ export default function ScrollIndicator() {
 
   return (
     <motion.div
-      className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}

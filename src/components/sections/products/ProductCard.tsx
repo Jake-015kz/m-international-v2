@@ -3,7 +3,7 @@
 import { type ReactNode, memo, useCallback, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Sparkles, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface ProductCardProps {
@@ -244,12 +244,6 @@ const ProductCard = memo(function ProductCard({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 400, damping: 15 }}
           >
-            <motion.div
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-            >
-              <Sparkles className="w-3 h-3" style={{ color }} />
-            </motion.div>
             <span className="text-[10px] font-unbounded font-bold" style={{ color }}>
               Хит
             </span>

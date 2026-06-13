@@ -15,13 +15,13 @@ interface GlassCardProps {
 }
 
 const variantStyles: Record<string, string> = {
-  default: "bg-bg-elevated border border-border-subtle shadow-sm",
-  subtle: "bg-bg-sunken/80 border border-border-subtle",
+  default: "bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)]",
+  subtle: "bg-[#EEF7E8] border border-[var(--border-soft)]",
   elevated:
-    "bg-bg-elevated border border-border-subtle shadow-lg shadow-fg-primary/5",
+    "bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] shadow-fg-primary/5",
   glass:
-    "bg-bg-elevated/60 backdrop-blur-xl border border-white/10 shadow-lg shadow-fg-primary/5",
-  glow: "bg-bg-elevated border border-accent-200/50 shadow-lg shadow-accent-500/10",
+    "bg-[#FFFFFF]/60 backdrop-blur-xl border border-[var(--border-soft)] shadow-[var(--shadow-soft)] shadow-fg-primary/5",
+  glow: "bg-[#EEF7E8] border border-accent-200/50 shadow-[var(--shadow-soft)] shadow-accent-500/10",
 };
 
 const GlassCard = memo(function GlassCard({

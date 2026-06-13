@@ -57,8 +57,8 @@ const ValueCard = memo(function ValueCard({
     <motion.div
       ref={ref}
       className={cn(
-        "group relative p-4 md:p-5 rounded-2xl bg-bg-elevated border border-border-subtle overflow-hidden cursor-default",
-        className
+      "group relative p-4 md:p-5 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] overflow-hidden cursor-default",
+      className
       )}
       style={{
         rotateX: springRotateX,

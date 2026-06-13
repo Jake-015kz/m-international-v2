@@ -32,12 +32,12 @@ const CTASection = memo(function CTASection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: EASE }}
         >
-          {/* Background — solid dark with dot pattern */}
+          {/* Background — soft natural with dot pattern */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(135deg, oklch(10% 0.005 160) 0%, oklch(15% 0.008 160) 100%)",
+                "linear-gradient(135deg, var(--primary-soft) 0%, oklch(97% 0.003 160) 100%)",
             }}
           />
 
@@ -109,7 +109,7 @@ const CTASection = memo(function CTASection() {
                 <MagneticButton
                   variant="primary"
                   size="lg"
-                  className="!bg-white hover:!bg-white/90 !text-[oklch(18%_0.01_160)] !border-white/20 hover:!border-white/30 !shadow-[0_4px_24px_rgba(255,255,255,0.15)] hover:!shadow-[0_4px_32px_rgba(255,255,255,0.25)]"
+                  className="!bg-white hover:!bg-white/90 !text-[var(--text-main)] !border-white/20 hover:!border-white/30 !shadow-[0_4px_24px_rgba(255,255,255,0.15)] hover:!shadow-[0_4px_32px_rgba(255,255,255,0.25)]"
                   onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   <Phone className="w-4 h-4" />

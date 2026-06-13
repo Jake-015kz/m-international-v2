@@ -18,9 +18,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        /* Luxury gold button — dark bg, gold border, shimmer */
+        /* Luxury green button */
         luxury:
-          "relative overflow-hidden bg-[oklch(14%_0.006_85)] text-[oklch(88%_0.10_85)] border border-[oklch(65%_0.16_85_/_0.2)] shadow-[0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_oklch(65%_0.16_85_/_0.08)] hover:bg-[oklch(20%_0.008_85)] hover:border-[oklch(65%_0.16_85_/_0.35)] hover:shadow-[0_4px_24px_oklch(65%_0.16_85_/_0.12),0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_oklch(65%_0.16_85_/_0.12)] active:scale-[0.97]",
+          "relative overflow-hidden bg-[#2F7D32] text-white border border-[#2F7D32] rounded-[14px] shadow-[0_4px_16px_rgba(47,125,50,0.25)] hover:bg-[#256B27] hover:border-[#256B27] hover:shadow-[0_6px_24px_rgba(47,125,50,0.35)] active:scale-[0.97]",
         /* Luxury ghost — transparent, gold border hover */
         "luxury-ghost":
           "bg-transparent text-foreground border border-border hover:border-[var(--gold-400)] hover:text-[var(--gold-500)] active:scale-[0.97]",

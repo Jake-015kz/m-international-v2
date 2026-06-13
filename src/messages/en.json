@@ -7,17 +7,20 @@
     "contacts": "Contacts"
   },
   "hero": {
-    "badge": "Premium Quality",
+    "label": "Premium Quality",
     "title": "M-International",
-    "subtitle": "Natural supplements for health and longevity",
-    "description": "Certified products for immunity, detox and longevity. Available in 50+ countries worldwide.",
-    "ctaPrimary": "Product Catalog",
-    "ctaSecondary": "About Us",
+    "lead": "Natural supplements for health and longevity",
+    "cta": "Product Catalog",
+    "aboutLink": "About Us",
+    "trust": {
+      "gmp": "GMP",
+      "iso": "ISO 22000",
+      "halal": "HALAL",
+      "countries": "50+ countries"
+    },
     "stat": {
       "countries": "Countries",
-      "customers": "Partners",
-      "products": "Products",
-      "years": "Years"
+      "customers": "Partners"
     }
   },
   "certificates": {

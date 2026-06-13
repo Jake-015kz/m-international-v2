@@ -33,7 +33,7 @@ const variantStyles: Record<string, string> = {
   outline:
     "bg-transparent border border-border-default hover:border-fg-accent text-fg-primary hover:text-fg-accent",
   luxury:
-    "bg-[oklch(16%_0.008_85)] hover:bg-[oklch(22%_0.01_85)] text-[oklch(88%_0.10_85)] border border-[oklch(65%_0.16_85_/_0.2)] hover:border-[oklch(65%_0.16_85_/_0.35)] shadow-[0_1px_3px_rgba(0,0,0,0.25),inset_0_1px_0_oklch(65%_0.16_85_/_0.08)] hover:shadow-[0_4px_24px_oklch(65%_0.16_85_/_0.12),0_1px_3px_rgba(0,0,0,0.25)]",
+    "bg-[#2F7D32] hover:bg-[#256B27] text-white border border-[#2F7D32] hover:border-[#256B27] shadow-[0_4px_16px_rgba(47,125,50,0.25)] hover:shadow-[0_6px_24px_rgba(47,125,50,0.35)] rounded-[14px]",
 };
 
 const sizeStyles: Record<string, string> = {

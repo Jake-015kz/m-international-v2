@@ -99,7 +99,7 @@ function TimelineCard({
             {item.year}
           </span>
         </div>
-        <div className="p-4 md:p-5 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent-200 transition-all duration-300 hover:shadow-float">
+        <div className="p-4 md:p-5 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] hover:border-accent-200 transition-all duration-300 hover:shadow-float">
           <h4 className="font-unbounded font-bold text-sm md:text-base text-fg-primary mb-1">
             {item.title}
           </h4>
