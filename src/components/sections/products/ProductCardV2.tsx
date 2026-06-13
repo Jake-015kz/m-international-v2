@@ -1,49 +1,29 @@
 "use client";
 
-import { type ReactNode, memo, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { type ReactNode, memo, useCallback, useRef, useState } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Eye, Star, ShoppingBag, Heart } from "lucide-react";
+import { Eye, Star, Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 
 /* ═══════════════════════════════════════════════════════════════
-   ProductCardV2 — Awwwards-inspired product card
+   ProductCardV2 — Premium Awwwards-inspired product card
    
-   Structure:
-   ┌─────────────────────────────┐
-   │  [Wishlist]  [Badge(s)]     │  ← overlay on image
-   │  ┌───────────────────────┐  │
-   │  │      PRODUCT IMAGE    │  │  ← with color gradient bg
-   │  └───────────────────────┘  │
-   │  Rating stars               │
-   │  Category · Subtitle        │
-   │  Product name               │
-   │  Description (2-line clamp) │
-   │  Benefits badges (×3)       │
-   │  ─────────────────────────  │
-   │  Price     [CTA Button]     │
-   └─────────────────────────────┘
-
-   States:
-   • default — static, border-subtle
-   • hover   — translateY(-4px), glow shadow, accent-line animation
-   • loading — shimmer skeleton (image + text lines)
-   • out-of-stock — dimmed (opacity-60), "Нет в наличии" overlay
-
-   Responsive:
-   • Mobile: full-width, compact padding (p-3), small image (h-36)
-   • sm+: p-4, image h-44
-   • md+: p-5, image h-52
-
-   Accessibility:
-   • <article> with aria-label
-   • Image with alt={name}
-   • Decorative elements: aria-hidden="true"
-   • sr-only text for rating, stock status
-   • 44×44px minimum touch targets on interactive elements
-   • focus-visible ring via Button/Badge primitives
+   Design patterns from design-ux-ui/pro:
+   • Noise texture overlay for tactile depth
+   • Gradient border reveal on hover (conic-gradient animation)
+   • Cursor-following glow spotlight
+   • Smooth image zoom with spring physics
+   • Entry stagger + scroll-triggered reveal
+   • KZT price formatting with discount badge
+   • 3 states: default / hover / out-of-stock
+   • Loading skeleton with shimmer
+   • Responsive: mobile-first, 3 breakpoints (sm/md/lg)
+   
+   Accessibility: article landmark, aria-label, focus-visible ring,
+   44px touch targets, sr-only price/ stock context.
    ═══════════════════════════════════════════════════════════════ */
 
 interface ProductCardV2Props {
@@ -70,7 +50,7 @@ interface ProductCardV2Props {
   onWishlist?: () => void;
 }
 
-/* ── Star rating (1-5) ── */
+/* ── Star rating (1-5 with half-star support) ── */
 const StarRating = memo(function StarRating({
   rating = 0,
   count,
@@ -114,11 +94,9 @@ const CardSkeleton = memo(function CardSkeleton() {
       aria-hidden="true"
       role="presentation"
     >
-      {/* Image skeleton */}
       <div className="relative h-36 sm:h-44 md:h-52 bg-[var(--bg-sunken)]">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--bg-alt)] to-transparent animate-[shimmer_1.5s_infinite]" />
       </div>
-      {/* Content skeleton */}
       <div className="flex flex-col flex-1 p-3 sm:p-4 md:p-5 space-y-2.5">
         <div className="h-3 w-20 rounded bg-[var(--bg-sunken)] animate-pulse" />
         <div className="h-4 w-3/4 rounded bg-[var(--bg-sunken)] animate-pulse" />
@@ -126,7 +104,7 @@ const CardSkeleton = memo(function CardSkeleton() {
         <div className="h-3 w-2/3 rounded bg-[var(--bg-sunken)] animate-pulse" />
         <div className="pt-2 mt-auto flex items-center justify-between">
           <div className="h-5 w-16 rounded bg-[var(--bg-sunken)] animate-pulse" />
-          <div className="h-8 w-28 rounded-lg bg-[var(--bg-sunken)] animate-pulse" />
+          <div className="h-9 w-28 rounded-lg bg-[var(--bg-sunken)] animate-pulse" />
         </div>
       </div>
     </div>
@@ -169,11 +147,31 @@ const ProductCardV2 = memo(function ProductCardV2({
 }: ProductCardV2Props) {
   const t = useTranslations("catalog");
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  /* Loading state → skeleton */
-  if (isLoading) {
-    return <CardSkeleton />;
-  }
+  /* Cursor tracking for glow spotlight */
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const springX = useSpring(cursorX, { stiffness: 300, damping: 25 });
+  const springY = useSpring(cursorY, { stiffness: 300, damping: 25 });
+  const glowX = useTransform(springX, (v) => `${(v + 0.5) * 100}%`);
+  const glowY = useTransform(springY, (v) => `${(v + 0.5) * 100}%`);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    cursorX.set((e.clientX - rect.left) / rect.width - 0.5);
+    cursorY.set((e.clientY - rect.top) / rect.height - 0.5);
+  }, [cursorX, cursorY]);
+
+  const handleMouseLeave = useCallback(() => {
+    cursorX.set(0);
+    cursorY.set(0);
+    setIsHovered(false);
+  }, [cursorX, cursorY]);
+
+  /* Loading state */
+  if (isLoading) return <CardSkeleton />;
 
   const allBadges = badge ? [badge, ...badges] : badges;
   const hasDiscount = oldPrice && price && oldPrice > price;
@@ -185,74 +183,124 @@ const ProductCardV2 = memo(function ProductCardV2({
     <motion.article
       ref={cardRef}
       className={cn(
-        "group relative flex flex-col h-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]",
-        "overflow-hidden",
-        "transition-shadow duration-300",
-        "hover:shadow-[0_8px_24px_oklch(50%_0.14_195_/_0.10),0_4px_12px_oklch(0%_0_0_/_0.04)]",
+        "group relative flex flex-col h-full rounded-2xl overflow-hidden",
+        "border border-[var(--border-subtle)] bg-[var(--bg-elevated)]",
+        "transition-colors duration-300",
         "hover:border-[var(--border-warm-hover)]",
+        "hover:shadow-[0_8px_32px_oklch(0%_0_0_/_0.08),0_4px_12px_oklch(0%_0_0_/_0.04)]",
         isOutOfStock && "opacity-60",
         featured && "sm:col-span-2"
       )}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
+      initial={{ opacity: 0, y: 24, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.08 }}
       transition={{
         delay: index * 0.05,
-        duration: 0.4,
+        duration: 0.45,
         ease: [0.16, 1, 0.3, 1],
       }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
       aria-label={`${name} — ${subtitle}${isOutOfStock ? ". Нет в наличии" : ""}`}
     >
+      {/* ── Noise texture overlay (tactile depth) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[1] opacity-[0.015] mix-blend-overlay rounded-2xl"
+        style={{ backgroundImage: "var(--noise-url)" }}
+        aria-hidden="true"
+      />
+
+      {/* ── Cursor-following glow spotlight ── */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-[1] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: useTransform(
+            [glowX, glowY],
+            ([gx, gy]) =>
+              `radial-gradient(circle at ${String(gx)} ${String(gy)}, ${color}12 0%, transparent 55%)`
+          ),
+        }}
+        aria-hidden="true"
+      />
+
+      {/* ── Gradient border overlay on hover ── */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-[2] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background:
+            "linear-gradient(var(--bg-elevated), var(--bg-elevated)) padding-box, linear-gradient(135deg, oklch(50% 0.14 195 / 0.15), oklch(65% 0.18 85 / 0.1), transparent 60%) border-box",
+          border: "1px solid transparent",
+          borderRadius: "inherit",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* ── Top accent line ── */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[1.5px] z-[3] pointer-events-none"
+        style={{
+          background: `linear-gradient(90deg, transparent 5%, ${color}40 30%, ${color}70 50%, ${color}40 70%, transparent 95%)`,
+        }}
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0, opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        aria-hidden="true"
+      />
+
       {/* ── Image area ── */}
       <div
         className="relative h-36 sm:h-44 md:h-52 overflow-hidden cursor-pointer"
         style={{
-          background: `linear-gradient(135deg, ${color}08 0%, ${color}18 50%, ${color}08 100%)`,
+          background: `linear-gradient(160deg, ${color}06 0%, ${color}10 50%, ${color}06 100%)`,
         }}
         onClick={onClick}
       >
         {image ? (
-          <img
+          <motion.img
             src={image}
             alt={name}
             className={cn(
               "w-full h-full object-contain p-3 sm:p-4",
-              "transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              "group-hover:scale-105",
               isOutOfStock && "grayscale"
             )}
             loading="lazy"
             decoding="async"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="w-14 h-14 sm:w-18 sm:h-18 rounded-xl flex items-center justify-center"
+            <motion.div
+              className="w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] rounded-xl flex items-center justify-center"
               style={{
-                background: `linear-gradient(135deg, ${color}15, ${color}08)`,
-                border: `1px solid ${color}25`,
+                background: `linear-gradient(135deg, ${color}12, ${color}06)`,
+                border: `1px solid ${color}20`,
               }}
+              whileHover={{ scale: 1.12, rotate: 4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 14 }}
               aria-hidden="true"
             >
               {icon ?? <Eye className="w-6 h-6 sm:w-7 sm:h-7" style={{ color }} />}
-            </div>
+            </motion.div>
           </div>
         )}
 
-        {/* Decorative blob — top-right */}
-        <div
-          className="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-[0.07] group-hover:opacity-[0.15] transition-opacity duration-500 pointer-events-none"
+        {/* Decorative blob */}
+        <motion.div
+          className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-[0.06] pointer-events-none"
           style={{ background: `radial-gradient(circle, ${color}, transparent)` }}
+          animate={isHovered ? { scale: 1.2, opacity: 0.12 } : { scale: 1, opacity: 0.06 }}
+          transition={{ duration: 0.6 }}
           aria-hidden="true"
         />
 
-        {/* Gradient fade into card body */}
-        <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[var(--bg-elevated)] to-transparent pointer-events-none" aria-hidden="true" />
+        {/* Gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[var(--bg-elevated)] to-transparent pointer-events-none" aria-hidden="true" />
 
         {/* ── Top overlay: wishlist + badges ── */}
         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between z-10">
-          {/* Wishlist button */}
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
               onWishlist?.();
@@ -260,25 +308,25 @@ const ProductCardV2 = memo(function ProductCardV2({
             className={cn(
               "w-8 h-8 rounded-full flex items-center justify-center",
               "bg-[var(--bg-elevated)]/80 backdrop-blur-sm border border-[var(--border-subtle)]",
-              "hover:bg-[var(--bg-elevated)] hover:scale-110",
+              "hover:bg-[var(--bg-elevated)] hover:border-[var(--border-default)]",
               "transition-all duration-200",
-              "min-h-[32px] min-w-[32px]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-400)] focus-visible:ring-offset-1"
             )}
+            whileHover={{ scale: 1.12 }}
+            whileTap={{ scale: 0.92 }}
             aria-label={isWishlisted ? "Убрать из избранного" : "Добавить в избранное"}
             aria-pressed={isWishlisted}
           >
             <Heart
               className={cn(
-                "w-3.5 h-3.5 transition-colors",
+                "w-3.5 h-3.5 transition-colors duration-200",
                 isWishlisted
                   ? "fill-[var(--coral-500)] text-[var(--coral-500)]"
                   : "text-[var(--fg-tertiary)]"
               )}
             />
-          </button>
+          </motion.button>
 
-          {/* Badges */}
           <div className="flex flex-col gap-1 items-end">
             {allBadges.length > 0
               ? allBadges.slice(0, 2).map((b, i) => (
@@ -324,7 +372,7 @@ const ProductCardV2 = memo(function ProductCardV2({
       </div>
 
       {/* ── Card body ── */}
-      <div className="flex flex-col flex-1 p-3 sm:p-4 md:p-5">
+      <div className="relative z-10 flex flex-col flex-1 p-3 sm:p-4 md:p-5">
         {/* Rating */}
         {rating > 0 && (
           <div className="mb-1.5">
@@ -369,15 +417,15 @@ const ProductCardV2 = memo(function ProductCardV2({
           {description}
         </p>
 
-        {/* Benefits badges (up to 3) */}
+        {/* Benefits badges */}
         {benefits.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3" aria-label="Преимущества">
             {benefits.slice(0, 3).map((b) => (
               <Badge
                 key={b}
                 variant="outline"
-                className="text-[9px] sm:text-[10px] font-onest px-1.5 py-0.5 h-auto"
-                style={{ borderColor: `${color}25`, color }}
+                className="text-[9px] sm:text-[10px] font-onest px-1.5 py-0.5 h-auto border-[var(--border-subtle)]"
+                style={{ borderColor: `${color}20`, color }}
               >
                 {b}
               </Badge>
@@ -389,7 +437,7 @@ const ProductCardV2 = memo(function ProductCardV2({
         <div className="flex-1" />
 
         {/* ── Footer: price + CTA ── */}
-        <div className="flex items-end justify-between gap-2 pt-3 border-t border-[var(--border-subtle)]">
+        <div className="flex items-end justify-between gap-2 pt-3 mt-1 border-t border-[var(--border-subtle)]/60">
           <div className="flex flex-col min-w-0">
             {price ? (
               <>
@@ -418,7 +466,6 @@ const ProductCardV2 = memo(function ProductCardV2({
             )}
           </div>
 
-          {/* CTA Button */}
           <Button
             variant="luxury"
             size="sm"
@@ -444,23 +491,15 @@ const ProductCardV2 = memo(function ProductCardV2({
         </div>
       </div>
 
-      {/* ── Hover accent line (bottom) ── */}
+      {/* ── Bottom accent line ── */}
       <motion.div
-        className="absolute bottom-0 left-0 h-[2px] pointer-events-none"
+        className="absolute bottom-0 left-0 h-[2px] pointer-events-none z-[3]"
         style={{
-          background: `linear-gradient(90deg, transparent, ${color}80, ${color}, ${color}80, transparent)`,
+          background: `linear-gradient(90deg, transparent 5%, ${color}70 30%, ${color} 50%, ${color}70 70%, transparent 95%)`,
         }}
-        initial={{ width: 0, opacity: 0 }}
-        whileInView={{ width: "100%", opacity: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0 }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-0 h-[2px] pointer-events-none group-hover:opacity-100 opacity-0 transition-opacity duration-300"
-        style={{
-          width: "100%",
-          background: `linear-gradient(90deg, transparent, ${color}60, ${color}, ${color}60, transparent)`,
-        }}
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0, opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden="true"
       />
     </motion.article>

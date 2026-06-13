@@ -1,14 +1,13 @@
 "use client";
 
-import { memo, useCallback, useState, useRef, useMemo } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight, Leaf } from "lucide-react";
+import { memo, useCallback, useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Leaf } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BackgroundDecorations } from "@/components/ui";
-import ProductCard from "./ProductCard";
+import ProductCardV2 from "./ProductCardV2";
 import ProductModal from "./ProductModal";
 import FilterBar from "./FilterBar";
 import ProductJsonLd from "./ProductJsonLd";
@@ -25,6 +24,11 @@ interface Product {
   benefits?: string[];
   composition?: string;
   category?: string;
+  price?: number;
+  oldPrice?: number;
+  rating?: number;
+  reviewCount?: number;
+  badge?: string;
 }
 
 const FILTER_OPTIONS = [
@@ -41,33 +45,9 @@ const ProductsSection = memo(function ProductsSection() {
   const t = useTranslations();
   const tProducts = useTranslations("products");
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    slidesToScroll: 1,
-    breakpoints: {
-      "(min-width: 640px)": { slidesToScroll: 2 },
-      "(min-width: 1024px)": { slidesToScroll: 3 },
-    },
-  });
-
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [prevEnabled, setPrevEnabled] = useState(false);
-  const [nextEnabled, setNextEnabled] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
-
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setPrevEnabled(emblaApi.canScrollPrev());
-    setNextEnabled(emblaApi.canScrollNext());
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
 
   const openModal = useCallback((product: Product) => {
     setSelectedProduct(product);
@@ -77,6 +57,10 @@ const ProductsSection = memo(function ProductsSection() {
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedProduct(null), 300);
+  }, []);
+
+  const handleFilterChange = useCallback((key: string) => {
+    setActiveFilter(key);
   }, []);
 
   // Build products from i18n messages
@@ -92,6 +76,11 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("micrystal.benefits") as unknown as string[],
       composition: tProducts("micrystal.composition"),
       category: "vision",
+      price: 8900,
+      oldPrice: 12500,
+      rating: 4.8,
+      reviewCount: 124,
+      badge: "Хит",
     },
     {
       name: tProducts("greenmax.name"),
@@ -104,6 +93,10 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("greenmax.benefits") as unknown as string[],
       composition: tProducts("greenmax.composition"),
       category: "detox",
+      price: 6500,
+      rating: 4.9,
+      reviewCount: 256,
+      badge: "Хит",
     },
     {
       name: tProducts("mimax.name"),
@@ -115,6 +108,10 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("mimax.benefits") as unknown as string[],
       composition: tProducts("mimax.composition"),
       category: "immunity",
+      price: 7200,
+      oldPrice: 8900,
+      rating: 4.6,
+      reviewCount: 89,
     },
     {
       name: tProducts("blumax.name"),
@@ -126,6 +123,9 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("blumax.benefits") as unknown as string[],
       composition: tProducts("blumax.composition"),
       category: "immunity",
+      price: 9500,
+      rating: 4.7,
+      reviewCount: 167,
     },
     {
       name: tProducts("nutrimax.name"),
@@ -137,6 +137,10 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("nutrimax.benefits") as unknown as string[],
       composition: tProducts("nutrimax.composition"),
       category: "nutrition",
+      price: 5400,
+      oldPrice: 7200,
+      rating: 4.5,
+      reviewCount: 98,
     },
     {
       name: tProducts("fleximax.name"),
@@ -148,6 +152,9 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("fleximax.benefits") as unknown as string[],
       composition: tProducts("fleximax.composition"),
       category: "joints",
+      price: 11000,
+      rating: 4.4,
+      reviewCount: 72,
     },
     {
       name: tProducts("machoman.name"),
@@ -159,6 +166,10 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("machoman.benefits") as unknown as string[],
       composition: tProducts("machoman.composition"),
       category: "mens",
+      price: 8200,
+      oldPrice: 10000,
+      rating: 4.3,
+      reviewCount: 55,
     },
     {
       name: tProducts("mitown.name"),
@@ -170,6 +181,9 @@ const ProductsSection = memo(function ProductsSection() {
       benefits: tProducts.raw("mitown.benefits") as unknown as string[],
       composition: tProducts("mitown.composition"),
       category: "nutrition",
+      price: 4900,
+      rating: 4.9,
+      reviewCount: 312,
     },
   ], [tProducts]);
 
@@ -178,10 +192,6 @@ const ProductsSection = memo(function ProductsSection() {
     if (activeFilter === "all") return allProducts;
     return allProducts.filter((p) => p.category === activeFilter);
   }, [allProducts, activeFilter]);
-
-  const handleFilterChange = useCallback((key: string) => {
-    setActiveFilter(key);
-  }, []);
 
   return (
     <>
@@ -210,7 +220,7 @@ const ProductsSection = memo(function ProductsSection() {
             </div>
           </ScrollReveal>
 
-          {/* Filter bar — instant, no reload */}
+          {/* Filter bar */}
           <ScrollReveal delay={0.1}>
             <div className="mt-6 md:mt-8">
               <FilterBar
@@ -221,7 +231,7 @@ const ProductsSection = memo(function ProductsSection() {
             </div>
           </ScrollReveal>
 
-          {/* Product grid — asymmetric with 2 visual tiers */}
+          {/* Product grid — asymmetric with featured cards */}
           <div className="mt-6 md:mt-10">
             <AnimatePresence mode="wait">
               <motion.div
@@ -240,7 +250,7 @@ const ProductsSection = memo(function ProductsSection() {
                     transition={{ delay: i * 0.06, duration: 0.4 }}
                     className={product.featured && i < 2 ? "sm:col-span-2 lg:col-span-2" : ""}
                   >
-                    <ProductCard
+                    <ProductCardV2
                       name={product.name}
                       subtitle={product.subtitle}
                       description={product.description}
@@ -249,6 +259,13 @@ const ProductsSection = memo(function ProductsSection() {
                       index={i}
                       featured={product.featured}
                       image={product.image}
+                      price={product.price}
+                      oldPrice={product.oldPrice}
+                      rating={product.rating}
+                      reviewCount={product.reviewCount}
+                      badge={product.badge}
+                      benefits={product.benefits}
+                      category={product.category}
                       onClick={() => openModal(product)}
                     />
                   </motion.div>
