@@ -74,12 +74,12 @@ const Hero = memo(function Hero() {
       aria-labelledby="hero-heading"
       style={{ contain: "layout style paint" }}
     >
-      {/* ── Light green gradient background ── */}
+      {/* ── Teal gradient background (Awwwards palette) ── */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background:
-            "linear-gradient(135deg, #3F8C3A 0%, #6FAE48 50%, #B8CE56 100%)",
+            "linear-gradient(135deg, oklch(36% 0.10 195) 0%, oklch(50% 0.14 195) 50%, oklch(62% 0.13 195) 100%)",
         }}
       />
 

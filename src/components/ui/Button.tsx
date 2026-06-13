@@ -18,9 +18,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        /* Luxury green button */
+        /* Luxury teal button (Awwwards palette) */
         luxury:
-          "relative overflow-hidden bg-[#2F7D32] text-white border border-[#2F7D32] rounded-[14px] shadow-[0_4px_16px_rgba(47,125,50,0.25)] hover:bg-[#256B27] hover:border-[#256B27] hover:shadow-[0_6px_24px_rgba(47,125,50,0.35)] active:scale-[0.97]",
+          "relative overflow-hidden bg-accent-500 text-white border border-accent-500 rounded-[14px] shadow-[0_4px_16px_oklch(50%_0.14_195_/_0.25)] hover:bg-accent-600 hover:border-accent-600 hover:shadow-[0_6px_24px_oklch(50%_0.14_195_/_0.35)] active:scale-[0.97]",
         /* Luxury ghost — transparent, gold border hover */
         "luxury-ghost":
           "bg-transparent text-foreground border border-border hover:border-[var(--gold-400)] hover:text-[var(--gold-500)] active:scale-[0.97]",
