@@ -1,10 +1,10 @@
 ---
-title: "shadcn/ui Skills for Next.js 16"
-description: "Installation, components, blocks, forms, theming, and MCP guidance for shadcn/ui in modern Next.js projects using pnpm"
-keywords: ["shadcn", "ui", "Next.js", "pnpm", "blocks", "sonner", "forms", "dark-mode", "mcp"]
+title: "shadcn/ui + Next.js 16 — Project Skill"
+description: "shadcn/ui components, Tailwind CSS 4, blocks, forms, theming, dark mode, Sonner, MCP — configured for m-international-v2 (Next.js 16, pnpm, App Router)"
+keywords: ["shadcn", "ui", "Next.js", "pnpm", "blocks", "sonner", "forms", "dark-mode", "mcp", "tailwind-4", "app-router"]
 ---
 
-# shadcn/ui Skills
+# shadcn/ui + Next.js 16 — Project Skill
 
 **Status:** Next.js 16 ready  
 **Package Manager:** pnpm (required)  
