@@ -118,6 +118,32 @@ function CardGlass({
   )
 }
 
+/* ── Gradient Border Card — Awwwards style ── */
+function CardGradient({
+  className,
+  variant = "accent",
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { variant?: "accent" | "gold" | "subtle" }) {
+  return (
+    <div
+      data-slot="card-gradient"
+      className={cn(
+        "relative rounded-2xl overflow-hidden",
+        "bg-card/80 backdrop-blur-xl text-card-foreground",
+        variant === "accent" && "[--gb-color:oklch(50%_0.14_195_/_0.3)]",
+        variant === "gold" && "[--gb-color:oklch(65%_0.18_85_/_0.25)]",
+        variant === "subtle" && "[--gb-color:oklch(50%_0.14_195_/_0.12)]",
+        className
+      )}
+      style={{
+        background: "linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, var(--gb-color), transparent 60%) border-box",
+        border: "1px solid transparent",
+      }}
+      {...props}
+    />
+  )
+}
+
 /* ── Stats Card — centered, bold number ── */
 function CardStat({
   className,
@@ -136,4 +162,4 @@ function CardStat({
   )
 }
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardLuxury, CardGlass, CardStat }
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardLuxury, CardGlass, CardGradient, CardStat }

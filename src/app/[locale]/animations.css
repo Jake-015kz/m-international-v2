@@ -298,3 +298,65 @@
 .aurora-blob-3 {
   animation: aurora-float-3 18s ease-in-out infinite 6s;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL-DRIVEN SECTION REVEAL — enhanced staggered entrances
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.section-reveal {
+  animation: section-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRADIENT BORDER ANIMATED — rotating gradient border
+   ═══════════════════════════════════════════════════════════════ */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-rotate {
+  to { --gradient-angle: 360deg; }
+}
+
+.gradient-border-animated {
+  --gradient-angle: 0deg;
+  position: relative;
+  border-radius: var(--radius-2xl, 24px);
+  overflow: hidden;
+}
+
+.gradient-border-animated::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    oklch(50% 0.14 195 / 0.4),
+    oklch(58% 0.19 25 / 0.2),
+    oklch(65% 0.18 85 / 0.3),
+    oklch(50% 0.14 195 / 0.4)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: gradient-rotate 4s linear infinite;
+}

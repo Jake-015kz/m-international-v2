@@ -214,6 +214,8 @@
   /* ── Typography families ── */
   --font-sans:     var(--font-onest, "system-ui", "arial");
   --font-heading:  var(--font-unbounded, "system-ui", "arial");
+  --font-geometric: var(--font-space-grotesk, "system-ui", "arial");
+  --font-body:     var(--font-inter, var(--font-onest, "system-ui", "arial"));
   --font-mono:     "SF Mono", "Fira Code", "JetBrains Mono", monospace;
 
   /* ── Type scale (major third, 1.25 ratio) ── */
@@ -359,6 +361,14 @@
   --card-bg:       #FFFFFF;
   --border-soft:   oklch(89% 0.008 85);
   --shadow-soft:   0 1px 3px oklch(0% 0 0 / 0.06), 0 1px 2px oklch(0% 0 0 / 0.04);
+
+  /* ── Gradient borders (Awwwards style) ── */
+  --gradient-border-accent:
+    linear-gradient(135deg, oklch(50% 0.14 195 / 0.4), oklch(58% 0.19 25 / 0.2), transparent 60%);
+  --gradient-border-gold:
+    linear-gradient(135deg, oklch(65% 0.18 85 / 0.35), oklch(65% 0.18 85 / 0.1), transparent 60%);
+  --gradient-border-subtle:
+    linear-gradient(135deg, oklch(50% 0.14 195 / 0.15), oklch(100% 0 0 / 0.08), transparent 60%);
 }
 
 /* ═══════════════════════════════════════════════════════════════

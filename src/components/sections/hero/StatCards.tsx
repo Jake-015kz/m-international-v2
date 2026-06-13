@@ -80,7 +80,17 @@ function StatCard({ data }: { data: StatCardData }) {
         }}
         className="will-change-transform"
       >
-        <div className="relative rounded-2xl border border-[oklch(1_0_0_/_0.12)] bg-white/[0.04] backdrop-blur-md p-4 overflow-hidden mobile-no-backdrop transition-all duration-300 hover:[filter:brightness(120%)]">
+        {/* Gradient border card with backdrop-blur */}
+        <div className="relative rounded-2xl border border-[oklch(1_0_0_/_0.12)] bg-white/[0.04] backdrop-blur-xl p-4 overflow-hidden mobile-no-backdrop transition-all duration-300 hover:[filter:brightness(120%)] hover:shadow-[0_0_30px_oklch(50%_0.14_195_/_0.12)]">
+          {/* Top accent line — gradient */}
+          <div
+            className="absolute top-0 left-0 right-0 h-[1px]"
+            style={{
+              background: "linear-gradient(90deg, transparent, oklch(100%_0_0_/_0.15), transparent)",
+            }}
+            aria-hidden="true"
+          />
+
           {/* Top row: label + change badge */}
           <div className="flex items-center justify-between mb-1">
             <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider leading-none">
@@ -118,9 +128,7 @@ function StatCard({ data }: { data: StatCardData }) {
 
           {/* Accent dot + divider */}
           <div className="flex items-center gap-1.5 mt-2.5 mb-0.5" aria-hidden="true">
-            <span
-              className="w-1.5 h-1.5 rounded-full shrink-0 bg-white/50"
-            />
+            <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-white/50" />
             <div className="flex-1 h-px bg-gradient-to-r from-white/[0.08] to-transparent" />
           </div>
 
@@ -205,7 +213,7 @@ const FloatingStatCards = memo(function FloatingStatCards() {
           <span className={`rounded-full h-2 w-2 bg-white/60 ${reducedMotion ? "" : "animate-ping"} absolute inline-flex`} />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-white/60" />
         </span>
-        <span className="text-[10px] font-medium text-white/30 uppercase tracking-wider">
+        <span className="text-[10px] font-medium text-white/30 uppercase tracking-wider font-space-grotesk">
           {t("stats.title")}
         </span>
         <div className="flex-1 h-px bg-gradient-to-r from-white/[0.06] to-transparent" />

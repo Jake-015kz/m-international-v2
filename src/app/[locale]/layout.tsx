@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { onest, unbounded } from "@/lib/fonts";
+import { onest, unbounded, spaceGrotesk, inter } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { MotionProvider } from "@/components/motion";
@@ -61,7 +61,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${onest.variable} ${unbounded.variable} antialiased`}
+      className={`${onest.variable} ${unbounded.variable} ${spaceGrotesk.variable} ${inter.variable} antialiased`}
     >
       <head>
         <script

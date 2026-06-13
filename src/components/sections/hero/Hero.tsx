@@ -69,7 +69,7 @@ const Hero = memo(function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden flex items-center pt-20 pb-10 md:pt-0 md:pb-0 md:min-h-[640px]"
+      className="relative overflow-hidden flex items-center pt-24 pb-12 md:pt-0 md:pb-0 md:min-h-[720px]"
       role="region"
       aria-labelledby="hero-heading"
       style={{ contain: "layout style paint" }}
@@ -111,17 +111,17 @@ const Hero = memo(function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
           {/* ── Left column: text content ── */}
           <div className="text-center lg:text-left order-1">
 
-            {/* ── Badge ── */}
+            {/* ── Badge — gradient border card ── */}
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 sm:mb-7"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-5 sm:mb-8"
             >
               <motion.span
                 className="w-1.5 h-1.5 rounded-full bg-white"
@@ -129,7 +129,7 @@ const Hero = memo(function Hero() {
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 aria-hidden="true"
               />
-              <span className="text-[11px] sm:text-xs font-onest font-medium text-white tracking-wide">
+              <span className="text-[11px] sm:text-xs font-space-grotesk font-medium text-white tracking-wide">
                 {t("label")}
               </span>
             </motion.div>
@@ -137,7 +137,7 @@ const Hero = memo(function Hero() {
             {/* ── Headline — compact for CIS, word reveal ── */}
             <h1
               id="hero-heading"
-              className="font-unbounded font-bold leading-[1.1] tracking-normal mb-3 sm:mb-4"
+              className="font-unbounded font-bold leading-[1.1] tracking-normal mb-4 sm:mb-5"
               style={{
                 fontSize: "clamp(32px, 7vw, 76px)",
                 color: "#FFFFFF",
@@ -155,7 +155,7 @@ const Hero = memo(function Hero() {
 
             {/* ── Subtitle — short, 1-2 lines max ── */}
             <motion.div
-              className="overflow-hidden mb-5 sm:mb-8"
+              className="overflow-hidden mb-6 sm:mb-10"
               initial={reducedMotion ? {} : { opacity: 0 }}
               animate={reducedMotion ? {} : { opacity: 1 }}
               transition={{ delay: 0.55, duration: 0.5 }}
@@ -164,7 +164,7 @@ const Hero = memo(function Hero() {
                 initial={reducedMotion ? {} : { y: 24, opacity: 0 }}
                 animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
-                className="text-sm sm:text-base font-onest font-light leading-relaxed max-w-lg mx-auto lg:mx-0"
+                className="text-sm sm:text-base font-inter font-light leading-relaxed max-w-lg mx-auto lg:mx-0"
                 style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 6px rgba(0,0,0,0.2)" }}
               >
                 {t("lead")}
@@ -176,7 +176,7 @@ const Hero = memo(function Hero() {
               initial={reducedMotion ? {} : { opacity: 0, y: 24, scale: 0.96 }}
               animate={reducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
               transition={{ delay: 0.75, duration: 0.8, ease: EASE }}
-              className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-6 sm:mb-10"
+              className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-8 sm:mb-12"
             >
               <MagneticButton
                 variant="luxury"
@@ -190,7 +190,7 @@ const Hero = memo(function Hero() {
                 onClick={() => {
                   document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full sm:w-auto ql-cta-primary font-onest font-semibold text-sm sm:text-base group"
+                className="w-full sm:w-auto ql-cta-primary font-space-grotesk font-semibold text-sm sm:text-base group"
                 aria-label={t("cta")}
               >
                 {/* Shimmer sweep */}
@@ -238,7 +238,7 @@ const Hero = memo(function Hero() {
                 onClick={() => {
                   document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full sm:w-auto cta-secondary font-onest font-medium text-sm sm:text-base"
+                className="w-full sm:w-auto cta-secondary font-space-grotesk font-medium text-sm sm:text-base"
                 aria-label={t("aboutLink")}
               >
                 {t("aboutLink")}
@@ -267,7 +267,7 @@ const Hero = memo(function Hero() {
                   <span className="text-white/70" aria-hidden="true">
                     <TrustIcon icon={item.icon} />
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-white/80 font-onest font-medium whitespace-nowrap">
+                  <span className="text-[10px] sm:text-[11px] text-white/80 font-space-grotesk font-medium whitespace-nowrap">
                     {t(`trust.${item.key}`)}
                   </span>
                 </motion.div>
@@ -282,7 +282,7 @@ const Hero = memo(function Hero() {
               />
 
               <motion.div
-                className="flex items-center gap-3 sm:gap-5 text-[10px] sm:text-[11px] text-white/80 font-onest"
+                className="flex items-center gap-3 sm:gap-5 text-[10px] sm:text-[11px] text-white/80 font-space-grotesk"
                 initial={reducedMotion ? {} : { opacity: 0, y: 8 }}
                 animate={reducedMotion ? {} : { opacity: 1, y: 0 }}
                 transition={{ delay: 1.4, duration: 0.5, ease: EASE }}
@@ -298,7 +298,7 @@ const Hero = memo(function Hero() {
           </div>
 
           {/* ── Right column: product image — visible on all screens, centered on mobile ── */}
-          <div className="flex items-center justify-center relative order-2 mt-2 lg:mt-0">
+          <div className="flex items-center justify-center relative order-2 mt-4 lg:mt-0">
             <motion.div
               initial={reducedMotion ? {} : { opacity: 0, scale: 0.85, y: 30 }}
               animate={reducedMotion ? {} : { opacity: 1, scale: 1, y: 0 }}
@@ -324,7 +324,7 @@ const Hero = memo(function Hero() {
                 style={{
                   filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.2))",
                   objectFit: "contain",
-                  maxWidth: "260px",
+                  maxWidth: "280px",
                   width: "100%",
                   height: "auto",
                 }}

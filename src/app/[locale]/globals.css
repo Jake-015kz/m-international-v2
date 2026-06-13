@@ -390,6 +390,75 @@ video {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   GRADIENT BORDER CARDS (Awwwards style)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Gradient border using pseudo-element */
+.gradient-border-card {
+  position: relative;
+  border-radius: var(--radius-2xl, 24px);
+  overflow: hidden;
+}
+
+.gradient-border-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-border-accent);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gradient-border-card-gold::before {
+  background: var(--gradient-border-gold);
+}
+
+.gradient-border-card-subtle::before {
+  background: var(--gradient-border-subtle);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASS CARD — enhanced backdrop-blur
+   ═══════════════════════════════════════════════════════════════ */
+.glass-card {
+  background: oklch(100% 0 0 / 0.06);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  border-radius: var(--radius-2xl, 24px);
+}
+
+.glass-card-strong {
+  background: oklch(100% 0 0 / 0.1);
+  backdrop-filter: blur(32px) saturate(1.6);
+  -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  border: 1px solid oklch(100% 0 0 / 0.15);
+  border-radius: var(--radius-2xl, 24px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION SPACING — enhanced vertical rhythm
+   ═══════════════════════════════════════════════════════════════ */
+.section-spacing {
+  padding-top: var(--space-16, 64px);
+  padding-bottom: var(--space-16, 64px);
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: var(--space-24, 96px);
+    padding-bottom: var(--space-24, 96px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    SECTION CONTAINMENT
    ═══════════════════════════════════════════════════════════════ */
 .section-contain {

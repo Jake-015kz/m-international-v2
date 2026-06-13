@@ -23,7 +23,7 @@ const CTASection = memo(function CTASection() {
   const patternY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   return (
-    <section ref={ref} className="relative py-12 md:py-24 overflow-hidden bg-bg-alt">
+    <section ref={ref} className="relative py-16 md:py-28 overflow-hidden bg-bg-alt">
       <Container className="relative z-10">
         <motion.div
           className="relative rounded-2xl overflow-hidden"
@@ -32,6 +32,15 @@ const CTASection = memo(function CTASection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: EASE }}
         >
+          {/* Gradient border top accent */}
+          <div
+            className="absolute top-0 left-0 right-0 h-[2px] z-20"
+            style={{
+              background: "linear-gradient(90deg, transparent, oklch(50%_0.14_195_/_0.4), oklch(58%_0.19_25_/_0.3), transparent)",
+            }}
+            aria-hidden="true"
+          />
+
           {/* Background — soft natural with dot pattern */}
           <div
             className="absolute inset-0"
@@ -77,9 +86,9 @@ const CTASection = memo(function CTASection() {
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          <div className="relative z-10 p-6 md:p-14">
+          <div className="relative z-10 p-8 md:p-16">
             <motion.div
-              className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8"
+              className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-10"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, ease: EASE }}
@@ -87,7 +96,7 @@ const CTASection = memo(function CTASection() {
               {/* Text — left-aligned (asymmetric) */}
               <div className="max-w-xl">
                 <motion.h2
-                  className="font-unbounded font-bold text-lg sm:text-2xl md:text-3xl text-white mb-2 md:mb-3 leading-[1.1] tracking-normal"
+                  className="font-unbounded font-bold text-xl sm:text-2xl md:text-3xl text-fg-primary mb-3 md:mb-4 leading-[1.1] tracking-normal"
                   initial={{ opacity: 0, y: 12 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.1, duration: 0.5 }}
@@ -95,7 +104,7 @@ const CTASection = memo(function CTASection() {
                   {t("title")}
                 </motion.h2>
                 <motion.p
-                  className="text-xs md:text-base text-white/50 font-onest font-light"
+                  className="text-sm md:text-base text-fg-secondary font-inter font-light"
                   initial={{ opacity: 0, y: 12 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.2, duration: 0.5 }}
@@ -109,7 +118,7 @@ const CTASection = memo(function CTASection() {
                 <MagneticButton
                   variant="primary"
                   size="lg"
-                  className="!bg-white hover:!bg-white/90 !text-[var(--text-main)] !border-white/20 hover:!border-white/30 !shadow-[0_4px_24px_rgba(255,255,255,0.15)] hover:!shadow-[0_4px_32px_rgba(255,255,255,0.25)]"
+                  className="font-space-grotesk font-semibold"
                   onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   <Phone className="w-4 h-4" />
@@ -119,7 +128,7 @@ const CTASection = memo(function CTASection() {
                 <MagneticButton
                   variant="outline"
                   size="lg"
-                  className="!bg-white/[0.06] hover:!bg-white/[0.12] !border-white/[0.1] hover:!border-white/[0.18] !text-white"
+                  className="font-space-grotesk font-medium"
                   onClick={() => document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   <MessageCircle className="w-4 h-4" />

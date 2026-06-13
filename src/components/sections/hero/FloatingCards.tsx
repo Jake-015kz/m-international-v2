@@ -50,7 +50,7 @@ const CERT_BADGES = [
   },
 ];
 
-/* ── Single cert badge card — Linear glass style ── */
+/* ── Single cert badge card — enhanced glass with gradient accent ── */
 function CertBadgeCard({
   badge,
   floatDelay,
@@ -79,17 +79,26 @@ function CertBadgeCard({
         ...SPRING,
       }}
     >
-      {/* The card — Linear glass style after entrance */}
       <motion.div
         animate={reducedMotion ? {} : { y: [0, -8, 0] }}
         transition={{ delay: STAGGER_DELAY + badge.delay + floatDelay, duration: floatDuration, repeat: Infinity, ease: "easeInOut" }}
         className="will-change-transform"
       >
-        <div className="rounded-2xl bg-white/[0.04] backdrop-blur-lg border border-[oklch(1_0_0_/_0.12)] shadow-lg p-3 lg:p-5 flex items-center gap-2 lg:gap-3 relative overflow-hidden transition-all duration-300 hover:[filter:brightness(130%)] mobile-no-backdrop">
+        {/* Enhanced glass card with gradient top line */}
+        <div className="rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-[oklch(1_0_0_/_0.12)] shadow-lg shadow-black/10 p-3 lg:p-5 flex items-center gap-2 lg:gap-3 relative overflow-hidden transition-all duration-300 hover:[filter:brightness(130%)] hover:shadow-[0_0_24px_oklch(70%_0.16_145_/_0.15)] mobile-no-backdrop">
+          {/* Top gradient accent line */}
+          <div
+            className="absolute top-0 left-0 right-0 h-[1px]"
+            style={{
+              background: "linear-gradient(90deg, transparent, oklch(70%_0.16_145_/_0.4), transparent)",
+            }}
+            aria-hidden="true"
+          />
+
           <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center shrink-0 bg-emerald-500/15">
             {badge.icon}
           </div>
-          <span className="text-xs lg:text-sm font-medium text-white/90 whitespace-nowrap">
+          <span className="text-xs lg:text-sm font-medium text-white/90 whitespace-nowrap font-space-grotesk">
             {t(badge.i18nKey)}
           </span>
         </div>
@@ -98,7 +107,7 @@ function CertBadgeCard({
   );
 }
 
-/* ── Left video card — kept as spring entrance ── */
+/* ── Left video card — kept as spring entrance, enhanced glass ── */
 const LeftCard = memo(function LeftCard() {
   const t = useTranslations("hero");
   const reducedMotion = usePrefersReducedMotion();
@@ -115,7 +124,16 @@ const LeftCard = memo(function LeftCard() {
         transition={{ delay: 1.2, duration: 3, repeat: Infinity, ease: "easeInOut" }}
         className="will-change-transform"
       >
-        <div className="rounded-2xl bg-white/[0.04] backdrop-blur-lg border border-[oklch(1_0_0_/_0.12)] shadow-lg p-4 lg:p-6 mobile-no-backdrop">
+        <div className="rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-[oklch(1_0_0_/_0.12)] shadow-lg shadow-black/10 p-4 lg:p-6 mobile-no-backdrop">
+          {/* Top gradient accent */}
+          <div
+            className="absolute top-0 left-0 right-0 h-[1px] rounded-t-2xl"
+            style={{
+              background: "linear-gradient(90deg, transparent, oklch(50%_0.14_195_/_0.3), transparent)",
+            }}
+            aria-hidden="true"
+          />
+
           <div className="relative aspect-video rounded-xl lg:rounded-2xl overflow-hidden bg-black/20 mb-3 flex items-center justify-center">
             <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/[0.08] backdrop-blur-sm rounded-full flex items-center justify-center border border-white/[0.12]">
               <svg className="w-4 h-4 lg:w-5 lg:h-5 text-white/70 ml-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -123,7 +141,7 @@ const LeftCard = memo(function LeftCard() {
               </svg>
             </div>
           </div>
-          <p className="text-center text-xs lg:text-sm font-light text-white/50">
+          <p className="text-center text-xs lg:text-sm font-light text-white/50 font-inter">
             {t("videoCard")}
           </p>
         </div>
