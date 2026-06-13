@@ -1,0 +1,208 @@
+{
+  "site": "M-International",
+  "base_url": "https://m-international.kz",
+  "structure_version": "v2 (Next.js SPA)",
+  "categories": [
+    {
+      "id": "catalog",
+      "slug": "/catalog",
+      "name": {"ru": "Каталог", "en": "Catalog", "kk": "Каталог"},
+      "type": "catalog_page",
+      "source": "Navbar.tsx nav_links",
+      "products": [],
+      "subcategories": [
+        {
+          "id": "vision",
+          "filter_key": "vision",
+          "name": {"ru": "Зрение", "en": "Vision", "kk": "Көру"},
+          "source": "ProductsSection.tsx FILTER_OPTIONS",
+          "category_path": "/catalog?filter=vision",
+          "products": [
+            {
+              "slug": "micrystal",
+              "name": "MiCrystal",
+              "old_site_url": "/products/micrystal",
+              "image": "/images/products/micrystal.webp",
+              "price": 8900, "old_price": 12500,
+              "rating": 4.8, "review_count": 124,
+              "badge": "Хит", "featured": true,
+              "in_new_code": true
+            }
+          ]
+        },
+        {
+          "id": "detox",
+          "filter_key": "detox",
+          "name": {"ru": "Детокс", "en": "Detox", "kk": "Детокс"},
+          "source": "ProductsSection.tsx FILTER_OPTIONS",
+          "category_path": "/catalog?filter=detox",
+          "products": [
+            {
+              "slug": "greenmax",
+              "name": "GreenMAX",
+              "old_site_url": "/products/greenmax",
+              "image": "/images/products/greenmax.webp",
+              "price": 6500,
+              "rating": 4.9, "review_count": 256,
+              "badge": "Хит", "featured": true,
+              "in_new_code": true
+            },
+            {
+              "slug": "mitown",
+              "name": "Mi Town",
+              "old_site_url": "/products/mi-town",
+              "image": "/images/products/mitown2.webp",
+              "price": 4900,
+              "rating": 4.9, "review_count": 312,
+              "in_new_code": true,
+              "note": "В ProductsSection привязан к category=nutrition, но subtitle='Детокс-кофе' — потенциально двойная категория"
+            }
+          ]
+        },
+        {
+          "id": "immunity",
+          "filter_key": "immunity",
+          "name": {"ru": "Иммунитет", "en": "Immunity", "kk": "Иммунитет"},
+          "source": "ProductsSection.tsx FILTER_OPTIONS",
+          "category_path": "/catalog?filter=immunity",
+          "products": [
+            {
+              "slug": "mimax",
+              "name": "MiMAX",
+              "old_site_url": "/products/mimax",
+              "image": "/images/products/mimax.webp",
+              "price": 7200, "old_price": 8900,
+              "rating": 4.6, "review_count": 89,
+              "in_new_code": true
+            },
+            {
+              "slug": "blumax",
+              "name": "BluMAX",
+              "old_site_url": "/products/blumax",
+              "image": "/images/products/blumax.webp",
+              "price": 9500,
+              "rating": 4.7, "review_count": 167,
+              "in_new_code": true
+            }
+          ]
+        },
+        {
+          "id": "nutrition",
+          "filter_key": "nutrition",
+          "name": {"ru": "Питание", "en": "Nutrition", "kk": "Тағам"},
+          "source": "ProductsSection.tsx FILTER_OPTIONS",
+          "category_path": "/catalog?filter=nutrition",
+          "products": [
+            {
+              "slug": "nutrimax",
+              "name": "NutriMAX",
+              "old_site_url": "/products/nutrimax",
+              "image": "/images/products/nutrimax.webp",
+              "price": 5400, "old_price": 7200,
+              "rating": 4.5, "review_count": 98,
+              "in_new_code": true
+            }
+          ]
+        },
+        {
+          "id": "joints",
+          "filter_key": "joints",
+          "name": {"ru": "Суставы", "en": "Joints", "kk": "Буындар"},
+          "source": "ProductsSection.tsx FILTER_OPTIONS",
+          "category_path": "/catalog?filter=joints",
+          "products": [
+            {
+              "slug": "fleximax",
+              "name": "FleXiMAX",
+              "old_site_url": "/products/fleximax",
+              "image": "/images/products/fleximax.webp",
+              "price": 11000,
+              "rating": 4.4, "review_count": 72,
+              "in_new_code": true
+            }
+          ]
+        },
+        {
+          "id": "mens",
+          "filter_key": "mens",
+          "name": {"ru": "Мужское", "en": "Men's Health", "kk": "Ерлер"},
+          "source": "ProductsSection.tsx FILTER_OPTIONS",
+          "category_path": "/catalog?filter=mens",
+          "products": [
+            {
+              "slug": "machoman",
+              "name": "Macho Man",
+              "old_site_url": "/products/machoman",
+              "image": "/images/products/machoman.webp",
+              "price": 8200, "old_price": 10000,
+              "rating": 4.3, "review_count": 55,
+              "in_new_code": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "products_not_in_new_code": [
+    {
+      "slug": "essential-oil",
+      "old_site_url": "/products/essential-oil",
+      "old_crawl_url": "https://global.m.international/products/essential-oil",
+      "in_new_source": false,
+      "note": "Есть в маршрутах старого сайта (crawl_report.json), ОТСУТСТВУЕТ в новом коде"
+    },
+    {
+      "slug": "mi-mask",
+      "old_site_url": "/products/mi-mask",
+      "old_crawl_url": "https://global.m.international/products/mi-mask",
+      "in_new_source": false,
+      "note": "Есть в маршрутах старого сайта, ОТСУТСТВУЕТ в новом коде"
+    },
+    {
+      "slug": "mi-serum",
+      "old_site_url": "/products/mi-serum",
+      "old_crawl_url": "https://global.m.international/products/mi-serum",
+      "in_new_source": false,
+      "note": "Есть в маршрутах старого сайта, ОТСУТСТВУЕТ в новом коде"
+    },
+    {
+      "slug": "mishroom",
+      "old_site_url": "/products/mishroom",
+      "old_crawl_url": "https://global.m.international/products/mishroom",
+      "in_new_source": false,
+      "note": "Есть в маршрутах старого сайта, ОТСУТСТВУЕТ в новом коде"
+    },
+    {
+      "slug": "relax",
+      "old_site_url": "/products/relax",
+      "old_crawl_url": "https://global.m.international/products/relax",
+      "in_new_source": false,
+      "note": "Есть в маршрутах старого сайта, ОТСУТСТВУЕТ в новом коде как продукт"
+    },
+    {
+      "slug": "ye-katerina",
+      "old_site_url": "/products/ye-katerina",
+      "old_crawl_url": "https://global.m.international/products/ye-katerina",
+      "in_new_source": false,
+      "note": "Есть в маршрутах старого сайта, ОТСУТСТВУЕТ в новом коде"
+    }
+  ],
+  "summary": {
+    "total_products_old_site": 14,
+    "total_products_in_new_code": 8,
+    "total_products_missing": 6,
+    "total_categories": 6,
+    "old_route_pattern": "/products/{slug}",
+    "new_route_pattern": "/catalog (client-side filter by category)",
+    "catalog_nav_links": ["/", "/catalog", "/about", "/contacts"],
+    "filter_options": ["all", "vision", "detox", "immunity", "nutrition", "joints", "mens"],
+    "files_analyzed": [
+      "src/components/sections/products/ProductsSection.tsx",
+      "src/components/layout/Navbar.tsx",
+      "src/components/sections/products/ProductCard.tsx",
+      "src/messages/ru.json",
+      "crawl_report.json",
+      "product_images.json"
+    ]
+  }
+}
