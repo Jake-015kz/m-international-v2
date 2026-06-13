@@ -77,11 +77,16 @@ function SlideMain() {
           sizes="100vw"
           quality={85}
         />
+        {/* Bottom gradient bleed */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent" />
+        {/* WCAG AAA contrast overlay — directional gradient for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-neutral-900/40 via-transparent to-transparent" />
+        {/* Top-to-bottom vignette for depth */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.40) 100%)",
+              "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.30) 100%)",
           }}
         />
       </div>
@@ -95,12 +100,9 @@ function SlideMain() {
         }}
       />
 
-      {/* Bottom gradient bleed */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent z-[2]" />
-
       {/* Content */}
       <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 pt-4 pb-6 sm:pt-8 sm:pb-10 lg:pt-0 lg:pb-0">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: text */}
           <div className="text-center lg:text-left order-1">
             {/* Badge */}
