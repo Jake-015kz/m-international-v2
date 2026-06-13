@@ -57,23 +57,23 @@ const Footer = memo(function Footer() {
             className="sm:col-span-2 lg:col-span-1"
           >
             <h3 className="font-unbounded font-bold text-base md:text-xl text-white mb-2 md:mb-3">M-International</h3>
-            <p className="text-[11px] md:text-sm text-white/40 font-onest font-light leading-relaxed mb-3 md:mb-4">
+            <p className="text-[11px] md:text-sm text-white/60 font-onest font-light leading-relaxed mb-3 md:mb-4">
               {t("subscription.description")}
             </p>
             <div className="space-y-1.5 md:space-y-2 mb-3 md:mb-4">
-              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/40 font-onest">
+              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/60 font-onest">
                 <MapPin className="w-3.5 h-3.5 shrink-0" />
                 <span>Казахстан, Алматы</span>
               </div>
-              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/40 font-onest">
+              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/60 font-onest">
                 <Phone className="w-3.5 h-3.5 shrink-0" />
                 <span>+7 (777) 123-45-67</span>
               </div>
-              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/40 font-onest">
+              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/60 font-onest">
                 <Mail className="w-3.5 h-3.5 shrink-0" />
                 <span>info@m-international.kz</span>
               </div>
-              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/40 font-onest">
+              <div className="flex items-center gap-2 text-[11px] md:text-xs text-white/60 font-onest">
                 <Clock className="w-3.5 h-3.5 shrink-0" />
                 <span>ПН-ПТ 10:00-18:00</span>
               </div>
@@ -108,7 +108,7 @@ const Footer = memo(function Footer() {
             <ul className="space-y-1.5 md:space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-[11px] md:text-sm text-white/40 hover:text-white/70 font-onest font-light transition-colors duration-200">{link.label}</a>
+                  <a href={link.href} className="text-[11px] md:text-sm text-white/60 hover:text-white/90 font-onest font-light transition-colors duration-200">{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -125,7 +125,7 @@ const Footer = memo(function Footer() {
             <ul className="space-y-1.5 md:space-y-2">
               {footerLinks.catalog.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-[11px] md:text-sm text-white/40 hover:text-white/70 font-onest font-light transition-colors duration-200">{link.label}</a>
+                  <a href={link.href} className="text-[11px] md:text-sm text-white/60 hover:text-white/90 font-onest font-light transition-colors duration-200">{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -140,7 +140,7 @@ const Footer = memo(function Footer() {
             className="sm:col-span-2 lg:col-span-1"
           >
             <h4 className="font-unbounded font-bold text-[10px] md:text-xs uppercase tracking-wider text-white/60 mb-2 md:mb-4">{t("subscription.title")}</h4>
-            <p className="text-[11px] md:text-xs text-white/40 font-onest font-light mb-3">{t("subscription.description")}</p>
+            <p className="text-[11px] md:text-xs text-white/60 font-onest font-light mb-3">{t("subscription.description")}</p>
             <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
@@ -162,12 +162,12 @@ const Footer = memo(function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <p className="text-[10px] md:text-xs text-white/30 font-onest">
+          <p className="text-[10px] md:text-xs text-white/50 font-onest">
             {t("copyright").replace("{year}", String(new Date().getFullYear()))}
           </p>
           <div className="flex items-center gap-3 md:gap-4">
             {footerLinks.legal.map((link) => (
-              <a key={link.label} href={link.href} className="text-[10px] md:text-xs text-white/30 hover:text-white/50 font-onest transition-colors duration-200">{link.label}</a>
+              <a key={link.label} href={link.href} className="text-[10px] md:text-xs text-white/50 hover:text-white/70 font-onest transition-colors duration-200">{link.label}</a>
             ))}
           </div>
         </motion.div>

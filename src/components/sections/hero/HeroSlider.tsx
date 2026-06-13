@@ -63,21 +63,21 @@ function SlideMain() {
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 pt-4 pb-6 sm:pt-8 sm:pb-10 lg:pt-0 lg:pb-0">
+      <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 pt-20 pb-6 sm:pt-8 sm:pb-10 lg:pt-0 lg:pb-0" style={{ paddingTop: "max(5rem, env(safe-area-inset-top) + 3.5rem)" }}>
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: text */}
           <div className="text-center lg:text-left order-1">
-            {/* Glassmorphism badge — Премиум качество */}
+            {/* Glassmorphism badge */}
             <div
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-5 sm:mb-8"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
-              <span className="text-[11px] sm:text-xs font-space-grotesk font-medium text-white/90 tracking-wide">
+              <span className="text-[11px] sm:text-xs font-space-grotesk font-medium text-white tracking-wide">
                 {t("label")}
               </span>
             </div>
 
-            {/* Headline — monolithic M-International.kz */}
+            {/* Headline */}
             <h1
               className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-sm mb-4 sm:mb-5 font-unbounded leading-[1.1]"
             >
@@ -96,7 +96,7 @@ function SlideMain() {
 
             {/* Description */}
             <p
-              className="text-white/80 leading-relaxed text-lg max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-10 font-inter"
+              className="text-white leading-relaxed text-lg max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-10 font-inter"
             >
               {t("lead")}
             </p>
@@ -136,10 +136,10 @@ function SlideMain() {
             {/* Trust badges — minimalist capsule row */}
             <TrustBadges />
 
-            {/* Countries + customers stat — separate line below badges */}
+            {/* Countries + customers stat */}
             <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-3 mb-0">
-              <span className="text-[11px] sm:text-xs text-white/60 font-space-grotesk">
-                <strong className="text-white/80 font-semibold">10K+</strong> {t("stat.customers")}
+              <span className="text-[11px] sm:text-xs text-white/80 font-space-grotesk">
+                <strong className="text-white font-semibold">10K+</strong> {t("stat.customers")}
               </span>
             </div>
           </div>
@@ -218,7 +218,7 @@ function SlideProduct() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent z-[2]" />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 py-12 sm:py-16">
+      <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 py-20 sm:py-16" style={{ paddingTop: "max(5rem, env(safe-area-inset-top) + 3.5rem)" }}>
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left: text */}
           <div className="text-center lg:text-left">
@@ -241,7 +241,7 @@ function SlideProduct() {
 
             <p
               className="text-sm sm:text-base font-inter font-light leading-relaxed max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-10"
-              style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 6px rgba(0,0,0,0.2)" }}
+              style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 6px rgba(0,0,0,0.2)" }}
             >
               {t("productSlide.lead")}
             </p>
@@ -334,7 +334,7 @@ function SlideStats() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent z-[2]" />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 py-12 sm:py-16">
+      <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 py-20 sm:py-16" style={{ paddingTop: "max(5rem, env(safe-area-inset-top) + 3.5rem)" }}>
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6 sm:mb-10">
             <span className="text-[11px] sm:text-xs font-space-grotesk font-medium text-white tracking-wide">
@@ -355,7 +355,7 @@ function SlideStats() {
 
           <p
             className="text-sm sm:text-base font-inter font-light leading-relaxed max-w-xl mx-auto mb-8 sm:mb-12"
-            style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 6px rgba(0,0,0,0.2)" }}
+            style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 6px rgba(0,0,0,0.2)" }}
           >
             {t("statsSlide.lead")}
           </p>
@@ -393,7 +393,7 @@ const HeroSlider = memo(function HeroSlider() {
 
   return (
     <section
-      className="relative overflow-hidden md:min-h-[720px]"
+      className="relative overflow-hidden min-h-[100dvh] md:min-h-[720px]"
       role="region"
       aria-label="Hero slider"
       aria-roledescription="carousel"
