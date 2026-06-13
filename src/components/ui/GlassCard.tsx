@@ -106,6 +106,7 @@ const GlassCard = memo(function GlassCard({
             opacity: isHovered ? 1 : 0,
           }}
           transition={{ opacity: { duration: 0.3 } }}
+          aria-hidden="true"
         />
       )}
       <div className="relative z-10">{children}</div>

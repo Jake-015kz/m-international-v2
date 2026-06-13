@@ -66,6 +66,8 @@ function CertBadgeCard({
   return (
     <motion.div
       className="absolute z-20 will-change-transform"
+      role="listitem"
+      aria-label={t(badge.i18nKey)}
       style={{
         right: "1rem",
         ...(badge.slot === "right-top" && { top: "18%" }),
@@ -152,7 +154,7 @@ const LeftCard = memo(function LeftCard() {
 
 const FloatingCards = memo(function FloatingCards() {
   return (
-    <>
+    <div className="hidden lg:block" role="list" aria-label="Сертификаты и достижения">
       <LeftCard />
 
       {CERT_BADGES.map((badge) => (
@@ -163,7 +165,7 @@ const FloatingCards = memo(function FloatingCards() {
           floatDuration={3.2 + badge.delay}
         />
       ))}
-    </>
+    </div>
   );
 });
 

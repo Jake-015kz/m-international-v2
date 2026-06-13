@@ -81,7 +81,7 @@ function StatCard({ data }: { data: StatCardData }) {
         className="will-change-transform"
       >
         {/* Gradient border card with backdrop-blur */}
-        <div className="relative rounded-2xl border border-[oklch(1_0_0_/_0.12)] bg-white/[0.04] backdrop-blur-xl p-4 overflow-hidden mobile-no-backdrop transition-all duration-300 hover:[filter:brightness(120%)] hover:shadow-[0_0_30px_oklch(50%_0.14_195_/_0.12)]">
+        <div className="relative rounded-2xl border border-[oklch(1_0_0_/_0.12)] bg-white/[0.04] backdrop-blur-xl p-4 overflow-hidden mobile-no-backdrop transition-all duration-300 hover:[filter:brightness(120%)] hover:shadow-[0_0_30px_oklch(50%_0.14_195_/_0.12)]" role="group" aria-label={`${t(data.labelKey)} — ${counter.toLocaleString("ru-RU")}${data.suffix}`}>
           {/* Top accent line — gradient */}
           <div
             className="absolute top-0 left-0 right-0 h-[1px]"
@@ -93,7 +93,7 @@ function StatCard({ data }: { data: StatCardData }) {
 
           {/* Top row: label + change badge */}
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider leading-none">
+            <span className="text-[10px] font-medium text-white/60 uppercase tracking-wider leading-none">
               {t(data.labelKey)}
             </span>
             <span

@@ -60,6 +60,8 @@ const ValueCard = memo(function ValueCard({
       "group relative p-4 md:p-5 rounded-2xl bg-[#FFFFFF] border border-[var(--border-soft)] shadow-[var(--shadow-soft)] overflow-hidden cursor-default",
       className
       )}
+      role="article"
+      aria-label={title}
       style={{
         rotateX: springRotateX,
         rotateY: springRotateY,
@@ -83,6 +85,7 @@ const ValueCard = memo(function ValueCard({
         }}
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
+        aria-hidden="true"
       />
 
       {/* Top accent line on hover */}
@@ -91,6 +94,7 @@ const ValueCard = memo(function ValueCard({
         style={{ background: `linear-gradient(90deg, transparent, ${color}60, transparent)` }}
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
+        aria-hidden="true"
       />
 
       <div className="relative z-10">
